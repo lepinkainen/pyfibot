@@ -16,7 +16,7 @@ from twisted.internet import reactor, protocol
 from twisted.python import log, rebuild
 
 # system imports
-import shelve
+#import shelve
 import sys
 import os.path
 import time
@@ -351,7 +351,8 @@ if __name__ == '__main__':
 
     sys.path.append(os.path.join(sys.path[0], 'lib'))
 
-    db = shelve.open("pyfibot.shelve")
+    #db = shelve.open("pyfibot.shelve")
+    db = {}
     f = PyFiBotFactory(db)
     #f.createNetwork(("irc.kolumbus.fi", 6667), "ircnet", "pyfibot", ["#pyfitest"])
     f.createNetwork(("irc.inet.fi", 6667), "ircnet", "pyfibot", ["#ioh9s1", "#soukka.net", "#python.fi", "#norsu", "#yomi"])
