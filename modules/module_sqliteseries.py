@@ -19,6 +19,7 @@ precache = ['NCIS', 'Boston Legal', 'battlestar galactica', 'veronica mars',
 CREATETABLE = "CREATE TABLE series (id INTEGER PRIMARY KEY, uid TEXT UNIQUE ON CONFLICT REPLACE, serie TEXT, season INTEGER, episode INTEGER, title TEXT, airdate DATE);"
 
 def command_sqlcache(bot, user, channel, args):
+    """Cache common series into the database"""
     if not isAdmin(user): return
 
     for seriename in precache:
@@ -31,10 +32,13 @@ def NOTinit():
     con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
     cur = con.cursor()
     cur.execute(CREATETABLE)
+    cur.close()
     con.commit()
     con.close()
 
 def command_epinfo(bot, user, channel, args):
+    """List episodes in the database"""
+    
     con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
     cur = con.cursor()
 
@@ -45,12 +49,14 @@ def command_epinfo(bot, user, channel, args):
         res.append(serie[0])
 
     res.sort()
-    bot.say(channel, "Known series: " + ", ".join(res))
-    
+    bot.say(channel, "Known series ("+str(len(res))+"): " + ", ".join(res))
+
+    cur.close()
     con.close()
 
 def command_ep(bot, user, channel, args):
     """Usage: sqlep [today|yesterday|tomorrow] or [seriename]"""
+    
     con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
     cur = con.cursor()
 
@@ -60,21 +66,30 @@ def command_ep(bot, user, channel, args):
 
     if args == "today":
         cur.execute("SELECT * FROM series WHERE airdate = date('now');")
+        if cur.rowcount == 0:
+            bot.say(channel, "No known releases today")
+            return
     elif args == "yesterday":
         modifier = "-1 day"
-        cur.execute("SELECT * FROM series WHERE airdate = date('now', '%s');" % (modifier))
+        cur.execute("SELECT * FROM series WHERE airdate = date('now', '-1 day');")
+        if cur.rowcount == 0:
+            bot.say(channel, "No known releases yesterday")
+            return
     elif args == "tomorrow":
         modifier = "+1 day"
-        cur.execute("SELECT * FROM series WHERE airdate = date('now', '%s');" % (modifier))
+        cur.execute("SELECT * FROM series WHERE airdate = date('now', '+1 day');")
+        if cur.rowcount == 0:
+            bot.say(channel, "No known releases tomorrow")
+            return
     else:
         # try to find the serie
-        cur.execute("SELECT * FROM series WHERE serie LIKE '%%%s%%' AND airdate > date('now') LIMIT 1" % args)
+        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", (args,))
         # nothing found, get more data from the web
         if cur.rowcount == 0:
             url = _search_serie(args)
             if url != None:
                 _cache_serie(url)
-                cur.execute("SELECT * FROM series WHERE serie LIKE '%%%s%%' AND airdate > date('now') LIMIT 1" % args)
+                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", (args,))
                 # still nothing found, give up
                 if cur.rowcount == 0:
                     bot.say(channel, "No future episodes of '%s' found" % args)
@@ -84,6 +99,7 @@ def command_ep(bot, user, channel, args):
         if episode < 10: episode = "0%d" % episode # pad ep with zeroes
         bot.say(channel, "Next episode on %s %sx%s '%s' on %s" % (serie, season, episode, title, airdate))
 
+    cur.close()
     con.close()
 
 def _cache_serie(url):
@@ -96,10 +112,7 @@ def _cache_serie(url):
         episode['epname'] = episode['epname'].replace("'", "pier")
         cur = con.cursor()
         uid = "%s%d%d" % (serie, episode['season'], episode['episode'])
-        sql = "INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES ('%s', '%s', %d, %d, '%s', date('%s'));" % (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2'])
-    
-        print sql
-        cur.execute(sql)
+        cur.execute("INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES (%s, %s, %d, %d, %s, date('%s'));", (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2']))
         cur.close()
 
     # Commit & close

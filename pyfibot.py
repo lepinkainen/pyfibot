@@ -208,7 +208,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def stopFactory(self):
 
         del self.allBots
-        self.data.close()
+        #self.data.close()
         
         ThrottledClientFactory.stopFactory(self)
         self.log("factory stopped")
