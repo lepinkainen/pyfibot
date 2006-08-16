@@ -7,14 +7,13 @@
 @license BSD
 """
 
-#import psyco
-#psyco.full()
+import psyco
+psyco.full()
 
 # twisted imports
 from twisted.protocols import irc
 from twisted.internet import reactor, protocol
 from twisted.python import log, rebuild
-
 
 # system imports
 import shelve
@@ -173,6 +172,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         '*!shrike@hpsjr.fi',
         '*!shrike@tefra.fi',
         ]
+
+    version = "$Revision$"
 
     protocol = botcore.PyFiBot
     allBots = None
