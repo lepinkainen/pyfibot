@@ -36,6 +36,18 @@ def NOTinit():
     con.commit()
     con.close()
 
+def command_epdel(bot, user, channel, args):
+    if not isAdmin(user): return
+
+    con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
+    cur = con.cursor()
+    cur.execute("DELETE FROM series WHERE serie='%s';" % args)
+    cur.close()
+    con.commit()
+    con.close()
+
+    bot.say(channel, "Done");
+
 def command_epinfo(bot, user, channel, args):
     """List episodes in the database"""
     
@@ -83,13 +95,13 @@ def command_ep(bot, user, channel, args):
             return
     else:
         # try to find the serie
-        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", (args,))
+        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", ("%"+args+"%",))
         # nothing found, get more data from the web
         if cur.rowcount == 0:
             url = _search_serie(args)
             if url != None:
                 _cache_serie(url)
-                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", (args,))
+                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", ("%"+args+"%",))
                 # still nothing found, give up
                 if cur.rowcount == 0:
                     bot.say(channel, "No future episodes of '%s' found" % args)
@@ -97,7 +109,24 @@ def command_ep(bot, user, channel, args):
     
     for (id, uid, serie, season, episode, title, airdate) in cur:
         if episode < 10: episode = "0%d" % episode # pad ep with zeroes
-        bot.say(channel, "Next episode on %s %sx%s '%s' on %s" % (serie, season, episode, title, airdate))
+
+        # YYYY-MM-DD -> datetime -> timedelta
+        t = time.strptime(airdate, "%Y-%m-%d")
+        ad = datetime.date(t.tm_year, t.tm_mon, t.tm_mday)
+        now = datetime.date.today()
+        tomorrow = now + datetime.timedelta(days=1)
+        td = ad-now
+
+        if ad == now:
+            airdate = "%s (Today)" % airdate
+        elif ad == tomorrow:
+            airdate = "%s (Tomorrow)" % airdate
+        else:
+            airdate = "%s (%d days)" % (airdate, td.days)
+        
+        #bot.say(channel, "Next episode on %s %sx%s '%s' on %s" % (serie, season, episode, title, airdate))
+        msg = "Next episode on %s %sx%s '%s' at %s" % (serie, season, episode, title, airdate)
+        bot.say(channel, msg)
 
     cur.close()
     con.close()
@@ -112,7 +141,8 @@ def _cache_serie(url):
         episode['epname'] = episode['epname'].replace("'", "pier")
         cur = con.cursor()
         uid = "%s%d%d" % (serie, episode['season'], episode['episode'])
-        cur.execute("INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES (%s, %s, %d, %d, %s, date('%s'));", (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2']))
+        print "INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES ('%s', '%s', %d, %d, '%s', date('%s'));" % (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2'])
+        cur.execute("INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES (%s, %s, %d, %d, %s, date(%s));", (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2'].strftime("%Y-%m-%d")))
         cur.close()
 
     # Commit & close
