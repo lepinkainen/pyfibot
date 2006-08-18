@@ -141,7 +141,6 @@ def _cache_serie(url):
         episode['epname'] = episode['epname'].replace("'", "pier")
         cur = con.cursor()
         uid = "%s%d%d" % (serie, episode['season'], episode['episode'])
-        print "INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES ('%s', '%s', %d, %d, '%s', date('%s'));" % (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2'])
         cur.execute("INSERT INTO series (uid, serie, season, episode, title, airdate) VALUES (%s, %s, %d, %d, %s, date(%s));", (uid, serie, episode['season'], episode['episode'], episode['epname'], episode['airdate2'].strftime("%Y-%m-%d")))
         cur.close()
 
