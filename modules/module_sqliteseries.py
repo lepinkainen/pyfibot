@@ -1,4 +1,3 @@
-import fnmatch
 import time
 import datetime
 import urllib
@@ -73,40 +72,40 @@ def command_ep(bot, user, channel, args):
     cur = con.cursor()
 
     if not args:
-        bot.say(channel, "Usage: sqlep [today|yesterday|tomorrow] or [seriename]")
+        bot.say(channel, "Usage: ep [today|yesterday|tomorrow] or [seriename]")
         return
 
     if args == "today":
-        cur.execute("SELECT * FROM series WHERE airdate = date('now');")
+        cur.execute("SELECT * FROM series WHERE airdate = date('now', 'localtime');")
         if cur.rowcount == 0:
             bot.say(channel, "No known releases today")
             return
     elif args == "yesterday":
-        modifier = "-1 day"
-        cur.execute("SELECT * FROM series WHERE airdate = date('now', '-1 day');")
+        cur.execute("SELECT * FROM series WHERE airdate = date('now', 'localtime', '-1 day');")
         if cur.rowcount == 0:
             bot.say(channel, "No known releases yesterday")
             return
     elif args == "tomorrow":
-        modifier = "+1 day"
-        cur.execute("SELECT * FROM series WHERE airdate = date('now', '+1 day');")
+        cur.execute("SELECT * FROM series WHERE airdate = date('now', 'localtime', '+1 day');")
         if cur.rowcount == 0:
             bot.say(channel, "No known releases tomorrow")
             return
     else:
         # try to find the serie
-        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", ("%"+args+"%",))
+        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
         # nothing found, get more data from the web
         if cur.rowcount == 0:
             url = _search_serie(args)
             if url != None:
                 _cache_serie(url)
-                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now') LIMIT 1", ("%"+args+"%",))
+                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
                 # still nothing found, give up
                 if cur.rowcount == 0:
                     bot.say(channel, "No future episodes of '%s' found" % args)
                     return
-    
+
+    episodes = []
+    # go through the results
     for (id, uid, serie, season, episode, title, airdate) in cur:
         if episode < 10: episode = "0%d" % episode # pad ep with zeroes
 
@@ -117,16 +116,19 @@ def command_ep(bot, user, channel, args):
         tomorrow = now + datetime.timedelta(days=1)
         td = ad-now
 
-        if ad == now:
-            airdate = "%s (Today)" % airdate
-        elif ad == tomorrow:
-            airdate = "%s (Tomorrow)" % airdate
-        else:
-            airdate = "%s (%d days)" % (airdate, td.days)
+        # change 0 and 1 to today & tomorrow, don't show date if we're asking stuff for a certain day
+        airdatestr = ""
+        if td.days > 0:
+            if ad == now:
+                if args != "today": airdatestr = "on %s (Today)" % airdate
+            elif ad == tomorrow:
+                if args != "tomorrow": airdatestr = "on %s (Tomorrow)" % airdate
+            else:
+                airdatestr = "on %s (%d days)" % (airdate, td.days)
         
-        #bot.say(channel, "Next episode on %s %sx%s '%s' on %s" % (serie, season, episode, title, airdate))
-        msg = "Next episode on %s %sx%s '%s' at %s" % (serie, season, episode, title, airdate)
-        bot.say(channel, msg)
+        episodes.append("%s %sx%s '%s' %s" % (serie, season, episode, title, airdatestr))
+
+    bot.say(channel, "-- ".join(episodes))
 
     cur.close()
     con.close()
