@@ -7,8 +7,11 @@
 @license BSD
 """
 
-import psyco
-psyco.full()
+try:
+    import psyco
+    psyco.full()
+except ImportError:
+    print "Psyco not found, running unoptimized"
 
 # twisted imports
 from twisted.protocols import irc
