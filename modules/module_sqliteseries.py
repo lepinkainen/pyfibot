@@ -36,6 +36,7 @@ def NOTinit():
     con.close()
 
 def command_epdel(bot, user, channel, args):
+    """Delete all data about a serie"""
     if not isAdmin(user): return
 
     con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
@@ -48,7 +49,7 @@ def command_epdel(bot, user, channel, args):
     bot.say(channel, "Done");
 
 def command_epinfo(bot, user, channel, args):
-    """List episodes in the database"""
+    """List series in the database"""
     
     con = sqlite.connect("/home/shrike/pyfibot/modules/series.db");
     cur = con.cursor()
@@ -92,13 +93,13 @@ def command_ep(bot, user, channel, args):
             return
     else:
         # try to find the serie
-        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
+        cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate >= date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
         # nothing found, get more data from the web
         if cur.rowcount == 0:
             url = _search_serie(args)
             if url != None:
                 _cache_serie(url)
-                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate > date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
+                cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate >= date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
                 # still nothing found, give up
                 if cur.rowcount == 0:
                     bot.say(channel, "No future episodes of '%s' found" % args)
@@ -106,7 +107,7 @@ def command_ep(bot, user, channel, args):
 
     episodes = []
     # go through the results
-    for (id, uid, serie, season, episode, title, airdate) in cur:
+    for (idno, uid, serie, season, episode, title, airdate) in cur:
         if episode < 10: episode = "0%d" % episode # pad ep with zeroes
 
         # YYYY-MM-DD -> datetime -> timedelta
@@ -153,17 +154,18 @@ def _cache_serie(url):
 def _search_serie(searchterms):
     """Search for a serie and return its episode list page URL"""
 
-    # google power
     if not searchterms: return
-    
-    url = "http://www.google.com/search?hl=en&q=site:epguides.com&q=%s"
+
+    # google power!
+    # Try to find the exact page by adding "(a Titles and Air Dates Guide)" to the search
+    url = "http://www.google.com/search?hl=en&q=site:epguides.com+%s+%%28a+Titles+and+Air+Dates+Guide%%29"
     searchterms = urllib.quote(searchterms)
     bs = getUrl(url % searchterms).getBS()
 
     if not bs: return
 
     results = []
-
+    
     # tidy up the search results
     for url in bs.fetch("a", {"href":re.compile("http://epguides.com/")}):
         url = url['href']
@@ -174,16 +176,7 @@ def _search_serie(searchterms):
 
     if not results: return None
 
-    # lessee if we are smarter than the search engine (look for an exact match):
-    # mangle the searchterm string
-    term = searchterms.replace(" ", "").lower()
-
-    for url in results:
-        seriename = urlparse.urlparse(url)[2].replace("/", "").lower()
-        if term == seriename:
-            return url
-
-    # we weren't smarter, so just return what the search engine thought was best
+    # The first result is the correct one
     return results[0]
 
 def _get_seriedata(url):
