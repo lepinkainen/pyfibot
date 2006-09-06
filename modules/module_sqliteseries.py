@@ -10,15 +10,10 @@ import sqlite
 # select * from series where airdate = date('2006-01-02', '-1 day');
 # select * from series where airdate = date('now', '-1 day');
 
-precache = ['NCIS', 'Boston Legal', 'battlestar galactica', 'veronica mars', 
-'smallville', '24', 'lost', 'stargate sg-1', 'stargate atlantis', 'viva la bam', 'bullshit', 
-'4400', 'mythbusters', 'house', 'last comic standing', 'deadwood', 'shield', 'blade -flashing', 
-'the unit', 'prison break', 'bones', 'the simpsons', 'survivor']
-
 CREATETABLE = "CREATE TABLE series (id INTEGER PRIMARY KEY, uid TEXT UNIQUE ON CONFLICT REPLACE, serie TEXT, season INTEGER, episode INTEGER, title TEXT, airdate DATE);"
 
 def command_sqlcache(bot, user, channel, args):
-    """Cache common series into the database"""
+    """Refresh the whole database"""
     if not isAdmin(user): return
 
     for seriename in precache:
@@ -97,13 +92,19 @@ def command_ep(bot, user, channel, args):
         # nothing found, get more data from the web
         if cur.rowcount == 0:
             url = _search_serie(args)
+            # found, cache more episodes and try searching again
             if url != None:
                 _cache_serie(url)
                 cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate >= date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
-                # still nothing found, give up
+                # still nothing found, give up - no new episodes
                 if cur.rowcount == 0:
+                    # get the latest actual episode
+                    #cur.execute("SELECT * FROM series WHERE serie LIKE %s ORDER BY airdate DESC LIMIT 1;", ("%"+args+"%",))                    
                     bot.say(channel, "No future episodes of '%s' found" % args)
                     return
+            # nothing found
+            else:
+                bot.say(channel, "Serie '%s' not found" % args)
 
     episodes = []
     # go through the results
@@ -157,8 +158,8 @@ def _search_serie(searchterms):
     if not searchterms: return
 
     # google power!
-    # Try to find the exact page by adding "(a Titles and Air Dates Guide)" to the search
-    url = "http://www.google.com/search?hl=en&q=site:epguides.com+%s+%%28a+Titles+and+Air+Dates+Guide%%29"
+    # Try to find the exact page by adding +"(a Titles and Air Dates Guide)" to the search
+    url = "http://www.google.com/search?hl=en&q=site:epguides.com+%s+%%2B%%22%%28a+Titles+and+Air+Dates+Guide%%29%%22"
     searchterms = urllib.quote(searchterms)
     bs = getUrl(url % searchterms).getBS()
 
