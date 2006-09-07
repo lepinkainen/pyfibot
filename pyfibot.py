@@ -7,29 +7,35 @@
 @license BSD
 """
 
-try:
-    import psyco
-    psyco.full()
-except ImportError:
-    print "Psyco not found, running unoptimized"
-
-# twisted imports
-from twisted.protocols import irc
-from twisted.internet import reactor, protocol
-from twisted.python import log, rebuild
-
-# system imports
-#import shelve
 import sys
 import os.path
 import time
 import urllib
 import fnmatch
 
+try:
+    import psyco
+    psyco.full()
+except ImportError:
+    print "Psyco not found, running unoptimized"
+
+try:
+    import yaml
+except ImportError:
+    print "PyYAML not found, please install from http://pyyaml.org/wiki/PyYAML"
+    sys.exit(1)
+
+# twisted imports
+try:
+    from twisted.protocols import irc
+    from twisted.internet import reactor, protocol
+    from twisted.python import log, rebuild
+except ImportError:
+    print "Twisted library not found, please install Twisted 1.3.0 from http://twistedmatrix.com/products/download"
+    sys.exit(1)
+
 from util import *
 from util.BeautifulSoup import BeautifulSoup
-
-# bot core
 import botcore
 
 class URLCacheItem(object):
@@ -48,7 +54,11 @@ class URLCacheItem(object):
         """Returns the raw file pointer to the given URL"""
         if not self.fp:
             urllib._urlopener = BotURLOpener()
-            self.fp = urllib.urlopen(self.url)
+            try:
+                self.fp = urllib.urlopen(self.url)
+            except IOError, e:
+                print "IOError when opening url %s" % url
+                print e
         return self.fp
 
     def _checkstatus(self):
@@ -112,7 +122,6 @@ class URLCacheItem(object):
                 bs.feed(self.getContent())
                 self.bs = bs
             else:
-                #print "NOT HTML, NO BS", self.url
                 return None
             
         self._checkstatus()
@@ -168,27 +177,20 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    admins = [
-        '*!shrike@a84-231-111-13.elisa-laajakaista.fi',
-        '*!shrike@sunshine.sjr.fi',
-        '*!shrike@ipv6.sjr.fi',
-        '*!shrike@hpsjr.fi',
-        '*!shrike@tefra.fi',
-        ]
-
     version = "$Revision$"
 
     protocol = botcore.PyFiBot
     allBots = None
-    
     moduledir = "modules/"
-
     startTime = None
 
-    def __init__(self, db):
+    def __init__(self, config):
         """Initialize the factory"""
 
-        self.data = db
+        self.config = config
+        print config['admins']
+        #self.admins = config['admins']
+        self.data = {}
         self.data['networks'] = {}
         self.ns = {}
 
@@ -341,7 +343,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         
         @return: True or False"""
     
-        for pattern in self.admins:
+        for pattern in self.config['admins']:
             if fnmatch.fnmatch(user, pattern):
                 return True
         
@@ -349,21 +351,50 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def log(self, message):
         print "%-20s: %s" % ("core", message)
-                                                                                                                                    
+
+def create_example_conf():
+    """Create an example configuration file"""
+    
+    conf = """
+    nick: botnick
+
+    admins:
+      - '*!*@myhost.com'
+    
+    networks:
+      ircnet:
+        server: irc.ircnet.com
+        channels:
+          - mychannel
+      quakenet:
+        server: irc.quakenet.org
+        authname: name
+        authpass: password
+        channels:
+          - (mysecret, password)
+    """
+
+    f = file("bot.config.example", 'w')
+    yaml.dump(yaml.load(conf), f, default_flow_style=False)
+    f.close()                                                                                                                       
 if __name__ == '__main__':
 
     sys.path.append(os.path.join(sys.path[0], 'lib'))
 
-    #db = shelve.open("pyfibot.shelve")
-    db = {}
-    f = PyFiBotFactory(db)
-    #f.createNetwork(("irc.kolumbus.fi", 6667), "ircnet", "pyfibot", ["#pyfitest"])
-    f.createNetwork(("irc.inet.fi", 6667), "ircnet", "pyfibot", ["#ioh9s1", "#soukka.net", "#python.fi", "#norsu", "#yomi"])
-    f.createNetwork(("efnet.xs4all.nl", 6667), "efnet", "pyfibot", [("#ankkalinna","millamagia")])
-    f.createNetwork(("mediatraffic.fi.quakenet.org", 6667), "quakenet", "pyfibot", ["#k21", "#northernprime"])
-    reactor.connectTCP("irc.inet.fi", 6667, f)
-    #reactor.connectTCP("efnet.xs4all.nl", 6667, f)
-    reactor.connectTCP("mediatraffic.fi.quakenet.org", 6667, f)
+    config = "bot.config"
     
-    reactor.run()
+    if os.path.exists(config):
+        config = yaml.load(file(config))
+    else:
+        create_example_conf()
+        print "No config file found, I created an example config (bot.config.example) for you. Please edit it and rename to bot.config."
+        sys.exit(1)
 
+    factory = PyFiBotFactory(config)
+    for network, settings in config['networks'].items():
+        # use network specific nick if one has been configured
+        nick = settings.get('nick', None) or config['nick']
+        factory.createNetwork((settings['server'], 6667), network, nick, settings['channels'])
+        reactor.connectTCP(settings['server'], 6667, factory)
+        
+    reactor.run()
