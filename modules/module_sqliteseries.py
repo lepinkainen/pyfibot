@@ -159,9 +159,11 @@ def _search_serie(searchterms):
 
     # google power!
     # Try to find the exact page by adding +"(a Titles and Air Dates Guide)" to the search
-    url = "http://www.google.com/search?hl=en&q=site:epguides.com+%s+%%2B%%22%%28a+Titles+and+Air+Dates+Guide%%29%%22"
-    searchterms = urllib.quote(searchterms)
-    bs = getUrl(url % searchterms).getBS()
+    #url = "http://www.google.com/search?hl=en&q=site:epguides.com+%s+%%2B%%22%%28a+Titles+and+Air+Dates+Guide%%29%%22"
+    url = "http://www.google.com/search?hl=en&q=site:epguides.com%%20%s"
+    search = "%s %s"
+    search = urllib.quote(search % (searchterms, '"(a Titles and Air Dates Guide)"'))
+    bs = getUrl(url % search).getBS()
 
     if not bs: return
 
@@ -170,13 +172,14 @@ def _search_serie(searchterms):
     # tidy up the search results
     for url in bs.fetch("a", {"href":re.compile("http://epguides.com/")}):
         url = url['href']
-
+        
         # only add serie summary pages (don't end with .html)
         if url.endswith("/"):
             results.append(url)
 
     if not results: return None
 
+    #print "RESULTS: ", results
     # The first result is the correct one
     return results[0]
 
