@@ -181,7 +181,7 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     protocol = botcore.PyFiBot
     allBots = None
-    moduledir = "modules/"
+    moduledir = os.path.join(sys.path[0], "modules/")
     startTime = None
 
     def __init__(self, config):
@@ -381,7 +381,7 @@ if __name__ == '__main__':
 
     sys.path.append(os.path.join(sys.path[0], 'lib'))
 
-    config = "bot.config"
+    config = os.path.join(sys.path[0], "bot.config")
     
     if os.path.exists(config):
         config = yaml.load(file(config))
