@@ -12,6 +12,8 @@ from types import TupleType
 def handle_url(bot, user, channel, url):
     """Handle urls"""
 
+    if channel == "#wow": return
+
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
     # try to find a specific handler for the URL

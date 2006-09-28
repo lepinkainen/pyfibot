@@ -2,6 +2,8 @@
 
 def handle_url(bot, user, channel, url):
 
+    if channel == "#wow": return
+
     # inform about large files (over 5MB)
     size = getUrl(url).getSize()
 

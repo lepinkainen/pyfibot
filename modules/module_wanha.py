@@ -8,6 +8,8 @@ urlcache = timeoutdict.TimeoutDict(timeout=172800, pollinterval=600)
 def handle_url(bot, user, channel, url):
     """Keep track of seen urls per channel"""
 
+    if channel == "#wow": return
+
     urlid = "%s|%s" % (channel, url)
 
     # old link
