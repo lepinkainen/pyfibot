@@ -183,6 +183,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     allBots = None
     moduledir = os.path.join(sys.path[0], "modules/")
     startTime = None
+    config = None
 
     def __init__(self, config):
         """Initialize the factory"""
