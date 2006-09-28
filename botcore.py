@@ -91,16 +91,24 @@ class CoreCommands(object):
                 else:
                     bot.join(newchannel)
 
+    # alias of part
+    def command_leave(self, user, channel, args):
+        """Usage: leave <channel>[@network] - Leave the specified channel"""
+        self.command_part(user, channel, args)
+        
     def command_part(self, user, channel, args):
         """Usage: part <channel>[@network] - Leave the specified channel"""
 
         if not self.factory.isAdmin(user):
             return
 
+        # part what and where?
         try:
             newchannel, network = args.split('@', 1)
         except ValueError, e:
             newchannel, network = args, self.network.alias
+
+        # get the bot instance for this chat network
         try:
             bot = self.factory.allBots[network]
         except KeyError:
@@ -148,7 +156,12 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     """PyFiBot"""
 
     nickname = "pyfibot"
+    realname = "http://code.google.com/p/pyfibot/"
 
+    # send 1 msg per second max
+    lineRate = 1
+    
+    
     hasQuit = False
 
     CMDCHAR = "."
@@ -182,9 +195,22 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
+
+        # QNet specific auth & ip hiding
+        if self.network.alias == "quakenet":
+            self.log("I'm on quakenet, authenticating...")
+            self.mode(self.nickname, '+', 'x') # Hide ident
+            authname = self.factory.config['networks']['quakenet'].get('authname', None)
+            authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
+            if not authname or not authpass:
+                self.log("authname or authpass not found, authentication aborted")
+            else:
+                self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
+                self.log("Auth sent.")
+        
         for chan in self.network.channels:
             # defined as a tuple, channel has a key
-            if type(chan) == tuple:
+            if type(chan) == list:
                 self.join(chan[0], key=chan[1])
             else:
                 self.join(chan)
@@ -288,7 +314,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # core commands
         method = getattr(self, "command_%s" % cmnd, None)
         if method is not None:
-            self.log("internal command %s called by %s " % (cmnd, user))
+            self.log("internal command %s called by %s (%s) on %s" % (cmnd, user, self.factory.isAdmin(user), channel))
             method(user, channel, args)
             return
 
@@ -299,7 +325,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             commands = [(c,ref) for c,ref in mylocals.items() if c == "command_%s" % cmnd]
 
             for cname, command in commands:
-                self.log("module command %s called by %s" % (cname, user))
+                self.log("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 command(self, user, channel, args)
 
     ### LOW-LEVEL IRC HANDLERS ###
@@ -402,3 +428,21 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def receivedMOTD(self, motd):
         """MOTD"""
         self._runhandler("receivedMOTD", motd)
+
+    ## SERVER INFORMATION
+
+    ## Network = Quakenet -> do Q auth
+    def isupport(self, options):
+        print self.network.alias+" SUPPORTS: "+options
+
+    def created(self, when):
+        print self.network.alias+" CREATED: "+when
+
+    def yourHost(self, info):
+        print self.network.alias+" YOURHOST: "+info
+
+    def myInfo(self, servername, version, umodes, cmodes):
+        print self.network.alias+" MYINFO: ", servername, version, umodes, cmodes
+
+    def luserMe(self, info):
+        print self.network.alias+" LUSERME: "+info
