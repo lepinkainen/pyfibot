@@ -9,6 +9,8 @@ import urlparse
 
 from types import TupleType
 
+from BeautifulSoup import BeautifulStoneSoup
+
 def handle_url(bot, user, channel, url):
     """Handle urls"""
 
@@ -68,7 +70,8 @@ def _title(bot, channel, title, smart=False):
     if len(title) > 200:
         title = title[:200]+"..."
 
-    title = _resolve_entities(title)
+    #title = _resolve_entities(title)
+    title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
 
     if not info:
         bot.say(channel, "%s '%s'" % (prefix, title))
