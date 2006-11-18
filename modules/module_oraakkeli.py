@@ -4,6 +4,7 @@ import urllib
 
 def command_oraakkeli(bot, user, channel, args):
     """Asks a question from the oracle (http://www.lintukoto.net/viihde/oraakkeli/)"""
+    if not args: return
 
     args = urllib.quote_plus(args)
 
