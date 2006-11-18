@@ -38,6 +38,10 @@ from util import *
 from util.BeautifulSoup import BeautifulSoup
 import botcore
 
+# default timeout for socket connections
+import socket
+socket.setdefaulttimeout(5)
+
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
     
