@@ -32,7 +32,7 @@ def command_ep(bot, user, channel, args):
     cur = con.cursor()
 
     if not args:
-        bot.say(channel, "Usage: ep [today|yesterday|tomorrow] or [seriename]")
+        bot.say(channel, "Usage: ep [today|yesterday|tomorrow] or [name of series]")
         return
 
     if args == "today":
@@ -55,7 +55,7 @@ def command_ep(bot, user, channel, args):
         cur.execute("SELECT * FROM series WHERE serie LIKE %s AND airdate >= date('now', 'localtime') LIMIT 1", ("%"+args+"%",))
         # nothing found, get more data from the web
         if cur.rowcount == 0:
-            bot.say(channel, "Serie '%s' not found" % args) # TODO: add to 'wishlist' file or something?
+            bot.say(channel, "Series '%s' not found" % args) # TODO: add to 'wishlist' file or something?
 
     episodes = []
     # go through the results
