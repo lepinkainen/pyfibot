@@ -17,3 +17,6 @@ def command_server(bot, user, channel, args):
         bot.say(channel, "Server %s is up" % args)
 
     #serverNames = [BeautifulStoneSoup(x.next, convertEntities=BeautifulStoneSoup.HTML_ENTITIES).contents[0] for x in soup('b', {"class":"smallBold", "style":"color: #234303;"})]
+
+def command_bestserver(bot, user, channel, args):
+    pass
