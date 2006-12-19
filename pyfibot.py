@@ -40,7 +40,7 @@ import botcore
 
 # default timeout for socket connections
 import socket
-socket.setdefaulttimeout(5)
+socket.setdefaulttimeout(20)
 
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
