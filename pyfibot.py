@@ -27,11 +27,15 @@ except ImportError:
 
 # twisted imports
 try:
-    from twisted.protocols import irc
+    # primarily try to use the Twisted 2.x irc module, fall back on the 1.3 one
+    try:
+        from twisted.words.protocols import irc
+    except ImportError:
+        from twisted.protocols import irc
     from twisted.internet import reactor, protocol
     from twisted.python import log, rebuild
 except ImportError:
-    print "Twisted library not found, please install Twisted 1.3.0 from http://twistedmatrix.com/products/download"
+    print "Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download"
     sys.exit(1)
 
 from util import *
@@ -379,9 +383,15 @@ def create_example_conf():
           - (mysecret, password)
     """
 
-    f = file("bot.config.example", 'w')
-    yaml.dump(yaml.load(conf), f, default_flow_style=False)
-    f.close()                                                                                                                       
+    examplefile = 'bot.config.example'
+    if os.path.exists(examplefile):
+        return False
+    else:
+        f = file(examplefile, 'w')
+        yaml.dump(yaml.load(conf), f, default_flow_style=False)
+        f.close()
+        return True
+
 if __name__ == '__main__':
 
     sys.path.append(os.path.join(sys.path[0], 'lib'))
@@ -391,8 +401,10 @@ if __name__ == '__main__':
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
-        create_example_conf()
-        print "No config file found, I created an example config (bot.config.example) for you. Please edit it and rename to bot.config."
+        if create_example_conf():
+            print "No config file found, I created an example config (bot.config.example) for you. Please edit it and rename to bot.config."
+        else:
+            print 'No config file found, there is an example config (bot.config.example) for you. Please edit it and rename to bot.config or delete it to generate a new example config.'
         sys.exit(1)
 
     factory = PyFiBotFactory(config)
