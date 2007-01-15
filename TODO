@@ -1,9 +1,0 @@
-- auth system
-  /msg bot <nick> <pass> -> opped on channel
-
-- worklog system
-  chatting == not working
-  manual start & stop
-  auto disabled on weekends
-  http://gozerbot.googlecode.com/svn/trunk/plugs/worktimer.py
-
