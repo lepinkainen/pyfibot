@@ -31,7 +31,8 @@ def handle_url(bot, user, channel, url):
 
         # don't alert for the same person
         if getNick(user) != getNick(userhost):
-            bot.say(channel, "%s: wanha. (by %s %s ago)" % ( getNick(user), getNick(userhost), agestr))
+            if channel != "#wow":
+                bot.say(channel, "%s: wanha. (by %s %s ago)" % ( getNick(user), getNick(userhost), agestr))
     else:
         cur.execute("INSERT INTO urls VALUES(%s, %s, %s, %s, %d)", (urlid, user, url, channel, int(time.time())));
         
