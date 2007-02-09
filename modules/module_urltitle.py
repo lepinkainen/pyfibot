@@ -22,7 +22,7 @@ def handle_url(bot, user, channel, url):
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
-            title = ref(user, channel, url)
+            title = ref(url)
             if title:
                 _title(bot, channel, title, True)
             return
@@ -84,65 +84,42 @@ def _resolve_entities(s):
 
     return s
 
-def _handle_tunnustustenluola(user, channel, url):
-    """*tunnustusten.luola.net*"""
-    pass
+##### HANDLERS #####
 
-def _handle_tunnustuksienluola(user, channel, url):
-    """*tunnustuksien.luola.net*"""
-    pass
+def _handle_hs(url):
+    """*hs.fi*artikkeli*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+    title = bs.find("title")
+    title = title.string.split("-")[0].strip()
+    return title
 
-def _handle_ircquotes(user, channel, url):
+## WORKING 20070209
+
+def _handle_ircquotes(url):
     """*ircquotes.net*"""
     pass
 
-def _handle_verkkokauppa(user, channel, url):
+def _handle_verkkokauppa(url):
     """*verkkokauppa.com*"""
     pass
 
-def _handle_bdog(user, channel, url):
-    """*www.bdog.fi*"""
+def _handle_wikipedia(url):
+    """*wikipedia.org*"""
     pass
 
-def _handle_keskisuomalainen_sahke(user, channel, url):
-    """*keskisuomalainen.net*sahkeuutiset/*"""
+def _handle_imageshack(url):
+    """*imageshack.us/my.php*"""
+    pass
 
+def _handle_mtv3(url):
+    """*mtv3.fi*"""
     bs = getUrl(url).getBS()
-    if not bs: return
+    title = bs.first("h1", "otsikko").next
 
-    title = bs.first('span', {'class':'jotsikko'})
-    if not title:
-        title = bs.first('p', {'class':'jotsikko'})
+    return title
 
-    if title:
-        title = title.next.string.split('\n')[2]
-        title = title.strip()
-        return title
-
-# http://www.iltasanomat.fi/uutiset/sahkeet.asp?id=854870
-def _handle_iltasanomat(user, channel, url):
-    """*iltasanomat.fi*sahkeet*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.first('span', {'class':'otsikko'})
-
-    if title:
-        title = title.string
-        return title
-
-def _handle_kaleva(user, channel, url):
-    """*kaleva.fi*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.first('span', {'class':'bigheadblk'})
-
-    if title:
-        title = title.string
-        return title
-
-def _handle_iltalehti(user, channel, url):
+def _handle_iltalehti(url):
     """*iltalehti.fi*html"""
 
     # go as normal
@@ -157,78 +134,41 @@ def _handle_iltalehti(user, channel, url):
 
     return title
 
-def _handle_bash(user, channel, url):
-    """*bash.org*"""
-    pass
-
-def _handle_wikipedia(user, channel, url):
-    """*wikipedia.org*"""
-    pass
-
-def _handle_nettiauto(user, channel, url):
-    """*nettiauto.com*"""
-    pass
-
-def _handle_demi(user, channel, url):
-    """*demi.fi/keskustelu.php*"""
+def _handle_iltasanomat(url):
+    """*iltasanomat.fi*"""
     bs = getUrl(url).getBS()
     if not bs: return
-    title = bs.first("div", {'id':'mamsgsubj'}).next
 
-    return title    
+    title = bs.first('h2', {'class':'h2Topic size26'})
 
-def _handle_itviikko(user, channel, url):
-    """http://www.itviikko.fi/uutiset/uutisalue.asp*"""
+    if title:
+        title = title.next
+        return title
 
-    # <font face="Arial, Helvetica, sans-serif" size="+2">
+def _handle_kaleva(url):
+    """*kaleva.fi*"""
     bs = getUrl(url).getBS()
     if not bs: return
-    title = bs.first('font',{'face':'Arial, Helvetica, sans-serif', 'size':'+2'}).next.next
-    return title
 
-def _handle_thesun(user, channel, url):
-    """http://www.thesun.co.uk/article/*"""
-    # go as normal
+    title = bs.first('span', {'class':'bigheadblk'})
+
+    if title:
+        title = title.string
+        return title
+
+def _handle_keskisuomalainen_sahke(url):
+    """*keskisuomalainen.net*sahkeuutiset/*"""
+
     bs = getUrl(url).getBS()
     if not bs: return
-    title = bs.first('span','black24').next
 
-    return title
+    title = bs.first('p', {'class':'jotsikko'})
 
-def _handle_imageshack(user, channel, url):
-    """*imageshack.us/my.php*"""
-    pass
+    if title:
+        title = title.next.strip()
+        return title
 
-def _handle_wowforums(user, channel, url):
-    """*forums-en.wow-europe.com*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-    title = bs.first('title').string + bs.first('b', {'class':'white'}).string
-    return title
-
-def _handle_wowforums_us(user, channel, url):
-    """*forums.worldofwarcraft.com*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-    title = bs.first('title').string + bs.first('b', {'class':'white'}).string
-    return title
-
-def _handle_allakhazam(user, channel, url):
-    """http://wow.allakhazam.com/db/item.html?witem=*"""
-    try:
-        itemId = urlparse.urlsplit(url)[3].split("=")[1]
-    except:
-        return
-
-    itemUrl = "http://wow.allakhazam.com/ihtml?"+itemId
-
-    bs = getUrl(itemUrl).getBS()
-
-    itemname = bs.first('span', {'class':'iname'}).next.string
-
-    return "%s - %s " % (itemname, itemUrl)
-
-def _handle_tietokone(user, channel, url):
+def _handle_tietokone(url):
     """http://www.tietokone.fi/uutta/uutinen.asp?news_id=*"""
     bs = getUrl(url).getBS()
 
@@ -236,4 +176,14 @@ def _handle_tietokone(user, channel, url):
     main = bs.first('span', {'class':'clsHdrMajor'}).next.string
 
     return "%s - %s" % (main, sub)
+
+def _handle_itviikko(url):
+    """http://www.itviikko.fi/page.php*"""
+
+    # <font face="Arial, Helvetica, sans-serif" size="+2">
+    bs = getUrl(url).getBS()
+    if not bs: return
+    title1 = bs.first("h2").next.next
+    title2 = title1.next
+    return "%s - %s" % (title1, title2)
 
