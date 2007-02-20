@@ -25,6 +25,7 @@ def handle_url(bot, user, channel, url):
             title = ref(url)
             if title:
                 _title(bot, channel, title, True)
+            # handler found, abort
             return
 
     # multiple matches for single method -version
@@ -44,21 +45,47 @@ def handle_url(bot, user, channel, url):
     # no title attribute
     if not title: return
 
+    
+
     try:
         title = title.string.strip().replace("\n", "").replace("\r", "")
-        _title(bot, channel, title)
+        if _check_redundant(url, title):
+            _title(bot, channel, title, redundant=True)   
+        else:
+            _title(bot, channel, title)
     except AttributeError:
         # TODO: Nees a better way to handle this
         # this happens with empty <title> tags
         pass
 
-def _title(bot, channel, title, smart=False):
+def _check_redundant(url, title):
+    """Returns true if the url already contains everything in the title"""
+    
+    buf = []
+    for ch in url:
+        if ch.isalnum(): buf.append(ch)
+        url = (''.join(buf)).lower()
+    buf = []
+    for ch in title:
+        if ch.isalnum() or ch == ' ': buf.append(ch)
+        title = (''.join(buf)).lower().split()
+    for word in title:
+        if word not in url: return False
+
+    return True
+
+def _title(bot, channel, title, smart=False, redundant=False):
     """Say title to channel"""
 
     if smart:
         prefix = "Smart title:"
     else:
         prefix = "Title:"
+
+    if redundant:
+        suffix = " [Redundant]"
+    else:
+        suffix = ""
 
     info = None
     # tuple, additional info
@@ -74,7 +101,7 @@ def _title(bot, channel, title, smart=False):
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
 
     if not info:
-        bot.say(channel, "%s '%s'" % (prefix, title))
+        bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
     else:
         bot.say(channel, "%s '%s' %s" % (prefix, title, info))
 
@@ -187,3 +214,18 @@ def _handle_itviikko(url):
     title2 = title1.next
     return "%s - %s" % (title1, title2)
 
+def _handle_kauppalehti(url):
+    """http://www.kauppalehti.fi/4/i/uutiset/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.fetch("h1")[1].string.strip("\n ")
+
+    return title
+
+def _handle_verkkokauppa(url):
+    """http://www.verkkokauppa.com/popups/prodinfo.php?id=*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    return bs.first("td", {'valign':'top', 'width':'59%', 'height':'139'}).next.strip()
