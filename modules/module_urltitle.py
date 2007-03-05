@@ -82,7 +82,7 @@ def _title(bot, channel, title, smart=False, redundant=False):
     else:
         prefix = "Title:"
 
-    if redundant:
+    if False:
         suffix = " [Redundant]"
     else:
         suffix = ""
@@ -97,19 +97,12 @@ def _title(bot, channel, title, smart=False, redundant=False):
     if len(title) > 200:
         title = title[:200]+"..."
 
-    #title = _resolve_entities(title)
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
 
     if not info:
         bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
     else:
         bot.say(channel, "%s '%s' %s" % (prefix, title, info))
-
-def _resolve_entities(s):
-    for (i, j) in htmlentitydefs.entitydefs.items():
-        s = s.replace("&%s;" % i, j)
-
-    return s
 
 ##### HANDLERS #####
 
@@ -125,10 +118,6 @@ def _handle_hs(url):
 
 def _handle_ircquotes(url):
     """*ircquotes.net*"""
-    pass
-
-def _handle_verkkokauppa(url):
-    """*verkkokauppa.com*"""
     pass
 
 def _handle_wikipedia(url):
@@ -228,4 +217,7 @@ def _handle_verkkokauppa(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    return bs.first("td", {'valign':'top', 'width':'59%', 'height':'139'}).next.strip()
+    product = bs.first("td", {'valign':'top', 'width':'59%', 'height':'139'}).next.strip()
+    price = str(bs.first(text="Hinta:").next.next.next.next.string).split("&")[0]
+
+    return "%s | %s EUR" % (product, price)
