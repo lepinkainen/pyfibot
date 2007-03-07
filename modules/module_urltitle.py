@@ -221,3 +221,12 @@ def _handle_verkkokauppa(url):
     price = str(bs.first(text="Hinta:").next.next.next.next.string).split("&")[0]
 
     return "%s | %s EUR" % (product, price)
+
+def _handle_yle(url):
+    """http://*yle.fi/uutiset/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.first("font", {'size':'3'}).next.string
+
+    return title
