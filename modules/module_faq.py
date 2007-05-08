@@ -33,6 +33,7 @@ def handle_privmsg(bot, user, channel, args):
             
 	else:
             if args=="index":
+                faqs.sort()
                 bot.say(channel, "FAQs for this channel: " + ", ".join(faqs))
 	    else:
 		bot.say(channel, "FAQ term '%s' not specified for this channel" % args)

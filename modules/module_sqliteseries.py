@@ -77,7 +77,7 @@ def command_ep(bot, user, channel, args):
 
         # change 0 and 1 to today & tomorrow, don't show date if we're asking stuff for a certain day
         airdatestr = ""
-        if td.days > 0:
+        if td.days >= 0:
             if ad == now:
                 if args != "today": airdatestr = "on %s (Today)" % airdate
             elif ad == tomorrow:
