@@ -121,11 +121,9 @@ class URLCacheItem(object):
         """
         
         if not self.bs:
-            # only attempt a bs parsing if the content is html or xhtml
+            # only attempt a bs parsing if the content is html, xml or xhtml
             if self.getHeaders().has_key('content-type') and \
-            self.getHeaders().getsubtype() == 'html' or \
-            self.getHeaders().getsubtype() == 'xhtml+xml':
-            
+            self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml']:
                 bs = BeautifulSoup()
                 bs.feed(self.getContent())
                 self.bs = bs
@@ -293,7 +291,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             # initialize module
             if env.has_key('init'):
                 self.log("initialize module - %s" % module)
-                env['init']()
+                env['init'](self.config)
             
             # add to namespace so we can find it later
             self.ns[module] = (env, env)
@@ -328,7 +326,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
         
         if self._urlcache.has_key(url) and not nocache:
-            self.log("internal cache hit: %s" % url)
+            self.log("cache hit : %s" % url)
         else:
             if nocache:
                 self.log("cache pass: %s" % url)
