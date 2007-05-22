@@ -18,15 +18,21 @@ from pyPgSQL import PgSQL
 # WITHOUT OIDS;
 # ALTER TABLE pyfibot.urls OWNER TO <user>;
 
+def init(botconfig):
+    global config
+    config = botconfig["module_pgsqlwanha"]
 
 def handle_url(bot, user, channel, url):
-    cx = PgSQL.connect(database="shrike", host="localhost", user="shrike", password="Riku1999")
+    cx = PgSQL.connect(database=config["database"],
+                       host=config["host"],
+                       user=config["user"],
+                       password=config["password"])
+        
     cur = cx.cursor()
     # find the oldest instance of given url on this channel
     cur.execute("SELECT * FROM pyfibot.urls WHERE channel=%s AND url=%s ORDER BY timestamp;", (channel, url))
 
     res = cur.fetchone()
-    print res
     if res:
         url, channel, userhost, timestamp, urlid = res;
 
@@ -49,7 +55,7 @@ def handle_url(bot, user, channel, url):
         # don't alert for the same person
         if getNick(user) != getNick(userhost):
             if channel != "#wow":
-                bot.say(channel, "%s: wanha. (by %s %s ago) (PGSQL)" % ( getNick(user), getNick(userhost), agestr))
+                bot.say(channel, "%s: wanha. (by %s %s ago)" % ( getNick(user), getNick(userhost), agestr))
 
     cur = cx.cursor()
     # always store URLs, this structure can handle it, sqlite can't
