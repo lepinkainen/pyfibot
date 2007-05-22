@@ -6,10 +6,15 @@ but still decide show idiotic bulk data in the HTML title element"""
 import fnmatch
 import htmlentitydefs
 import urlparse
+import re
 
 from types import TupleType
 
 from BeautifulSoup import BeautifulStoneSoup
+
+def init(botconfig):
+    global config
+    config = botconfig["module_urltitle"]
 
 def handle_url(bot, user, channel, url):
     """Handle urls"""
@@ -222,6 +227,7 @@ def _handle_verkkokauppa(url):
 
     return "%s | %s EUR" % (product, price)
 
+
 def _handle_yle(url):
     """http://*yle.fi/uutiset/*"""
     bs = getUrl(url).getBS()
@@ -230,3 +236,24 @@ def _handle_yle(url):
     title = bs.first("font", {'size':'3'}).next.string
 
     return title
+
+def _handle_youtube(url):
+    """http://www.youtube.com/watch?v=*"""
+    dev_id = config.get("youtube_devid", None)
+    if not dev_id: return
+
+    rest_url = "http://www.youtube.com/api2_rest?method=youtube.videos.get_details&dev_id=%s&video_id=%s"
+    match = re.match("http://www.youtube.com/watch\?v=(.*)", url)
+    if match:
+        
+        infourl = rest_url % (dev_id, match.group(1))
+        bs = getUrl(infourl).getBS()
+        author = bs.find("author").renderContents()
+        title = bs.find("title").renderContents()
+        length = bs.find("length_seconds").renderContents()
+        rating = bs.find("rating_avg").renderContents()
+        views = bs.find("view_count").renderContents()
+
+        #bs.first("title")+" "+bs.first("length_seconds")
+        return "YouTube: %s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
+    
