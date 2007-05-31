@@ -7,11 +7,11 @@ Beautiful Soup parses a (possibly invalid) XML or HTML document into a
 tree representation. It provides methods and Pythonic idioms that make
 it easy to navigate, search, and modify the tree.
 
-A well-structured XML/HTML document yields a well-behaved data
-structure. An ill-structured XML/HTML document yields a
-correspondingly ill-behaved data structure. If your document is only
-locally well-structured, you can use this library to find and process
-the well-structured part of it.
+A well-formed XML/HTML document yields a well-formed data
+structure. An ill-formed XML/HTML document yields a correspondingly
+ill-formed data structure. If your document is only locally
+well-formed, you can use this library to find and process the
+well-formed part of it. The BeautifulSoup class 
 
 Beautiful Soup works with Python 2.2 and up. It has no external
 dependencies, but you'll have more success at converting data to UTF-8
@@ -34,21 +34,18 @@ Beautiful Soup defines classes for two main parsing strategies:
 
 Beautiful Soup also defines a class (UnicodeDammit) for autodetecting
 the encoding of an HTML or XML document, and converting it to
-Unicode. Much of this code is taken from Mark Pilgrim's Universal Feed
-Parser.
+Unicode. Much of this code is taken from Mark Pilgrim's Universal Feed Parser.
 
 For more than you ever wanted to know about Beautiful Soup, see the
 documentation:
 http://www.crummy.com/software/BeautifulSoup/documentation.html
+
 """
 from __future__ import generators
 
-__author__ = "Leonard Richardson (crummy.com)"
-__contributors__ = ["Sam Ruby (intertwingly.net)",
-                    "the unwitting Mark Pilgrim (diveintomark.org)",
-                    "http://www.crummy.com/software/BeautifulSoup/AUTHORS.html"]
-__version__ = "3.0.3"
-__copyright__ = "Copyright (c) 2004-2006 Leonard Richardson"
+__author__ = "Leonard Richardson (leonardr@segfault.org)"
+__version__ = "3.0.4"
+__copyright__ = "Copyright (c) 2004-2007 Leonard Richardson"
 __license__ = "PSF"
 
 from sgmllib import SGMLParser, SGMLParseError
@@ -56,14 +53,13 @@ import codecs
 import types
 import re
 import sgmllib
-from htmlentitydefs import name2codepoint
+try:
+  from htmlentitydefs import name2codepoint
+except ImportError:
+  name2codepoint = {}
 
-# This RE makes Beautiful Soup able to parse XML with namespaces.
+#This hack makes Beautiful Soup able to parse XML with namespaces
 sgmllib.tagfind = re.compile('[a-zA-Z][-_.:a-zA-Z0-9]*')
-
-# This RE makes Beautiful Soup capable of recognizing numeric character
-# references that use hexadecimal.
-sgmllib.charref = re.compile('&#(\d+|x[0-9a-fA-F]+);')
 
 DEFAULT_OUTPUT_ENCODING = "utf-8"
 
@@ -364,7 +360,7 @@ class NavigableString(unicode, PageElement):
             raise AttributeError, "'%s' object has no attribute '%s'" % (self.__class__.__name__, attr)
 
     def __unicode__(self):
-        return __str__(self, None)
+        return self.__str__(None)
 
     def __str__(self, encoding=DEFAULT_OUTPUT_ENCODING):
         if encoding:
@@ -393,17 +389,14 @@ class Declaration(NavigableString):
         return "<!%s>" % NavigableString.__str__(self, encoding)        
 
 class Tag(PageElement):
+
     """Represents a found HTML tag with its attributes and contents."""
 
-    XML_ENTITIES_TO_CHARS = { 'apos' : "'",
-                              "quot" : '"',
-                              "amp" : "&",
-                              "lt" : "<",
-                              "gt" : ">"
-                              }
-    # An RE for finding ampersands that aren't the start of of a
-    # numeric entity.
-    BARE_AMPERSAND = re.compile("&(?!#\d+;|#x[0-9a-fA-F]+;|\w+;)")
+    XML_SPECIAL_CHARS_TO_ENTITIES = { "'" : "squot",
+                                      '"' : "quote",
+                                      "&" : "amp",
+                                      "<" : "lt",
+                                      ">" : "gt" }
 
     def __init__(self, parser, name, attrs=None, parent=None,
                  previous=None):
@@ -413,7 +406,6 @@ class Tag(PageElement):
         # chunks be garbage-collected
         self.parserClass = parser.__class__
         self.isSelfClosing = parser.isSelfClosingTag(name)
-        self.convertHTMLEntities = parser.convertHTMLEntities
         self.name = name
         if attrs == None:
             attrs = []
@@ -515,15 +507,6 @@ class Tag(PageElement):
     def __unicode__(self):
         return self.__str__(None)
 
-    def _convertEntities(self, match):
-        x = match.group(1)
-        if x in name2codepoint:
-            return unichr(name2codepoint[x])            
-        elif "&" + x + ";" in self.XML_ENTITIES_TO_CHARS:
-            return '&%s;' % x
-        else:
-            return '&amp;%s;' % x
-
     def __str__(self, encoding=DEFAULT_OUTPUT_ENCODING,
                 prettyPrint=False, indentLevel=0):
         """Returns a string or Unicode representation of this tag and
@@ -559,24 +542,19 @@ class Tag(PageElement):
                     #   attribute in single quotes, and escaping any
                     #   embedded single quotes to XML entities.
                     if '"' in val:
+                        fmt = "%s='%s'"
                         # This can't happen naturally, but it can happen
                         # if you modify an attribute value after parsing.
                         if "'" in val:
-                            val = val.replace('"', "&quot;")
-                        else:
-                            fmt = "%s='%s'"
-
-                    # Optionally convert any HTML entities
-                    if self.convertHTMLEntities:
-                        val = re.sub("&(\w+);", self._convertEntities, val)
+                            val = val.replace("'", "&squot;")
 
                     # Now we're okay w/r/t quotes. But the attribute
                     # value might also contain angle brackets, or
                     # ampersands that aren't part of entities. We need
                     # to escape those to XML entities too.
-                    val = val.replace("<", "&lt;").replace(">", "&gt;")
-                    val = self.BARE_AMPERSAND.sub("&amp;", val)
-
+                    val = re.sub("([<>]|&(?![^\s]+;))",
+                                 lambda x: "&" + self.XML_SPECIAL_CHARS_TO_ENTITIES[x.group(0)[0]] + ";",
+                                 val)
                                       
                 attrs.append(fmt % (self.toEncoding(key, encoding),
                                     self.toEncoding(val, encoding)))
@@ -900,6 +878,10 @@ class BeautifulStoneSoup(Tag, SGMLParser):
     or when BeautifulSoup makes an assumption counter to what you were
     expecting."""
 
+    XML_ENTITY_LIST = {}
+    for i in Tag.XML_SPECIAL_CHARS_TO_ENTITIES.values():
+        XML_ENTITY_LIST[i] = True 
+
     SELF_CLOSING_TAGS = {}
     NESTABLE_TAGS = {}
     RESET_NESTING_TAGS = {}
@@ -915,7 +897,6 @@ class BeautifulStoneSoup(Tag, SGMLParser):
 
     HTML_ENTITIES = "html"
     XML_ENTITIES = "xml"
-    ALL_ENTITIES = [HTML_ENTITIES, XML_ENTITIES]
 
     def __init__(self, markup="", parseOnlyThese=None, fromEncoding=None,
                  markupMassage=True, smartQuotesTo=XML_ENTITIES,
@@ -948,20 +929,12 @@ class BeautifulStoneSoup(Tag, SGMLParser):
         self.parseOnlyThese = parseOnlyThese
         self.fromEncoding = fromEncoding
         self.smartQuotesTo = smartQuotesTo
-
-        if convertEntities:
+        self.convertEntities = convertEntities
+        if self.convertEntities:
             # It doesn't make sense to convert encoded characters to
             # entities even while you're converting entities to Unicode.
             # Just convert it all to Unicode.
             self.smartQuotesTo = None
-
-        if isList(convertEntities):
-            self.convertHTMLEntities = self.HTML_ENTITIES in convertEntities
-            self.convertXMLEntities = self.XML_ENTITIES in convertEntities
-        else:
-            self.convertHTMLEntities = self.HTML_ENTITIES == convertEntities
-            self.convertXMLEntities = self.XML_ENTITIES == convertEntities
-
         self.instanceSelfClosingTags = buildTagMap(None, selfClosingTags)
         SGMLParser.__init__(self)
             
@@ -974,7 +947,7 @@ class BeautifulStoneSoup(Tag, SGMLParser):
         except StopParsing:
             pass
         self.markup = None                 # The markup can now be GCed
-
+        
     def _feed(self, inDocumentEncoding=None):
         # Convert the document to Unicode.
         markup = self.markup
@@ -995,8 +968,7 @@ class BeautifulStoneSoup(Tag, SGMLParser):
                     markup = fix.sub(m, markup)
         self.reset()
 
-        SGMLParser.feed(self, markup or "")
-        SGMLParser.close(self)
+        SGMLParser.feed(self, markup)
         # Close out any unfinished strings and close all the open tags.
         self.endData()
         while self.currentTag.name != self.ROOT_TAG_NAME:
@@ -1055,8 +1027,6 @@ class BeautifulStoneSoup(Tag, SGMLParser):
     def endData(self, containerClass=NavigableString):
         if self.currentData:
             currentData = ''.join(self.currentData)
-            if currentData.endswith('<') and self.convertHTMLEntities:
-                currentData = currentData[:-1] + '&lt;'
             if not currentData.strip():
                 if '\n' in currentData:
                     currentData = '\n'
@@ -1150,7 +1120,7 @@ class BeautifulStoneSoup(Tag, SGMLParser):
             #This is not a real tag.
             #print "<%s> is not real!" % name
             attrs = ''.join(map(lambda(x, y): ' %s="%s"' % (x, y), attrs))
-            self.currentData.append('<%s%s>' % (name, attrs))
+            self.handle_data('<%s%s>' % (name, attrs))
             return        
         self.endData()
 
@@ -1179,7 +1149,7 @@ class BeautifulStoneSoup(Tag, SGMLParser):
         if self.quoteStack and self.quoteStack[-1] != name:
             #This is not a real end tag.
             #print "</%s> is not real!" % name
-            self.currentData.append('</%s>' % name)
+            self.handle_data('</%s>' % name)
             return
         self.endData()
         self._popToTag(name)
@@ -1188,13 +1158,6 @@ class BeautifulStoneSoup(Tag, SGMLParser):
             self.literal = (len(self.quoteStack) > 0)
 
     def handle_data(self, data):
-        if self.convertHTMLEntities:
-            if data[0] == '&':
-                data = self.BARE_AMPERSAND.sub("&amp;",data)
-            else:
-                data = data.replace('&','&amp;') \
-                           .replace('<','&lt;') \
-                           .replace('>','&gt;')
         self.currentData.append(data)
 
     def _toStringSubclass(self, text, subclass):
@@ -1218,33 +1181,26 @@ class BeautifulStoneSoup(Tag, SGMLParser):
 
     def handle_charref(self, ref):
         "Handle character references as data."
-        if ref[0] == 'x':
-            data = unichr(int(ref[1:],16))
-        else:
+        if self.convertEntities in [self.HTML_ENTITIES,
+                                    self.XML_ENTITIES]:
             data = unichr(int(ref))
-        
-        if u'\x80' <= data <= u'\x9F':
-            data = UnicodeDammit.subMSChar(chr(ord(data)), self.smartQuotesTo)
-        elif not self.convertHTMLEntities and not self.convertXMLEntities:
+        else:
             data = '&#%s;' % ref
-
         self.handle_data(data)
 
     def handle_entityref(self, ref):
         """Handle entity references as data, possibly converting known
         HTML entity references to the corresponding Unicode
         characters."""
-        replaceWithXMLEntity = self.convertXMLEntities and \
-                               self.XML_ENTITIES_TO_CHARS.has_key(ref)
-        if self.convertHTMLEntities or replaceWithXMLEntity:
+        data = None
+        if self.convertEntities == self.HTML_ENTITIES or \
+               (self.convertEntities == self.XML_ENTITIES and \
+                self.XML_ENTITY_LIST.get(ref)):
             try:
                 data = unichr(name2codepoint[ref])
             except KeyError:
-                if replaceWithXMLEntity:
-                    data = self.XML_ENTITIES_TO_CHARS.get(ref)
-                else:
-                    data="&amp;%s" % ref
-        else:
+                pass
+        if not data:
             data = '&%s;' % ref
         self.handle_data(data)
         
@@ -1565,16 +1521,18 @@ class UnicodeDammit:
     # by the heuristics in find_codec.
     CHARSET_ALIASES = { "macintosh" : "mac-roman",
                         "x-sjis" : "shift-jis" }
-    
+
     def __init__(self, markup, overrideEncodings=[],
                  smartQuotesTo='xml'):
         self.markup, documentEncoding, sniffedEncoding = \
                      self._detectEncoding(markup)
         self.smartQuotesTo = smartQuotesTo
         self.triedEncodings = []
-        if isinstance(markup, unicode):
-            return markup
-
+        if markup == '' or isinstance(markup, unicode):
+            self.originalEncoding = None
+            self.unicode = unicode(markup)            
+            return
+        
         u = None
         for proposedEncoding in overrideEncodings:
             u = self._convertFrom(proposedEncoding)
@@ -1596,19 +1554,16 @@ class UnicodeDammit:
         self.unicode = u
         if not u: self.originalEncoding = None
 
-    def subMSChar(orig, smartQuotesTo):
+    def _subMSChar(self, orig):
         """Changes a MS smart quote character to an XML or HTML
         entity."""
-        sub = UnicodeDammit.MS_CHARS.get(orig)
+        sub = self.MS_CHARS.get(orig)
         if type(sub) == types.TupleType:
-            if smartQuotesTo == 'xml':
+            if self.smartQuotesTo == 'xml':
                 sub = '&#x%s;' % sub[1]
-            elif smartQuotesTo == 'html':
-                sub = '&%s;' % sub[0]
             else:
-                sub = unichr(int(sub[1],16))
+                sub = '&%s;' % sub[0]
         return sub            
-    subMSChar = staticmethod(subMSChar)
 
     def _convertFrom(self, proposed):        
         proposed = self.find_codec(proposed)
@@ -1619,11 +1574,11 @@ class UnicodeDammit:
 
         # Convert smart quotes to HTML if coming from an encoding
         # that might have them.
-        if self.smartQuotesTo and proposed in("windows-1252",
-                                              "ISO-8859-1",
-                                              "ISO-8859-2"):
+        if self.smartQuotesTo and proposed.lower() in("windows-1252",
+                                                      "iso-8859-1",
+                                                      "iso-8859-2"):
             markup = re.compile("([\x80-\x9f])").sub \
-                     (lambda(x): self.subMSChar(x.group(1),self.smartQuotesTo),
+                     (lambda(x): self._subMSChar(x.group(1)),
                       markup)
 
         try:
@@ -1800,7 +1755,7 @@ class UnicodeDammit:
                  '\x9c' : ('oelig', '153'),
                  '\x9d' : '?',
                  '\x9e' : ('#x17E', '17E'),
-                 '\x9f' : ('Yuml', '178'),}
+                 '\x9f' : ('Yuml', ''),}
 
 #######################################################################
 
