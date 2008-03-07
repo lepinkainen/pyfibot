@@ -1,5 +1,4 @@
-
-# -*- coding: iso8859-1 -*-
+# -*- coding: utf-8 -*-
 # $Id$
 
 """Bot core
