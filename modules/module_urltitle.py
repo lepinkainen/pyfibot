@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Displays HTML page titles
 
 Smart title functionality for sites which could have clear titles,
@@ -103,6 +104,7 @@ def _title(bot, channel, title, smart=False, redundant=False):
         title = title[:200]+"..."
 
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
+    print title
 
     if not info:
         bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
