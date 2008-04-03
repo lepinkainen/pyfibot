@@ -150,8 +150,8 @@ def _handle_iltalehti(url):
     if not bs: return
     title = bs.first('title').string
 
-    # the last part is the actual story title, lose the rest
-    title = title.split("|")[-1].strip()
+    # the first part is the actual story title, lose the rest
+    title = title.split("|")[0].strip()
 
     if not title: return
 

@@ -100,7 +100,7 @@ class URLCacheItem(object):
                 print "CONTENT TOO LARGE, WILL NOT FETCH", size, self.url
                 self.content = None
             else:
-                self.content = f.read()
+                self.content = unicode(f.read(), encoding="utf-8", errors="ignore")
 
         self._checkstatus()
         return self.content
