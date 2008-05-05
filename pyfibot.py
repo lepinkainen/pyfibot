@@ -41,6 +41,7 @@ except ImportError:
 
 from util import *
 from util.BeautifulSoup import BeautifulSoup
+from util.BeautifulSoup import UnicodeDammit
 import botcore
 
 # default timeout for socket connections
@@ -100,7 +101,7 @@ class URLCacheItem(object):
                 print "CONTENT TOO LARGE, WILL NOT FETCH", size, self.url
                 self.content = None
             else:
-                self.content = unicode(f.read(), encoding="utf-8", errors="ignore")
+                self.content = UnicodeDammit(f.read()).unicode
 
         self._checkstatus()
         return self.content
