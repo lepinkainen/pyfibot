@@ -1,6 +1,6 @@
 """Warns about large files"""
 
-def handle_url(bot, user, channel, url):
+def handle_url(bot, user, channel, url, msg):
 
     if channel == "#wow": return
 
