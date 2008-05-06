@@ -17,8 +17,10 @@ def init(botconfig):
     global config
     config = botconfig["module_urltitle"]
 
-def handle_url(bot, user, channel, url):
+def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
+
+    if msg.startswith("-"): return
 
     if channel == "#wow": return
 
@@ -50,8 +52,6 @@ def handle_url(bot, user, channel, url):
     title = bs.first('title')
     # no title attribute
     if not title: return
-
-    
 
     try:
         title = title.string.strip().replace("\n", "").replace("\r", "")
