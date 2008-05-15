@@ -111,7 +111,10 @@ class URLCacheItem(object):
         
         if not self.headers:
             f = self._open(self.url)
-            self.headers = f.info()
+            if f:
+                self.headers = f.info()
+            else:
+                self.headers = {}
         
         self._checkstatus()
         return self.headers
