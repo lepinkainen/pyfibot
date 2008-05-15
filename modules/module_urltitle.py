@@ -83,10 +83,7 @@ def _check_redundant(url, title):
 def _title(bot, channel, title, smart=False, redundant=False):
     """Say title to channel"""
 
-    if smart:
-        prefix = "Smart title:"
-    else:
-        prefix = "Title:"
+    prefix = "Title:"
 
     if False:
         suffix = " [Redundant]"
