@@ -236,6 +236,15 @@ def _handle_yle(url):
 
     return title
 
+def _handle_mol(url):
+    """http://www.mol.fi/paikat/Job.do?jobID=*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.first("div", {'class':'otsikko'}).string
+
+    return title
+
 def _handle_youtube(url):
     """http://www.youtube.com/watch?v=*"""
     dev_id = config.get("youtube_devid", None)
