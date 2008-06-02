@@ -183,8 +183,8 @@ def _handle_tietokone(url):
     """http://www.tietokone.fi/uutta/uutinen.asp?news_id=*"""
     bs = getUrl(url).getBS()
 
-    sub = bs.first('span', {'class':'clsHdrTPun'}).next.string
-    main = bs.first('span', {'class':'clsHdrMajor'}).next.string
+    sub = bs.first('h5').string
+    main = bs.first('h2').string
 
     return "%s - %s" % (main, sub)
 
