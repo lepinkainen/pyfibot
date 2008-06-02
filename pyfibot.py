@@ -128,7 +128,7 @@ class URLCacheItem(object):
         if not self.bs:
             # only attempt a bs parsing if the content is html, xml or xhtml
             if self.getHeaders().has_key('content-type') and \
-            self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml']:
+            self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
                 bs = BeautifulSoup()
                 bs.feed(self.getContent())
                 self.bs = bs

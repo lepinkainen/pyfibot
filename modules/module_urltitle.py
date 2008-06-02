@@ -236,10 +236,10 @@ def _handle_mol(url):
 
     return title
 
-def _hande_youtube_gdata(url):
+def _handle_youtube_gdata(url):
     """http://www.youtube.com/watch?v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
-
+    
     match = re.match("http://www.youtube.com/watch\?v=(.*)", url)
     if match:
         infourl = gdata_url % match.group(1)
@@ -255,22 +255,3 @@ def _hande_youtube_gdata(url):
         length = media.first("yt:duration")['seconds']
         
         return "%s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
-
-def _handle_youtube_rest(url):
-    dev_id = config.get("youtube_devid", None)
-    if not dev_id: return
-
-    rest_url = "http://www.youtube.com/api2_rest?method=youtube.videos.get_details&dev_id=%s&video_id=%s"
-    match = re.match("http://www.youtube.com/watch\?v=(.*)", url)
-    
-    if match:    
-        infourl = rest_url % (dev_id, match.group(1))
-        bs = getUrl(infourl).getBS()
-        if bs.first("ut_response")['status'] == 'ok':
-            author = bs.find("author").renderContents()
-            title = bs.find("title").renderContents()
-            length = bs.find("length_seconds").renderContents()
-            rating = bs.find("rating_avg").renderContents()
-            views = bs.find("view_count").renderContents()
-
-            return "YouTube: %s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
