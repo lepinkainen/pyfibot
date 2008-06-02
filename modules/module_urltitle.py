@@ -23,6 +23,7 @@ def handle_url(bot, user, channel, url, msg):
     if msg.startswith("-"): return
 
     if channel == "#wow": return
+    if channel == "#debian.fi" and "youtube" in url: return
 
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
@@ -35,16 +36,6 @@ def handle_url(bot, user, channel, url, msg):
                 _title(bot, channel, title, True)
             # handler found, abort
             return
-
-    # multiple matches for single method -version
-#     for handler, ref in handlers:
-#         patterns = ref.__doc__.split()
-#         for pattern in patterns:
-#             if fnmatch.fnmatch(url, pattern):
-#                 title = ref(user, channel, url)
-#                 if title:
-#                     _title(channel, title)
-#                 return
                         
     bs = getUrl(url).getBS()
     if not bs: return
