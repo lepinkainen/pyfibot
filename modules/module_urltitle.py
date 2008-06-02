@@ -247,12 +247,12 @@ def _handle_youtube(url):
         
         infourl = rest_url % (dev_id, match.group(1))
         bs = getUrl(infourl).getBS()
-        author = bs.find("author").renderContents()
-        title = bs.find("title").renderContents()
-        length = bs.find("length_seconds").renderContents()
-        rating = bs.find("rating_avg").renderContents()
-        views = bs.find("view_count").renderContents()
+        if bs.first("ut_response")['status'] == 'ok':
+            author = bs.find("author").renderContents()
+            title = bs.find("title").renderContents()
+            length = bs.find("length_seconds").renderContents()
+            rating = bs.find("rating_avg").renderContents()
+            views = bs.find("view_count").renderContents()
 
-        #bs.first("title")+" "+bs.first("length_seconds")
-        return "YouTube: %s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
+            return "YouTube: %s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
     
