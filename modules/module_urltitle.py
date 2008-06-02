@@ -23,7 +23,7 @@ def handle_url(bot, user, channel, url, msg):
     if msg.startswith("-"): return
 
     if channel == "#wow": return
-    if channel == "#debian.fi" and "youtube" in url: return
+    if channel == "#debian.fi" and not "youtube" in url: return
 
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
