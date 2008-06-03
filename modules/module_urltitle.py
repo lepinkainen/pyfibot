@@ -237,7 +237,7 @@ def _handle_mol(url):
     return title
 
 def _handle_youtube_gdata(url):
-    """http://www.youtube.com/watch?v=*"""
+    """http://*.youtube.com/watch?v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
     
     match = re.match("http://www.youtube.com/watch\?v=(.*)", url)
