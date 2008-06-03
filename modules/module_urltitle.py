@@ -228,7 +228,7 @@ def _handle_yle(url):
     return title
 
 def _handle_mol(url):
-    """http://www.mol.fi/paikat/Job.do?jobID=*"""
+    """http://www.mol.fi/paikat/Job.do?*"""
     bs = getUrl(url).getBS()
     if not bs: return
 
@@ -252,7 +252,7 @@ def _handle_youtube_gdata(url):
         try:
             rating = entry.first("gd:rating")['average']
         except TypeError:
-            rating = "N/A"
+            rating = "0"
             
         views = entry.first("yt:statistics")['viewcount']
 
