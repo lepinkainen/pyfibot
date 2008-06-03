@@ -243,11 +243,17 @@ def _handle_youtube_gdata(url):
     match = re.match("http://www.youtube.com/watch\?v=(.*)", url)
     if match:
         infourl = gdata_url % match.group(1)
+        print infourl
         bs = getUrl(infourl).getBS()
     
         entry = bs.first("entry")
         author = entry.author.next.string
-        rating = entry.first("gd:rating")['average']
+        # if an entry doesn't have a rating, the whole element is missing
+        try:
+            rating = entry.first("gd:rating")['average']
+        except TypeError:
+            rating = "N/A"
+            
         views = entry.first("yt:statistics")['viewcount']
 
         media = entry.first("media:group")
