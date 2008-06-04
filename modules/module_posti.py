@@ -1,5 +1,6 @@
 import urllib2
 from BeautifulSoup import BeautifulSoup
+import datetime
 import time
 
 baseurl = "http://www.verkkoposti.com/e3/TrackinternetServlet?lang=fi&LOTUS_hae=Hae&LOTUS_side=1&LOTUS_trackId=%s&LOTUS_hae=Hae"
@@ -28,7 +29,23 @@ def getstatus(code, count=None):
         date = time.strptime(date, "%d.%m.%Y, klo %H:%M&nbsp;")
         location = location[6:].strip()
 
-        res.append("%s - %s - %s" % (time.strftime("%Y-%m-%d %H:%M:%S", date), statustext, location))
+        dt = datetime.datetime(*date[0:6])
+        now = datetime.datetime.now()
+        age = now - dt
+        
+        agestr = ""
+        
+        if age.days > 0:
+            agestr += "%d days " % age.days
+
+        secs = age.seconds
+        hours,minutes,seconds = secs//3600,secs//60%60,secs%60
+        
+        if hours > 0: agestr += "%d h " % hours
+        if minutes > 0: agestr += "%d m " % minutes
+        if seconds > 0: agestr += "%d s" % seconds        
+
+        res.append("%s - %s - %s" % (agestr, statustext, location))
 
     if count:
         return res[:count]
