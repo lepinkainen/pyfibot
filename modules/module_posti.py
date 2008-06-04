@@ -33,20 +33,19 @@ def getstatus(code, count=None):
         now = datetime.datetime.now()
         age = now - dt
         
-        agestr = ""
-        
+        agestr = []
+
         if age.days > 0:
-            agestr += "%d days " % age.days
+            agestr.append("%dd" % age.days)
 
         secs = age.seconds
         hours,minutes,seconds = secs//3600,secs//60%60,secs%60
+
+        if hours > 0: agestr.append("%dh" % hours)
+        if minutes > 0: agestr.append("%dm" % minutes)
         
-        if hours > 0: agestr += "%d h " % hours
-        if minutes > 0: agestr += "%d m " % minutes
-        if seconds > 0: agestr += "%d s" % seconds        
-
-        res.append("%s - %s - %s" % (agestr, statustext, location))
-
+        res.append("%s - %s - %s" % (" ".join(agestr)+" ago", statustext, location))
+                                                
     if count:
         return res[:count]
     else:
