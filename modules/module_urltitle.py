@@ -189,14 +189,11 @@ def _handle_tietokone(url):
     return "%s - %s" % (main, sub)
 
 def _handle_itviikko(url):
-    """http://www.itviikko.fi/page.php*"""
+    """http://www.itviikko.fi/*/*/*/*/*"""
 
-    # <font face="Arial, Helvetica, sans-serif" size="+2">
     bs = getUrl(url).getBS()
     if not bs: return
-    title1 = bs.first("h2").next.next
-    title2 = title1.next
-    return "%s - %s" % (title1, title2)
+    return bs.first("h1", "headline").string
 
 def _handle_kauppalehti(url):
     """http://www.kauppalehti.fi/4/i/uutiset/*"""
