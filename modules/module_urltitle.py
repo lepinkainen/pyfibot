@@ -247,14 +247,23 @@ def _handle_youtube_gdata(url):
         author = entry.author.next.string
         # if an entry doesn't have a rating, the whole element is missing
         try:
-            rating = entry.first("gd:rating")['average']
+            rating = int(entry.first("gd:rating")['average'])
         except TypeError:
-            rating = "0"
+            rating = 0
+
+        stars = rating * "*"
             
         views = entry.first("yt:statistics")['viewcount']
 
         media = entry.first("media:group")
         title = media.first("media:title").string
-        length = media.first("yt:duration")['seconds']
-        
-        return "%s by %s [%s seconds - %s stars - %s views]" % (title, author, length, rating, views)
+        secs = media.first("yt:duration")['seconds']
+
+        lengthstr = []
+        hours,minutes,seconds = secs//3600,secs//60%60,secs%60
+
+        if hours > 0: lengthstr.append("%dh" % hours)
+        if minutes > 0: lengthtr.append("%dm" % minutes)
+        if seconds > 0: lengthtr.append("%ds" % seconds)
+
+        return "%s by %s [%s - %s - %s views]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views)
