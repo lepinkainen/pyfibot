@@ -237,7 +237,7 @@ def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
     
-    match = re.match("http://.*?youtube.com/watch\?v=(.*)", url)
+    match = re.match("http://.*?youtube.com/watch\?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
         print infourl
