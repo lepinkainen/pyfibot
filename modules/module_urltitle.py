@@ -105,8 +105,8 @@ def _handle_hs(url):
     """*hs.fi*artikkeli*"""
     bs = getUrl(url).getBS()
     if not bs: return
-    title = bs.find("title")
-    title = title.string.split("-")[0].strip()
+    title = bs.title.string
+    title = title.split("-")[0].strip()
     return title
 
 ## WORKING 20070209
