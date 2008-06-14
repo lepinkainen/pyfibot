@@ -255,6 +255,8 @@ def _handle_youtube_gdata(url):
             
         views = entry.first("yt:statistics")['viewcount']
 
+        racy = entry.first("yt:racy")
+
         media = entry.first("media:group")
         title = media.first("media:title").string
         secs = int(media.first("yt:duration")['seconds'])
@@ -266,4 +268,9 @@ def _handle_youtube_gdata(url):
         if minutes > 0: lengthstr.append("%dm" % minutes)
         if seconds > 0: lengthstr.append("%ds" % seconds)
 
-        return "%s by %s [%s - %s - %s views]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views)
+        if racy:
+            adult = " - XXX"
+        else:
+            adult = ""
+        
+        return "%s by %s [%s - %s - %s views%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, adult)
