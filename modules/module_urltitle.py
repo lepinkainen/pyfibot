@@ -109,7 +109,13 @@ def _handle_hs(url):
     title = title.split("-")[0].strip()
     return title
 
-## WORKING 20070209
+def _handle_hs(url):
+    """*ksml.fi/uutiset*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+    title = bs.title.string
+    title = title.split("-")[0].strip()
+    return title
 
 def _handle_ircquotes(url):
     """*ircquotes.net*"""
