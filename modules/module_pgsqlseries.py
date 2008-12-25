@@ -1,6 +1,9 @@
 import time
 import datetime
-from pyPgSQL import PgSQL
+try:
+    from pyPgSQL import PgSQL
+except:
+    pass
 
 def init(botconfig):
     global config

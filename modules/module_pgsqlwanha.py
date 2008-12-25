@@ -1,6 +1,10 @@
 import time
 import datetime
-from pyPgSQL import PgSQL
+try:
+    from pyPgSQL import PgSQL
+except:
+    pass
+
 
 
 # -- For postgresql
