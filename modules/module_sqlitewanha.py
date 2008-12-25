@@ -1,4 +1,7 @@
-import sqlite3
+try:
+    import sqlite3
+except:
+    import sqlite
 import time
 import datetime
 

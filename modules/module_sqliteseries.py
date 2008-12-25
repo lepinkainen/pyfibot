@@ -1,6 +1,9 @@
+try:
+    import sqlite3
+except:
+    import sqlite
 import time
 import datetime
-import sqlite3
 
 # create table series (id INTEGER PRIMARY KEY, uid TEXT UNIQUE, serie TEXT, season INTEGER, episode INTEGER, title TEXT, airdate DATE);
 # insert into series values(null, 'Alias', 1, 1, 'Pilot', date('2006-01-01'));
