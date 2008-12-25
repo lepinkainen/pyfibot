@@ -1,4 +1,3 @@
-import sqlite
 import time
 import datetime
 from pyPgSQL import PgSQL
@@ -20,9 +19,12 @@ from pyPgSQL import PgSQL
 
 def init(botconfig):
     global config
-    config = botconfig["module_pgsqlwanha"]
+    config = botconfig.get("module_pgsqlwanha", None)
 
 def handle_url(bot, user, channel, url):
+
+    if not config: return
+    
     cx = PgSQL.connect(database=config["database"],
                        host=config["host"],
                        user=config["user"],

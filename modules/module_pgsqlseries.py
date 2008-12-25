@@ -4,10 +4,14 @@ from pyPgSQL import PgSQL
 
 def init(botconfig):
     global config
-    config = botconfig["module_pgsqlseries"]
+    try:
+        config = botconfig["module_pgsqlseries"]
+    except KeyError:
+        config = None
             
 def command_ep(bot, user, channel, args):
     """Usage: sqlep [today|yesterday|tomorrow] or [seriename]"""
+    if not config: return
     
     cx = PgSQL.connect(database=config["database"],
                        host=config["host"],

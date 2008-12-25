@@ -200,8 +200,6 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Initialize the factory"""
 
         self.config = config
-        print config['admins']
-        #self.admins = config['admins']
         self.data = {}
         self.data['networks'] = {}
         self.ns = {}

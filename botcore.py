@@ -12,7 +12,7 @@
 # Maintenance task, remove already run items from tasks
 
 # twisted imports
-from twisted.protocols import irc
+from twisted.words.protocols import irc
 from twisted.internet import reactor, protocol, defer
 from twisted.python import log, rebuild
 
@@ -129,6 +129,12 @@ class CoreCommands(object):
         self.quit("Working as programmed")
         self.hasQuit = 1
 
+    def command_channels(self, user, channel, args):
+        """Usage: channels <network> - List channels the bot is on"""
+        if not args: return
+        bot = self.factory.allBots[args]
+        self.say(channel, "I am on %s" % self.network.channels)
+
     def command_help(self, user, channel, cmnd):
         """Get help on all commands or a specific one. Usage: help [<command>]"""
 
@@ -159,7 +165,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     # send 1 msg per second max
     lineRate = 1
-    
     
     hasQuit = False
 
@@ -212,7 +217,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             if type(chan) == list:
                 self.join(chan[0], key=chan[1])
             else:
-                self.join(chan)
+                self.join('#'+chan)
         self.log("joined %d channel(s)" % len(self.network.channels))
 
     def pong(self, user, secs):
@@ -342,7 +347,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         if nick.lower() != self.nickname.lower():
             pass
-            #self.updateUser(nick, channel)
         elif channel not in self.network.channels:
             self.network.channels.append(channel)
             self.factory.setNetwork(self.network)
