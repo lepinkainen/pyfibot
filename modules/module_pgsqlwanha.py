@@ -25,7 +25,7 @@ def init(botconfig):
     global config
     config = botconfig.get("module_pgsqlwanha", None)
 
-def handle_url(bot, user, channel, url):
+def handle_url(bot, user, channel, url, msg):
 
     if not config: return
     

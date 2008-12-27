@@ -7,7 +7,7 @@ import datetime
 
 # create table urls (id TEXT UNIQUE, nick TEXT, url TEXT, channel TEXT, time int);
 
-def handle_url(bot, user, channel, url):
+def handle_url(bot, user, channel, url, msg):
     urlid = "%s|%s" % (channel, url)
     
     con = sqlite.connect("/home/shrike/pyfibot/modules/urls.db")
