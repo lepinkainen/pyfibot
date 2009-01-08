@@ -157,7 +157,7 @@ def _handle_iltasanomat(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.first('h2', {'class':'h2Topic size26'})
+    title = bs.first('h2', {'class':'size26'})
 
     if title:
         title = title.next
