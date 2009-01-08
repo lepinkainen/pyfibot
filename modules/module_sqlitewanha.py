@@ -1,16 +1,24 @@
 try:
     import sqlite3
+    sqlite = sqlite3
 except:
     import sqlite
 import time
 import datetime
+import sys, os.path
 
 # create table urls (id TEXT UNIQUE, nick TEXT, url TEXT, channel TEXT, time int);
 
+def init(botconfig):
+    global config
+    config = botconfig.get("module_sqlitewanha", None)
+
 def handle_url(bot, user, channel, url, msg):
+    if not config: return
+
     urlid = "%s|%s" % (channel, url)
     
-    con = sqlite.connect("/home/shrike/pyfibot/modules/urls.db")
+    con = sqlite.connect(os.path.join(sys.path[0], "urls.sqlite"))
     cur = con.cursor()
     cur.execute("SELECT * FROM urls WHERE id=%s", (urlid,))
     if cur.rowcount:

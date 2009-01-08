@@ -21,6 +21,7 @@ def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
 
     if msg.startswith("-"): return
+    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/", url): return # IMDB urls are handled elsewhere
 
     if channel == "#wow": return
     if channel == "#debian.fi" and not "youtube" in url: return
