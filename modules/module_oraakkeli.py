@@ -10,4 +10,7 @@ def command_oraakkeli(bot, user, channel, args):
 
     answer = getUrl("http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args).getContent()
 
+    answer = unicode(answer)
+    answer = answer.encode("utf-8")
+    
     bot.say(channel, "Oraakkeli vastaa: %s" % answer)
