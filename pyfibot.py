@@ -13,6 +13,7 @@ import os.path
 import time
 import urllib
 import fnmatch
+import HTMLParser
 
 try:
     import psyco
@@ -104,6 +105,7 @@ class URLCacheItem(object):
                 self.content = UnicodeDammit(f.read()).unicode
 
         self._checkstatus()
+
         return self.content
 
     def getHeaders(self):
@@ -129,8 +131,12 @@ class URLCacheItem(object):
             # only attempt a bs parsing if the content is html, xml or xhtml
             if self.getHeaders().has_key('content-type') and \
             self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
-                bs = BeautifulSoup()
-                bs.feed(self.getContent())
+                print "Creating bs"
+                try:
+                    bs = BeautifulSoup(markup=self.getContent())
+                except HTMLParser.HTMLParseError:
+                    print "BS unable to parse content"
+                    return None
                 self.bs = bs
             else:
                 return None
