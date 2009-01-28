@@ -11,7 +11,7 @@ import re
 
 from types import TupleType
 
-from BeautifulSoup import BeautifulStoneSoup
+from util.BeautifulSoup import BeautifulStoneSoup
 
 def init(botconfig):
     global config

@@ -1,5 +1,5 @@
-from BeautifulSoup import BeautifulSoup
-from BeautifulSoup import BeautifulStoneSoup
+from util.BeautifulSoup import BeautifulSoup
+from util.BeautifulSoup import BeautifulStoneSoup
 import urllib2
 
 def command_server(bot, user, channel, args):

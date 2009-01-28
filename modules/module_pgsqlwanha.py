@@ -26,7 +26,7 @@ def init(botconfig):
     config = botconfig.get("module_pgsqlwanha", None)
 
 def handle_url(bot, user, channel, url, msg):
-
+    return
     if not config: return
     
     cx = PgSQL.connect(database=config["database"],

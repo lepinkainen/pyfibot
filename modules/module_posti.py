@@ -1,5 +1,5 @@
 import urllib2
-from BeautifulSoup import BeautifulSoup
+from util.BeautifulSoup import BeautifulSoup
 import datetime
 import time
 
