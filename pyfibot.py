@@ -131,7 +131,6 @@ class URLCacheItem(object):
             # only attempt a bs parsing if the content is html, xml or xhtml
             if self.getHeaders().has_key('content-type') and \
             self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
-                print "Creating bs"
                 try:
                     bs = BeautifulSoup(markup=self.getContent())
                 except HTMLParser.HTMLParseError:
