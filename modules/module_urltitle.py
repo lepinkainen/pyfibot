@@ -152,15 +152,15 @@ def _handle_iltalehti(url):
     return title
 
 def _handle_iltasanomat(url):
-    """*iltasanomat.fi*"""
+    """*iltasanomat.fi*uutinen.asp*"""
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.first('h2', {'class':'size26'})
+    title = bs.title.string.split(" - ")[0]
 
-    if title:
-        title = title.next
-        return title
+    if not title: return
+
+    return title
 
 def _handle_kaleva(url):
     """*kaleva.fi*"""
