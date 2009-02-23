@@ -25,6 +25,12 @@ def handle_url(bot, user, channel, url, msg):
 
     if channel.lstrip("#") in config['disable']: return
 
+    for ignore in config.get("ignore", []):
+        if fnmatch.fnmatch(url, ignore): 
+            print "Ignored URL:", url, ignore
+            return
+
+
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
     # try to find a specific handler for the URL
@@ -116,18 +122,6 @@ def _handle_hs(url):
     title = bs.title.string
     title = title.split("-")[0].strip()
     return title
-
-def _handle_ircquotes(url):
-    """*ircquotes.net*"""
-    pass
-
-def _handle_wikipedia(url):
-    """*wikipedia.org*"""
-    pass
-
-def _handle_imageshack(url):
-    """*imageshack.us/my.php*"""
-    pass
 
 def _handle_mtv3(url):
     """*mtv3.fi*"""
