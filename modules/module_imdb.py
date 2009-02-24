@@ -14,8 +14,8 @@ def handle_url(bot, user, channel, url, msg):
     movie = i.get_movie(m.group(1))
 
     title = movie['long imdb title']
-    rating = movie['rating']
-    votes = movie['votes']
+    rating = movie.get('rating', 0.0)
+    votes = movie.get('votes', 'no')
 
     msg = "[IMDB] %s - Rating: %.1f (%s votes)" % (title, rating, votes)
     print msg
