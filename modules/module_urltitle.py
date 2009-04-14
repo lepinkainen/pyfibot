@@ -23,7 +23,7 @@ def handle_url(bot, user, channel, url, msg):
     if msg.startswith("-"): return
     if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/", url): return # IMDB urls are handled elsewhere
 
-    if channel.lstrip("#") in config['disable']: return
+    if channel.lstrip("#") in config.get('disable', ''): return
 
     for ignore in config.get("ignore", []):
         if fnmatch.fnmatch(url, ignore): 
