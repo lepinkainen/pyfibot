@@ -102,7 +102,11 @@ class URLCacheItem(object):
                 print "CONTENT TOO LARGE, WILL NOT FETCH", size, self.url
                 self.content = None
             else:
-                self.content = UnicodeDammit(f.read()).unicode
+                if self.checkType():
+                    self.content = UnicodeDammit(f.read()).unicode
+                else:
+                    type = self.getHeaders().getsubtype()
+                    print "WRONG CONTENT TYPE, WILL NOT FETCH", size, type, self.url
 
         self._checkstatus()
 
@@ -120,6 +124,12 @@ class URLCacheItem(object):
         
         self._checkstatus()
         return self.headers
+
+    def checkType(self):
+        if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
+            return True
+        else:
+            return False
 
     def getBS(self):
         """Get a beautifulsoup instance for the URL
