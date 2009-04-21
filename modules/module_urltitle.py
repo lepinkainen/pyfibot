@@ -254,6 +254,11 @@ def _handle_youtube_gdata(url):
         stars = int(round(rating)) * "*"
             
         views = entry.first("yt:statistics")['viewcount']
+        statistics = entry.first("yt:statistics")
+        if statistics:
+            views = statistics['viewcount']
+        else:
+            views = "0"
 
         racy = entry.first("yt:racy")
 
