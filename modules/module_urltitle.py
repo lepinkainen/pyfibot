@@ -257,7 +257,7 @@ def _handle_youtube_gdata(url):
         if statistics:
             views = statistics['viewcount']
         else:
-            views = "0"
+            views = "no"
 
         racy = entry.first("yt:racy")
 
