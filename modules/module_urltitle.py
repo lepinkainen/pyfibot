@@ -51,7 +51,7 @@ def handle_url(bot, user, channel, url, msg):
     if not title: return
 
     try:
-        title = title.string.strip().replace("\n", "").replace("\r", "")
+        title = title.string.strip().replace("\n", "").replace("\r", "").replace("\t", " ")
         if _check_redundant(url, title):
             _title(bot, channel, title, redundant=True)   
         else:
