@@ -156,17 +156,6 @@ def _handle_iltasanomat(url):
 
     return title
 
-def _handle_kaleva(url):
-    """*kaleva.fi*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.first('span', {'class':'bigheadblk'})
-
-    if title:
-        title = title.string
-        return title
-
 def _handle_keskisuomalainen_sahke(url):
     """*keskisuomalainen.net*sahkeuutiset/*"""
 
