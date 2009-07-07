@@ -6,7 +6,7 @@ def handle_url(bot, user, channel, url, msg):
 
     # inform about large files (over 5MB)
     size = getUrl(url).getSize()
-    headers = getUrl(url).getHeaders()['content-type']
+    headers = getUrl(url).getHeaders()
     if 'content-type' in headers:
         contentType = headers['content-type']
     else:
