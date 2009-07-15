@@ -209,7 +209,8 @@ def _handle_yle(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.first("font", {'size':'3'}).next.string
+    title = bs.title.string
+    title = title.split("|")[0].strip()
 
     return title
 

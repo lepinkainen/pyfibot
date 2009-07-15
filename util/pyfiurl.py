@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: iso8859-1 -*-
 ## (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
 
 ## Thanks to Shrike for helping this :)
@@ -41,7 +40,7 @@ _countrycodes=['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
                'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf',
                'ws', 'ye', 'yt', 'yu', 'za', 'zm', 'zw', 'aero', 'biz', 'com',
                'coop', 'edu', 'gov', 'info', 'int', 'mil', 'museum', 'name',
-               'net', 'org', 'pro']
+               'net', 'org', 'pro', 'me']
 
 _schemes=['http://', 'https://', 'ftp://', 'svn://']
 
