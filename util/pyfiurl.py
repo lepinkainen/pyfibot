@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf8 -*-
 ## (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
 
 ## Thanks to Shrike for helping this :)
@@ -7,7 +8,7 @@
 
 """Find absolute URLs from strings"""
 
-__version__="3.0.2"
+__version__="3.0.3"
 
 import re
 from UserString import UserString
@@ -124,7 +125,7 @@ validPathChars=[string.ascii_letters,
                 string.digits,
                 '/;?:@&=+$,%#'
                 '-_.!~*()',
-                '[]<>{}^\|\'`', ## not so valid but used
+                'åäö[]<>{}^\|\'`', ## not so valid but used
                 ]
 
 validUserinfoChars=[string.ascii_letters,
