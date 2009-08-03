@@ -15,7 +15,7 @@ from util.BeautifulSoup import BeautifulStoneSoup
 
 def init(botconfig):
     global config
-    config = botconfig.get("module_urltitle", None)
+    config = botconfig.get("module_urltitle", {})
 
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
