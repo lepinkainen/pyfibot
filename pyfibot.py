@@ -8,6 +8,7 @@
 @license BSD
 """
 
+import re
 import sys
 import os.path
 import time
@@ -245,7 +246,13 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.info("factory stopped")
         
     def buildProtocol(self, address):
-        address = (address.host, address.port)
+        # address.host is a hostname -> twisted bug -> fixit
+        if re.match("[\.a-z]+", address.host):
+            host = socket.gethostbyname(address.host)
+            address = (host, address.port)
+            log.warn("Fixing twisted library 8.2.x bug...")
+        else:
+            address = (address.host, address.port)
 
         # do we know how to connect to the given address?
         for n in self.data['networks'].values():
