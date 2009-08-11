@@ -241,9 +241,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self.msg(channel, m, length)
             cont = True                                                                        
 
-    def Xlog(self, message):
+    def log(self, message):
         botId = "%s@%s" % (self.nickname, self.network.alias)
-        print "%-20s: %s" % (botId, message)
+        log.info("%s: %s", botId, message)
 
     ###### COMMUNICATION
 
