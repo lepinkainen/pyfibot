@@ -233,7 +233,7 @@ def _handle_netanttila(url):
     itemname = bs.first("h1").string.replace("\n", "").replace("\r", "").replace("\t", "").strip()
     price = bs.first("td", {'class': 'right highlight'}).string.split(" ")[0]
 
-    return "%s | %sEUR" % (itemname, price)
+    return "%s | %s€" % (itemname, price)
 
 def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?*v=*"""
