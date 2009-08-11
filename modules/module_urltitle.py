@@ -226,6 +226,15 @@ def _handle_mol(url):
 
     return title
 
+def _handle_netanttila(url):
+    """http://www.netanttila.com/webapp/wcs/stores/servlet/ProductDisplay*"""
+    bs = getUrl(url).getBS()
+    
+    itemname = bs.first("h1").string.replace("\n", "").replace("\r", "").replace("\t", "").strip()
+    price = bs.first("td", {'class': 'right highlight'}).string.split(" ")[0]
+
+    return "%s | %sEUR" % (itemname, price)
+
 def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?*v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
