@@ -447,7 +447,14 @@ if __name__ == '__main__':
     for network, settings in config['networks'].items():
         # use network specific nick if one has been configured
         nick = settings.get('nick', None) or config['nick']
-        factory.createNetwork((settings['server'], 6667), network, nick, settings['channels'])
+
+        # prevent internal confusion with channels
+        chanlist = []
+        for channel in settings['channels']:
+            if channel[0] not in '&#!+': channel = '#' + channel
+            chanlist.append(channel)
+
+        factory.createNetwork((settings['server'], 6667), network, nick, chanlist)
         reactor.connectTCP(settings['server'], 6667, factory)
         
     reactor.run()

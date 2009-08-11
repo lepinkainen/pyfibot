@@ -41,7 +41,7 @@ class CoreCommands(object):
         self.say(channel, "%s: %s" % (user, args))
 
     def command_ping(self, user, channel, args):
-        self.say(channel, "%s: My current ping is %.0f" % (self.factory.getNick(user), self.pingAve*100.0))
+        self.say(channel, "%s: My current ping is %.0fms" % (self.factory.getNick(user), self.pingAve*100.0))
 
     def command_rehash(self, user, channel, args):
         """Reload modules. Usage: rehash [debug]"""
@@ -49,7 +49,6 @@ class CoreCommands(object):
         if self.factory.isAdmin(user):
             try:
                 # rebuild core & update
-                #rebuild.rebuild(sys.modules['botcore'])
                 log.info("rebuilding %r" % self)
                 rebuild.updateInstance(self)
 
@@ -57,9 +56,10 @@ class CoreCommands(object):
 
             except Exception, e:
                 self.say(channel, "Rehash error: %s" % e)
-                log.error(e)
+                log.error("Rehash error: "+e)
             else:
                 self.say(channel, "Rehash OK")
+                log.info("Rehash OK")
 
     def say(self, channel, message, length = None):
         """Must be implemented by the inheriting class"""
@@ -72,10 +72,13 @@ class CoreCommands(object):
             return
 
         password = None
+        # see if we have multiple arguments
         try:
             args, password = args.split(' ', 1)
         except ValueError, e:
             pass
+        
+        # see if the user specified a network
         try:
             newchannel, network = args.split('@', 1)
         except ValueError, e:
@@ -85,13 +88,18 @@ class CoreCommands(object):
         except KeyError:
             self.say(channel, "I am not on that network.")
         else:
+            log.debug("Attempting to join channel %s", channel)
             if newchannel in bot.network.channels:
                 self.say(channel, "I am already in %s on %s." % (newchannel, network))
+                log.debug("Already on channel %s", channel)
+                log.debug("Channels I'm on this network: %s", bot.network.channels)
             else:
                 if password:
                     bot.join(newchannel, key=password)
+                    log.debug("Joined")
                 else:
                     bot.join(newchannel)
+                    log.debug("Joined")
 
     # alias of part
     def command_leave(self, user, channel, args):
@@ -134,7 +142,9 @@ class CoreCommands(object):
 
     def command_channels(self, user, channel, args):
         """Usage: channels <network> - List channels the bot is on"""
-        if not args: return
+        if not args: 
+            self.say(channel, "Please specify a network")
+            return
         bot = self.factory.allBots[args]
         self.say(channel, "I am on %s" % self.network.channels)
 
@@ -197,7 +207,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
-        log.info("connection lost")
+        log.info("connection lost:", reason)
         
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
@@ -219,8 +229,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             if type(chan) == list:
                 self.join(chan[0], key=chan[1])
             else:
-                self.join('#'+chan)
-        log.info("joined %d channel(s)" % len(self.network.channels))
+                self.join(chan)
+
+        log.info("joined %d channel(s): %s", len(self.network.channels), ", ".join(self.network.channels))
 
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
