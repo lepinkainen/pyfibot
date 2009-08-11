@@ -7,11 +7,14 @@ but still decide show idiotic bulk data in the HTML title element"""
 import fnmatch
 import htmlentitydefs
 import urlparse
+import logging
 import re
 
 from types import TupleType
 
 from util.BeautifulSoup import BeautifulStoneSoup
+
+log = logging.getLogger("urltitle")
 
 def init(botconfig):
     global config
@@ -27,7 +30,7 @@ def handle_url(bot, user, channel, url, msg):
 
     for ignore in config.get("ignore", []):
         if fnmatch.fnmatch(url, ignore): 
-            print "Ignored URL:", url, ignore
+            log.info("Ignored URL: %s %s", url, ignore)
             return
 
 
@@ -101,7 +104,7 @@ def _title(bot, channel, title, smart=False, redundant=False):
         title = title[:200]+"..."
 
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
-    print title
+    log.info(title)
 
     if not info:
         bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
@@ -242,7 +245,6 @@ def _handle_youtube_gdata(url):
     match = re.match("http://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
-        print infourl
         bs = getUrl(infourl).getBS()
     
         entry = bs.first("entry")

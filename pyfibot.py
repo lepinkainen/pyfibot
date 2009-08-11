@@ -14,6 +14,8 @@ import time
 import urllib
 import fnmatch
 import HTMLParser
+import logging
+import logging.handlers
 
 try:
     import psyco
@@ -29,13 +31,9 @@ except ImportError:
 
 # twisted imports
 try:
-    # primarily try to use the Twisted 2.x irc module, fall back on the 1.3 one
-    try:
-        from twisted.words.protocols import irc
-    except ImportError:
-        from twisted.protocols import irc
+    from twisted.words.protocols import irc
     from twisted.internet import reactor, protocol
-    from twisted.python import log, rebuild
+    from twisted.python import rebuild
 except ImportError:
     print "Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download"
     sys.exit(1)
@@ -43,11 +41,15 @@ except ImportError:
 from util import *
 from util.BeautifulSoup import BeautifulSoup
 from util.BeautifulSoup import UnicodeDammit
-import botcore
 
 # default timeout for socket connections
 import socket
 socket.setdefaulttimeout(20)
+
+import botcore
+
+log = logging.getLogger('core')
+
 
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
@@ -68,8 +70,7 @@ class URLCacheItem(object):
             try:
                 self.fp = urllib.urlopen(self.url)
             except IOError, e:
-                print "IOError when opening url %s" % url
-                print e
+                log.warn("IOError when opening url %s" % url)
         return self.fp
 
     def _checkstatus(self):
@@ -99,14 +100,14 @@ class URLCacheItem(object):
 
             size = self.getSize()
             if size > self.max_size:
-                print "CONTENT TOO LARGE, WILL NOT FETCH", size, self.url
+                log.warn("CONTENT TOO LARGE, WILL NOT FETCH", size, self.url)
                 self.content = None
             else:
                 if self.checkType():
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
                     type = self.getHeaders().getsubtype()
-                    print "WRONG CONTENT TYPE, WILL NOT FETCH", size, type, self.url
+                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH", size, type, self.url)
 
         self._checkstatus()
 
@@ -144,7 +145,7 @@ class URLCacheItem(object):
                 try:
                     bs = BeautifulSoup(markup=self.getContent())
                 except HTMLParser.HTMLParseError:
-                    print "BS unable to parse content"
+                    log.warn("BS unable to parse content")
                     return None
                 self.bs = bs
             else:
@@ -162,7 +163,7 @@ class BotURLOpener(urllib.FancyURLopener):
         urllib.FancyURLopener.__init__(self, *args)
 
     def prompt_user_passwd(self, host, realm):
-        print "PASSWORD PROMPT:", host, realm
+        log.info("PASSWORD PROMPT:", host, realm)
         return ('', '')
 
 class Network:
@@ -191,19 +192,19 @@ class ThrottledClientFactory(protocol.ClientFactory):
     failedDelay = 60
     
     def clientConnectionLost(self, connector, reason):
-        print connector
-        print "connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay)
+        #print connector
+        log.info("connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay))
         reactor.callLater(self.lostDelay, connector.connect)
         
     def clientConnectionFailed(self, connector, reason):
-        print connector
-        print "connection failed (%s): reconnecting in %d seconds" % (reason, self.failedDelay)
+        #print connector
+        log.info("connection failed (%s): reconnecting in %d seconds" % (reason, self.failedDelay))
         reactor.callLater(self.failedDelay, connector.connect)
                                                                         
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "$Revision$"
+    version = "20090811.0"
 
     protocol = botcore.PyFiBot
     allBots = None
@@ -233,7 +234,7 @@ class PyFiBotFactory(ThrottledClientFactory):
 
         ThrottledClientFactory.startFactory(self)
 
-        self.log("factory started")
+        log.info("factory started")
 
     def stopFactory(self):
 
@@ -241,17 +242,19 @@ class PyFiBotFactory(ThrottledClientFactory):
         #self.data.close()
         
         ThrottledClientFactory.stopFactory(self)
-        self.log("factory stopped")
+        log.info("factory stopped")
         
     def buildProtocol(self, address):
         address = (address.host, address.port)
 
         # do we know how to connect to the given address?
         for n in self.data['networks'].values():
-            if n.address == address:
+            ip = socket.gethostbyname(n.address[0])
+            net_address = (ip, n.address[1])
+            if net_address == address:
                 break
         else:
-            self.log("unknown network address: " + repr(address))
+            log.info("unknown network address: " + repr(address))
             return InstantDisconnectProtocol()
 
         p = self.protocol(n)
@@ -269,12 +272,11 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def clientConnectionLost(self, connector, reason):
         """Connection lost for some reason"""
-        self.log("connection to %s lost" % str(connector.getDestination().host))
+        log.info("connection to %s lost" % str(connector.getDestination().host))
 
         # find bot that connects to the address that just disconnected
         for n in self.data['networks'].values():
             dest = connector.getDestination()
-            #print "DESTINATION: "+str(dest)
             if (dest.host, dest.port) == n.address:
                 if self.allBots.has_key(n.alias):
                     # did we quit intentionally?
@@ -284,7 +286,7 @@ class PyFiBotFactory(ThrottledClientFactory):
                     del self.allBots[n.alias]
                     return
                 else:
-                    self.log("No active connection to known network %s" % n.address)
+                    log.info("No active connection to known network %s" % n.address[0])
 
     def _finalize_modules(self):
         """Call all module finalizers"""
@@ -292,7 +294,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             # if rehashing (module already in namespace), finalize the old instance first
             if self.ns.has_key(module):
                 if self.ns[module][0].has_key('finalize'):
-                    self.log("finalize - %s" % module)
+                    log.info("finalize - %s" % module)
                     self.ns[module][0]['finalize']()
 
 
@@ -303,12 +305,12 @@ class PyFiBotFactory(ThrottledClientFactory):
         for module in self._findmodules():
 
             env = self._getGlobals()
-            self.log("load module - %s" % module)
+            log.info("load module - %s" % module)
             # Load new version of the module
             execfile(os.path.join(self.moduledir, module), env, env)
             # initialize module
             if env.has_key('init'):
-                self.log("initialize module - %s" % module)
+                log.info("initialize module - %s" % module)
                 env['init'](self.config)
             
             # add to namespace so we can find it later
@@ -344,12 +346,12 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
         
         if self._urlcache.has_key(url) and not nocache:
-            self.log("cache hit : %s" % url)
+            log.info("cache hit : %s" % url)
         else:
             if nocache:
-                self.log("cache pass: %s" % url)
+                log.info("cache pass: %s" % url)
             else:
-                self.log("cache miss: %s" % url)
+                log.info("cache miss: %s" % url)
             self._urlcache[url] = URLCacheItem(url)
             
         return self._urlcache[url]
@@ -373,9 +375,6 @@ class PyFiBotFactory(ThrottledClientFactory):
                 return True
         
         return False
-
-    def log(self, message):
-        print "%-20s: %s" % ("core", message)
 
 def create_example_conf():
     """Create an example configuration file"""
@@ -408,7 +407,24 @@ def create_example_conf():
         f.close()
         return True
 
+
+def init_logging():
+    filename = os.path.join(sys.path[0], 'pyfibot.log')
+    # get root logger
+    logger = logging.getLogger()
+    if False:
+        handler = logging.handlers.RotatingFileHandler(filename, maxBytes=5000*1024, backupCount=20)
+    else:
+        handler = logging.StreamHandler()
+    # time format is same format of strftime
+    formatter = logging.Formatter('%(asctime)-15s %(levelname)-8s %(name)-11s %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(logging.DEBUG)
+
 if __name__ == '__main__':
+
+    init_logging()
 
     sys.path.append(os.path.join(sys.path[0], 'lib'))
 

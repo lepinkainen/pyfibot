@@ -14,7 +14,7 @@
 # twisted imports
 from twisted.words.protocols import irc
 from twisted.internet import reactor, protocol, defer
-from twisted.python import log, rebuild
+from twisted.python import rebuild
 
 from types import FunctionType
 
@@ -23,6 +23,7 @@ import time
 import string
 import random
 import urllib
+import logging
 from util import pyfiurl
 
 # user matching
@@ -32,6 +33,8 @@ import fnmatch
 import textwrap
 
 __pychecker__ = 'unusednames=i, classattr'
+
+log = logging.getLogger("bot")
 
 class CoreCommands(object):
     def command_echo(self, user, channel, args):
@@ -47,14 +50,14 @@ class CoreCommands(object):
             try:
                 # rebuild core & update
                 #rebuild.rebuild(sys.modules['botcore'])
-                self.log("rebuilding %r" % self)
+                log.info("rebuilding %r" % self)
                 rebuild.updateInstance(self)
 
                 self.factory._loadmodules()
 
             except Exception, e:
                 self.say(channel, "Rehash error: %s" % e)
-                print e
+                log.error(e)
             else:
                 self.say(channel, "Rehash OK")
 
@@ -146,7 +149,6 @@ class CoreCommands(object):
         # help for a specific command
         if len(cmnd) > 0:
             for cname, ref in commands:
-                print cname, ref
                 if cname == cmnd:
                     helptext = ref.__doc__.split("\n", 1)[0]
                     self.say(channel, "Help for %s: %s" % (cmnd, helptext))
@@ -180,7 +182,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # text wrapper to clip overly long answers
         self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
         
-        self.log("initialized")
+        log.info("bot initialized")
 
 
     def __repr__(self):
@@ -191,26 +193,26 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
         self.repeatingPing(300)
-        self.log("connection made")
+        log.info("connection made")
             
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
-        self.log("connection lost")
+        log.info("connection lost")
         
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
 
         # QNet specific auth & ip hiding
         if self.network.alias == "quakenet":
-            self.log("I'm on quakenet, authenticating...")
+            log.info("I'm on quakenet, authenticating...")
             self.mode(self.nickname, '+', 'x') # Hide ident
             authname = self.factory.config['networks']['quakenet'].get('authname', None)
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
-                self.log("authname or authpass not found, authentication aborted")
+                log.info("authname or authpass not found, authentication aborted")
             else:
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
-                self.log("Auth sent.")
+                log.info("Auth sent.")
         
         for chan in self.network.channels:
             # defined as a tuple, channel has a key
@@ -218,7 +220,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 self.join(chan[0], key=chan[1])
             else:
                 self.join('#'+chan)
-        self.log("joined %d channel(s)" % len(self.network.channels))
+        log.info("joined %d channel(s)" % len(self.network.channels))
 
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
@@ -239,10 +241,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self.msg(channel, m, length)
             cont = True                                                                        
 
-    def log(self, message):
+    def Xlog(self, message):
         botId = "%s@%s" % (self.nickname, self.network.alias)
         print "%-20s: %s" % (botId, message)
-
 
     ###### COMMUNICATION
 
@@ -318,7 +319,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # core commands
         method = getattr(self, "command_%s" % cmnd, None)
         if method is not None:
-            self.log("internal command %s called by %s (%s) on %s" % (cmnd, user, self.factory.isAdmin(user), channel))
+            log.info("internal command %s called by %s (%s) on %s" % (cmnd, user, self.factory.isAdmin(user), channel))
             method(user, channel, args)
             return
 
@@ -329,7 +330,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             commands = [(c,ref) for c,ref in mylocals.items() if c == "command_%s" % cmnd]
 
             for cname, command in commands:
-                self.log("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
+                log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 command(self, user, channel, args)
 
     ### LOW-LEVEL IRC HANDLERS ###
@@ -436,16 +437,16 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     ## Network = Quakenet -> do Q auth
     def isupport(self, options):
-        print self.network.alias+" SUPPORTS: "+options
+        log.info(self.network.alias+" SUPPORTS: "+options)
 
     def created(self, when):
-        print self.network.alias+" CREATED: "+when
+        log.info(self.network.alias+" CREATED: "+when)
 
     def yourHost(self, info):
-        print self.network.alias+" YOURHOST: "+info
+        log.info(self.network.alias+" YOURHOST: "+info)
 
     def myInfo(self, servername, version, umodes, cmodes):
-        print self.network.alias+" MYINFO: ", servername, version, umodes, cmodes
+        log.info(self.network.alias+" MYINFO: %s %s %s %s", servername, version, umodes, cmodes)
 
     def luserMe(self, info):
-        print self.network.alias+" LUSERME: "+info
+        log.info(self.network.alias+" LUSERME: "+info)
