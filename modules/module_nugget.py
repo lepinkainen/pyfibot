@@ -31,7 +31,7 @@ class Nuggets():
 
 class NuggetsEn(Nuggets):
 	def __init__(self, archive_num):
-		self.question = "Did you know that, "
+		self.question = "Did you know, "
 		#archive_max checked 13-8-2009
 		self.archive_max = 246
 		self.archive_num = archive_num
