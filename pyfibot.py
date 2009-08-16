@@ -101,14 +101,14 @@ class URLCacheItem(object):
 
             size = self.getSize()
             if size > self.max_size:
-                log.warn("CONTENT TOO LARGE, WILL NOT FETCH", size, self.url)
+                log.warn("CONTENT TOO LARGE, WILL NOT FETCH %s %s", size, self.url)
                 self.content = None
             else:
                 if self.checkType():
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
                     type = self.getHeaders().getsubtype()
-                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH", size, type, self.url)
+                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH %s, %s, %s", size, type, self.url)
 
         self._checkstatus()
 
