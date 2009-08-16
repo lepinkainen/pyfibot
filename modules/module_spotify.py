@@ -16,4 +16,4 @@ def handle_url(bot, user, channel, url, msg):
 
     artist, album, song = songinfo.split("/", 2)
 
-    bot.say(channel, "[Spotify] Artist: %s - Album: %s - Song: %s" % (artist.strip(), album.strip(), song.strip()))
+    bot.say(channel, "[Spotify] %s - %s (%s)" % (artist.strip(), song.strip(), album.strip()))
