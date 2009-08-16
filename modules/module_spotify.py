@@ -1,14 +1,22 @@
 import re
 import urllib
 
-def do_spotify(bot, user, channel, dataurl):    
+def do_spotify(bot, user, channel, dataurl, type):    
     f = urllib.urlopen(dataurl)
     songinfo = f.read()
     f.close()
 
-    artist, album, song = songinfo.split("/", 2)
-
-    bot.say(channel, "[Spotify] %s - %s (%s)" % (artist.strip(), song.strip(), album.strip()))
+    
+    if type == "track":
+        artist, album, song = songinfo.split("/", 2)
+        bot.say(channel, "[Spotify] %s - %s (%s)" % (artist.strip(), song.strip(), album.strip()))
+    elif type == "artist":
+        bot.say(channel, "[Spotify] %s" % songinfo.strip())
+    elif type == "album":
+        artist, album = songinfo.split("/", 1)
+        bot.say(channel, "[Spotify] %s - %s" % (artist.strip(), album.strip()))
+    else:
+        pass
 
 def handle_privmsg(bot, user, reply, msg):
     """Grab Spotify URLs from the messages and handle them"""
@@ -18,4 +26,4 @@ def handle_privmsg(bot, user, reply, msg):
 
     dataurl = "http://spotify.url.fi/%s/%s?txt" % (m.group(2), m.group(4))
 
-    do_spotify(bot, user, reply, dataurl)
+    do_spotify(bot, user, reply, dataurl, m.group(2))
