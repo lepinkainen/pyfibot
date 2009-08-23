@@ -380,11 +380,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         Twisted IRCClient doesn't handle this at all.."""
 
         nick = self.factory.getNick(prefix)
-        channel = params[0]
         if nick == self.nickname:
             self.left(channel)
         else:
-            self.userLeft(prefix, channel, params[1])
+            self.userLeft(prefix, None, params[0])
 
     ###### HANDLERS ######
 
@@ -420,9 +419,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """Someone joined"""
         self._runhandler("userJoined", user, channel)
 
-    def userLeft(self, user, channel):
+    def userLeft(self, user, channel, message):
         """Someone left"""
-        self._runhandler("userLeft", user, channel)
+        self._runhandler("userLeft", user, channel, message)
 
     def userKicked(self, kickee, channel, kicker, message):
         """Someone got kicked by someone"""
