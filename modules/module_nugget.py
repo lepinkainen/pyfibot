@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from urllib import FancyURLopener
-from BeautifulSoup import BeautifulSoup
+from util.BeautifulSoup import BeautifulSoup
 import re
 import random
 

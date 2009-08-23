@@ -5,7 +5,6 @@ def do_spotify(bot, user, channel, dataurl, type):
     f = urllib.urlopen(dataurl)
     songinfo = f.read()
     f.close()
-
     
     if type == "track":
         artist, album, song = songinfo.split("/", 2)

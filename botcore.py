@@ -372,7 +372,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         if nick == self.nickname:
             self.left(channel)
         else:
-            self.userLeft(prefix, channel)
+            self.userLeft(prefix, channel, params[1])
         
     def irc_QUIT(self, prefix, params):
         """QUIT-handler.
@@ -384,7 +384,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         if nick == self.nickname:
             self.left(channel)
         else:
-            self.userLeft(prefix, channel)
+            self.userLeft(prefix, channel, params[1])
 
     ###### HANDLERS ######
 
