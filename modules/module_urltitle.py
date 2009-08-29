@@ -239,6 +239,14 @@ def _handle_netanttila(url):
 
     return "%s | %s EUR" % (itemname, price)
 
+def _handle_varttifi(url):
+    """http://www.vartti.fi/artikkeli/*"""
+    bs = getUrl(url).getBS()
+
+    title = bs.first("h2").string
+
+    return title
+
 def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?*v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
