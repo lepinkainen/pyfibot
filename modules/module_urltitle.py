@@ -257,6 +257,11 @@ def _handle_youtube_gdata(url):
         bs = getUrl(infourl).getBS()
     
         entry = bs.first("entry")
+
+        if not entry: 
+            log.info("Video too recent, no info through API yet.")
+            return
+
         author = entry.author.next.string
         # if an entry doesn't have a rating, the whole element is missing
         try:
