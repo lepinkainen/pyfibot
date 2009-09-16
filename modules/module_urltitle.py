@@ -56,9 +56,14 @@ def handle_url(bot, user, channel, url, msg):
 
     try:
         # remove newlines, linefeeds and tabs
-        title = title.string.strip().replace("\n", "").replace("\r", "").replace("\t", " ")
+        title = title.string.strip().replace("\n", " ").replace("\r", " ").replace("\t", " ")
+
         # compress multiple spaces into one
         title = re.sub("[ ]{2,}", "", title)
+
+        # nothing left in title (only spaces, newlines and linefeeds)
+        if not title: return
+
         if _check_redundant(url, title):
             _title(bot, channel, title, redundant=True)   
         else:
