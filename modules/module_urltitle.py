@@ -55,11 +55,14 @@ def handle_url(bot, user, channel, url, msg):
     if not title: return
 
     try:
-        # remove newlines, linefeeds and tabs
-        title = title.string.strip().replace("\n", " ").replace("\r", " ").replace("\t", " ")
+        # remove trailing spaces, newlines, linefeeds and tabs
+        title = title.string.strip()
+        title = title.replace("\n", " ")
+        title = title.replace("\r", " ")
+        title = title.replace("\t", " ")
 
         # compress multiple spaces into one
-        title = re.sub("[ ]{2,}", "", title)
+        title = re.sub("[ ]{2,}", " ", title)
 
         # nothing left in title (only spaces, newlines and linefeeds)
         if not title: return
