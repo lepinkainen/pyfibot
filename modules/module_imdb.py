@@ -15,9 +15,12 @@ def handle_url(bot, user, channel, url, msg):
     title = movie['long imdb title']
     rating = movie.get('rating', 0.0)
     votes = movie.get('votes', 'no')
+    toprank = movie.get('top 250 rank')
+    if toprank:
+        toprank = "Top 250: #%d" % toprank
     genre = "("+"/".join(movie.get('genres'))+")"
 
-    msg = "[IMDB] %s - Rating: %.1f (%s votes) %s" % (title, rating, votes, genre)
+    msg = "[IMDB] %s - Rating: %.1f (%s votes) %s %s" % (title, rating, votes, genre, toprank)
 
     msg = str(msg)
     bot.say(channel, msg)
