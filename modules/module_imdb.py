@@ -1,9 +1,18 @@
 
-from imdb import IMDb
+has_imdb = False
+
+try:
+    from imdb import IMDb
+    has_imdb = True
+except:
+    print "Could not find IMDbPY library, please install from http://imdbpy.sourceforge.net/"
+
 import re
 
 def handle_url(bot, user, channel, url, msg):
     """Handle IMDB urls"""
+
+    if not has_imdb: return
 
     m = re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/", url)
 

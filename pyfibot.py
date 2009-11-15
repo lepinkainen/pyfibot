@@ -205,7 +205,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "20090811.0"
+    version = "20091115.0"
 
     protocol = botcore.PyFiBot
     allBots = None
@@ -221,8 +221,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         self.data['networks'] = {}
         self.ns = {}
 
-        # cache url contents for 10 minutes, check for old entries every minute
-        self._urlcache = timeoutdict.TimeoutDict(timeout=600, pollinterval=60)
+        # cache url contents for 5 minutes, check for old entries every minute
+        self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
 
         if not os.path.exists("data"):
             os.mkdir("data")
