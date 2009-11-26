@@ -35,6 +35,6 @@ def handle_url(bot, user, channel, url, msg):
     genre = "("+"/".join(movie.get('genres'))+")"
 
     msg = "[IMDB] %s - Rating: %.1f (%s votes) %s %s" % (title, rating, votes, genre, rank)
+    msg = msg.encode("UTF-8")
 
-    msg = str(msg)
     bot.say(channel, msg)
