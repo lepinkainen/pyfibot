@@ -201,7 +201,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     ###### CORE 
 
     def printResult(self, msg, info):
-        log.debug("Result %s %s" % (msg, info))
+        # Don't print results if there is nothing to say (usually non-operation on module)
+        if msg:
+            log.debug("Result %s %s" % (msg, info))
     
     def printError(self, msg, info):
         log.error("ERROR %s %s" % (msg, info))
@@ -320,6 +322,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             handlers = [(h,ref) for h,ref in mylocals.items() if h == handler and type(ref) == FunctionType]
 
             for hname, func in handlers:
+                # defer each handler to a separate thread, assign callbacks to see when they end
+                # TODO: Profiling: add time.time() to callback params, calculate difference
                 d = threads.deferToThread(func, self, *args, **kwargs)
                 d.addCallback(self.printResult, "handler %s completed" % hname)
                 d.addErrback(self.printError, "handler %s error" % hname)
@@ -352,10 +356,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
             for cname, command in commands:
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
+                # Defer commands to threads
                 d = threads.deferToThread(command, self, user, channel, args)
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
-                #command(self, user, channel, args)
 
     ### LOW-LEVEL IRC HANDLERS ###
 
