@@ -13,7 +13,7 @@
 
 # twisted imports
 from twisted.words.protocols import irc
-from twisted.internet import reactor, protocol, defer
+from twisted.internet import reactor, protocol, defer, threads
 from twisted.python import rebuild
 
 from types import FunctionType
@@ -91,8 +91,8 @@ class CoreCommands(object):
             log.debug("Attempting to join channel %s", channel)
             if newchannel in bot.network.channels:
                 self.say(channel, "I am already in %s on %s." % (newchannel, network))
-                log.debug("Already on channel %s", channel)
-                log.debug("Channels I'm on this network: %s", bot.network.channels)
+                log.debug("Already on channel %s" % channel)
+                log.debug("Channels I'm on this network: %s" % bot.network.channels)
             else:
                 if password:
                     bot.join(newchannel, key=password)
@@ -200,6 +200,12 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     ###### CORE 
 
+    def printResult(self, msg, info):
+        log.debug("Result %s %s" % (msg, info))
+    
+    def printError(self, msg, info):
+        log.error("ERROR %s %s" % (msg, info))
+
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
         self.repeatingPing(300)
@@ -231,7 +237,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             else:
                 self.join(chan)
 
-        log.info("joined %d channel(s): %s", len(self.network.channels), ", ".join(self.network.channels))
+        log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
 
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
@@ -250,7 +256,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for m in msg:
             if cont: m = "..."+m
             self.msg(channel, m, length)
-            cont = True                                                                        
+            cont = True
+
+        return ('botcore.say', channel, message)
 
     def log(self, message):
         botId = "%s@%s" % (self.nickname, self.network.alias)
@@ -312,7 +320,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             handlers = [(h,ref) for h,ref in mylocals.items() if h == handler and type(ref) == FunctionType]
 
             for hname, func in handlers:
-                func(self, *args, **kwargs)
+                d = threads.deferToThread(func, self, *args, **kwargs)
+                d.addCallback(self.printResult, "handler %s completed" % hname)
+                d.addErrback(self.printError, "handler %s error" % hname)
             
     def _command(self, user, channel, cmnd):
         """Handles bot commands.
@@ -342,7 +352,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
             for cname, command in commands:
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
-                command(self, user, channel, args)
+                d = threads.deferToThread(command, self, user, channel, args)
+                d.addCallback(self.printResult, "command %s completed" % cname)
+                d.addErrback(self.printError, "command %s error" % cname)
+                #command(self, user, channel, args)
 
     ### LOW-LEVEL IRC HANDLERS ###
 
@@ -456,7 +469,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         log.info(self.network.alias+" YOURHOST: "+info)
 
     def myInfo(self, servername, version, umodes, cmodes):
-        log.info(self.network.alias+" MYINFO: %s %s %s %s", servername, version, umodes, cmodes)
+        log.info(self.network.alias+" MYINFO: %s %s %s %s" % (servername, version, umodes, cmodes))
 
     def luserMe(self, info):
         log.info(self.network.alias+" LUSERME: "+info)

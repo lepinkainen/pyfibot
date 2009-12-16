@@ -45,4 +45,4 @@ def calc_google(args):
 
 def command_calc(bot, user, channel, args):
     if not args: return
-    bot.say(channel, calc_google(args))
+    return bot.say(channel, calc_google(args))

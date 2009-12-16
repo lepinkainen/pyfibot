@@ -11,16 +11,16 @@ def handle_userJoined(bot, user, channel):
         ip = parseWebchatIP(username)
         hostname = socket.getfqdn(ip)
         if hostname:
-            bot.say(channel, "%s is using webchat from %s -> %s" % (nick, ip, hostname))
+            return bot.say(channel, "%s is using webchat from %s -> %s" % (nick, ip, hostname))
 
 def command_webchat(bot, user, channel, args):
     """Parse a webhcat hex ip to a domain"""
     ip = parseWebchatIP(args)
     if ip:
         hostname = socket.getfqdn(ip)
-        bot.say(channel, "webchat from %s" % hostname)
+        return bot.say(channel, "webchat from %s" % hostname)
     else:
-        bot.say(channel, "%s: %s is not a valid webchat hex ip" % (getNick(user), args))
+        return bot.say(channel, "%s: %s is not a valid webchat hex ip" % (getNick(user), args))
 
 def parseWebchatIP(hexip):
     """Parse webchat hex-format ip to decimal ip"""

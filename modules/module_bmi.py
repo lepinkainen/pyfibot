@@ -23,6 +23,6 @@ def command_bmi(bot, user, channel, args):
     """Calculates your body mass index. Usage: .bmi height(cm)/weight(kg)"""
     data = args.split("/")
     if len(data) != 2:
-        bot.say(channel, "error with arguments")
+        return bot.say(channel, "error with arguments")
     else:
-        bot.say(channel, print_bmi(calc_bmi(int(data[0]), int(data[1]))))
+        return bot.say(channel, print_bmi(calc_bmi(int(data[0]), int(data[1]))))

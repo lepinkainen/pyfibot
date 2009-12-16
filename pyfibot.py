@@ -33,7 +33,7 @@ except ImportError:
 # twisted imports
 try:
     from twisted.words.protocols import irc
-    from twisted.internet import reactor, protocol
+    from twisted.internet import reactor, protocol, threads, defer
     from twisted.python import rebuild
 except ImportError:
     print "Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download"
@@ -101,14 +101,14 @@ class URLCacheItem(object):
 
             size = self.getSize()
             if size > self.max_size:
-                log.warn("CONTENT TOO LARGE, WILL NOT FETCH %s %s", size, self.url)
+                log.warn("CONTENT TOO LARGE, WILL NOT FETCH %s %s" % (size, self.url))
                 self.content = None
             else:
                 if self.checkType():
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
                     type = self.getHeaders().getsubtype()
-                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH %s, %s, %s", size, type, self.url)
+                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH %s, %s, %s" % (size, type, self.url))
 
         self._checkstatus()
 
@@ -156,7 +156,7 @@ class URLCacheItem(object):
         return self.bs
 
 class BotURLOpener(urllib.FancyURLopener):
-    """Url opener that fakes itself as Firefox and ignores all basic auth prompts"""
+    """URL opener that fakes itself as Firefox and ignores all basic auth prompts"""
     
     def __init__(self, *args):
         # Firefox 1.0PR on w2k
@@ -242,8 +242,9 @@ class PyFiBotFactory(ThrottledClientFactory):
         del self.allBots
         #self.data.close()
         
-        ThrottledClientFactory.stopFactory(self)
+        ThrottledClientFactory.stopFactory(self)        
         log.info("factory stopped")
+        reactor.stop()
         
     def buildProtocol(self, address):
         if re.match("[^a-z]+", address.host):
@@ -324,18 +325,6 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Find all modules"""
         modules = [m for m in os.listdir(self.moduledir) if m.startswith("module_") and m.endswith(".py")]
         return modules
-
-    def _runhandler(self, handler, *args, **kwargs):
-        """Run a handler for an event"""
-        handler = "handle_%s" % handler
-        # module commands
-        for module, env in self.ns.items():
-            myglobals, mylocals = env
-            # find all matching command functions
-            handlers = [(h,ref) for h,ref in mylocals.items() if h == handler and type(ref) == FunctionType]
-
-            for hname, func in handlers:
-                func(*args, **kwargs)
 
     def _getGlobals(self):
         """Global methods for modules"""

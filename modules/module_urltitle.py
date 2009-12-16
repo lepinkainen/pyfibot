@@ -43,9 +43,8 @@ def handle_url(bot, user, channel, url, msg):
         if fnmatch.fnmatch(url, pattern):
             title = ref(url)
             if title:
-                _title(bot, channel, title, True)
-            # handler found, abort
-            return
+                # handler found, abort
+                return _title(bot, channel, title, True)
                         
     bs = getUrl(url).getBS()
     if not bs: return
@@ -68,9 +67,9 @@ def handle_url(bot, user, channel, url, msg):
         if not title: return
 
         if _check_redundant(url, title):
-            _title(bot, channel, title, redundant=True)   
+            return _title(bot, channel, title, redundant=True)   
         else:
-            _title(bot, channel, title)
+            return _title(bot, channel, title)
     except AttributeError:
         # TODO: Nees a better way to handle this
         # this happens with empty <title> tags
@@ -116,9 +115,9 @@ def _title(bot, channel, title, smart=False, redundant=False):
     log.info(title)
 
     if not info:
-        bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
+        return bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
     else:
-        bot.say(channel, "%s '%s' %s" % (prefix, title, info))
+        return bot.say(channel, "%s '%s' %s" % (prefix, title, info))
 
 ##### HANDLERS #####
 

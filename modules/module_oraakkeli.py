@@ -13,4 +13,4 @@ def command_oraakkeli(bot, user, channel, args):
     answer = unicode(answer)
     answer = answer.encode("utf-8")
     
-    bot.say(channel, "Oraakkeli vastaa: %s" % answer)
+    return bot.say(channel, "Oraakkeli vastaa: %s" % answer)

@@ -16,6 +16,8 @@ def init(botconfig):
 def handle_url(bot, user, channel, url, msg):
     if not config: return
 
+    ret = None
+
     urlid = "%s|%s" % (channel, url)
     
     con = sqlite.connect(os.path.join(sys.path[0], "urls.sqlite"))
@@ -43,10 +45,12 @@ def handle_url(bot, user, channel, url, msg):
         # don't alert for the same person
         if getNick(user) != getNick(userhost):
             if channel != "#wow":
-                bot.say(channel, "%s: wanha. (by %s %s ago)" % ( getNick(user), getNick(userhost), agestr))
+                ret = bot.say(channel, "%s: wanha. (by %s %s ago)" % ( getNick(user), getNick(userhost), agestr))
     else:
         cur.execute("INSERT INTO urls VALUES(%s, %s, %s, %s, %d)", (urlid, user, url, channel, int(time.time())));
         
     con.commit()
     cur.close()
     con.close()
+
+    return ret

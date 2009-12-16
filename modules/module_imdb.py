@@ -37,4 +37,4 @@ def handle_url(bot, user, channel, url, msg):
     msg = "[IMDB] %s - Rating: %.1f (%s votes) %s %s" % (title, rating, votes, genre, rank)
     msg = msg.encode("UTF-8")
 
-    bot.say(channel, msg)
+    return bot.say(channel, msg)

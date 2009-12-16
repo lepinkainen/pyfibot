@@ -10,7 +10,7 @@ def command_posti(bot, user, channel, args):
     result = getstatus(args, count=1)
     
     for line in result:
-        bot.say(channel, line.encode("UTF-8"))
+        return bot.say(channel, line.encode("UTF-8"))
 
 def getstatus(code, count=None):
     url = baseurl % code

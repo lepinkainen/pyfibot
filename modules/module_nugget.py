@@ -83,4 +83,4 @@ def command_nugget(bot, user, channel, args):
     else:
         nugget = NuggetsFi(10000)
         
-    bot.say(channel, nugget.getSentence())
+    return bot.say(channel, nugget.getSentence())
