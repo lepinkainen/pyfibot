@@ -39,7 +39,12 @@ def calc_google(args):
 
     m = re.search("\/calc_img\.gif.*?<b>(.*?)<\/b>", d)
     if m:
-        return m.group(1)
+        res = m.group(1)
+        # clean up
+        res = res.replace("<font size=-2> </font>", " ")
+        res = res.replace("<sup>", "^").replace("</sup>", "")
+        res = res.replace("&#215;", "×")
+        return res
     else:
         return "Invalid calculation"
 
