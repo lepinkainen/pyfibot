@@ -7,7 +7,7 @@ def handle_userJoined(bot, user, channel):
     username = username.replace("~", "").replace("-", "")
 
     # known webchat hosts
-    if host in ["webchat.xs4all.nl", "wwwirc.kapsi.fi"]:
+    if host in ["webchat.xs4all.nl", "wwwirc.kapsi.fi", "webchat.mibbit.com"]:
         ip = parseWebchatIP(username)
         hostname = socket.getfqdn(ip)
         if hostname:
