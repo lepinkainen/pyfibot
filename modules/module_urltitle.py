@@ -24,7 +24,7 @@ def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
 
     if msg.startswith("-"): return
-    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/", url): return # IMDB urls are handled elsewhere
+    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url): return # IMDB urls are handled elsewhere
     if re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url): return # spotify handled elsewhere
 
     if channel.lstrip("#") in config.get('disable', ''): return
