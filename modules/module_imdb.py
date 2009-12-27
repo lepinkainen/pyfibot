@@ -14,7 +14,7 @@ def handle_url(bot, user, channel, url, msg):
 
     if not has_imdb: return
 
-    m = re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/", url)
+    m = re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url)
 
     if not m: return
         
