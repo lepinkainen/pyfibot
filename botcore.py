@@ -389,6 +389,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         if nick == self.nickname:
             self.left(channel)
         else:
+            # some clients don't send a part message at all, compensate
+            if len(params) == 1: params.append("")
             self.userLeft(prefix, channel, params[1])
         
     def irc_QUIT(self, prefix, params):
