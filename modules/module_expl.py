@@ -39,7 +39,7 @@ def check_params(bot, args, channel):
 
     expldir = expl_getdir(channel)
     if not expldir:
-        bot.log("No expldir for channel %s" % channel)
+        bot.log("No expldir for channel %s, create %s to enable expl." % (channel, os.path.join(sys.path[0], "expl", channel)))
         return False
 
     termlist = expl_getlist(expldir)
@@ -80,10 +80,12 @@ def command_add(bot, user, channel, args):
     try:
         expldir, termlist = check_params(bot, args, channel)
     except TypeError:
+        bot.log("No expldir for channel %s" % channel)
         return
 
     args = args.split(" ", 1)
-    if not args[1]: return
+    if not args[1]: 
+        return bot.say(user, "No explanation given")
   
     term = expl_parseterm(args[0])
     if term in termlist:
