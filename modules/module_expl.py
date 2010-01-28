@@ -102,6 +102,8 @@ def command_add(bot, user, channel, args):
 def command_del(bot, user, channel, args):
     """Deletes term from explanation database. Usage: .del <term> See also: .expl, .rexpl, .add, .ls"""
 
+    if not isAdmin(user): return
+
     try:
         expldir, termlist = check_params(bot, args, channel)
     except TypeError:
