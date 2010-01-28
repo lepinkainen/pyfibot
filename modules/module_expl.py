@@ -43,7 +43,6 @@ def check_params(bot, args, channel):
         return False
 
     termlist = expl_getlist(expldir)
-    if not termlist: return False
 
     return expldir, termlist
     
