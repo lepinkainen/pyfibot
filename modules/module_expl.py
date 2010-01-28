@@ -33,7 +33,7 @@ def expl_getexpl(expldir, term):
     f.close()
     return expl
 
-def check_params(args, channel):
+def check_params(bot, args, channel):
     """Do some initial checking for the stuff we need for every subcommand"""
     if not args: return False
 
@@ -51,7 +51,7 @@ def command_expl(bot, user, channel, args):
     """Explains terms. Usage: .expl <term> See also: .rexpl, .add, .del, .ls"""
 
     try:
-        expldir, termlist = check_params(args, channel)
+        expldir, termlist = check_params(bot, args, channel)
     except TypeError:
         return
  
@@ -66,7 +66,7 @@ def command_rexpl(bot, user, channel, args):
     """Returns random explanation. See also: .expl, .add, .del, .ls"""
 
     try:
-        expldir, termlist = check_params("none", channel)
+        expldir, termlist = check_params(bot, "none", channel)
     except TypeError:
         return
  
@@ -78,7 +78,7 @@ def command_add(bot, user, channel, args):
     """Adds explanation for term. Usage: .add <term> <explanation> See also: .expl, .rexpl, .del, .ls"""
 
     try:
-        expldir, termlist = check_params(args, channel)
+        expldir, termlist = check_params(bot, args, channel)
     except TypeError:
         return
 
@@ -102,7 +102,7 @@ def command_del(bot, user, channel, args):
     """Deletes term from explanation database. Usage: .del <term> See also: .expl, .rexpl, .add, .ls"""
 
     try:
-        expldir, termlist = check_params(args, channel)
+        expldir, termlist = check_params(bot, args, channel)
     except TypeError:
         return
  
@@ -119,7 +119,7 @@ def command_ls(bot, user, channel, args):
     """Lists commands matching your Unix-like search query. Usage: .ls <query> Example: .ls ex[cp]la[!i]* matches 'explanation' and 'exclamation' but not 'explain'. See also: .expl, .rexpl, .add, .del"""
 
     try:
-        expldir, termlist = check_params(args, channel)
+        expldir, termlist = check_params(bot, args, channel)
     except TypeError:
         return
  

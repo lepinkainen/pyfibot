@@ -303,3 +303,27 @@ def _handle_youtube_gdata(url):
             adult = ""
         
         return "%s by %s [%s - %s - %s views%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, adult)
+
+def _handle_helmet(url):
+    """http://www.helmet.fi/record=*fin"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+ 
+    title = bs.find(attr={'class':'bibInfoLabel'},text='Teoksen nimi').next.next.next.next.string
+ 
+    return title
+ 
+def _handle_ircquotes(url):
+    """http://ircquotes.fi/[?]*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+ 
+    chan = bs.first("span", {'class':'quotetitle'}).next.next.string
+    points = bs.first("span", {'class':'points'}).next.string
+    firstline = bs.first("div", {'class':'quote'}).next.string
+ 
+    title = "%s (%s): %s" % (chan, points, firstline)
+ 
+    return title
+ 
+ 
