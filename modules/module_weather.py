@@ -24,9 +24,6 @@ def parse_google_wind_condition(wind_condition):
 def command_weather(bot, user, channel, args):
     """ Just pass city's name and i tell you the current weather for that location."""
     if not has_pywapi: return
-    if not args:
-        bot.say(channel, 'please enter argument.')
-        return
 
     result_dict = pywapi.get_weather_from_google(args)
     if not all(result_dict.values()):
