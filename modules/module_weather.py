@@ -8,7 +8,8 @@ try:
 except:
     print('Error loading library pywapi. Probably you havent install it yet.')
 
-#TODO: This function need fixing!
+import compass_points
+	#TODO: This function need fixing!
 def feels_like(temperature, air_speed):
     """tempeture as °C, air_speed as kmph. The formula from http://www.bbc.co.uk/weather/features/understanding/feelslike.shtml"""
     air_speed = air_speed ** 0.16
@@ -36,7 +37,7 @@ def command_weather(bot, user, channel, args):
     temperature = int(result_dict['current_conditions']['temp_c'])
     
     answer = u'%s: %s, %d °C feels like %d °C, Wind: %.1f m/s from %s' % \
-	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_point)
+	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_points[compass_point])
     answer = answer.encode("utf-8")
     return bot.say(channel, answer)
   
