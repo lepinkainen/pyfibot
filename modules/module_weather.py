@@ -32,15 +32,15 @@ def command_weather(bot, user, channel, args):
 
     compass_point, kmph, mps = parse_google_wind_condition(result_dict['current_conditions']['wind_condition'])
 	
-	compass_points = {'N': 'north', 'S': 'south', 'W': 'west', 'E': 'east', 'NW': 'northwest', 'NE': 'northeast', 'SW': 'southwest', 'SE': 'southeast'}
-	compass_point = compass_points[compass_point]
+    compass_points = {'N': 'north', 'S': 'south', 'W': 'west', 'E': 'east', 'NW': 'northwest', 'NE': 'northeast', 'SW': 'southwest', 'SE': 'southeast'}
+    compass_point = compass_points[compass_point]
 
     city = result_dict['forecast_information']['city']
     condition = result_dict['current_conditions']['condition']
     temperature = int(result_dict['current_conditions']['temp_c'])
     
     answer = u'%s: %s, %d °C feels like %d °C, Wind: %.1f m/s from %s' % \
-	     (city, condition, temperature, feels_like(temperature, kmph), mps, cp2humanreadable(compass_point))
+	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_point)
     answer = answer.encode("utf-8")
     return bot.say(channel, answer)
   
