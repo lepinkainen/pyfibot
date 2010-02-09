@@ -8,7 +8,6 @@ try:
 except:
     print('Error loading library pywapi. Probably you havent install it yet.')
 
-import compass_points
 	#TODO: This function need fixing!
 def feels_like(temperature, air_speed):
     """tempeture as °C, air_speed as kmph. The formula from http://www.bbc.co.uk/weather/features/understanding/feelslike.shtml"""
@@ -32,6 +31,9 @@ def command_weather(bot, user, channel, args):
         return
 
     compass_point, kmph, mps = parse_google_wind_condition(result_dict['current_conditions']['wind_condition'])
+	compass_point = {'N': 'north', 'S': 'south', 'W': 'west', 'E': 'east',
+	 'NW': 'northwest', 'NE': 'northeast', 'SW': 'southwest', 'SE': 'southeast'}[compass_point]
+	 
     city = result_dict['forecast_information']['city']
     condition = result_dict['current_conditions']['condition']
     temperature = int(result_dict['current_conditions']['temp_c'])
