@@ -37,7 +37,7 @@ def command_weather(bot, user, channel, args):
     temperature = int(result_dict['current_conditions']['temp_c'])
     
     answer = u'%s: %s, %d °C feels like %d °C, Wind: %.1f m/s from %s' % \
-	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_points[compass_point])
+	     (city, condition, temperature, feels_like(temperature, kmph), mps, cp2humanreadable(compass_point))
     answer = answer.encode("utf-8")
     return bot.say(channel, answer)
   
