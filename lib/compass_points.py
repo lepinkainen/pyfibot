@@ -6,5 +6,3 @@ compass_points = {'N': 'north',
 		 'NE': 'northeast',
 		 'SW': 'southwest',
 		 'SE': 'southeast'}
-
-print compass_points['N']
