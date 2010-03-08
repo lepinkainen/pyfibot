@@ -254,6 +254,10 @@ def _handle_varttifi(url):
 
     return title
 
+def _handle_youtube_gdata_new(url):
+    """http://youtube.com/watch#!v=*"""
+    return self._handle_youtube_gdata(url)
+
 def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?*v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"

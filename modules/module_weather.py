@@ -8,7 +8,6 @@ try:
 except:
     print('Error loading library pywapi. Probably you havent install it yet.')
 
-	#TODO: This function need fixing!
 def feels_like(temperature, air_speed):
     """tempeture as °C, air_speed as kmph. The formula from http://www.bbc.co.uk/weather/features/understanding/feelslike.shtml"""
     air_speed = air_speed ** 0.16
