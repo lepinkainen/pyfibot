@@ -237,6 +237,34 @@ def _handle_mol(url):
 
     return title
 
+def _handle_helmet(url):
+    """http://www.helmet.fi/record=*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.first("strong").string
+
+    return title
+
+def _handle_tweet(url):
+    """http*://twitter.com/*/status/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    status = bs.first("span", {'class':'entry-content'}).findAll(text=True)
+    content = ""
+    for i in status:
+        content += i
+
+    published = bs.first("span", {'class':'published timestamp'})['data']
+    # Fri Feb 05 17:40:13 +0000 2010
+    published = time.strptime(published[7:37], "%a %b %d %H:%M:%S +0000 %Y")
+    published = time.strftime("%Y-%m-%d %H:%M", published)
+
+    title = "(%s) %s" % (published, content)
+
+    return title
+
 def _handle_netanttila(url):
     """http://www.netanttila.com/webapp/wcs/stores/servlet/ProductDisplay*"""
     bs = getUrl(url).getBS()
