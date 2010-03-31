@@ -376,7 +376,7 @@ def create_example_conf():
     nick: botnick
 
     admins:
-      - '*!*@myhost.com'
+      - 'foo!bar@example.com'
     
     networks:
       ircnet:
