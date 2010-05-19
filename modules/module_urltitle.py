@@ -29,11 +29,19 @@ def handle_url(bot, user, channel, url, msg):
 
     if channel.lstrip("#") in config.get('disable', ''): return
 
+    # hack, support both ignore and ignore_urls for a while
     for ignore in config.get("ignore", []):
         if fnmatch.fnmatch(url, ignore): 
             log.info("Ignored URL: %s %s", url, ignore)
             return
-
+    for ignore in config.get("ignore_urls", []):
+        if fnmatch.fnmatch(url, ignore): 
+            log.info("Ignored URL: %s %s", url, ignore)
+            return
+    for ignore in config.get("ignore_users", []):
+        if fnmatch.fnmatch(user, ignore): 
+            log.info("Ignored url from user: %s, %s %s", user, url, ignore)
+            return
 
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
