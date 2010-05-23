@@ -160,7 +160,7 @@ class BotURLOpener(urllib.FancyURLopener):
     
     def __init__(self, *args):
         # Firefox 1.0PR on w2k
-        self.version = "Mozilla/5.0 (Windows; U; Windows NT 5.0; rv:1.7.3) PyFiBot"
+        self.version = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/534.0 (KHTML, like Gecko) Chrome/6.0.408.1 Safari/534.0"
         urllib.FancyURLopener.__init__(self, *args)
 
     def prompt_user_passwd(self, host, realm):
