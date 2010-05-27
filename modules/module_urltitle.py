@@ -366,4 +366,14 @@ def _handle_ircquotes(url):
  
     return title
  
- 
+def _handle_alko(url):
+    """http://www.alko.fi/tuotteet/fi/*"""
+
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    name = bs.find('span', {'class':'tuote_otsikko'}).string
+    price = bs.find('span', {'class':'tuote_hinta'}).string.split(" ")[0]+u"€"
+    drinktype = bs.find('span', {'class':'tuote_tyyppi'}).next
+
+    return name+" - "+drinktype+" - "+price
