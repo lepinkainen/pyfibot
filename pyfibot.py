@@ -443,7 +443,12 @@ if __name__ == '__main__':
             if channel[0] not in '&#!+': channel = '#' + channel
             chanlist.append(channel)
 
-        factory.createNetwork((settings['server'], 6667), network, nick, chanlist)
-        reactor.connectTCP(settings['server'], 6667, factory)
+	port = 6667
+	try:
+	    port = int(settings.get('port'))
+	except:
+	    pass
+        factory.createNetwork((settings['server'], port), network, nick, chanlist)
+        reactor.connectTCP(settings['server'], port, factory)
         
     reactor.run()
