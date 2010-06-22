@@ -221,9 +221,9 @@ def _handle_verkkokauppa(url):
     if not bs: return
 
     product = bs.first("td", {'valign':'top', 'width':'59%', 'height':'139'}).next.strip()
-    price = str(bs.first(text="Hinta:").next.next.next.next.string).split("&")[0]
+    price = str(bs.first(text="Hinta:").next.next.next.next.next.string).split("&")[0]
 
-    return "%s | %s EUR" % (product, price)
+    return "%s | %s€" % (product, price)
 
 
 def _handle_yle(url):
