@@ -265,6 +265,7 @@ def _handle_tweet(url):
         content += i
 
     published = bs.first("span", {'class':'published timestamp'})['data']
+    import time
     # Fri Feb 05 17:40:13 +0000 2010
     published = time.strptime(published[7:37], "%a %b %d %H:%M:%S +0000 %Y")
     published = time.strftime("%Y-%m-%d %H:%M", published)
