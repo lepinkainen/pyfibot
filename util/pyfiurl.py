@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 ## (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
 
 ## Thanks to Shrike for helping this :)
@@ -287,6 +287,10 @@ def unitTest():
         def testAnchor(self):
             """Link with an anchor tag"""
             self.assertEqual(['http://foo.com/page.html#anchor'], grab('http://foo.com/page.html#anchor', self.needScheme))
+
+        def testScandinavian(self):
+            """Test åäö"""
+            self.assertEqual(['http://www.hs.fi/kotimaa/artikkeli/Äidin+avovaimosta+lapsen+toinen+huoltaja+KKOn+päätöksellä/1135253379084'], grab('http://www.hs.fi/kotimaa/artikkeli/Äidin+avovaimosta+lapsen+toinen+huoltaja+KKOn+päätöksellä/1135253379084', self.needScheme))
 
         def testBlocks(self):
             """Test blocks"""

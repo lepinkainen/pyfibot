@@ -466,7 +466,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     ## Network = Quakenet -> do Q auth
     def isupport(self, options):
-        log.info(self.network.alias+" SUPPORTS: "+options)
+        log.info(self.network.alias+" SUPPORTS: "+",".join(options))
 
     def created(self, when):
         log.info(self.network.alias+" CREATED: "+when)

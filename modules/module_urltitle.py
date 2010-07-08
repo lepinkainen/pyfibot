@@ -378,3 +378,24 @@ def _handle_alko(url):
     drinktype = bs.find('span', {'class':'tuote_tyyppi'}).next
 
     return name+" - "+drinktype+" - "+price
+
+def _handle_salakuunneltua(url):
+    """*salakuunneltua.fi*"""
+    return None
+
+def _handle_vimeo(url):
+    """*vimeo.com/*"""
+
+    data_url = "http://vimeo.com/api/v2/video/%s.xml"
+
+    match = re.match("http://.*?vimeo.com/(\d+)", url)
+    if match:
+        infourl = data_url % match.group(1)
+        bs = getUrl(infourl).getBS()
+    
+        title = bs.first("title").string
+        user = bs.first("user_name").string
+        likes = bs.first("stats_number_of_likes").string
+        plays = bs.first("stats_number_of_plays").string
+
+        return "%s by %s [%s likes, %s views]" % (title, user, likes, plays)
