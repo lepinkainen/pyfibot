@@ -35,11 +35,12 @@ def command_weather(bot, user, channel, args):
     compass_point = compass_points[compass_point]
 
     city = result_dict['forecast_information']['city']
+    humidity = result_dict['current_conditions']['humidity']
     condition = result_dict['current_conditions']['condition']
     temperature = int(result_dict['current_conditions']['temp_c'])
     
-    answer = u'%s: %s, %d °C feels like %d °C, Wind: %.1f m/s from %s' % \
-	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_point)
+    answer = u'%s: %s, %d °C feels like %d °C, Wind: %.1f m/s from %s, %s' % \
+	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_point, humidity)
     answer = answer.encode("utf-8")
     return bot.say(channel, answer)
   
