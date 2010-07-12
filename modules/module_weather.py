@@ -6,7 +6,7 @@ try:
     import pywapi
     has_pywapi = True
 except:
-    print('Error loading library pywapi. Probably you havent install it yet.')
+    print('Error loading library pywapi. Probably you havent installed it yet.')
 
 def feels_like(temperature, air_speed):
     """tempeture as °C, air_speed as kmph. The formula from http://www.bbc.co.uk/weather/features/understanding/feelslike.shtml"""
@@ -21,7 +21,7 @@ def parse_google_wind_condition(wind_condition):
     return wind_condition[1], kmph, mps
 
 def command_weather(bot, user, channel, args):
-    """ Just pass city's name and i tell you the current weather for that location."""
+    """ This module tells a weather for location."""
     if not has_pywapi: return
 
     result_dict = pywapi.get_weather_from_google(args)
@@ -43,4 +43,4 @@ def command_weather(bot, user, channel, args):
 	     (city, condition, temperature, feels_like(temperature, kmph), mps, compass_point, humidity)
     answer = answer.encode("utf-8")
     return bot.say(channel, answer)
-  
+
