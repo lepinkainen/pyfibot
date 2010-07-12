@@ -19,12 +19,11 @@ def command_forecast(bot, user, channel, args):
         bot.say(channel, 'unknown location')
         return
 
-    answerlist = []
+    answerstr = u'%s: ' % (result_dict['forecast_information']['city'])
     for day in result_dict['forecasts']:
-    	answerlist.append(u'%s: %s (%.0f°C/%.0f°C).' % (day['day_of_week'], \
+        answerstr = answerstr + (u'%s: %s (%.0f°C/%.0f°C), ' % (day['day_of_week'], \
                           day['condition'], \
                           celcius_to_fahrenheit(day['low']), \
                           celcius_to_fahrenheit(day['high'])))
 
-    answer = " ".join(answerlist).encode("utf-8")
-    bot.say(channel, answer)
+    bot.say(channel, answerstr.encode('utf-8'))
