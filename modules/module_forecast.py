@@ -8,7 +8,7 @@ try:
 except:
     print('Error loading library pywapi. Probably you havent installed it yet.')
 
-def celcius_to_fahrenheit(f): return (int(f)-32)/1.8
+def fahrenheit_to_celcius(f): return (int(f)-32)/1.8
 
 def command_forecast(bot, user, channel, args):
     '''this module tells weather forecast for location'''
@@ -22,8 +22,8 @@ def command_forecast(bot, user, channel, args):
     def format_day(day):
         return (u'%s: %s (%.0f°C/%.0f°C)' % (day['day_of_week'], \
                           day['condition'], \
-                          celcius_to_fahrenheit(day['low']), \
-                          celcius_to_fahrenheit(day['high'])))
+                          fahrenheit_to_celcius(day['low']), \
+                          fahrenheit_to_celcius(day['high'])))
 
 
     answerstr = u'%s: ' % (result_dict['forecast_information']['city'])
