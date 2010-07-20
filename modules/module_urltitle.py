@@ -138,7 +138,9 @@ def _handle_hs(url):
 
     # determine article age and warn if it is too old
     from datetime import datetime
-    date = bs.first('p', {'class':'date'}).string.strip()
+    # handle updated news items of format, and get the latest update stamp
+    # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
+    date = bs.first('p', {'class':'date'}).string.split("|")[-1].strip()[-15:]
     article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
     delta = datetime.now() - article_date
 
