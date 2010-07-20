@@ -125,7 +125,7 @@ def _title(bot, channel, title, smart=False, redundant=False):
     if not info:
         return bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
     else:
-        return bot.say(channel, "%s '%s' %s" % (prefix, title, info))
+        return bot.say(channel, "%s '%s' [%s]" % (prefix, title, info))
 
 ##### HANDLERS #####
 
@@ -135,9 +135,19 @@ def _handle_hs(url):
     if not bs: return
     title = bs.title.string
     title = title.split("-")[0].strip()
-    return title
 
-def _handle_hs(url):
+    # determine article age and warn if it is too old
+    from datetime import datetime
+    date = bs.first('p', {'class':'date'}).string.strip()
+    article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
+    delta = datetime.now() - article_date
+
+    if delta.days > 365:
+        return title, "NOTE: Article is %d days old!" % delta.days
+    else:
+        return title
+
+def _handle_ksml(url):
     """*ksml.fi/uutiset*"""
     bs = getUrl(url).getBS()
     if not bs: return
@@ -355,7 +365,7 @@ def _handle_helmet(url):
     return title
  
 def _handle_ircquotes(url):
-    """http://ircquotes.fi/[?]*"""
+    """http://*ircquotes.fi/[?]*"""
     bs = getUrl(url).getBS()
     if not bs: return
  
