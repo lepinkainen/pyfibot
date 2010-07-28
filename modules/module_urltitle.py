@@ -136,17 +136,21 @@ def _handle_hs(url):
     title = bs.title.string
     title = title.split("-")[0].strip()
 
-    # determine article age and warn if it is too old
-    from datetime import datetime
-    # handle updated news items of format, and get the latest update stamp
-    # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
-    date = bs.first('p', {'class':'date'}).string.split("|")[-1].strip()[-15:]
-    article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
-    delta = datetime.now() - article_date
+    try:
+        # determine article age and warn if it is too old
+        from datetime import datetime
+        # handle updated news items of format, and get the latest update stamp
+        # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
+        date = bs.first('p', {'class':'date'}).string.split("|")[-1].strip()[-15:]
+        article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
+        delta = datetime.now() - article_date
 
-    if delta.days > 365:
-        return title, "NOTE: Article is %d days old!" % delta.days
-    else:
+        if delta.days > 365:
+            return title, "NOTE: Article is %d days old!" % delta.days
+        else:
+            return title
+    except Exception, e:
+        log.error("Error when parsing hs.fi: "+e)
         return title
 
 def _handle_ksml(url):
