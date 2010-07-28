@@ -175,8 +175,6 @@ def _handle_iltalehti(url):
     # the first part is the actual story title, lose the rest
     title = title.split("|")[0].strip()
 
-    if not title: return
-
     return title
 
 def _handle_iltasanomat(url):
@@ -184,9 +182,8 @@ def _handle_iltasanomat(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.title.string.split(" - ")[0]
-
-    if not title: return
+    # strip the bit after the last "-"
+    title = " - ".join(bs.title.string.split(" - ")[:-1])
 
     return title
 
