@@ -186,8 +186,7 @@ def _handle_iltasanomat(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    # strip the bit after the last "-"
-    title = " - ".join(bs.title.string.split(" - ")[:-1])
+    title = bs.title.string.rsplit(" - ", 1)[0]
 
     return title
 
