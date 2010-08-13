@@ -5,7 +5,7 @@
 
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2004 Riku Lindblad
-@license GPL
+@license BSD
 """
 
 # TODO:
