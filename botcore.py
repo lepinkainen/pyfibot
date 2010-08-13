@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# $Id$
 
-"""Bot core
+"""
+Bot core
 
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2004 Riku Lindblad
-@license BSD
+@license New-Style BSD
 """
 
 # TODO:

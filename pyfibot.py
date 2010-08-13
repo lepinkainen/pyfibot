@@ -1,11 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""A modular python bot based on the twisted matrix irc library
+"""
+A modular python bot based on the twisted matrix irc library
 
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2006 Riku Lindblad
-@license BSD
+@license New-Style BSD
 """
 
 import re
