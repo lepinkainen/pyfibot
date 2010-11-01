@@ -1,28 +1,26 @@
 import re
-import urllib
+from util.BeautifulSoup import BeautifulStoneSoup
 
-def do_spotify(bot, user, channel, dataurl, type):    
-    f = urllib.urlopen(dataurl)
-    songinfo = f.read()
-    f.close()
-    
-    if type == "track":
-        artist, album, song = songinfo.split("/", 2)
-        return bot.say(channel, "[Spotify] %s - %s (%s)" % (artist.strip(), song.strip(), album.strip()))
-    elif type == "artist":
-        return bot.say(channel, "[Spotify] %s" % songinfo.strip())
-    elif type == "album":
-        artist, album = songinfo.split("/", 1)
-        return bot.say(channel, "[Spotify] %s - %s" % (artist.strip(), album.strip()))
-    else:
-        return None
-
-def handle_privmsg(bot, user, reply, msg):
+def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""
 
-    m = re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", msg)
+    m = re.match(".*(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?.*", args)
     if not m: return None
 
-    dataurl = "http://spotify.url.fi/%s/%s?txt" % (m.group(2), m.group(4))
+    apiurl = "http://ws.spotify.com/lookup/1/?uri=spotify:%s:%s" % (m.group(2), m.group(4))
 
-    return do_spotify(bot, user, reply, dataurl, m.group(2))
+    bs = getUrl(apiurl).getBS()
+    data = '[Spotify] '
+    if m.group(2) == 'album':
+        artist = str(bs.first('album').first('artist').first('name').string)
+        name = str(bs.first('album').first('name').string)
+	year = str(bs.first('album').first('released').string)
+        data += '%s - %s (%s)' % (artist, name, year) 
+    if m.group(2) == 'artist':
+        data += str(bs.first('artist').first('name').string)
+    if m.group(2) == 'track':
+	artist = str(bs.first('track').first('artist').first('name').string)
+        album = str(bs.first('track').first('album').first('name').string)
+        title = str(bs.first('track').first('name').string)
+        data += '%s - %s - %s' % (artist, album, title)
+    return bot.say(channel, data)
