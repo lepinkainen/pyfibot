@@ -266,6 +266,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         botId = "%s@%s" % (self.nickname, self.network.alias)
         log.info("%s: %s", botId, message)
 
+    def callLater(self, delay, callable):
+        self.callLater(delay, callable)
+
     ###### COMMUNICATION
 
     def privmsg(self, user, channel, msg):

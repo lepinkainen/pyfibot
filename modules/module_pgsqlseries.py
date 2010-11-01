@@ -5,10 +5,10 @@ try:
 except:
     pass
 
-def init(botconfig):
+def init(bot):
     global config
     try:
-        config = botconfig["module_pgsqlseries"]
+        config = bot.config["module_pgsqlseries"]
     except KeyError:
         config = None
             

@@ -21,9 +21,9 @@ except:
 # WITHOUT OIDS;
 # ALTER TABLE pyfibot.urls OWNER TO <user>;
 
-def init(botconfig):
+def init(bot):
     global config
-    config = botconfig.get("module_pgsqlwanha", None)
+    config = bot.config.get("module_pgsqlwanha", None)
 
 def handle_url(bot, user, channel, url, msg):
     return

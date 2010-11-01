@@ -9,9 +9,9 @@ import sys, os.path
 
 # create table urls (id TEXT UNIQUE, nick TEXT, url TEXT, channel TEXT, time int);
 
-def init(botconfig):
+def init(bot):
     global config
-    config = botconfig.get("module_sqlitewanha", None)
+    config = bot.config.get("module_sqlitewanha", None)
 
 def handle_url(bot, user, channel, url, msg):
     if not config: return

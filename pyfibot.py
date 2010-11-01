@@ -317,7 +317,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             # initialize module
             if env.has_key('init'):
                 log.info("initialize module - %s" % module)
-                env['init'](self.config)
+                env['init'](self)
             
             # add to namespace so we can find it later
             self.ns[module] = (env, env)

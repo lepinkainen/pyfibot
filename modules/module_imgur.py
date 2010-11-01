@@ -9,12 +9,12 @@ consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
 oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
 oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
 
-def init(botconfig):
+def init(bot):
     global config
     global consumer_key, consumer_secret, oauth_token, oauth_token_secret
     global token, consumer
     try:
-        config = config = botconfig.get("module_imgur", {})
+        config = config = bot.config.get("module_imgur", {})
     except KeyError:
         config = None
 
