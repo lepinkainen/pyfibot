@@ -37,7 +37,7 @@ def calc_google(args):
 
     d = opener.open(request).read()
 
-    m = re.search("\/calc_img\.gif.*?<b>(.*?)<\/b>", d)
+    m = re.search("calculator-40.gif[^>]+><td>[^<]+<td[^>]+><h2[^>]+><b>([^<]+)</b>", d)
     if m:
         res = m.group(1)
         # clean up
