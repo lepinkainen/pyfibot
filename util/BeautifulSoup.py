@@ -1731,12 +1731,7 @@ class SimplifyingSOAPParser(BeautifulSOAP):
 
 # Autodetects character encodings.
 # Download from http://chardet.feedparser.org/
-try:
-    import chardet
-#    import chardet.constants
-#    chardet.constants._debug = 1
-except ImportError:
-    chardet = None
+chardet = None
 
 # cjkcodecs and iconv_codec make Python know about more character encodings.
 # Both are available from http://cjkpython.i18n.org/
