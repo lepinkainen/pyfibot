@@ -41,7 +41,7 @@ _countrycodes=['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
                'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf',
                'ws', 'ye', 'yt', 'yu', 'za', 'zm', 'zw', 'aero', 'biz', 'com',
                'coop', 'edu', 'gov', 'info', 'int', 'mil', 'museum', 'name',
-               'net', 'org', 'pro', 'me']
+               'net', 'org', 'pro', 'me', 'mobi']
 
 _schemes=['http://', 'https://', 'ftp://', 'svn://']
 

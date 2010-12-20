@@ -56,7 +56,7 @@ class CoreCommands(object):
 
             except Exception, e:
                 self.say(channel, "Rehash error: %s" % e)
-                log.error("Rehash error: "+e)
+                log.error("Rehash error: "+str(e))
             else:
                 self.say(channel, "Rehash OK")
                 log.info("Rehash OK")

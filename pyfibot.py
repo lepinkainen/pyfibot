@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -157,7 +157,7 @@ class URLCacheItem(object):
         return self.bs
 
 class BotURLOpener(urllib.FancyURLopener):
-    """URL opener that fakes itself as Firefox and ignores all basic auth prompts"""
+    """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
     
     def __init__(self, *args):
         # Firefox 1.0PR on w2k

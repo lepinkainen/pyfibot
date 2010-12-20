@@ -141,16 +141,21 @@ def _handle_hs(url):
         from datetime import datetime
         # handle updated news items of format, and get the latest update stamp
         # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
-        date = bs.first('p', {'class':'date'}).string.split("|")[-1].strip()[-15:]
-        article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
-        delta = datetime.now() - article_date
+        date = bs.first('p', {'class':'date'}).next
+        print date
+        if date:
+            date = date.split("|")[0].strip()
+            article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
+            delta = datetime.now() - article_date
 
-        if delta.days > 365:
-            return title, "NOTE: Article is %d days old!" % delta.days
+            if delta.days > 365:
+                return title, "NOTE: Article is %d days old!" % delta.days
+            else:
+                return title
         else:
             return title
     except Exception, e:
-        log.error("Error when parsing hs.fi: "+e)
+        log.error("Error when parsing hs.fi: "+str(e))
         return title
 
 def _handle_ksml(url):
@@ -175,7 +180,6 @@ def _handle_iltalehti(url):
     bs = getUrl(url).getBS()
     if not bs: return
     title = bs.first('title').string
-
     # the first part is the actual story title, lose the rest
     title = title.split("|")[0].strip()
 
