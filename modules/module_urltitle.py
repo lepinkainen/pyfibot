@@ -142,7 +142,7 @@ def _handle_hs(url):
         # handle updated news items of format, and get the latest update stamp
         # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
         date = bs.first('p', {'class':'date'}).next
-        print date
+        # in case hs.fi changes the date format, don't crash on it
         if date:
             date = date.split("|")[0].strip()
             article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
@@ -155,7 +155,7 @@ def _handle_hs(url):
         else:
             return title
     except Exception, e:
-        log.error("Error when parsing hs.fi: "+str(e))
+        log.error("Error when parsing hs.fi: %s" % e)
         return title
 
 def _handle_ksml(url):
