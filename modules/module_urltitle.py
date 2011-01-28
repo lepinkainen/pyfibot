@@ -382,7 +382,12 @@ def _handle_ircquotes(url):
     title = "%s (%s): %s" % (chan, points, firstline)
  
     return title
- 
+
+
+def _handle_alko2(url):
+    """http://alko.fi/tuotteet/fi/*"""
+    return _handle_alko(url)
+    
 def _handle_alko(url):
     """http://www.alko.fi/tuotteet/fi/*"""
 
