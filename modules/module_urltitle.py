@@ -43,6 +43,11 @@ def handle_url(bot, user, channel, url, msg):
             log.info("Ignored url from user: %s, %s %s", user, url, ignore)
             return
 
+    # a crude way to handle the new-fangled shebang urls as per
+    # http://code.google.com/web/ajaxcrawling/docs/getting-started.html
+    # this can manage twitter + gawker sites for now
+    url = url.replace("#!", "?_escaped_fragment_=")
+
     handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
 
     # try to find a specific handler for the URL
