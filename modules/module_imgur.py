@@ -1,8 +1,12 @@
 """Upload images to imgur.com"""
 
 import urllib
-import json
-import oauth2 as oauth
+try:
+  import json
+  import oauth2 as oauth
+  init_ok = True
+except:
+  init_ok = False
 
 consumer_key = 'cbcbcaf338bc7b430428dc4b64500e7004c761bbd'
 consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
@@ -10,6 +14,9 @@ oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
 oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
 
 def init(bot):
+    if not init_ok:
+        return False
+    
     global config
     global consumer_key, consumer_secret, oauth_token, oauth_token_secret
     global token, consumer
@@ -28,7 +35,7 @@ def init(bot):
 
 
 def handle_url(bot, user, channel, url, msg):
-    if url.endswith(".jpg") or url.endswith(".gif"):
+    if init_ok and (url.endswith(".jpg") or url.endswith(".gif")):
         print channel, upload_images([url])
 
 def upload_gallery(url):
