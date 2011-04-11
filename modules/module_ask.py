@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" START Knowledge Parser by tuhoojabotti (http://www.tuhoojabotti.com) """
+""" START Knowledge Parser by tuhoojabotti (http://www.tuhoojabotti.com/) """
 
 import urllib, re, htmlentitydefs
 from util.BeautifulSoup import BeautifulStoneSoup
@@ -27,25 +27,25 @@ def command_ask(bot, user, channel, args):
             answer = "".join(elem.findAll(text=True)[2:]).strip()
 
     # Clean it up a bit...
-    answer = re.sub("\n|\r|\t", " ", answer) # One-line it.
-    answer = re.sub("\[.*?\]", "", answer)  # Remove cites
-    answer = re.sub("[ ]{2,}", " ", answer) # Compress multiple spaces into one
+    answer = re.sub("\n|\r|\t", " ", answer)    # One-line it.
+    answer = re.sub("\[.*?\]", "", answer)      # Remove cites
+    answer = re.sub("[ ]{2,}", " ", answer)     # Compress multiple spaces into one
     if not answer: return bot.say(channel, "Sorry, I don't know.") # See if there is an answer left. :P
 
     # Crop long answers...
     if len(answer) > 2000:
-        answer = "Answer is too long, see %s for more information." % "http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args    #TODO: Shorturl
-    if len(answer) > 390:
+        answer = "Answer is too long, see %s for more information." % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
+    if len(answer) > 380:
         # It's longer than 390 chars, try splitting first 4 sentences.
-        answer = ". ".join(answer.split(". ")[:4])+". &ndash; &ndash;"                                                              #TODO: Shorturl
+        answer = ". ".join(answer.split(". ")[:4])+". &ndash; &ndash; %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
         # It's still too long, so we'll split by word. :/
-        if len(answer) > 390:
-            answer = answer[:390].split(" ")
+        if len(answer) > 380:
+            answer = answer[:380].split(" ")
             answer.pop() # Last word is probably incomplete so get rid of it.
-            answer = " ".join(answer)+" &ndash; &ndash;"                                                                            #TODO: Shorturl
+            answer = " ".join(answer)+" &ndash; &ndash; %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
 
     # Let's make it twisted safe
-    answer = unescape(answer) # Clean up hex escaped chars
+    answer = unescape(answer)       # Clean up hex escaped chars
     answer = unicode(answer)
     answer = answer.encode("utf-8") # WTF-8 <3
     # SPAM!
@@ -73,3 +73,6 @@ def unescape(text):
                 pass
         return text # leave as is
     return re.sub("&#?\w+;", fixup, text)
+
+
+def shorturl(url): return getUrl("http://href.fi/api.php?create=%s" % url).getContent()
