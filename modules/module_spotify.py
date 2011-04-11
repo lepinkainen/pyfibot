@@ -22,5 +22,5 @@ def handle_privmsg(bot, user, channel, args):
 	artist = str(bs.first('track').first('artist').first('name').string)
         album = str(bs.first('track').first('album').first('name').string)
         title = str(bs.first('track').first('name').string)
-        data += '%s - %s - %s' % (artist, album, title)
+        data += '%s - %s' % (artist, title)
     return bot.say(channel, data)
