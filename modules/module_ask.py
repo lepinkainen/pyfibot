@@ -8,6 +8,10 @@ from util.BeautifulSoup import BeautifulStoneSoup
 def command_ask(bot, user, channel, args):
     """Asks a question from the START (http://start.csail.mit.edu/) Usage: .ask <question>"""
 
+    # Config
+    sentences = 1
+    absmaxlen = 200
+
     # Retrieve data!
     if len(args)<3 or not args: return bot.say(channel, "Your argument is invalid.")
     args = urllib.quote_plus(args)
@@ -28,19 +32,19 @@ def command_ask(bot, user, channel, args):
 
     # Clean it up a bit...
     answer = re.sub("\n|\r|\t", " ", answer)    # One-line it.
-    answer = re.sub("\[.*?\]", "", answer)      # Remove cites
+    answer = re.sub("\[.*?\]|<.*?/>", "", answer)      # Remove cites and nasty html
     answer = re.sub("[ ]{2,}", " ", answer)     # Compress multiple spaces into one
     if not answer: return bot.say(channel, "Sorry, I don't know.") # See if there is an answer left. :P
 
     # Crop long answers...
     if len(answer) > 2000:
         answer = "Answer is too long, see %s for more information." % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
-    if len(answer) > 380:
+    if len(answer) > absmaxlen:
         # It's longer than 390 chars, try splitting first 4 sentences.
-        answer = ". ".join(answer.split(". ")[:4])+". &ndash; &ndash; %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
+        answer = ". ".join(answer.split(". ")[:sentences])+". &ndash; &ndash; %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
         # It's still too long, so we'll split by word. :/
-        if len(answer) > 380:
-            answer = answer[:380].split(" ")
+        if len(answer) > absmaxlen:
+            answer = answer[:absmaxlen].split(" ")
             answer.pop() # Last word is probably incomplete so get rid of it.
             answer = " ".join(answer)+" &ndash; &ndash; %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
 
