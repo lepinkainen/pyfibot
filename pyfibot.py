@@ -169,7 +169,7 @@ class BotURLOpener(urllib.FancyURLopener):
         return ('', '')
 
 class Network:
-    def __init__(self, root, alias, address, nickname, channels = None, linerate = 1):
+    def __init__(self, root, alias, address, nickname, channels = None, linerate = None):
         self.alias = alias                         # network name
         self.address = address                     # server address
         self.nickname = nickname                   # nick to use
@@ -268,7 +268,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         p.factory = self
         return p
 
-    def createNetwork(self, address, alias, nickname, channels = None, linerate = 1):
+    def createNetwork(self, address, alias, nickname, channels = None, linerate = None):
         self.setNetwork(Network("data", alias, address, nickname, channels, linerate))
                 
     def setNetwork(self, net):
@@ -375,7 +375,6 @@ def create_example_conf():
     
     conf = """
     nick: botnick
-    linerate: 1
 
     admins:
       - 'foo!bar@example.com'
