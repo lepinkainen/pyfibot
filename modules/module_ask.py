@@ -3,11 +3,10 @@
 """ START Knowledge Parser by tuhoojabotti (http://www.tuhoojabotti.com/) """
 
 import urllib, re, htmlentitydefs, sys
-from util.BeautifulSoup import BeautifulStoneSoup, Comment
+from util.BeautifulSoup import BeautifulStoneSoup
 
 def command_ask(bot, user, channel, args):
     """Asks a question from the START (http://start.csail.mit.edu/) Usage: .ask <question>"""
-    print "----------------- MODULE ASK -----------------"
     # Config: If answer is longer than absmaxlen, then crop n sentences from the start, if still too long, crop to absmaxlenght and cut the last word
     # Note: A shortlink will be applied after the absmaxlen: See http://href.fi/xxx for more.
     sentences = 1
@@ -21,7 +20,6 @@ def command_ask(bot, user, channel, args):
 
     # Try parsing something usefull out of it.
     elems = bs(name="span",attrs={'quality' : re.compile("(T|KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD)")})
-    answer = ""
     answers = []
     data = False
     for elem in elems:
@@ -44,8 +42,7 @@ def command_ask(bot, user, channel, args):
                 print "td fail!",sys.exc_info()[0]
             # Parse together a reply.
             try:
-                answer = "".join(elem.findAll(text=True)[2:])
-                answers.append(answer)
+                answers.append("".join(elem.findAll(text=True)[2:]))
             except:
                 print "Error in parsing answer",sys.exc_info()[0]
 
