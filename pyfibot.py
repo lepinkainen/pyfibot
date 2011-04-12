@@ -268,8 +268,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         p.factory = self
         return p
 
-    def createNetwork(self, address, alias, nickname, channels = None, lineRate = 1):
-        self.setNetwork(Network("data", alias, address, nickname, channels, lineRate))
+    def createNetwork(self, address, alias, nickname, channels = None, linerate = 1):
+        self.setNetwork(Network("data", alias, address, nickname, channels, linerate))
                 
     def setNetwork(self, net):
         nets = self.data['networks']
@@ -441,7 +441,7 @@ if __name__ == '__main__':
         nick = settings.get('nick', None) or config['nick']
 
         # use network specific linerate if one has been configured
-        linerate = settings.get('linerate', None) or config['linerate']
+        linerate = settings.get('linerate', None) or config.get('linerate', None)
 
         # prevent internal confusion with channels
         chanlist = []
