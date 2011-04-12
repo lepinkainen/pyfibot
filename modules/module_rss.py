@@ -7,22 +7,24 @@
 @licence BSD
 """
 
+import sys
+import os
+import re
+import urllib
+import logging
+import logging.handlers
+import hashlib
+from threading import Thread
+
 try:
     import feedparser
-    import os
     import sqlite3
-    import logging
-    import logging.handlers
-    import sys
-    import hashlib
     from twisted.internet import reactor
-    from threading import Thread
-    import re
     import yaml
-    import urllib
+    init_ok = True
 except ImportError, error:
-    print error
-    sys.exit(2)
+    print 'Error starting rss module: ',error
+    init_ok = False
 
 # Initialize logger
 log = logging.getLogger('rss')
@@ -30,9 +32,6 @@ log = logging.getLogger('rss')
 t = None
 t2 = None
 
-# Read configuration
-configfile = os.path.join(sys.path[0], 'modules', 'module_rss.conf')
-rssconfig = yaml.load(file(configfile))
 # Config format:
 # database: rss.db
 # delays:
@@ -44,13 +43,27 @@ rssconfig = yaml.load(file(configfile))
 
 def event_signedon(bot):
     """Starts rotators"""
+    if not init_ok: 
+        log.error("Config not ok, not starting rotators")
+        return False
+
     global delay
     global output_dealy
+
     rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
     rotator_output(bot, rssconfig["delays"]["output"])
 
 def init(botconfig):
     """Creates database if it doesn't exist"""
+    if not init_ok: 
+        log.error("Config not ok, skipping init")
+        return False
+
+    global rssconfig
+    # Read configuration
+    configfile = os.path.join(sys.path[0], 'modules', 'module_rss.conf')
+    rssconfig = yaml.load(file(configfile))
+
     db_conn = sqlite3.connect(rssconfig["database"])
     d = db_conn.cursor()
     d.execute("CREATE TABLE IF NOT EXISTS feeds (id INTEGER PRIMARY KEY,feed_url TEXT,channel TEXT,feed_title TEXT);")
