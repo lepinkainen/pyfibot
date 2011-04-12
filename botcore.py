@@ -188,7 +188,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def __init__(self, network):
         self.network = network
         self.nickname = self.network.nickname
-
+        self.lineRate = self.network.linerate
         # text wrapper to clip overly long answers
         self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
         
@@ -253,7 +253,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """Override default say to make replying to private messages easier"""
         # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
-
         cont = False
         
         for m in msg:

@@ -169,12 +169,12 @@ class BotURLOpener(urllib.FancyURLopener):
         return ('', '')
 
 class Network:
-    def __init__(self, root, alias, address, nickname, channels = None):
+    def __init__(self, root, alias, address, nickname, channels = None, linerate = 1):
         self.alias = alias                         # network name
         self.address = address                     # server address
         self.nickname = nickname                   # nick to use
         self.channels = channels or {}             # channels to join
-
+        self.linerate = linerate
         # create network specific save directory
         p = os.path.join(root, alias)
         if not os.path.isdir(p):
@@ -268,8 +268,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         p.factory = self
         return p
 
-    def createNetwork(self, address, alias, nickname, channels = None):
-        self.setNetwork(Network("data", alias, address, nickname, channels))
+    def createNetwork(self, address, alias, nickname, channels = None, lineRate = 1):
+        self.setNetwork(Network("data", alias, address, nickname, channels, lineRate))
                 
     def setNetwork(self, net):
         nets = self.data['networks']
@@ -375,6 +375,7 @@ def create_example_conf():
     
     conf = """
     nick: botnick
+    linerate: 1
 
     admins:
       - 'foo!bar@example.com'
@@ -384,6 +385,7 @@ def create_example_conf():
         server: irc.ircnet.com
         channels:
           - mychannel
+        linerate: 3
       quakenet:
         server: irc.quakenet.org
         authname: name
@@ -438,18 +440,22 @@ if __name__ == '__main__':
         # use network specific nick if one has been configured
         nick = settings.get('nick', None) or config['nick']
 
+        # use network specific linerate if one has been configured
+        linerate = settings.get('linerate', None) or config['linerate']
+
         # prevent internal confusion with channels
         chanlist = []
         for channel in settings['channels']:
             if channel[0] not in '&#!+': channel = '#' + channel
             chanlist.append(channel)
 
-	port = 6667
-	try:
-	    port = int(settings.get('port'))
-	except:
-	    pass
-        factory.createNetwork((settings['server'], port), network, nick, chanlist)
+        port = 6667
+        try:
+            port = int(settings.get('port'))
+        except:
+            pass
+
+        factory.createNetwork((settings['server'], port), network, nick, chanlist, linerate)
         reactor.connectTCP(settings['server'], port, factory)
         
     reactor.run()
