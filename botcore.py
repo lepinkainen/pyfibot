@@ -240,6 +240,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 self.join(chan)
 
         log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
+        self._runEvents("signedon")
 
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
@@ -330,6 +331,22 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 d = threads.deferToThread(func, self, *args, **kwargs)
                 d.addCallback(self.printResult, "handler %s completed" % hname)
                 d.addErrback(self.printError, "handler %s error" % hname)
+
+    def _runEvents(self, eventname, *args, **kwargs):
+        """Run funtions on events named by eventname parameter"""
+        eventname = "event_%s" % eventname
+        for module, env in self.factory.ns.items():
+            myglobals, mylocals = env 
+
+            # find all matching events
+            events = [(h,ref) for h,ref in mylocals.items() if h == eventname and type(ref) == FunctionType]
+
+            for ename, func in events:
+                # defer each handler to a separate thread, assign callbacks to see when they end
+                # TODO: Profiling: add time.time() to callback params, calculate difference
+                d = threads.deferToThread(func, self, *args, **kwargs)
+                d.addCallback(self.printResult, "%s %s event completed" % (module, ename))
+                d.addErrback(self.printError, "%s %s event error" % (module, ename))
             
     def _command(self, user, channel, cmnd):
         """Handles bot commands.
