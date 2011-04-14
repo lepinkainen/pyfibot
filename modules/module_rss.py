@@ -165,7 +165,7 @@ def command_rss(bot, user, channel, args):
             else:
                 bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list")
     except IndexError:
-        bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del             <feed_url/feed_id>, List feeds: .rss list") 
+        bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list") 
 
 def shorturl(url):
     params = urllib.urlencode({'create': url})
@@ -287,12 +287,18 @@ def output(bot):
             channel = channel.encode("UTF-8")
             url = url.encode("UTF-8")
             feed_title = d.execute("SELECT feed_title from feeds where feed_url = ?", (feed_url,)).fetchone()[0].encode('UTF-8')
-            if (rssconfig["output_syntax"] == 0): bot.say(channel, "%s: %s - %s" % (feed_title, title, url))
-            elif (rssconfig["output_syntax"] == 1): bot.say(channel, "%s: %s - %s" % (feed_title, title, shorturl(url)))
-            elif (rssconfig["output_syntax"] == 2): bot.say(channel, "%s: %s (%i)" % (feed_title, title, id))
+
+            if (rssconfig["output_syntax"] == 0): 
+                bot.say(channel, "%s: %s - %s" % (feed_title, title, url))
+            elif (rssconfig["output_syntax"] == 1): 
+                bot.say(channel, "%s: %s - %s" % (feed_title, title, shorturl(url)))
+            elif (rssconfig["output_syntax"] == 2): 
+                bot.say(channel, "%s: %s (%i)" % (feed_title, title, id))
             data = [url, channel]
+
             d.execute("UPDATE titles_with_urls SET printed=1 WHERE URL=? and channel=?", data)
             db_conn.commit()
+            log.debug("output thread terminated cleanly")
     except StopIteration:
         pass
     except Exception, e:
@@ -303,6 +309,7 @@ def output(bot):
 def rotator_indexfeeds(bot, delay):
     """Timer for methods/functions"""
     try:
+        print "indexfeeds run"
         global t, t2
         if (type(t2).__name__ == 'NoneType'):
             t = Thread(target=indexfeeds, args=(bot,))

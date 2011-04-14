@@ -174,6 +174,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     nickname = "pyfibot"
     realname = "http://code.google.com/p/pyfibot/"
+    password = None
 
     # send 1 msg per second max
     lineRate = 1
