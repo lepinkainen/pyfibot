@@ -1,92 +1,132 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" START Knowledge Parser by tuhoojabotti (http://www.tuhoojabotti.com/) """
+""" Pyfibot START Knowledge Parser
+@author Ville 'tuhoojabotti' Lahdenvuo <tuhoojabotti@gmail.com> (http://www.tuhoojabotti.com/)
+@copyright Copyright (c) 2011 Ville Lahdenvuo
+@licence BSD
+"""
 
-import urllib, re, htmlentitydefs, sys
-from util.BeautifulSoup import BeautifulStoneSoup
+import urllib, re, htmlentitydefs, sys, os, logging, yaml
+from util.BeautifulSoup import BeautifulStoneSoup, Comment
+
+log = logging.getLogger('ask') # Initialize logger
+
+# Config module_ask.conf:
+#  sentences: 1      - How many sentences of the output to print if it's longer than max length
+#  maxlength: 150    - How many chars is the max length of output
+# Note: A shortlink will be applied after the maxlength e.g. See http://href.fi/xxx for more.
+
+def init(botconfig):
+    global askconfig
+    # Read configuration
+    configfile = os.path.join(sys.path[0], 'modules', 'module_ask.conf')
+    askconfig = yaml.load(file(configfile))
 
 def command_ask(bot, user, channel, args):
-    """Asks a question from the START (http://start.csail.mit.edu/) Usage: .ask <question>"""
-    # Config: If answer is longer than absmaxlen, then crop n sentences from the start, if still too long, crop to absmaxlenght and cut the last word
-    # Note: A shortlink will be applied after the absmaxlen: See http://href.fi/xxx for more.
-    sentences = 1
-    absmaxlen = 150
-
-    # Retrieve data!
-    if len(args)<3 or not args: return bot.say(channel, "Your argument is invalid.")
-    args = urllib.quote_plus(args)
-    bs = getUrl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args).getBS()
-    if not bs: return
-
-    # Try parsing something usefull out of it.
-    elems = bs(name="span",attrs={'quality' : re.compile("(T|KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD)")})
-    answers = []
-    data = False
-    for elem in elems:
-        # If it has no child spans, it's a one we want!
-        if len(elem.findAll(name="span",attrs={'quality' : re.compile("(T|KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD)")}))==0:
-            # Handle <SUP>
-            try:
-                [sup.replaceWith(("^%s" % sup.string) if sup.string != None else " ") for sup in elem.findAll('sup')]
-            except:
-                print "sup fail!",sys.exc_info()[0]
-            # Handle <TABLE> data
-            try:
-                for td in elem.findAll('td'):
-                    # Remove tds if not text or too short, ugly table data. :/
-                    if td.string != None:
-                        if len(td.string)<10: td.extract()
-                    else:
-                        td.extract()
-            except:
-                print "td fail!",sys.exc_info()[0]
-            # Parse together a reply.
-            try:
-                answers.append("".join(elem.findAll(text=True)[2:]))
-            except:
-                print "Error in parsing answer",sys.exc_info()[0]
-
-    # Remove too short answers
-    if len(answers)>0:
-       data = True # We got some data.
-    else:
-       return bot.say(channel, "Sorry, I don't know.")
-    try: # Try to find suitable data for IRC
-        answer = min((ans for ans in answers if len(ans) > 35 and len(ans) < 2000), key=len)
-    except:
-        return bot.say(channel, "Sorry, I don't know")
-
-    # Clean it up a bit...
-    answer = re.sub("\[.*?\]|<.*?/>", "", answer)           # Remove cites and nasty html
-    answer = re.sub("\n|\r|\t", " ", answer).strip(' \t')   # One-line it.
-    answer = re.sub("[ ]{2,}", " ", answer)                 # Compress multiple spaces into one
-    if not answer and not data:
-        return bot.say(channel, "Sorry, I don't know.")     # See if there is an answer left. :P
-    elif not answer and data:
-        return bot.say(channel, "Found some data. See %s for details." % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args))
-    
-    # Crop long answer...
-    if len(answer) > absmaxlen:
-        # It's longer than absolute max chars, try splitting first n sentences.
-        answer = ". ".join(answer.split(". ")[:sentences])+"." # %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
-        # It's still too long, so we'll split by word. :/
-        if len(answer) > absmaxlen:
-            answer = answer[:absmaxlen].split(" ")
-            answer.pop() # Last word is probably incomplete so get rid of it.
-            answer = " ".join(answer) # %s" % shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args)
-        answer = "%s &ndash; See %s for more." % (answer, shorturl("http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % args))
-
-    # Let's make it twisted safe
-    answer = unescape(answer)       # Clean up hex escaped chars
-    answer = unicode(answer)
-    answer = answer.encode("utf-8") # WTF-8 <3
-
+    """Ask a question from the START (http://start.csail.mit.edu/) Usage: .ask <question>"""
     # SPAM!
-    return bot.say(channel, "%s" % answer)
+    return bot.say(channel, getSTARTReply(args))
 
-# HELPERS
+def getSTARTReply(q):
+    if len(q)<3 or not q: return "Your argument is invalid."
 
-def unescape(text):
+    # Some variables
+    sentences = askconfig.get('sentences', 1)
+    absmaxlen = askconfig.get('maxlength', 120)
+    url       = "http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % urllib.quote_plus(q)
+    # For parsing
+    answers   = []
+    data      = False # Do we have information or not
+    media     = False # A variable that tells if the reply has media such as js, img in the results.
+    fails     = re.compile("(KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD|MISSPELLED-WORD|CANT-PARSE|FORBIDDEN-ASSERTION|LEXICON)")
+    medias    = re.compile("doctype|click|map|below",re.IGNORECASE)
+
+    # Retrieve data from the internet service
+    bs = getUrl(url).getBS()
+    if not bs: return "Failed to contact START. Try again later."
+
+    # Find useful tags from the HTML mess. (Those spans with no child spans with the quality T.)
+    data_tags = [ tag for tag in bs(name = "span",attrs = {'type':'reply','quality':'T'}) if len( tag(name = "span",attrs = {'type':'reply','quality':'T'}) ) == 0 ]
+
+    if len(data_tags)==0:
+
+        # Find tags about the users fail
+        fail_tags = [ tag for tag in bs(name = "span",attrs = {'type':'reply','quality':fails}) if len( tag(name = "span",attrs = {'type':'reply','quality':fails}) ) == 0 ]
+
+        if len(fail_tags)==0:
+            log.debug("Failed to parse data from:")
+            log.debug(bs)
+            log.debug("data: %s" % data_tags)
+            log.debug("fails: %s" % fail_tags)
+            return "Failed to parse data. :/"
+        else: # Let's return the fail tag then.
+            # Cleanups on string depth
+            s = "".join([ tag for tag in fail_tags[0](text=True) if type(tag) != Comment and re.search("Accept|Abort",tag) == None ])
+            s = re.sub("<.*?>", "", s)                    # Remove possibly remaining HMTL tags (like BASE) that aren't parsed by bs
+            s = re.sub("\n|\r|\t", " ", s).strip(' \t')   # One-line it.
+            s = re.sub("&nbsp;|[ ]{2,}", " ", s)          # Compress multiple spaces into one
+            s = unescape(s)                               # Clean up hex escaped chars            
+            if len(s)>absmaxlen:
+                s = s[:absmaxlen].split(' ')
+                s.pop()
+                s = " ".join(s)           
+            return unicode(s).encode('utf-8')
+
+    else:
+
+        for answer in data_tags:
+
+            # Cleanups on html depth
+            [sup.replaceWith(("^%s" % sup.string) if sup.string != None else " ") for sup in answer.findAll('sup')]   # Handle <SUP> tags
+            [br.replaceWith(" ") for br in answer.findAll('br')]                                                      # Handle <BR> tags
+            [td.extract() for td in answer.findAll('td') if len("".join(td.findAll(text=True)))<10]                   # Handle <TABLE> data
+            [cm.extract() for cm in answer.findAll(text=lambda text:isinstance(text, Comment))]                       # Handle <!-- Comments -->
+
+            # Find media by looking for tags like img and script and words like doctype, map, click (It sometimes embeds a whole HTML-document to the results. :S)
+            if len( answer.findAll({"img": True,"script": True}) ) > 0 or medias.search("".join(answer(text=True))) != None: media = True
+
+            # Cleanups on string depth
+            s = "".join(answer(text=True))
+            s = re.sub("<.*?>", "", s)                    # Remove possibly remaining HMTL tags (like BASE) that aren't parsed by bs
+            s = re.sub("\n|\r|\t", " ", s).strip(' \t')   # One-line it.
+            s = re.sub("&nbsp;|[ ]{2,}", " ", s)          # Compress multiple spaces into one
+            s = unescape(s)                               # Clean up hex escaped chars
+
+            answers.append(s)
+
+        # Try to find suitable data for IRC
+        try:
+            answer = min((ans for ans in answers if len(ans) > 10 and not medias.search(ans)), key=len)
+        except:
+            if media == False:
+                return "Sorry, I don't know"
+            else:
+                return "Take a look at %s :P" % shorturl(url).encode("utf-8")
+
+        # Crop long answer...
+        if len(answer) > absmaxlen:
+
+            # It's longer than absolute max chars, try splitting first n sentences.
+            answer = ". ".join(answer.split(". ")[:sentences])+"."
+
+            # It's still too long, so we'll split by word. :/
+            if len(answer) > absmaxlen:
+                answer = answer[:absmaxlen].split(" ")
+                answer.pop() # plops
+                answer = " ".join(answer)
+
+            answer = "%s &ndash; See %s for more." % (answer, shorturl(url))
+
+        # It's not too long, but additional media is available, so let's give a link. :)
+        elif media==True:
+            answer = "%s &ndash; See %s for media." % (answer, shorturl(url))
+
+        return unicode(unescape(answer)).encode('utf-8')
+
+# -= HELPERS =-
+
+def unescape(text): # Unescape ugly wtf-8-hex-escaped chars
     def fixup(m):
         text = m.group(0)
         if text[:2] == "&#":
@@ -107,8 +147,8 @@ def unescape(text):
         return text # leave as is
     return re.sub("&#?\w+;", fixup, text)
 
-def shorturl(url): # Get and href.fi shorted url
-    try: 
-        return getUrl("http://href.fi/api.php?create=%s" % url).getContent()
-    except: # Failed!
+def shorturl(url):
+    try:
+        return urllib.urlopen("http://href.fi/api.php?%s" % urllib.urlencode({'create': url})).read()
+    except: # If something fails
         return url
