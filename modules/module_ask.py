@@ -38,7 +38,7 @@ def getSTARTReply(q):
     # For parsing
     answers   = []
     data      = False # Do we have information or not
-    media     = False # A variable that tells if the reply has media such as js, img in the results.
+    media     = False # Do we have media such as js, img in the results
     fails     = re.compile("(KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD|MISSPELLED-WORD|CANT-PARSE|FORBIDDEN-ASSERTION|LEXICON)")
     medias    = re.compile("doctype|click|map|below",re.IGNORECASE)
 
@@ -61,24 +61,23 @@ def getSTARTReply(q):
             log.debug("fails: %s" % fail_tags)
             return "Failed to parse data. :/"
         else: # Let's return the fail tag then.
-            # Cleanups on string depth
             s = "".join([ tag for tag in fail_tags[0](text=True) if type(tag) != Comment and re.search("Accept|Abort",tag) == None ])
-            s = re.sub("<.*?>", "", s)                    # Remove possibly remaining HMTL tags (like BASE) that aren't parsed by bs
-            s = re.sub("\n|\r|\t", " ", s).strip(' \t')   # One-line it.
-            s = re.sub("&nbsp;|[ ]{2,}", " ", s)          # Compress multiple spaces into one
-            s = unescape(s)                               # Clean up hex escaped chars            
+            s = re.sub("<.*?>", "", s)                          # Remove possibly remaining HTML tags (like BASE) that aren't parsed by bs
+            s = re.sub("\n|\r|\t|&nbsp;", " ", s).strip(' \t')  # One-line it.
+            s = re.sub("[ ]{2,}", " ", s)                       # Compress multiple spaces into one
+            s = unescape(s)                                     # Clean up hex and html escaped chars
             if len(s)>absmaxlen:
                 s = s[:absmaxlen].split(' ')
                 s.pop()
-                s = " ".join(s)           
-            return unicode(s).encode('utf-8')
+                s = " ".join(s) + "..."
+            return unicode("Fail: " + s).encode('utf-8')
 
     else:
 
         for answer in data_tags:
 
             # Cleanups on html depth
-            [sup.replaceWith(("^%s" % sup.string) if sup.string != None else " ") for sup in answer.findAll('sup')]   # Handle <SUP> tags
+            [sup.replaceWith( ("^%s" % sup.string) if sup.string != None else " " ) for sup in answer.findAll('sup')]   # Handle <SUP> tags
             [br.replaceWith(" ") for br in answer.findAll('br')]                                                      # Handle <BR> tags
             [td.extract() for td in answer.findAll('td') if len("".join(td.findAll(text=True)))<10]                   # Handle <TABLE> data
             [cm.extract() for cm in answer.findAll(text=lambda text:isinstance(text, Comment))]                       # Handle <!-- Comments -->
@@ -88,10 +87,10 @@ def getSTARTReply(q):
 
             # Cleanups on string depth
             s = "".join(answer(text=True))
-            s = re.sub("<.*?>", "", s)                    # Remove possibly remaining HMTL tags (like BASE) that aren't parsed by bs
-            s = re.sub("\n|\r|\t", " ", s).strip(' \t')   # One-line it.
-            s = re.sub("&nbsp;|[ ]{2,}", " ", s)          # Compress multiple spaces into one
-            s = unescape(s)                               # Clean up hex escaped chars
+            s = re.sub("<.*?>", "", s)                          # Remove possibly remaining HMTL tags (like BASE) that aren't parsed by bs
+            s = re.sub("\n|\r|\t|&nbsp;", " ", s).strip(' \t')  # One-line it.
+            s = re.sub("[ ]{2,}", " ", s)                       # Compress multiple spaces into one
+            s = unescape(s)                                     # Clean up hex and html escaped chars
 
             answers.append(s)
 
