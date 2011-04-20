@@ -9,6 +9,7 @@ import htmlentitydefs
 import urlparse
 import logging
 import re
+import json
 
 from types import TupleType
 
@@ -408,6 +409,26 @@ def _handle_alko(url):
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
     return None
+
+
+def _handle_facebook(url):
+    """*facebook.com/*"""
+    if re.match("http(.*?)://(.*?)\.facebook\.com/event\\.php\\?eid=(\\d+)", url):
+      url = "https://graph.facebook.com/%s" % url.split('eid=')[1]
+      data = json.loads(getUrl(url).getContent())
+      title = data['name']
+    elif re.match("http(.*?)://(.*?)\.facebook\.com/profile\\.php\\?id=(\\d+)", url):
+      url = "https://graph.facebook.com/%s" % url.split('id=')[1]
+      data = json.loads(getUrl(url).getContent())
+      title = data['name']
+    elif re.match("http(.*?)://(.*?)\.facebook\.com/(.*?)", url):
+      url = "https://graph.facebook.com/%s" % url.split('/')[-1]
+      data = json.loads(getUrl(url).getContent())
+      title = data['name']
+    else:
+      return    
+
+    return title
 
 def _handle_vimeo(url):
     """*vimeo.com/*"""
