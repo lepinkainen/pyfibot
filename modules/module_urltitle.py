@@ -413,15 +413,15 @@ def _handle_salakuunneltua(url):
 
 def _handle_facebook(url):
     """*facebook.com/*"""
-    if re.match("http(.*?)://(.*?)\.facebook\.com/event\\.php\\?eid=(\\d+)", url):
+    if re.match("http(s?)://(www\.?)facebook\.com/event\\.php\\?eid=(\\d+)", url):
       url = "https://graph.facebook.com/%s" % url.split('eid=')[1]
       data = json.loads(getUrl(url).getContent())
       title = data['name']
-    elif re.match("http(.*?)://(.*?)\.facebook\.com/profile\\.php\\?id=(\\d+)", url):
+    elif re.match("http(s?)://(www\.?)facebook\.com/profile\\.php\\?id=(\\d+)", url):
       url = "https://graph.facebook.com/%s" % url.split('id=')[1]
       data = json.loads(getUrl(url).getContent())
       title = data['name']
-    elif re.match("http(.*?)://(.*?)\.facebook\.com/(.*?)", url):
+    elif re.match("http(s?)://(www\.?)facebook\.com/(.*?)", url):
       url = "https://graph.facebook.com/%s" % url.split('/')[-1]
       data = json.loads(getUrl(url).getContent())
       title = data['name']
