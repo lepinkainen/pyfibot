@@ -421,6 +421,10 @@ def _handle_facebook(url):
       url = "https://graph.facebook.com/%s" % url.split('id=')[1]
       data = json.loads(getUrl(url).getContent())
       title = data['name']
+    elif re.match("http(s?)://(www\.?)facebook\.com/group\\.php\\?gid=(\\d+)", url):
+      url = "https://graph.facebook.com/%s" % url.split('gid=')[1]
+      data = json.loads(getUrl(url).getContent())
+      title = data['name']
     elif re.match("http(s?)://(www\.?)facebook\.com/(.*?)", url):
       url = "https://graph.facebook.com/%s" % url.split('/')[-1]
       data = json.loads(getUrl(url).getContent())
