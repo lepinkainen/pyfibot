@@ -109,7 +109,7 @@ class URLCacheItem(object):
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
                     type = self.getHeaders().getsubtype()
-                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH %s, %s, %s" % (size, type, self.url))
+                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH size:%s, type:%s, %s" % (size, type, self.url))
 
         self._checkstatus()
 
@@ -129,7 +129,7 @@ class URLCacheItem(object):
         return self.headers
 
     def checkType(self):
-        if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
+        if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml', 'json', 'javascript']:
             return True
         else:
             return False
