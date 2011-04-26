@@ -313,15 +313,21 @@ def _handle_varttifi(url):
 
     return title
 
+def _handle_youtube_shorturl(url):
+    """http://youtu.be/*"""
+    return _handle_youtube_gdata(url)
+
 def _handle_youtube_gdata_new(url):
     """http://youtube.com/watch#!v=*"""
-    return self._handle_youtube_gdata(url)
+    return _handle_youtube_gdata(url)
 
 def _handle_youtube_gdata(url):
     """http://*youtube.com/watch?*v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
-    
-    match = re.match("http://.*?youtube.com/watch\?.*?v=([^&]+)", url)
+
+    match = re.match("http://youtu.be/(.*)", url)
+    if not match:
+        match = re.match("http://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
         bs = getUrl(infourl).getBS()
