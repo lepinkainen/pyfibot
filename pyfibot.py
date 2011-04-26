@@ -336,6 +336,9 @@ class PyFiBotFactory(ThrottledClientFactory):
     def getUrl(self, url, nocache=False):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
         
+        # work around urllib bug, don't send fragment to server <http://bugs.python.org/issue8280>
+        url = urllib.splittag(url)[0]
+
         if self._urlcache.has_key(url) and not nocache:
             log.info("cache hit : %s" % url)
         else:
