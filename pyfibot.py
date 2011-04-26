@@ -194,7 +194,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
     
     lostDelay = 10
     failedDelay = 60
-    
+
     def clientConnectionLost(self, connector, reason):
         #print connector
         log.info("connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay))
@@ -208,7 +208,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "20091115.0"
+    version = "20110425.0"
 
     protocol = botcore.PyFiBot
     allBots = None
@@ -227,8 +227,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         # cache url contents for 5 minutes, check for old entries every minute
         self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
 
-        if not os.path.exists("data"):
-            os.mkdir("data")
+        #if not os.path.exists("data"):
+        #    os.mkdir("data")
                         
     def startFactory(self):
         self.allBots = {}
@@ -243,32 +243,30 @@ class PyFiBotFactory(ThrottledClientFactory):
     def stopFactory(self):
 
         del self.allBots
-        #self.data.close()
         
         ThrottledClientFactory.stopFactory(self)        
         log.info("factory stopped")
-        reactor.stop()
         
     def buildProtocol(self, address):
-        if re.match("[^a-z]+", address.host):
-            log.error("Kludge fix for twisted.words weirdness")
-            fqdn = socket.getfqdn(address.host)
-            address = (fqdn, address.port)
-        else:
-            address = (address.host, address.port)
+        log.info("Building protocol for %s",address)
+        
+        fqdn = socket.getfqdn(address.host)
+        log.debug("Address: %s - %s",address, fqdn)
             
-        # do we know how to connect to the given address?
-        for n in self.data['networks'].values():
-            if n.address == address:
-                break
-        else:
-            log.info("unknown network address: " + repr(address))
-            return InstantDisconnectProtocol()
+        # do we know which network the address belongs to?
+        for network, server in self.data['networks'].items():
+            if server.address[0] == fqdn:
+                log.debug("connecting to %s / %s", server, address)
 
-        p = self.protocol(n)
-        self.allBots[n.alias] = p
-        p.factory = self
-        return p
+                p = self.protocol(server)
+                self.allBots[server.alias] = p
+                print self.allBots
+                p.factory = self
+                return p
+
+        # no address found
+        log.info("unknown network address: " + repr(address))
+        return InstantDisconnectProtocol()
 
     def createNetwork(self, address, alias, nickname, channels = None, linerate = None, password=None, is_ssl=False):
         self.setNetwork(Network("data", alias, address, nickname, channels, linerate, password, is_ssl))
@@ -445,6 +443,7 @@ if __name__ == '__main__':
         linerate = settings.get('linerate', None) or config.get('linerate', None)
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
+        port = int(settings.get('port', 6667))
 
         # prevent internal confusion with channels
         chanlist = []
@@ -452,16 +451,15 @@ if __name__ == '__main__':
             if channel[0] not in '&#!+': channel = '#' + channel
             chanlist.append(channel)
 
-        port = 6667
-        try:
-            port = int(settings.get('port'))
-        except:
-            pass
+        # resolve server name here in case it's a round-robin address
+        server_name = socket.getfqdn(settings['server'])
 
-        factory.createNetwork((settings['server'], port), network, nick, chanlist, linerate, password, is_ssl)
+        factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
-            reactor.connectSSL(settings['server'], port, factory, ssl.ClientContextFactory())
+            log.info("connecting via SSL to %s:%d" % (settings['server'], port))
+            reactor.connectSSL(server_name, port, factory, ssl.ClientContextFactory())
         else:
-            reactor.connectTCP(settings['server'], port, factory)
+            log.info("connecting to %s:%d" % (settings['server'], port))
+            reactor.connectTCP(server_name, port, factory)
         
     reactor.run()
