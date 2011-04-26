@@ -196,12 +196,10 @@ class ThrottledClientFactory(protocol.ClientFactory):
     failedDelay = 60
 
     def clientConnectionLost(self, connector, reason):
-        #print connector
         log.info("connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay))
         reactor.callLater(self.lostDelay, connector.connect)
         
     def clientConnectionFailed(self, connector, reason):
-        #print connector
         log.info("connection failed (%s): reconnecting in %d seconds" % (reason, self.failedDelay))
         reactor.callLater(self.failedDelay, connector.connect)
                                                                         
@@ -260,7 +258,6 @@ class PyFiBotFactory(ThrottledClientFactory):
 
                 p = self.protocol(server)
                 self.allBots[server.alias] = p
-                print self.allBots
                 p.factory = self
                 return p
 
@@ -436,16 +433,15 @@ if __name__ == '__main__':
 
     factory = PyFiBotFactory(config)
     for network, settings in config['networks'].items():
-        # use network specific nick if one has been configured
-        nick = settings.get('nick', None) or config['nick']
+        # settings = per network, config = global
 
-        # use network specific linerate if one has been configured
+        nick = settings.get('nick', None) or config['nick']
         linerate = settings.get('linerate', None) or config.get('linerate', None)
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
 
-        # prevent internal confusion with channels
+        # normalize channel names to prevent internal confusion
         chanlist = []
         for channel in settings['channels']:
             if channel[0] not in '&#!+': channel = '#' + channel
@@ -456,10 +452,10 @@ if __name__ == '__main__':
 
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
-            log.info("connecting via SSL to %s:%d" % (settings['server'], port))
+            log.info("connecting via SSL to %s:%d" % (server_name, port))
             reactor.connectSSL(server_name, port, factory, ssl.ClientContextFactory())
         else:
-            log.info("connecting to %s:%d" % (settings['server'], port))
+            log.info("connecting to %s:%d" % (server_name, port))
             reactor.connectTCP(server_name, port, factory)
         
     reactor.run()
