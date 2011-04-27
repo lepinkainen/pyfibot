@@ -9,7 +9,6 @@ A modular python bot based on the twisted matrix irc library
 @license New-Style BSD
 """
 
-import re
 import sys
 import os.path
 import time
@@ -33,9 +32,7 @@ except ImportError:
 
 # twisted imports
 try:
-    from twisted.words.protocols import irc
-    from twisted.internet import reactor, protocol, threads, defer, ssl
-    from twisted.python import rebuild
+    from twisted.internet import reactor, protocol, ssl
 except ImportError:
     print "Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download"
     sys.exit(1)
@@ -55,7 +52,7 @@ log = logging.getLogger('core')
 
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
-    
+
     def __init__(self, url):
         self.url = url
         self.content = None
@@ -72,7 +69,7 @@ class URLCacheItem(object):
             try:
                 self.fp = urllib.urlopen(self.url)
             except IOError, e:
-                log.warn("IOError when opening url %s" % url)
+                log.warn("IOError (%s) when opening url %s",e , url)
         return self.fp
 
     def _checkstatus(self):
@@ -168,6 +165,7 @@ class BotURLOpener(urllib.FancyURLopener):
         log.info("PASSWORD PROMPT:", host, realm)
         return ('', '')
 
+
 class Network:
     def __init__(self, root, alias, address, nickname, channels = None, linerate = None, password=None, is_ssl=False):
         self.alias = alias                         # network name
@@ -185,9 +183,11 @@ class Network:
     def __repr__(self):
         return 'Network(%r, %r)' % (self.alias, self.address)
 
+
 class InstantDisconnectProtocol(protocol.Protocol):
     def connectionMade(self):
         self.transport.loseConnection()
+
 
 class ThrottledClientFactory(protocol.ClientFactory):
     """Client factory that inserts a slight delay to connecting and reconnecting"""
@@ -202,6 +202,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
     def clientConnectionFailed(self, connector, reason):
         log.info("connection failed (%s): reconnecting in %d seconds" % (reason, self.failedDelay))
         reactor.callLater(self.failedDelay, connector.connect)
+
                                                                         
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
@@ -299,7 +300,6 @@ class PyFiBotFactory(ThrottledClientFactory):
                 if self.ns[module][0].has_key('finalize'):
                     log.info("finalize - %s" % module)
                     self.ns[module][0]['finalize']()
-
 
     def _loadmodules(self):
         """Load all modules"""

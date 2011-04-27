@@ -5,7 +5,6 @@ Smart title functionality for sites which could have clear titles,
 but still decide show idiotic bulk data in the HTML title element"""
 
 import fnmatch
-import htmlentitydefs
 import urlparse
 import logging
 import re
@@ -16,6 +15,7 @@ from types import TupleType
 from util.BeautifulSoup import BeautifulStoneSoup
 
 log = logging.getLogger("urltitle")
+config = None
 
 def init(bot):
     global config

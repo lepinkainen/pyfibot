@@ -13,21 +13,14 @@ Bot core
 
 # twisted imports
 from twisted.words.protocols import irc
-from twisted.internet import reactor, protocol, defer, threads
+from twisted.internet import reactor, threads
 from twisted.python import rebuild
 
 from types import FunctionType
 
-import os, sys
-import time
 import string
-import random
-import urllib
 import logging
 from util import pyfiurl
-
-# user matching
-import fnmatch
 
 # line splitting
 import textwrap
@@ -36,12 +29,14 @@ __pychecker__ = 'unusednames=i, classattr'
 
 log = logging.getLogger("bot")
 
+
 class CoreCommands(object):
     def command_echo(self, user, channel, args):
         self.say(channel, "%s: %s" % (user, args))
 
     def command_ping(self, user, channel, args):
-        self.say(channel, "%s: My current ping is %.0fms" % (self.factory.getNick(user), self.pingAve*100.0))
+        self.say(channel, "%s: My current ping is %.0fms" % \
+                 (self.factory.getNick(user), self.pingAve*100.0))
 
     def command_rehash(self, user, channel, args):
         """Reload modules. Usage: rehash [debug]"""
@@ -145,7 +140,7 @@ class CoreCommands(object):
         if not args: 
             self.say(channel, "Please specify a network")
             return
-        bot = self.factory.allBots[args]
+
         self.say(channel, "I am on %s" % self.network.channels)
 
     def command_help(self, user, channel, cmnd):
@@ -195,7 +190,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         
         log.info("bot initialized")
 
-
     def __repr__(self):
         return 'PyFiBot(%r, %r)' % (self.nickname, self.network.address)
 
@@ -224,7 +218,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # QNet specific auth & ip hiding
         if self.network.alias == "quakenet":
             log.info("I'm on quakenet, authenticating...")
-            self.mode(self.nickname, '+', 'x') # Hide ident
+            self.mode(self.nickname, '+', 'x')  # Hide ident
             authname = self.factory.config['networks']['quakenet'].get('authname', None)
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
@@ -323,7 +317,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            handlers = [(h,ref) for h,ref in mylocals.items() if h == handler and type(ref) == FunctionType]
+            handlers = [(h, ref) for h, ref in mylocals.items() if h == handler and type(ref) == FunctionType]
 
             for hname, func in handlers:
                 # defer each handler to a separate thread, assign callbacks to see when they end
@@ -339,7 +333,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             myglobals, mylocals = env 
 
             # find all matching events
-            events = [(h,ref) for h,ref in mylocals.items() if h == eventname and type(ref) == FunctionType]
+            events = [(h, ref) for h, ref in mylocals.items() if h == eventname and type(ref) == FunctionType]
 
             for ename, func in events:
                 # defer each handler to a separate thread, assign callbacks to see when they end
@@ -420,7 +414,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         nick = self.factory.getNick(prefix)
         if nick == self.nickname:
-            self.left(channel)
+            self.left(params)
         else:
             self.userLeft(prefix, None, params[0])
 
