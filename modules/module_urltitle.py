@@ -419,24 +419,22 @@ def _handle_salakuunneltua(url):
 
 def _handle_facebook(url):
     """*facebook.com/*"""
-    if re.match("http(s?)://(www\.?)facebook\.com/event\\.php\\?eid=(\\d+)", url):
-      url = "https://graph.facebook.com/%s" % url.split('eid=')[1]
-      data = json.loads(getUrl(url).getContent())
-      title = data['name']
-    elif re.match("http(s?)://(www\.?)facebook\.com/profile\\.php\\?id=(\\d+)", url):
-      url = "https://graph.facebook.com/%s" % url.split('id=')[1]
-      data = json.loads(getUrl(url).getContent())
-      title = data['name']
-    elif re.match("http(s?)://(www\.?)facebook\.com/group\\.php\\?gid=(\\d+)", url):
-      url = "https://graph.facebook.com/%s" % url.split('gid=')[1]
-      data = json.loads(getUrl(url).getContent())
-      title = data['name']
-    elif re.match("http(s?)://(www\.?)facebook\.com/(.*?)", url):
-      url = "https://graph.facebook.com/%s" % url.split('/')[-1]
-      data = json.loads(getUrl(url).getContent())
-      title = data['name']
+    """*facebook.com/*"""
+    if re.match("http(s?)://(.*?)facebook\.com/(.*?)id=(\\d+)", url):
+      asd = urlparse.urlparse(url)
+      id = asd.query.split('id=')[1].split('&')[0]
+      if id != '':
+        url = "https://graph.facebook.com/%s" % id
+        content = getUrl(url).getContent()
+        if content != 'false':
+          data = json.loads(content)
+          try:
+            title = data['name']
+          except: return
+        else:
+          title = 'Private url'
     else:
-      return    
+      return
 
     return title
 
