@@ -15,14 +15,23 @@ import logging
 import logging.handlers
 import hashlib
 from threading import Thread
+import urllib2
+import sqlite3
+
+# import py2.6 json if available, fall back to simplejson
+try:
+    import json
+except:
+    try:
+        import simplejson as json
+    except ImportError, error:
+        print 'Error starting rss module: ',error
+        init_ok = False
 
 try:
     import feedparser
-    import sqlite3
     from twisted.internet import reactor
     import yaml
-    import urllib2
-    import simplejson as json
     import htmlentitydefs
     init_ok = True
 except ImportError, error:
