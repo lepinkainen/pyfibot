@@ -454,3 +454,11 @@ def _handle_vimeo(url):
         plays = bs.first("stats_number_of_plays").string
 
         return "%s by %s [%s likes, %s views]" % (title, user, likes, plays)
+
+def _handle_aamulehti(url):
+    """http://www.aamulehti.fi/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.fetch("h1")[0].string
+    return title
