@@ -238,15 +238,14 @@ def _handle_kauppalehti(url):
     return title
 
 def _handle_verkkokauppa(url):
-    """http://www.verkkokauppa.com/popups/prodinfo.php?id=*"""
+    """http://www.verkkokauppa.com/*/product/*"""
     bs = getUrl(url).getBS()
     if not bs: return
 
-    product = bs.first("td", {'valign':'top', 'width':'59%', 'height':'139'}).next.strip()
-    price = str(bs.first(text="Hinta:").next.next.next.next.next.string).split("&")[0]
+    product = bs.first('h1', id='productName').string
+    price = bs.first('span', {'class':'hintabig'}).string
 
-    return u"%s | %s€" % (product, price)
-
+    return "%s | %s" % (product, price)
 
 def _handle_yle(url):
     """http://*yle.fi/uutiset/*"""
