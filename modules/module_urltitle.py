@@ -329,7 +329,7 @@ def _handle_youtube_gdata(url):
         match = re.match("http://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
-        bs = getUrl(infourl).getBS()
+        bs = getUrl(infourl, True).getBS()
     
         entry = bs.first("entry")
 
@@ -424,7 +424,7 @@ def _handle_facebook(url):
       id = asd.query.split('id=')[1].split('&')[0]
       if id != '':
         url = "https://graph.facebook.com/%s" % id
-        content = getUrl(url).getContent()
+        content = getUrl(url, True).getContent()
         if content != 'false':
           data = json.loads(content)
           try:
@@ -445,7 +445,7 @@ def _handle_vimeo(url):
     match = re.match("http://.*?vimeo.com/(\d+)", url)
     if match:
         infourl = data_url % match.group(1)
-        bs = getUrl(infourl).getBS()
+        bs = getUrl(infourl, True).getBS()
     
         title = bs.first("title").string
         user = bs.first("user_name").string
