@@ -472,13 +472,16 @@ def _handle_stackoverflow(url):
         return
 
     question_id = match.group(1)
-    content = getUrl(api_url % question_id).getContent()
+    content = getUrl(api_url % question_id, True).getContent()
     if not content: 
         log.debug("No content received")
         return
 
     try:
         data = json.loads(content)
-        return data['questions'][0]['title']
+        title = data['questions'][0]['title']
+        tags = "/".join(data['questions'][0]['tags'])
+        score = data['questions'][0]['score']
+        return "%s - %dpts - %s" % (title, score, tags)
     except Exception, e:
-        return None
+        return "Json parsing failed %s" % e

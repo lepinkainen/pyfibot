@@ -107,6 +107,7 @@ class URLCacheItem(object):
                 if self.checkType():
                     # handle gzipped content
                     if f.info().get('Content-Encoding') == 'gzip':
+                        log.debug("Gzipped data, uncompressing")
                         buf = StringIO( f.read())
                         f = GzipFile(fileobj=buf)
                     self.content = UnicodeDammit(f.read()).unicode
@@ -131,7 +132,6 @@ class URLCacheItem(object):
         return self.headers
 
     def checkType(self):
-        print "SUBTYPE", self.getHeaders().getsubtype()
         if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml', 'json', 'javascript']:
             return True
         else:
