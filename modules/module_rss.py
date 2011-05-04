@@ -342,16 +342,22 @@ def output(bot):
         d.execute("SELECT * FROM titles_with_urls WHERE printed='0'")
         row = d.fetchone()
         if (row != None):
+            log.debug("New row found for output")
+            log.debug(row)
+
             id = row[0]
             feed_url = row[1]
             feed_output_syntax = d.execute("SELECT output_syntax_id FROM feeds WHERE feed_url = ?", (feed_url,)).fetchone()[0]
             title = row[2]
             url = row[3]
             channel = row[4]
+
             title = unicode(unescape(title)).encode("UTF-8")
             channel = channel.encode("UTF-8")
             url = url.encode("UTF-8")
+
             feed_title = d.execute("SELECT feed_title from feeds where feed_url = ?", (feed_url,)).fetchone()[0].encode('UTF-8')
+
             if (feed_output_syntax == 0): 
                 bot.say(channel, "%s: %s – %s" % (feed_title, title, url))
             elif (feed_output_syntax == 1): 
@@ -362,6 +368,7 @@ def output(bot):
                 bot.say(channel, "%s: %s" % (feed_title, title))
             elif (feed_output_syntax == 4): 
                 bot.say(channel, "%s" % title)
+
             data = [url, channel]
             d.execute("UPDATE titles_with_urls SET printed=1 WHERE URL=? and channel=?", data)
             db_conn.commit()

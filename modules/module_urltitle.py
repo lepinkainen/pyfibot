@@ -461,3 +461,24 @@ def _handle_aamulehti(url):
 
     title = bs.fetch("h1")[0].string
     return title
+
+def _handle_stackoverflow(url):
+    """*stackoverflow.com/questions/*"""
+
+    api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
+
+    match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
+    if match is None:
+        return
+
+    question_id = match.group(1)
+    content = getUrl(api_url % question_id).getContent()
+    if not content: 
+        log.debug("No content received")
+        return
+
+    try:
+        data = json.loads(content)
+        return data['questions'][0]['title']
+    except Exception, e:
+        return None

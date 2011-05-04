@@ -17,6 +17,8 @@ import fnmatch
 import HTMLParser
 import logging
 import logging.handlers
+from gzip import GzipFile
+from StringIO import StringIO
 
 try:
     import psyco
@@ -103,13 +105,16 @@ class URLCacheItem(object):
                 self.content = None
             else:
                 if self.checkType():
+                    # handle gzipped content
+                    if f.info().get('Content-Encoding') == 'gzip':
+                        buf = StringIO( f.read())
+                        f = GzipFile(fileobj=buf)
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
                     type = self.getHeaders().getsubtype()
                     log.warn("WRONG CONTENT TYPE, WILL NOT FETCH size:%s, type:%s, %s" % (size, type, self.url))
-
+        
         self._checkstatus()
-
         return self.content
 
     def getHeaders(self):
@@ -126,6 +131,7 @@ class URLCacheItem(object):
         return self.headers
 
     def checkType(self):
+        print "SUBTYPE", self.getHeaders().getsubtype()
         if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml', 'json', 'javascript']:
             return True
         else:
@@ -157,8 +163,8 @@ class BotURLOpener(urllib.FancyURLopener):
     """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
     
     def __init__(self, *args):
-        # Firefox 1.0PR on w2k
-        self.version = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/534.0 (KHTML, like Gecko) Chrome/6.0.408.1 Safari/534.0"
+        # Latest Chrome on Windows XP
+        self.version = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.16 Safari/534.30"
         urllib.FancyURLopener.__init__(self, *args)
 
     def prompt_user_passwd(self, host, realm):
