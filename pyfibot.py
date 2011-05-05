@@ -39,7 +39,7 @@ except ImportError:
     print "Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download"
     sys.exit(1)
 
-from util import *
+from util import timeoutdict
 from util.BeautifulSoup import BeautifulSoup
 from util.BeautifulSoup import UnicodeDammit
 
@@ -71,7 +71,7 @@ class URLCacheItem(object):
             try:
                 self.fp = urllib.urlopen(self.url)
             except IOError, e:
-                log.warn("IOError (%s) when opening url %s",e , url)
+                log.warn("IOError (%s) when opening url %s", e, url)
         return self.fp
 
     def _checkstatus(self):
@@ -86,8 +86,8 @@ class URLCacheItem(object):
         """Get the content length of URL in kB
 
         @return None if the server doesn't return a content-length header"""
-        if self.getHeaders().has_key('content-length'):
-            length = int(self.getHeaders()['content-length'])/1024
+        if 'content-length' in self.getHeaders():
+            length = int(self.getHeaders()['content-length']) / 1024
             return length
         else:
             return None
@@ -108,7 +108,7 @@ class URLCacheItem(object):
                     # handle gzipped content
                     if f.info().get('Content-Encoding') == 'gzip':
                         log.debug("Gzipped data, uncompressing")
-                        buf = StringIO( f.read())
+                        buf = StringIO(f.read())
                         f = GzipFile(fileobj=buf)
                     self.content = UnicodeDammit(f.read()).unicode
                 else:
@@ -145,8 +145,8 @@ class URLCacheItem(object):
         
         if not self.bs:
             # only attempt a bs parsing if the content is html, xml or xhtml
-            if self.getHeaders().has_key('content-type') and \
-            self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
+            if 'content-type' in self.getHeaders() and \
+               self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
                 try:
                     bs = BeautifulSoup(markup=self.getContent())
                 except HTMLParser.HTMLParseError:
@@ -158,6 +158,7 @@ class URLCacheItem(object):
             
         self._checkstatus()
         return self.bs
+
 
 class BotURLOpener(urllib.FancyURLopener):
     """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
@@ -173,7 +174,7 @@ class BotURLOpener(urllib.FancyURLopener):
 
 
 class Network:
-    def __init__(self, root, alias, address, nickname, channels = None, linerate = None, password=None, is_ssl=False):
+    def __init__(self, root, alias, address, nickname, channels=None, linerate=None, password=None, is_ssl=False):
         self.alias = alias                         # network name
         self.address = address                     # server address
         self.nickname = nickname                   # nick to use
@@ -253,10 +254,10 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.info("factory stopped")
         
     def buildProtocol(self, address):
-        log.info("Building protocol for %s",address)
+        log.info("Building protocol for %s", address)
         
         fqdn = socket.getfqdn(address.host)
-        log.debug("Address: %s - %s",address, fqdn)
+        log.debug("Address: %s - %s", address, fqdn)
             
         # do we know which network the address belongs to?
         for network, server in self.data['networks'].items():
@@ -272,7 +273,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.info("unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
 
-    def createNetwork(self, address, alias, nickname, channels = None, linerate = None, password=None, is_ssl=False):
+    def createNetwork(self, address, alias, nickname, channels=None, linerate=None, password=None, is_ssl=False):
         self.setNetwork(Network("data", alias, address, nickname, channels, linerate, password, is_ssl))
                 
     def setNetwork(self, net):
@@ -288,7 +289,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         for n in self.data['networks'].values():
             dest = connector.getDestination()
             if (dest.host, dest.port) == n.address:
-                if self.allBots.has_key(n.alias):
+                if n.alias in self.allBots:
                     # did we quit intentionally?
                     if not self.allBots[n.alias].hasQuit:
                         # nope, reconnect
@@ -302,8 +303,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Call all module finalizers"""
         for module in self._findmodules():
             # if rehashing (module already in namespace), finalize the old instance first
-            if self.ns.has_key(module):
-                if self.ns[module][0].has_key('finalize'):
+            if module in self.ns:
+                if 'finalize' in self.ns[module][0]:
                     log.info("finalize - %s" % module)
                     self.ns[module][0]['finalize']()
 
@@ -318,7 +319,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             # Load new version of the module
             execfile(os.path.join(self.moduledir, module), env, env)
             # initialize module
-            if env.has_key('init'):
+            if 'init' in env:
                 log.info("initialize module - %s" % module)
                 env['init'](self)
             
@@ -345,7 +346,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         # work around urllib bug, don't send fragment to server <http://bugs.python.org/issue8280>
         url = urllib.splittag(url)[0]
 
-        if self._urlcache.has_key(url) and not nocache:
+        if url in self._urlcache and not nocache:
             log.info("cache hit : %s" % url)
         else:
             if nocache:
@@ -375,6 +376,7 @@ class PyFiBotFactory(ThrottledClientFactory):
                 return True
         
         return False
+
 
 def create_example_conf():
     """Create an example configuration file"""
@@ -414,7 +416,7 @@ def init_logging():
     # get root logger
     logger = logging.getLogger()
     if False:
-        handler = logging.handlers.RotatingFileHandler(filename, maxBytes=5000*1024, backupCount=20)
+        handler = logging.handlers.RotatingFileHandler(filename, maxBytes=5000 * 1024, backupCount=20)
     else:
         handler = logging.StreamHandler()
     # time format is same format of strftime
@@ -453,7 +455,8 @@ if __name__ == '__main__':
         # normalize channel names to prevent internal confusion
         chanlist = []
         for channel in settings['channels']:
-            if channel[0] not in '&#!+': channel = '#' + channel
+            if channel[0] not in '&#!+':
+                channel = '#' + channel
             chanlist.append(channel)
 
         # resolve server name here in case it's a round-robin address
