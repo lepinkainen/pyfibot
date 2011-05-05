@@ -36,7 +36,7 @@ class CoreCommands(object):
 
     def command_ping(self, user, channel, args):
         self.say(channel, "%s: My current ping is %.0fms" % \
-                 (self.factory.getNick(user), self.pingAve*100.0))
+                 (self.factory.getNick(user), self.pingAve * 100.0))
 
     def command_rehash(self, user, channel, args):
         """Reload modules. Usage: rehash [debug]"""
@@ -56,7 +56,7 @@ class CoreCommands(object):
                 self.say(channel, "Rehash OK")
                 log.info("Rehash OK")
 
-    def say(self, channel, message, length = None):
+    def say(self, channel, message, length=None):
         """Must be implemented by the inheriting class"""
         raise NotImplementedError
 
@@ -70,13 +70,13 @@ class CoreCommands(object):
         # see if we have multiple arguments
         try:
             args, password = args.split(' ', 1)
-        except ValueError, e:
+        except ValueError:
             pass
         
         # see if the user specified a network
         try:
             newchannel, network = args.split('@', 1)
-        except ValueError, e:
+        except ValueError:
             newchannel, network = args, self.network.alias
         try:
             bot = self.factory.allBots[network]
@@ -110,7 +110,7 @@ class CoreCommands(object):
         # part what and where?
         try:
             newchannel, network = args.split('@', 1)
-        except ValueError, e:
+        except ValueError:
             newchannel, network = args, self.network.alias
 
         # get the bot instance for this chat network
@@ -149,7 +149,7 @@ class CoreCommands(object):
         commands = []
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
-            commands += [(c.replace("command_", ""),ref) for c,ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
+            commands += [(c.replace("command_", ""), ref) for c, ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
         
         # help for a specific command
         if len(cmnd) > 0:
@@ -163,7 +163,8 @@ class CoreCommands(object):
             commandlist = ", ".join([c for c, ref in commands])
             
             self.say(channel, "Available commands: %s" % commandlist)
-                                                                                        
+
+                                   
 class PyFiBot(irc.IRCClient, CoreCommands):
     """PyFiBot"""
 
@@ -244,14 +245,15 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         reactor.callLater(delay, self.repeatingPing, delay)
         self.ping(self.nickname)
 
-    def say(self, channel, message, length = None):
+    def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
         # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
         cont = False
         
         for m in msg:
-            if cont: m = "..."+m
+            if cont: 
+                m = "..." + m
             self.msg(channel, m, length)
             cont = True
 
@@ -366,7 +368,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            commands = [(c,ref) for c,ref in mylocals.items() if c == "command_%s" % cmnd]
+            commands = [(c, ref) for c, ref in mylocals.items() if c == "command_%s" % cmnd]
 
             for cname, command in commands:
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
@@ -404,7 +406,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self.left(channel)
         else:
             # some clients don't send a part message at all, compensate
-            if len(params) == 1: params.append("")
+            if len(params) == 1: 
+                params.append("")
             self.userLeft(prefix, channel, params[1])
         
     def irc_QUIT(self, prefix, params):
@@ -480,16 +483,16 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     ## Network = Quakenet -> do Q auth
     def isupport(self, options):
-        log.info(self.network.alias+" SUPPORTS: "+",".join(options))
+        log.info(self.network.alias + " SUPPORTS: " + ",".join(options))
 
     def created(self, when):
-        log.info(self.network.alias+" CREATED: "+when)
+        log.info(self.network.alias + " CREATED: " + when)
 
     def yourHost(self, info):
-        log.info(self.network.alias+" YOURHOST: "+info)
+        log.info(self.network.alias + " YOURHOST: " + info)
 
     def myInfo(self, servername, version, umodes, cmodes):
-        log.info(self.network.alias+" MYINFO: %s %s %s %s" % (servername, version, umodes, cmodes))
+        log.info(self.network.alias + " MYINFO: %s %s %s %s" % (servername, version, umodes, cmodes))
 
     def luserMe(self, info):
-        log.info(self.network.alias+" LUSERME: "+info)
+        log.info(self.network.alias + " LUSERME: " + info)
