@@ -25,14 +25,14 @@ def webchat_getorigin(hexip):
 
     ip = []
 
-    for i in range(2,len(hexip)+2,2):
+    for i in range(2, len(hexip) + 2, 2):
         try: 
-             dec = int(hexip[i-2:i], 16)
+            dec = int(hexip[i - 2:i], 16)
         except ValueError: return
         ip.append(str(dec))
     if ip:
-         origin = '.'.join(ip)
-         hostname = socket.getfqdn(origin)
-         if hostname != origin:
-              origin = "%s -> %s" % (origin, hostname)
+        origin = '.'.join(ip)
+        hostname = socket.getfqdn(origin)
+        if hostname != origin:
+            origin = "%s -> %s" % (origin, hostname)
     return origin

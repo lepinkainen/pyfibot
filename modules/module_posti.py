@@ -22,7 +22,7 @@ def getstatus(code, count=None):
 
     res = []
 
-    statuslist = bs.find("div", {'class':"result_up"}).find("table", {'width': '500'}).findAll("p", {'class': 'resulttext'})
+    statuslist = bs.find("div", {'class': "result_up"}).find("table", {'width': '500'}).findAll("p", {'class': 'resulttext'})
     for status in statuslist:
         date, statustext, location = status.contents
         statustext = statustext.string
@@ -39,12 +39,12 @@ def getstatus(code, count=None):
             agestr.append("%dd" % age.days)
 
         secs = age.seconds
-        hours,minutes,seconds = secs//3600,secs//60%60,secs%60
+        hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
 
         if hours > 0: agestr.append("%dh" % hours)
         if minutes > 0: agestr.append("%dm" % minutes)
         
-        res.append("%s - %s - %s" % (" ".join(agestr)+" ago", statustext, location))
+        res.append("%s - %s - %s" % (" ".join(agestr) + " ago", statustext, location))
                                                 
     if count:
         return res[:count]

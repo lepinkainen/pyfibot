@@ -1,11 +1,12 @@
 import re
-from util.BeautifulSoup import BeautifulStoneSoup
+
 
 def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""
 
     m = re.match(".*(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?.*", args)
-    if not m: return None
+    if not m: 
+        return None
 
     apiurl = "http://ws.spotify.com/lookup/1/?uri=spotify:%s:%s" % (m.group(2), m.group(4))
 
@@ -14,13 +15,14 @@ def handle_privmsg(bot, user, channel, args):
     if m.group(2) == 'album':
         artist = str(bs.first('album').first('artist').first('name').string)
         name = str(bs.first('album').first('name').string)
-	year = str(bs.first('album').first('released').string)
+        year = str(bs.first('album').first('released').string)
         data += '%s - %s (%s)' % (artist, name, year) 
     if m.group(2) == 'artist':
         data += str(bs.first('artist').first('name').string)
     if m.group(2) == 'track':
-	artist = str(bs.first('track').first('artist').first('name').string)
-        album = str(bs.first('track').first('album').first('name').string)
+        artist = str(bs.first('track').first('artist').first('name').string)
+        #album = str(bs.first('track').first('album').first('name').string)
         title = str(bs.first('track').first('name').string)
         data += '%s - %s' % (artist, title)
+        
     return bot.say(channel, data)

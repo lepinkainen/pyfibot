@@ -5,26 +5,34 @@ from operator import pow, add, sub, mul, div, mod
 
 import urllib2
 
+
 def doTheMath(matchobj):
     e = matchobj.groups()
     res = {"^": pow, "+": add, "-": sub, "*": mul, "/": div, "%": mod}[e[1]](float(e[0]), float(e[2]))
     return str(res)
 
+
 def calc(str, match=True):
-    if match: str = str.group(0)[1:-1]
+    if match: 
+        str = str.group(0)[1:-1]
 
     while True:
         newstr = re.sub("[(][-+*^%/\d.]*[)]", calc, str)
-        if (newstr == str): break
-        else: str = newstr
+        if (newstr == str): 
+            break
+        else: 
+            str = newstr
 
     for op in ["[\^]", "[*/%]", "[-+]"]:
         while True:
             newstr = re.sub("(\-?[\d.]+)(%s)(\-?[\d.]+)" % op, doTheMath, str)
-            if (newstr == str): break
-            else: str = newstr
+            if (newstr == str): 
+                break
+            else: 
+                str = newstr
 
     return str
+
 
 def calc_google(args):
     google_url = "http://www.google.com/search?hl=en&num=1&q=%s"
@@ -48,6 +56,8 @@ def calc_google(args):
     else:
         return "Invalid calculation"
 
+
 def command_calc(bot, user, channel, args):
-    if not args: return
+    if not args: 
+        return
     return bot.say(channel, calc_google(args))

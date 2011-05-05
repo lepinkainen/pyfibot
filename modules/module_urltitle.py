@@ -25,8 +25,8 @@ def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
 
     if msg.startswith("-"): return
-    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url): return # IMDB urls are handled elsewhere
-    if re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url): return # spotify handled elsewhere
+    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url): return  # IMDB urls are handled elsewhere
+    if re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url): return  # spotify handled elsewhere
 
     if channel.lstrip("#") in config.get('disable', ''): return
 
@@ -49,7 +49,7 @@ def handle_url(bot, user, channel, url, msg):
     # this can manage twitter + gawker sites for now
     url = url.replace("#!", "?_escaped_fragment_=")
 
-    handlers = [(h,ref) for h,ref in globals().items() if h.startswith("_handle_")]
+    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
 
     # try to find a specific handler for the URL
     for handler, ref in handlers:
@@ -123,7 +123,7 @@ def _title(bot, channel, title, smart=False, redundant=False):
     
     # crop obscenely long titles
     if len(title) > 200:
-        title = title[:200]+"..."
+        title = title[:200] + "..."
 
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
     log.info(title)
@@ -147,7 +147,7 @@ def _handle_hs(url):
         from datetime import datetime
         # handle updated news items of format, and get the latest update stamp
         # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
-        date = bs.first('p', {'class':'date'}).next
+        date = bs.first('p', {'class': 'date'}).next
         # in case hs.fi changes the date format, don't crash on it
         if date:
             date = date.split("|")[0].strip()
@@ -206,7 +206,7 @@ def _handle_keskisuomalainen_sahke(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.first('p', {'class':'jotsikko'})
+    title = bs.first('p', {'class': 'jotsikko'})
 
     if title:
         title = title.next.strip()
@@ -243,7 +243,7 @@ def _handle_verkkokauppa(url):
     if not bs: return
 
     product = bs.first('h1', id='productName').string
-    price = bs.first('span', {'class':'hintabig'}).string
+    price = bs.first('span', {'class': 'hintabig'}).string
 
     return "%s | %s" % (product, price)
 
@@ -262,16 +262,7 @@ def _handle_mol(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    title = bs.first("div", {'class':'otsikko'}).string
-
-    return title
-
-def _handle_helmet(url):
-    """http://www.helmet.fi/record=*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.first("strong").string
+    title = bs.first("div", {'class': 'otsikko'}).string
 
     return title
 
@@ -280,12 +271,12 @@ def _handle_tweet(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    status = bs.first("span", {'class':'entry-content'}).findAll(text=True)
+    status = bs.first("span", {'class': 'entry-content'}).findAll(text=True)
     content = ""
     for i in status:
         content += i
 
-    published = bs.first("span", {'class':'published timestamp'})['data']
+    published = bs.first("span", {'class': 'published timestamp'})['data']
     import time
     # Fri Feb 05 17:40:13 +0000 2010
     published = time.strptime(published[7:37], "%a %b %d %H:%M:%S +0000 %Y")
@@ -359,7 +350,7 @@ def _handle_youtube_gdata(url):
         secs = int(media.first("yt:duration")['seconds'])
 
         lengthstr = []
-        hours,minutes,seconds = secs//3600,secs//60%60,secs%60
+        hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
 
         if hours > 0: lengthstr.append("%dh" % hours)
         if minutes > 0: lengthstr.append("%dm" % minutes)
@@ -377,7 +368,7 @@ def _handle_helmet(url):
     bs = getUrl(url).getBS()
     if not bs: return
  
-    title = bs.find(attr={'class':'bibInfoLabel'},text='Teoksen nimi').next.next.next.next.string
+    title = bs.find(attr={'class': 'bibInfoLabel'}, text='Teoksen nimi').next.next.next.next.string
  
     return title
  
@@ -386,9 +377,9 @@ def _handle_ircquotes(url):
     bs = getUrl(url).getBS()
     if not bs: return
  
-    chan = bs.first("span", {'class':'quotetitle'}).next.next.string
-    points = bs.first("span", {'class':'points'}).next.string
-    firstline = bs.first("div", {'class':'quote'}).next.string
+    chan = bs.first("span", {'class': 'quotetitle'}).next.next.string
+    points = bs.first("span", {'class': 'points'}).next.string
+    firstline = bs.first("div", {'class': 'quote'}).next.string
  
     title = "%s (%s): %s" % (chan, points, firstline)
  
@@ -405,11 +396,11 @@ def _handle_alko(url):
     bs = getUrl(url).getBS()
     if not bs: return
 
-    name = bs.find('span', {'class':'tuote_otsikko'}).string
-    price = bs.find('span', {'class':'tuote_hinta'}).string.split(" ")[0]+u"€"
-    drinktype = bs.find('span', {'class':'tuote_tyyppi'}).next
+    name = bs.find('span', {'class': 'tuote_otsikko'}).string
+    price = bs.find('span', {'class': 'tuote_hinta'}).string.split(" ")[0] + u"€"
+    drinktype = bs.find('span', {'class': 'tuote_tyyppi'}).next
 
-    return name+" - "+drinktype+" - "+price
+    return name + " - " + drinktype + " - " + price
 
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
@@ -420,20 +411,20 @@ def _handle_facebook(url):
     """*facebook.com/*"""
     """*facebook.com/*"""
     if re.match("http(s?)://(.*?)facebook\.com/(.*?)id=(\\d+)", url):
-      asd = urlparse.urlparse(url)
-      id = asd.query.split('id=')[1].split('&')[0]
-      if id != '':
-        url = "https://graph.facebook.com/%s" % id
-        content = getUrl(url, True).getContent()
-        if content != 'false':
-          data = json.loads(content)
-          try:
-            title = data['name']
-          except: return
-        else:
-          title = 'Private url'
+        asd = urlparse.urlparse(url)
+        id = asd.query.split('id=')[1].split('&')[0]
+        if id != '':
+            url = "https://graph.facebook.com/%s" % id
+            content = getUrl(url, True).getContent()
+            if content != 'false':
+                data = json.loads(content)
+                try:
+                    title = data['name']
+                except: return
+            else:
+                title = 'Private url'
     else:
-      return
+        return
 
     return title
 

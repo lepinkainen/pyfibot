@@ -2,16 +2,19 @@
 
 import urllib
 try:
-  import json
-  import oauth2 as oauth
-  init_ok = True
+    import json
+    import oauth2 as oauth
+    init_ok = True
 except:
-  init_ok = False
+    init_ok = False
 
 consumer_key = 'cbcbcaf338bc7b430428dc4b64500e7004c761bbd'
 consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
 oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
 oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
+consumer = None
+token = None
+
 
 def init(bot):
     if not init_ok:
@@ -25,9 +28,9 @@ def init(bot):
     except KeyError:
         config = None
 
-    consumer_key       = config.get('consumer_key', '')
-    consumer_secret    = config.get('consumer_secret', '')
-    oauth_token        = config.get('oauth_token', '')
+    consumer_key = config.get('consumer_key', '')
+    consumer_secret = config.get('consumer_secret', '')
+    oauth_token = config.get('oauth_token', '')
     oauth_token_secret = config.get('oauth_token_secret', '')
 
     token = oauth.Token(key=oauth_token, secret=oauth_token_secret)
@@ -38,18 +41,20 @@ def handle_url(bot, user, channel, url, msg):
     if init_ok and (url.endswith(".jpg") or url.endswith(".gif")):
         print channel, upload_images([url])
 
+
 def upload_gallery(url):
     from mechanize import Browser
     br = Browser()
     br.set_handle_robots(False)
     br.open(url)
 
-    urls=set()
+    urls = set()
 
     for link in br.links(url_regex=".jpg$"):
         urls.add(link.url)
 
     upload_images(urls)
+
 
 def upload_images(urls):
     # uploaded images
@@ -63,9 +68,8 @@ def upload_images(urls):
 
         metadata = {
             'image': url, 
-            'type':'url',
-            'caption': 'Original url: %s'%url
-            }
+            'type': 'url',
+            'caption': 'Original url: %s' % url}
 
         resp, cont = client.request("http://api.imgur.com/2/account/images.json", "POST", body=urllib.urlencode(metadata))
         data = json.loads(cont)

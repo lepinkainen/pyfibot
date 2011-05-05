@@ -56,7 +56,7 @@ t2 = None
 
 def event_signedon(bot):
     """Starts rotators"""
-    if not init_ok: 
+    if not init_ok:
         log.error("Config not ok, not starting rotators")
         return False
     if (empty_database > 0):
@@ -65,7 +65,7 @@ def event_signedon(bot):
 
 def init(botconfig):
     """Creates database if it doesn't exist"""
-    if not init_ok: 
+    if not init_ok:
         log.error("Config not ok, skipping init")
         return False
 
@@ -83,7 +83,7 @@ def init(botconfig):
     global empty_database
     empty_database = d.execute("SELECT COUNT(*) FROM feeds").fetchone()[0]
     d.close()
-   
+
 def rss_addfeed(bot, user, channel, feed_url, output_syntax):
     """Adds RSS-feed to sqlite-database"""
     global empty_database
@@ -107,21 +107,21 @@ def rss_addfeed(bot, user, channel, feed_url, output_syntax):
             bot.say(channel, "Database \"%s\" created." % rssconfig["database"])
     except Exception, e:
         bot.say(channel, "Error: %s" % e)
-        
+
     d.execute("SELECT * FROM feeds WHERE feed_url = ? AND channel = ?", (feed_url, channel, ))
     already_on_db = d.fetchone()
     if already_on_db is None:
-            data = [None, feed_url, channel, feed_title, output_syntax]
-            d.execute("INSERT INTO feeds VALUES (?, ?, ?, ?, ?)", data)
-            db_conn.commit()
-            d.close()
-            if (empty_database == 0):
-                rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
-                rotator_output(bot, rssconfig["delays"]["output"])
-                empty_database = 1
+        data = [None, feed_url, channel, feed_title, output_syntax]
+        d.execute("INSERT INTO feeds VALUES (?, ?, ?, ?, ?)", data)
+        db_conn.commit()
+        d.close()
+        if (empty_database == 0):
+            rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
+            rotator_output(bot, rssconfig["delays"]["output"])
+            empty_database = 1
             return bot.say(channel, "Url \"%s\" inserted to database." % feed_url)
     else:
-        id = already_on_db[0] 
+        id = already_on_db[0]
         return bot.say(channel, "Url \"%s\" is already on database with ID: %i" % (feed_url, id))
 
 def rss_delfeed(bot, user, channel, args):
@@ -174,10 +174,10 @@ def rss_modify_feed_setting(bot, feed_ident, channel, target, tvalue):
     elif (target == "syntax"):
         if (db_conn.execute("UPDATE feeds SET output_syntax_id = ? WHERE id = ? OR feed_url = ? AND channel = ?", (tvalue, feed_ident, feed_ident, channel)).rowcount == 1):
             db_conn.commit()
-            bot.say(channel, "Feed's (%s) output syntax modified to \"%s\"" % (feed_url, tvalue.encode("UTF-8"))) 
+            bot.say(channel, "Feed's (%s) output syntax modified to \"%s\"" % (feed_url, tvalue.encode("UTF-8")))
     else: bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
     d.close()
-    
+
 def rss_listfeeds(bot, user, channel, args):
     """Lists all RSS-feeds added to channel"""
     feeds = list_feeds(channel)
@@ -207,7 +207,7 @@ def command_rss(bot, user, channel, args):
             else:
                 bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
     except IndexError:
-        bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>") 
+        bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
 
 def shorturl(url):
     try:
@@ -274,10 +274,10 @@ def indexfeeds(bot):
         log.debug("indexfeeds thread started")
         db_conn = sqlite3.connect(rssconfig["database"])
         d = db_conn.cursor()
-	
+
         # If table is removed, then create a new one
         titles_table_exists = d.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='titles_with_urls'").fetchone()
-    	if (titles_table_exists[0] == 0):
+        if (titles_table_exists[0] == 0):
             init(None)
 
         # Let's count all rows to index
@@ -358,15 +358,15 @@ def output(bot):
 
             feed_title = d.execute("SELECT feed_title from feeds where feed_url = ?", (feed_url,)).fetchone()[0].encode('UTF-8')
 
-            if (feed_output_syntax == 0): 
+            if (feed_output_syntax == 0):
                 bot.say(channel, "%s: %s – %s" % (feed_title, title, url))
-            elif (feed_output_syntax == 1): 
+            elif (feed_output_syntax == 1):
                 bot.say(channel, "%s: %s – %s" % (feed_title, title, shorturl(url)))
-            elif (feed_output_syntax == 2): 
+            elif (feed_output_syntax == 2):
                 bot.say(channel, "%s: %s (%i)" % (feed_title, title, id))
-            elif (feed_output_syntax == 3): 
+            elif (feed_output_syntax == 3):
                 bot.say(channel, "%s: %s" % (feed_title, title))
-            elif (feed_output_syntax == 4): 
+            elif (feed_output_syntax == 4):
                 bot.say(channel, "%s" % title)
 
             data = [url, channel]

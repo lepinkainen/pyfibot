@@ -69,7 +69,7 @@ def command_rexpl(bot, user, channel, args):
     except TypeError:
         return
  
-    term = termlist[random.randrange(0, len(termlist)-1)]
+    term = termlist[random.randrange(0, len(termlist) - 1)]
     expl = expl_getexpl(expldir, term)
     return bot.say(channel, "'%s': %s" % (term, expl))
  
@@ -93,7 +93,7 @@ def command_add(bot, user, channel, args):
     expl = args[1]
     f = file(os.path.join(expldir, term), 'w')
     f.write(expl)
-    f.write("\n") # add a newline to make it easier to admin
+    f.write("\n")  # add a newline to make it easier to admin
     f.close()
  
     bot.log("Term '%s' for %s added by %s: %s" % (term, channel, user, term))
