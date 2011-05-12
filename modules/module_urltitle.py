@@ -81,39 +81,81 @@ def handle_url(bot, user, channel, url, msg):
         if not title: return
 
         if _check_redundant(url, title):
-            return _title(bot, channel, title, redundant=True)   
-        else:
-            return _title(bot, channel, title)
+            return
+        
+        return _title(bot, channel, title)
+
     except AttributeError:
         # TODO: Nees a better way to handle this
         # this happens with empty <title> tags
         pass
 
 def _check_redundant(url, title):
-    """Returns true if the url already contains everything in the title"""
+    """Returns true if the url and title are similar enough."""
+
+    # remove hostname from the title
+    hostname = urlparse.urlparse(url.lower()).netloc
+    hostname = ".".join(hostname.split('@')[-1].split(':')[0].lstrip('www.').split('.'))
+
+    cmp_title = title.lower()
+    for part in hostname.split('.'):
+        idx = cmp_title.replace(' ', '').find(part)
+        if idx != -1:
+            break
+
+    if idx > len(cmp_title)/2:
+        cmp_title = cmp_title[0:idx+(len(title[0:idx])-len(title[0:idx].replace(' ', '')))].strip()
+    elif idx == 0:
+        cmp_title = cmp_title[idx+len(hostname):].strip()
+
+    # truncate some nordic letters
+    unicode_to_ascii = {u'\u00E4' : 'a', u'\u00C4' : 'A', u'\u00F6' : 'o',\
+                u'\u00D6' : 'O', u'\u00C5': 'A', u'\u00E5': 'a'}
+    for i in unicode_to_ascii:
+         cmp_title = cmp_title.replace(i, unicode_to_ascii[i])
+
+    cmp_url = url.replace("-", " ")
+    cmp_url = url.replace("+", " ")
+    cmp_url = url.replace("_", " ")
+
+    parts = cmp_url.lower().rsplit("/")
+
+    distances = []
+    for part in parts:
+        if part.rfind('.') != -1:
+            part = part[:part.rfind('.')]
+        distances.append(_levenshtein_distance(part, cmp_title))
     
-    buf = []
-    for ch in url:
-        if ch.isalnum(): buf.append(ch)
-        url = (''.join(buf)).lower()
-    buf = []
-    for ch in title:
-        if ch.isalnum() or ch == ' ': buf.append(ch)
-        title = (''.join(buf)).lower().split()
-    for word in title:
-        if word not in url: return False
+    if len(title) < 20 and min(distances) < 5:
+        return True
+    elif len(title) >= 20 and len(title) <= 30 and min(distances) < 10:
+        return True
+    elif len(title) > 30 and len(title) <= 60 and min(distances) <= 21:
+        return True
+    elif len(title) > 60 and min(distances) < 37:
+        return True
 
-    return True
+    return False
 
-def _title(bot, channel, title, smart=False, redundant=False):
+def _levenshtein_distance(s, t):
+
+    d = [ [i] + [0]*len(t) for i in xrange(0, len(s)+1) ]
+    d[0] = [i for i in xrange(0, (len(t)+1))]
+
+    for i in xrange(1, len(d)):
+        for j in xrange(1, len(d[i])):
+            if len(s) > i-1 and len(t) > j-1 and s[i-1] == t[j-1]:
+                d[i][j] = d[i-1][j-1]
+            else:
+                d[i][j] = min((d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+1))
+
+    return d[len(s)][len(t)]
+
+
+def _title(bot, channel, title, smart=False):
     """Say title to channel"""
 
     prefix = "Title:"
-
-    if False:
-        suffix = " [Redundant]"
-    else:
-        suffix = ""
 
     info = None
     # tuple, additional info
@@ -129,55 +171,11 @@ def _title(bot, channel, title, smart=False, redundant=False):
     log.info(title)
 
     if not info:
-        return bot.say(channel, "%s '%s'%s" % (prefix, title, suffix))
+        return bot.say(channel, "%s '%s'" % (prefix, title))
     else:
         return bot.say(channel, "%s '%s' [%s]" % (prefix, title, info))
 
 ##### HANDLERS #####
-
-def _handle_hs(url):
-    """*hs.fi*artikkeli*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-    title = bs.title.string
-    title = title.split("-")[0].strip()
-
-    try:
-        # determine article age and warn if it is too old
-        from datetime import datetime
-        # handle updated news items of format, and get the latest update stamp
-        # 20.7.2010 8:02 | Päivitetty: 20.7.2010 12:53
-        date = bs.first('p', {'class': 'date'}).next
-        # in case hs.fi changes the date format, don't crash on it
-        if date:
-            date = date.split("|")[0].strip()
-            article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
-            delta = datetime.now() - article_date
-
-            if delta.days > 365:
-                return title, "NOTE: Article is %d days old!" % delta.days
-            else:
-                return title
-        else:
-            return title
-    except Exception, e:
-        log.error("Error when parsing hs.fi: %s" % e)
-        return title
-
-def _handle_ksml(url):
-    """*ksml.fi/uutiset*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-    title = bs.title.string
-    title = title.split("-")[0].strip()
-    return title
-
-def _handle_mtv3(url):
-    """*mtv3.fi*"""
-    bs = getUrl(url).getBS()
-    title = bs.first("h1", "otsikko").next
-
-    return title
 
 def _handle_iltalehti(url):
     """*iltalehti.fi*html"""
@@ -247,16 +245,6 @@ def _handle_verkkokauppa(url):
 
     return "%s | %s" % (product, price)
 
-def _handle_yle(url):
-    """http://*yle.fi/uutiset/*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.title.string
-    title = title.split("|")[0].strip()
-
-    return title
-
 def _handle_mol(url):
     """http://www.mol.fi/paikat/Job.do?*"""
     bs = getUrl(url).getBS()
@@ -294,14 +282,6 @@ def _handle_netanttila(url):
     price = bs.first("td", {'class': 'right highlight'}).string.split(" ")[0]
 
     return "%s | %s EUR" % (itemname, price)
-
-def _handle_varttifi(url):
-    """http://www.vartti.fi/artikkeli/*"""
-    bs = getUrl(url).getBS()
-
-    title = bs.first("h2").string
-
-    return title
 
 def _handle_youtube_shorturl(url):
     """http://youtu.be/*"""
@@ -444,14 +424,6 @@ def _handle_vimeo(url):
         plays = bs.first("stats_number_of_plays").string
 
         return "%s by %s [%s likes, %s views]" % (title, user, likes, plays)
-
-def _handle_aamulehti(url):
-    """http://www.aamulehti.fi/*"""
-    bs = getUrl(url).getBS()
-    if not bs: return
-
-    title = bs.fetch("h1")[0].string
-    return title
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
