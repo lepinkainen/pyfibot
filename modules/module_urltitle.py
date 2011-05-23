@@ -448,3 +448,73 @@ def _handle_stackoverflow(url):
         return "%s - %dpts - %s" % (title, score, tags)
     except Exception, e:
         return "Json parsing failed %s" % e
+
+def _handle_hs(url):
+    """*hs.fi*artikkeli*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+    title = bs.title.string
+    title = title.split("-")[0].strip()
+
+    try:
+        # determine article age and warn if it is too old
+        from datetime import datetime
+        # handle updated news items of format, and get the latest update stamp
+        # 20.7.2010 8:02 | PÃ¤ivitetty: 20.7.2010 12:53
+        date = bs.first('p', {'class': 'date'}).next
+        # in case hs.fi changes the date format, don't crash on it
+        if date:
+            date = date.split("|")[0].strip()
+            article_date = datetime.strptime(date, "%d.%m.%Y %H:%M")
+            delta = datetime.now() - article_date
+
+            if delta.days > 365:
+                return title, "NOTE: Article is %d days old!" % delta.days
+            else:
+                return title
+        else:
+            return title
+    except Exception, e:
+        log.error("Error when parsing hs.fi: %s" % e)
+        return title
+
+def _handle_ksml(url):
+    """*ksml.fi/uutiset*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+    title = bs.title.string
+    title = title.split("-")[0].strip()
+    return title
+
+def _handle_mtv3(url):
+    """*mtv3.fi*"""
+    bs = getUrl(url).getBS()
+    title = bs.first("h1", "otsikko").next
+
+    return title
+
+def _handle_yle(url):
+    """http://*yle.fi/uutiset/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.title.string
+    title = title.split("|")[0].strip()
+    
+    return title
+
+def _handle_varttifi(url):
+    """http://www.vartti.fi/artikkeli/*"""
+    bs = getUrl(url).getBS()
+
+    title = bs.first("h2").string
+
+    return title
+
+def _handle_aamulehti(url):
+    """http://www.aamulehti.fi/*"""
+    bs = getUrl(url).getBS()
+    if not bs: return
+
+    title = bs.fetch("h1")[0].string
+    return title
