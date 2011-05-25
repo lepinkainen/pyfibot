@@ -21,12 +21,6 @@ from gzip import GzipFile
 from StringIO import StringIO
 
 try:
-    import psyco
-    psyco.full()
-except ImportError:
-    print "Psyco not found, running unoptimized"
-
-try:
     import yaml
 except ImportError:
     print "PyYAML not found, please install from http://pyyaml.org/wiki/PyYAML"

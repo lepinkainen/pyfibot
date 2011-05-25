@@ -8,9 +8,6 @@ Bot core
 @license New-Style BSD
 """
 
-# TODO:
-# Maintenance task, remove already run items from tasks
-
 # twisted imports
 from twisted.words.protocols import irc
 from twisted.internet import reactor, threads
