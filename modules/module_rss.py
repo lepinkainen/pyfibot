@@ -25,7 +25,7 @@ except:
     try:
         import simplejson as json
     except ImportError, error:
-        print 'Error starting rss module: ',error
+        print('Error starting rss module: %s' % error)
         init_ok = False
 
 try:
@@ -35,7 +35,7 @@ try:
     import htmlentitydefs
     init_ok = True
 except ImportError, error:
-    print 'Error starting rss module: ',error
+    print('Error starting rss module: %s' % error)
     init_ok = False
 
 # Initialize logger
@@ -54,6 +54,7 @@ t2 = None
 
 # With output_syntax #2 you could get url via .url <id>
 
+
 def event_signedon(bot):
     """Starts rotators"""
     if not init_ok:
@@ -62,6 +63,7 @@ def event_signedon(bot):
     if (empty_database > 0):
         rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
         rotator_output(bot, rssconfig["delays"]["output"])
+
 
 def init(botconfig):
     """Creates database if it doesn't exist"""
@@ -83,6 +85,7 @@ def init(botconfig):
     global empty_database
     empty_database = d.execute("SELECT COUNT(*) FROM feeds").fetchone()[0]
     d.close()
+
 
 def rss_addfeed(bot, user, channel, feed_url, output_syntax):
     """Adds RSS-feed to sqlite-database"""
@@ -124,9 +127,9 @@ def rss_addfeed(bot, user, channel, feed_url, output_syntax):
         id = already_on_db[0]
         return bot.say(channel, "Url \"%s\" is already on database with ID: %i" % (feed_url, id))
 
+
 def rss_delfeed(bot, user, channel, args):
-    """Deletes RSS-feed from sqlite-database by given ID"""
-    """Should have support for deletion using ID or feed's URL"""
+    """Deletes RSS-feed from sqlite-database by given ID. Should have support for deletion using ID or feed's URL"""
     db_conn = sqlite3.connect(rssconfig["database"])
     d = db_conn.cursor()
 
@@ -138,10 +141,9 @@ def rss_delfeed(bot, user, channel, args):
         bot.say(channel, "Feed %s deleted successfully" % feed_url.encode("UTF-8"))
     d.close()
 
-def list_feeds(channel):
-    """Lists channels (or all) RSS-feeds from sqlite-database"""
 
-    """Initialize connection to database-file"""
+def list_feeds(channel):
+    """Lists channels (or all) RSS-feeds from sqlite-database. Initialize connection to database-file"""
     db_conn = sqlite3.connect(rssconfig["database"])
     d = db_conn.cursor()
 
@@ -160,10 +162,11 @@ def list_feeds(channel):
     d.close()
     return feeds
 
+
 def rss_modify_feed_setting(bot, feed_ident, channel, target, tvalue):
     """Modifies feed's settings"""
     db_conn = sqlite3.connect(rssconfig["database"])
-    d= db_conn.cursor()
+    d = db_conn.cursor()
     d.execute("SELECT id, feed_url FROM feeds WHERE id = ? OR feed_url = ?", (feed_ident, feed_ident,))
     row = d.fetchone()
     feed_url = row[1].encode("UTF-8")
@@ -175,8 +178,10 @@ def rss_modify_feed_setting(bot, feed_ident, channel, target, tvalue):
         if (db_conn.execute("UPDATE feeds SET output_syntax_id = ? WHERE id = ? OR feed_url = ? AND channel = ?", (tvalue, feed_ident, feed_ident, channel)).rowcount == 1):
             db_conn.commit()
             bot.say(channel, "Feed's (%s) output syntax modified to \"%s\"" % (feed_url, tvalue.encode("UTF-8")))
-    else: bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
-    d.close()
+    else:
+        bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
+        d.close()
+
 
 def rss_listfeeds(bot, user, channel, args):
     """Lists all RSS-feeds added to channel"""
@@ -184,16 +189,20 @@ def rss_listfeeds(bot, user, channel, args):
     for feed in feeds:
         bot.say(channel, "%s: %s" % (feed[0], feed[1]))
 
+
 def command_rss(bot, user, channel, args):
     """Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>"""
     try:
         args = args.split()
         subcommand = args[0]
-        if (subcommand != "list"): feed_ident = args[1]
+        if (subcommand != "list"):
+            feed_ident = args[1]
         if (isAdmin(user)):
             if (subcommand == "add"):
-                if (len(args) > 2): output_syntax = args[2]
-                else: output_syntax = rssconfig["output_syntax"]
+                if (len(args) > 2):
+                    output_syntax = args[2]
+                else:
+                    output_syntax = rssconfig["output_syntax"]
                 rss_addfeed(bot, user, channel, feed_ident, output_syntax)
             elif (subcommand == "del"):
                 rss_delfeed(bot, user, channel, feed_ident)
@@ -202,12 +211,15 @@ def command_rss(bot, user, channel, args):
             elif (subcommand == "set"):
                 target = args[2]
                 tvalue = args[3].decode("UTF-8")
-                if (target == "title"): rss_modify_feed_setting(bot, feed_ident, channel, "title", tvalue)
-                elif (target == "syntax"): rss_modify_feed_setting(bot, feed_ident, channel, "syntax", tvalue)
+                if (target == "title"):
+                    rss_modify_feed_setting(bot, feed_ident, channel, "title", tvalue)
+                elif (target == "syntax"):
+                    rss_modify_feed_setting(bot, feed_ident, channel, "syntax", tvalue)
             else:
                 bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
     except IndexError:
         bot.say(channel, "Invalid syntax! Usage: Add feed: .rss add <feed_url>, Delete feed: .rss del <feed_url/feed_id>, List feeds: .rss list, Change feed settings: .rss set <feed_id/feed_url> title/syntax <value>")
+
 
 def shorturl(url):
     try:
@@ -218,9 +230,11 @@ def shorturl(url):
             return results['data']['url'].encode("UTF-8")
         raise Exception("Error in function shorturl: %s" % results['status_txt'])
     except HTTPError, e:
-        log.debug('Error in function shorturl (url => %s): %s' % (url,e.read()))
+        log.debug('Error in function shorturl (url => %s): %s' % (url, e.read()))
 
-def unescape(text): # Unescape ugly wtf-8-hex-escaped chars
+
+def unescape(text):
+    """Unescape ugly wtf-8-hex-escaped chars."""
     def fixup(m):
         text = m.group(0)
         if text[:2] == "&#":
@@ -238,12 +252,14 @@ def unescape(text): # Unescape ugly wtf-8-hex-escaped chars
                 text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
             except KeyError:
                 pass
-        return text # leave as is
+        return text  # leave as is
     return re.sub("&#?\w+;", fixup, text)
+
 
 def remove_html_tags(data):
     p = re.compile(r'<.*?>')
     return p.sub('', data)
+
 
 def sqlite_add_item(bot, feed_url, title, url, channel, cleanup):
     """Adds item with feed-url, title, url, channel and marks it as non-printed"""
@@ -261,11 +277,13 @@ def sqlite_add_item(bot, feed_url, title, url, channel, cleanup):
         db_conn.commit()
         db_conn.close()
     except sqlite3.IntegrityError, e:
+        # Couldn't add entry twice
         return
     except Exception, e:
         # Database is already opened
         log.debug('Error in sqlite_add_item: %s' % e)
         pass
+
 
 def indexfeeds(bot):
     """Updates all RSS-feeds found on database and outputs new elements"""
@@ -314,6 +332,7 @@ def indexfeeds(bot):
     except Exception, e:
         log.debug('Error in indexfeeds: %s', e)
 
+
 def command_url(bot, user, channel, args):
     """Prints feed's element url by given id"""
     id = args
@@ -331,8 +350,9 @@ def command_url(bot, user, channel, args):
             url = url.encode("UTF-8")
             bot.say(channel, "%s" % (url))
     except Exception, e:
-        #Database is already opened
+        # Database is already opened
         log.debug("Exception in command showurl: %s" % e)
+
 
 def output(bot):
     """This function is launched from rotator to collect and announce new items from feeds to channel"""
@@ -376,9 +396,10 @@ def output(bot):
     except StopIteration:
         pass
     except Exception, e:
-        #Database is already opened
+        # Database is already opened
         log.debug("Exception in function output: %s" % e)
         pass
+
 
 def rotator_indexfeeds(bot, delay):
     """Timer for methods/functions"""
@@ -396,6 +417,7 @@ def rotator_indexfeeds(bot, delay):
             reactor.callLater(delay, rotator_indexfeeds, bot, delay)
     except Exception, e:
         print e
+
 
 def rotator_output(bot, delay):
     """Timer for methods/functions"""

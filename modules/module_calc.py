@@ -13,22 +13,22 @@ def doTheMath(matchobj):
 
 
 def calc(str, match=True):
-    if match: 
+    if match:
         str = str.group(0)[1:-1]
 
     while True:
         newstr = re.sub("[(][-+*^%/\d.]*[)]", calc, str)
-        if (newstr == str): 
+        if (newstr == str):
             break
-        else: 
+        else:
             str = newstr
 
     for op in ["[\^]", "[*/%]", "[-+]"]:
         while True:
             newstr = re.sub("(\-?[\d.]+)(%s)(\-?[\d.]+)" % op, doTheMath, str)
-            if (newstr == str): 
+            if (newstr == str):
                 break
-            else: 
+            else:
                 str = newstr
 
     return str
@@ -58,6 +58,6 @@ def calc_google(args):
 
 
 def command_calc(bot, user, channel, args):
-    if not args: 
+    if not args:
         return
     return bot.say(channel, calc_google(args))

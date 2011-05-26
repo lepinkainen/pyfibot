@@ -8,11 +8,15 @@ try:
 except:
     print('Error loading library pywapi. Probably you havent installed it yet.')
 
-def fahrenheit_to_celcius(f): return (int(f)-32)/1.8
+
+def fahrenheit_to_celcius(f):
+    return (int(f) - 32) / 1.8
+
 
 def command_forecast(bot, user, channel, args):
-    '''this module tells weather forecast for location'''
-    if not has_pywapi: return
+    """This module tells weather forecast for location"""
+    if not has_pywapi:
+        return
 
     result_dict = pywapi.get_weather_from_google(args)
     if not all(result_dict.values()):
@@ -24,7 +28,6 @@ def command_forecast(bot, user, channel, args):
                           day['condition'], \
                           fahrenheit_to_celcius(day['low']), \
                           fahrenheit_to_celcius(day['high'])))
-
 
     answerstr = u'%s: ' % (result_dict['forecast_information']['city'])
     answerstr += u", ".join(format_day(day) for day in result_dict['forecasts'])

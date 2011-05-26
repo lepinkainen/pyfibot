@@ -1,5 +1,6 @@
 import socket
 
+
 def handle_userJoined(bot, user, channel):
     nick = getNick(user)
     userhost = user.split("!")[1]
@@ -11,6 +12,7 @@ def handle_userJoined(bot, user, channel):
         if origin:
             return bot.say(channel, "%s is using webchat from %s" % (nick, origin))
 
+
 def command_webchat(bot, user, channel, args):
     """Parse a webhcat hex ip to a domain"""
     origin = webchat_getorigin(args)
@@ -19,16 +21,17 @@ def command_webchat(bot, user, channel, args):
     else:
         return bot.say(channel, "%s: %s is not a valid webchat hex ip" % (getNick(user), args))
 
+
 def webchat_getorigin(hexip):
     """Parse webchat hex-format ip to decimal ip and hostname if it exists"""
-    if len(hexip) != 8: return
-
+    if len(hexip) != 8:
+        return
     ip = []
-
     for i in range(2, len(hexip) + 2, 2):
-        try: 
+        try:
             dec = int(hexip[i - 2:i], 16)
-        except ValueError: return
+        except ValueError:
+            return
         ip.append(str(dec))
     if ip:
         origin = '.'.join(ip)
