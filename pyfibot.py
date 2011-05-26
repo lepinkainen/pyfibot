@@ -70,7 +70,6 @@ class URLCacheItem(object):
 
     def _checkstatus(self):
         """Check if all data has already been cached and close socket if so"""
-        
         if self.content and \
            self.headers and \
            self.bs:
@@ -108,20 +107,17 @@ class URLCacheItem(object):
                 else:
                     type = self.getHeaders().getsubtype()
                     log.warn("WRONG CONTENT TYPE, WILL NOT FETCH size:%s, type:%s, %s" % (size, type, self.url))
-        
         self._checkstatus()
         return self.content
 
     def getHeaders(self):
         """Get headers for the URL"""
-        
         if not self.headers:
             f = self._open(self.url)
             if f:
                 self.headers = f.info()
             else:
                 self.headers = {}
-        
         self._checkstatus()
         return self.headers
 
@@ -136,7 +132,6 @@ class URLCacheItem(object):
 
         @return None if the url doesn't contain HTML
         """
-        
         if not self.bs:
             # only attempt a bs parsing if the content is html, xml or xhtml
             if 'content-type' in self.getHeaders() and \
@@ -149,14 +144,12 @@ class URLCacheItem(object):
                 self.bs = bs
             else:
                 return None
-            
         self._checkstatus()
         return self.bs
 
 
 class BotURLOpener(urllib.FancyURLopener):
     """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
-    
     def __init__(self, *args):
         # Latest Chrome on Windows XP
         self.version = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.16 Safari/534.30"
@@ -192,24 +185,22 @@ class InstantDisconnectProtocol(protocol.Protocol):
 
 class ThrottledClientFactory(protocol.ClientFactory):
     """Client factory that inserts a slight delay to connecting and reconnecting"""
-    
     lostDelay = 10
     failedDelay = 60
 
     def clientConnectionLost(self, connector, reason):
         log.info("connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay))
         reactor.callLater(self.lostDelay, connector.connect)
-        
+
     def clientConnectionFailed(self, connector, reason):
         log.info("connection failed (%s): reconnecting in %d seconds" % (reason, self.failedDelay))
         reactor.callLater(self.failedDelay, connector.connect)
 
-                                                                        
+
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
     version = "20110425.0"
-
     protocol = botcore.PyFiBot
     allBots = None
     moduledir = os.path.join(sys.path[0], "modules/")
@@ -218,58 +209,44 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def __init__(self, config):
         """Initialize the factory"""
-
         self.config = config
         self.data = {}
         self.data['networks'] = {}
         self.ns = {}
-
-        # cache url contents for 5 minutes, check for old entries every minute
+        # Cache url contents for 5 minutes, check for old entries every minute
         self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
 
-        #if not os.path.exists("data"):
-        #    os.mkdir("data")
-                        
     def startFactory(self):
         self.allBots = {}
         self.starttime = time.time()
-
         self._loadmodules()
-
         ThrottledClientFactory.startFactory(self)
-
         log.info("factory started")
 
     def stopFactory(self):
-
         del self.allBots
-        
-        ThrottledClientFactory.stopFactory(self)        
+        ThrottledClientFactory.stopFactory(self)
         log.info("factory stopped")
-        
+
     def buildProtocol(self, address):
         log.info("Building protocol for %s", address)
-        
         fqdn = socket.getfqdn(address.host)
         log.debug("Address: %s - %s", address, fqdn)
-            
-        # do we know which network the address belongs to?
+        # TODO We do need to know which network the address belongs to
         for network, server in self.data['networks'].items():
             if server.address[0] == fqdn:
-                log.debug("connecting to %s / %s", server, address)
-
+                log.debug("Connecting to %s / %s", server, address)
                 p = self.protocol(server)
                 self.allBots[server.alias] = p
                 p.factory = self
                 return p
-
-        # no address found
-        log.info("unknown network address: " + repr(address))
+        # No address found
+        log.info("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
 
     def createNetwork(self, address, alias, nickname, channels=None, linerate=None, password=None, is_ssl=False):
         self.setNetwork(Network("data", alias, address, nickname, channels, linerate, password, is_ssl))
-                
+
     def setNetwork(self, net):
         nets = self.data['networks']
         nets[net.alias] = net
@@ -305,19 +282,16 @@ class PyFiBotFactory(ThrottledClientFactory):
     def _loadmodules(self):
         """Load all modules"""
         self._finalize_modules()
-        
         for module in self._findmodules():
-
             env = self._getGlobals()
             log.info("load module - %s" % module)
             # Load new version of the module
             execfile(os.path.join(self.moduledir, module), env, env)
-            # initialize module
+            # Initialize module
             if 'init' in env:
                 log.info("initialize module - %s" % module)
                 env['init'](self)
-            
-            # add to namespace so we can find it later
+            # Add to namespace so we can find it later
             self.ns[module] = (env, env)
 
     def _findmodules(self):
@@ -336,7 +310,6 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def getUrl(self, url, nocache=False):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
-        
         # work around urllib bug, don't send fragment to server <http://bugs.python.org/issue8280>
         url = urllib.splittag(url)[0]
 
@@ -348,39 +321,32 @@ class PyFiBotFactory(ThrottledClientFactory):
             else:
                 log.info("cache miss: %s" % url)
             self._urlcache[url] = URLCacheItem(url)
-            
         return self._urlcache[url]
 
     def getNick(self, user):
         """Parses nick from nick!user@host
-        
         @type user: string
         @param user: nick!user@host
-        
         @return: nick"""
         return user.split('!', 1)[0]
 
     def isAdmin(self, user):
         """Check if an user has admin privileges.
-        
         @return: True or False"""
-    
         for pattern in self.config['admins']:
             if fnmatch.fnmatch(user, pattern):
                 return True
-        
         return False
 
 
 def create_example_conf():
     """Create an example configuration file"""
-    
     conf = """
     nick: botnick
 
     admins:
       - 'foo!bar@example.com'
-    
+
     networks:
       ircnet:
         server: irc.ircnet.com
@@ -420,13 +386,10 @@ def init_logging():
     logger.setLevel(logging.DEBUG)
 
 if __name__ == '__main__':
-
     init_logging()
-
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-
     config = os.path.join(sys.path[0], "bot.config")
-    
+
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
@@ -439,23 +402,19 @@ if __name__ == '__main__':
     factory = PyFiBotFactory(config)
     for network, settings in config['networks'].items():
         # settings = per network, config = global
-
         nick = settings.get('nick', None) or config['nick']
         linerate = settings.get('linerate', None) or config.get('linerate', None)
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
-
         # normalize channel names to prevent internal confusion
         chanlist = []
         for channel in settings['channels']:
             if channel[0] not in '&#!+':
                 channel = '#' + channel
             chanlist.append(channel)
-
         # resolve server name here in case it's a round-robin address
         server_name = socket.getfqdn(settings['server'])
-
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
@@ -463,5 +422,4 @@ if __name__ == '__main__':
         else:
             log.info("connecting to %s:%d" % (server_name, port))
             reactor.connectTCP(server_name, port, factory)
-        
     reactor.run()

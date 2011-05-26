@@ -69,7 +69,7 @@ class CoreCommands(object):
             args, password = args.split(' ', 1)
         except ValueError:
             pass
-        
+
         # see if the user specified a network
         try:
             newchannel, network = args.split('@', 1)
@@ -97,7 +97,7 @@ class CoreCommands(object):
     def command_leave(self, user, channel, args):
         """Usage: leave <channel>[@network] - Leave the specified channel"""
         self.command_part(user, channel, args)
-        
+
     def command_part(self, user, channel, args):
         """Usage: part <channel>[@network] - Leave the specified channel"""
 
@@ -122,7 +122,7 @@ class CoreCommands(object):
             else:
                 bot.network.channels.remove(newchannel)
                 bot.part(newchannel)
-            
+
     def command_quit(self, user, channel, args):
         """Usage: logoff - Leave this network"""
 
@@ -134,7 +134,7 @@ class CoreCommands(object):
 
     def command_channels(self, user, channel, args):
         """Usage: channels <network> - List channels the bot is on"""
-        if not args: 
+        if not args:
             self.say(channel, "Please specify a network")
             return
 
@@ -147,21 +147,19 @@ class CoreCommands(object):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             commands += [(c.replace("command_", ""), ref) for c, ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
-        
-        # help for a specific command
+        # Help for a specific command
         if len(cmnd) > 0:
             for cname, ref in commands:
                 if cname == cmnd:
                     helptext = ref.__doc__.split("\n", 1)[0]
                     self.say(channel, "Help for %s: %s" % (cmnd, helptext))
                     return
-        # generic help
+        # Generic help
         else:
             commandlist = ", ".join([c for c, ref in commands])
-            
             self.say(channel, "Available commands: %s" % commandlist)
 
-                                   
+
 class PyFiBot(irc.IRCClient, CoreCommands):
     """PyFiBot"""
 
@@ -171,33 +169,30 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     # send 1 msg per second max
     linerate = 1
-    
     hasQuit = False
 
     CMDCHAR = "."
 
     # Rolling ping time average
     pingAve = 0.0
-        
+
     def __init__(self, network):
         self.network = network
         self.nickname = self.network.nickname
         self.linerate = self.network.linerate
-        # text wrapper to clip overly long answers
+        # Text wrapper to clip overly long answers
         self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
-        
         log.info("bot initialized")
 
     def __repr__(self):
         return 'PyFiBot(%r, %r)' % (self.nickname, self.network.address)
 
-    ###### CORE 
-
+    """Core"""
     def printResult(self, msg, info):
         # Don't print results if there is nothing to say (usually non-operation on module)
         if msg:
             log.debug("Result %s %s" % (msg, info))
-    
+
     def printError(self, msg, info):
         log.error("ERROR %s %s" % (msg, info))
 
@@ -205,28 +200,27 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         irc.IRCClient.connectionMade(self)
         self.repeatingPing(300)
         log.info("connection made")
-            
+
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
         log.info("connection lost:", reason)
-        
+
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
-
-        # QNet specific auth & ip hiding
+        # QuakeNet specific auth and IP-address masking
+        # TODO: Alias could be case-sensitive
         if self.network.alias == "quakenet":
             log.info("I'm on quakenet, authenticating...")
             self.mode(self.nickname, '+', 'x')  # Hide ident
             authname = self.factory.config['networks']['quakenet'].get('authname', None)
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
-                log.info("authname or authpass not found, authentication aborted")
+                log.info("Quakenet authname or authpass not found. Authentication aborted")
             else:
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
                 log.info("Auth sent.")
-        
         for chan in self.network.channels:
-            # defined as a tuple, channel has a key
+            # Defined as a tuple, channel has a key
             if type(chan) == list:
                 self.join(chan[0], key=chan[1])
             else:
@@ -247,13 +241,12 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
         cont = False
-        
+
         for m in msg:
-            if cont: 
+            if cont:
                 m = "..." + m
             self.msg(channel, m, length)
             cont = True
-
         return ('botcore.say', channel, message)
 
     def log(self, message):
@@ -263,24 +256,18 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def callLater(self, delay, callable):
         self.callLater(delay, callable)
 
-    ###### COMMUNICATION
-
+    """Communication"""
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message.
-        
         @param user: nick!user@host
         @param channel: Channel where the message originated from
         @param msg: The actual message
         """
 
         channel = channel.lower()
-
         lmsg = msg.lower()
         lnick = self.nickname.lower()
         nickl = len(lnick)
-        
-        #self.log("<%s|%s> %s" % (self.getNick(user), channel, msg))
-
         if channel == lnick:
             # Turn private queries into a format we can understand
             if not msg.startswith(self.CMDCHAR):
@@ -293,14 +280,13 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             # Turn 'nick:' prefixes into self.CMDCHAR prefixes
             if lmsg.startswith(lnick) and len(lmsg) > nickl and lmsg[nickl] in string.punctuation:
                 msg = self.CMDCHAR + msg[len(self.nickname) + 1:].lstrip()
-                
         reply = (channel == lnick) and user or channel
 
         if msg.startswith(self.CMDCHAR):
             cmnd = msg[len(self.CMDCHAR):]
             self._command(user, reply, cmnd)
 
-        # run privmsg handlers
+        # Run privmsg handlers
         self._runhandler("privmsg", user, reply, msg)
 
         # run URL handlers
@@ -308,7 +294,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         if urls:
             for url in urls:
                 self._runhandler("url", user, reply, url, msg)
-                                                        
+
     def _runhandler(self, handler, *args, **kwargs):
         """Run a handler for an event"""
         handler = "handle_%s" % handler
@@ -329,7 +315,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """Run funtions on events named by eventname parameter"""
         eventname = "event_%s" % eventname
         for module, env in self.factory.ns.items():
-            myglobals, mylocals = env 
+            myglobals, mylocals = env
 
             # find all matching events
             events = [(h, ref) for h, ref in mylocals.items() if h == eventname and type(ref) == FunctionType]
@@ -340,7 +326,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 d = threads.deferToThread(func, self, *args, **kwargs)
                 d.addCallback(self.printResult, "%s %s event completed" % (module, ename))
                 d.addErrback(self.printError, "%s %s event error" % (module, ename))
-            
+
     def _command(self, user, channel, cmnd):
         """Handles bot commands.
 
@@ -348,7 +334,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         The command methods are formatted as "command_<commandname>"
         """
-        # split arguments from the command part        
+        # Split arguments from the command part
         try:
             cmnd, args = cmnd.split(" ", 1)
         except ValueError:
@@ -378,7 +364,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def irc_JOIN(self, prefix, params):
         """override the twisted version to preserve full userhost info"""
-        
         nick = self.factory.getNick(prefix)
         channel = params[-1]
 
@@ -403,10 +388,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self.left(channel)
         else:
             # some clients don't send a part message at all, compensate
-            if len(params) == 1: 
+            if len(params) == 1:
                 params.append("")
             self.userLeft(prefix, channel, params[1])
-        
+
     def irc_QUIT(self, prefix, params):
         """QUIT-handler.
 
@@ -421,11 +406,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     ###### HANDLERS ######
 
     ## ME
-        
     def joined(self, channel):
         """I joined a channel"""
         self._runhandler("joined", channel)
-        
+
     def left(self, channel):
         """I left a channel"""
         self._runhandler("left", channel)
@@ -437,7 +421,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def modeChanged(self, user, channel, set, modes, args):
         """Mode changed on user or channel"""
         self._runhandler("modeChanged", user, channel, set, modes, args)
-        
+
     def kickedFrom(self, channel, kicker, message):
         """I was kicked from a channel"""
         self._runhandler("kickedFrom", channel, kicker, message)
@@ -447,7 +431,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self._runhandler("nickChanged", nick)
 
     ## OTHER PEOPLE
-    
     def userJoined(self, user, channel):
         """Someone joined"""
         self._runhandler("userJoined", user, channel)
@@ -465,7 +448,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self._runhandler("action", user, channel, data)
 
     def topicUpdated(self, user, channel, topic):
-        """Save topic to maindb when it changes"""        
+        """Save topic to maindb when it changes"""
         self._runhandler("topicUpdated", user, channel, topic)
 
     def userRenamed(self, oldnick, newnick):
