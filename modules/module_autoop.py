@@ -1,21 +1,24 @@
-# commands .autoop add/del/status/list
-# and .op
-# Nick-format nick!ident@hostma.sk
+"""
+Commands:
+.autoop add/del/status/list
+.op
 
-# Supports adding/deleting multiple autoop-rules:
-# .autoop add #testchannel firstNick!ident@hostma.sk secNick!ident@hostma.sk
+Nick-format: nick!ident@example.org
 
-# In add/del #channel needed, if changes done in query. If changes are made
-# in #channel, defaults to current #channel.
+Supports adding/deleting multiple autoop-rules:
+.autoop add #testchannel firstNick!ident@example.org secNick!ident@example.org
 
-# config-file in root/modules/module_autooop.conf
-# config-format:
-# 'nick!ident@hostma.sk':
-# - '#channelOne'
-# - '#channelTwo'
-#
-# 'secNick!ident@hostma.sk':
-# - '#channelTwo'
+In add/del #channel needed, if changes done in query. If changes are made in #channel, defaults to current #channel.
+
+config-file in root/modules/module_autooop.conf
+config-format:
+ 'nick!ident@example.org':
+ - '#channelOne'
+ - '#channelTwo'
+
+ 'secNick!ident@example.org':
+ - '#channelTwo'
+"""
 
 import fnmatch
 import yaml
@@ -35,7 +38,7 @@ def init(botconfig):
 
 def writeConfig():
     # open file for writing (note, removes all markings that have been made to config-file prior to .rehash
-    f = open(oplistfile, 'w') 
+    f = open(oplistfile, 'w')
     yaml.dump(oplist, f, default_flow_style=False)
     f.close()
 
