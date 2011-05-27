@@ -159,6 +159,8 @@ def _levenshtein_distance(s, t):
 def _title(bot, channel, title, smart=False):
     """Say title to channel"""
 
+    if not title: return
+
     prefix = "Title:"
     info = None
     # tuple, additional info
@@ -509,3 +511,8 @@ def _handle_aamulehti(url):
         return
     title = bs.fetch("h1")[0].string
     return title
+
+
+def _handle_apina(url):
+    """http://apina.biz/*"""
+    return None
