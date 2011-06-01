@@ -60,6 +60,7 @@ def event_signedon(bot):
     if not init_ok:
         log.error("Config not ok, not starting rotators")
         return False
+    log.debug("Signed on event on rss-module: %s" % empty_database)
     if (empty_database > 0):
         rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
         rotator_output(bot, rssconfig["delays"]["output"])
@@ -317,8 +318,9 @@ def indexfeeds(bot):
                 cleanup = 1
 
             feed_data = feedparser.parse(feed_url)
-            sorted_entries = sorted(feed_data.entries, key=lambda entry: entry["date_parsed"])
-            for entry in sorted_entries:
+            #sorted_entries = sorted(feed_data.entries, key=lambda entry: entry["date_parsed"])
+            feed_data.entries.reverse()
+            for entry in feed_data.entries:
                 try:
                     title = remove_html_tags(entry['title'])
                     url = entry['link']
@@ -368,6 +370,9 @@ def output(bot):
             id = row[0]
             feed_url = row[1]
             feed_output_syntax = d.execute("SELECT output_syntax_id FROM feeds WHERE feed_url = ?", (feed_url,)).fetchone()[0]
+            if (feed_output_syntax == None):
+                feed_output_syntax = rssconfig["output_syntax"]
+
             title = row[2]
             url = row[3]
             channel = row[4]
