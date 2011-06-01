@@ -60,7 +60,6 @@ def event_signedon(bot):
     if not init_ok:
         log.error("Config not ok, not starting rotators")
         return False
-    log.debug("Signed on event on rss-module: %s" % empty_database)
     if (empty_database > 0):
         rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
         rotator_output(bot, rssconfig["delays"]["output"])
@@ -318,7 +317,6 @@ def indexfeeds(bot):
                 cleanup = 1
 
             feed_data = feedparser.parse(feed_url)
-            #sorted_entries = sorted(feed_data.entries, key=lambda entry: entry["date_parsed"])
             feed_data.entries.reverse()
             for entry in feed_data.entries:
                 try:
