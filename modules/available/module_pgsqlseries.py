@@ -5,17 +5,19 @@ try:
 except:
     pass
 
+
 def init(bot):
     global config
     try:
         config = bot.config["module_pgsqlseries"]
     except KeyError:
         config = None
-            
+
+
 def command_ep(bot, user, channel, args):
     """Usage: sqlep [today|yesterday|tomorrow] or [seriename]"""
-    if not config: return
-    
+    if not config:
+        return
     cx = PgSQL.connect(database=config["database"],
                        host=config["host"],
                        user=config["user"],
@@ -61,26 +63,27 @@ def command_ep(bot, user, channel, args):
         episode = row['episode']
         title = row['title']
         airdate = row['airdate']
-        if episode < 10: episode = "0%d" % episode # pad ep with zeroes
-
+        if episode < 10:
+            episode = "0%d" % episode  # pad ep with zeroes
         ad = datetime.date.fromtimestamp(airdate.ticks())
         now = datetime.date.today()
         tomorrow = now + datetime.timedelta(days=1)
-        td = ad-now
+        td = ad - now
         # change 0 and 1 to today & tomorrow, don't show date if we're asking stuff for a certain day
         airdatestr = ""
-        airdate = ad # use datetime instead of the postgres internal type
+        airdate = ad  # use datetime instead of the postgres internal type
         if td.days >= 0:
             if ad == now:
-                if args != "today": airdatestr = "on %s (Today)" % airdate
+                if args != "today":
+                    airdatestr = "on %s (Today)" % airdate
             elif ad == tomorrow:
-                if args != "tomorrow": airdatestr = "on %s (Tomorrow)" % airdate
+                if args != "tomorrow":
+                    airdatestr = "on %s (Tomorrow)" % airdate
             else:
                 airdatestr = "on %s (%d days)" % (airdate, td.days)
-        
+
         episodes.append("%s %sx%s '%s' %s" % (serie, season, episode, title, airdatestr))
-
     bot.say(channel, "-- ".join(episodes))
-
-    if not cur.closed: cur.close()
+    if not cur.closed:
+        cur.close()
     cx.close()

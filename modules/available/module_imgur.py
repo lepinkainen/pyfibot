@@ -19,7 +19,6 @@ token = None
 def init(bot):
     if not init_ok:
         return False
-    
     global config
     global consumer_key, consumer_secret, oauth_token, oauth_token_secret
     global token, consumer
@@ -67,7 +66,7 @@ def upload_images(urls):
         print "Transloading %s..." % url
 
         metadata = {
-            'image': url, 
+            'image': url,
             'type': 'url',
             'caption': 'Original url: %s' % url}
 
