@@ -7,6 +7,9 @@ A modular python bot based on the twisted matrix irc library
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2006 Riku Lindblad
 @license New-Style BSD
+
+$Id$
+$HeadURL$
 """
 
 import sys

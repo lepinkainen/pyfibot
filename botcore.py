@@ -6,6 +6,9 @@ Bot core
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2004 Riku Lindblad
 @license New-Style BSD
+
+$Id$
+$HeadURL$
 """
 
 # twisted imports
