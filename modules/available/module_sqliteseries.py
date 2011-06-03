@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 try:
     import sqlite3
 except:

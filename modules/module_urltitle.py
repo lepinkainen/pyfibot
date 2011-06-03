@@ -2,7 +2,11 @@
 """Displays HTML page titles
 
 Smart title functionality for sites which could have clear titles,
-but still decide show idiotic bulk data in the HTML title element"""
+but still decide show idiotic bulk data in the HTML title element
+
+$Id$
+$HeadURL$
+"""
 
 import fnmatch
 import urlparse

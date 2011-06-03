@@ -5,6 +5,9 @@
 @author Ville 'tuhoojabotti' Lahdenvuo <tuhoojabotti@gmail.com> (http://www.tuhoojabotti.com/)
 @copyright Copyright (c) 2011 Ville Lahdenvuo
 @licence BSD
+
+$Id$
+$HeadURL$
 """
 
 import urllib

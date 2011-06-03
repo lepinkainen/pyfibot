@@ -1,5 +1,10 @@
 # -*- encoding: utf-8 -*-
 
+"""
+$Id$
+$HeadURL$
+"""
+
 import os
 import os.path
 import sys

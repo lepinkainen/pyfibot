@@ -1,3 +1,9 @@
+"""
+$Id$
+$HeadURL$
+"""
+
+
 def calc_bmi(height, weight):
     return  (float(weight) / height ** 2) * 10000
 

@@ -1,4 +1,7 @@
 """
+$Id$
+$HeadURL$
+
 Commands:
 .autoop add/del/status/list
 .op

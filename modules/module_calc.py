@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+$Id$
+$HeadURL$
+"""
+
 import re
 from operator import pow, add, sub, mul, div, mod
 

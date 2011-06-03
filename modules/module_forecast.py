@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+"""
+$Id$
+$HeadURL$
+"""
 
 has_pywapi = False
 try:

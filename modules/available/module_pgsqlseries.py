@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 import time
 import datetime
 try:

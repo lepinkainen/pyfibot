@@ -1,4 +1,9 @@
-"""Warns about large files"""
+"""
+Warns about large files
+
+$Id$
+$HeadURL$
+"""
 
 
 def handle_url(bot, user, channel, url, msg):

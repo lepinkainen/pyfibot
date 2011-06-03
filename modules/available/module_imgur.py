@@ -1,4 +1,8 @@
-"""Upload images to imgur.com"""
+"""Upload images to imgur.com
+
+$Id$
+$HeadURL$
+"""
 
 import urllib
 try:

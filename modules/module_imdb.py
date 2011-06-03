@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 has_imdb = False
 
 try:

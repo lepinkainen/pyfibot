@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 import socket
 
 

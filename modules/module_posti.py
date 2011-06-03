@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 import urllib2
 from util.BeautifulSoup import BeautifulSoup
 import datetime

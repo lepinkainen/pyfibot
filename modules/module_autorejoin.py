@@ -1,3 +1,8 @@
+"""
+$Id$
+$HeadURL$
+"""
+
 # rejoin after 1 minute
 delay = 60
 

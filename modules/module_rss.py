@@ -5,6 +5,9 @@
 @author Henri 'fgeek' Salo <henri@nerv.fi>, Tomi 'dmc' Nykänen
 @copyright Copyright (c) 2010 Henri Salo
 @licence BSD
+
+$Id$
+$HeadURL$
 """
 
 import sys
