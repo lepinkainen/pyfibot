@@ -361,7 +361,7 @@ def create_example_conf():
         authname: name
         authpass: password
         channels:
-          - (mysecret, password)
+          - channel, password
     """
 
     examplefile = 'bot.config.example'
