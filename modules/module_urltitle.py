@@ -288,22 +288,22 @@ def _handle_netanttila(url):
 
 
 def _handle_youtube_shorturl(url):
-    """http://youtu.be/*"""
+    """http*://youtu.be/*"""
     return _handle_youtube_gdata(url)
 
 
 def _handle_youtube_gdata_new(url):
-    """http://youtube.com/watch#!v=*"""
+    """http*://youtube.com/watch#!v=*"""
     return _handle_youtube_gdata(url)
 
 
 def _handle_youtube_gdata(url):
-    """http://*youtube.com/watch?*v=*"""
+    """http*://*youtube.com/watch?*v=*"""
     gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
 
-    match = re.match("http://youtu.be/(.*)", url)
+    match = re.match("https?://youtu.be/(.*)", url)
     if not match:
-        match = re.match("http://.*?youtube.com/watch\?.*?v=([^&]+)", url)
+        match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
         bs = getUrl(infourl, True).getBS()
