@@ -237,14 +237,15 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.debug("Address: %s - %s", address, fqdn)
         # TODO We do need to know which network the address belongs to
         for network, server in self.data['networks'].items():
-            if server.address[0] == fqdn:
+            log.debug("%s - %s", server, fqdn)
+            if server.address[0] == fqdn or server.address[0] == address.host:
                 log.debug("Connecting to %s / %s", server, address)
                 p = self.protocol(server)
                 self.allBots[server.alias] = p
                 p.factory = self
                 return p
         # No address found
-        log.info("Unknown network address: " + repr(address))
+        log.error("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
 
     def createNetwork(self, address, alias, nickname, channels=None, linerate=None, password=None, is_ssl=False):
