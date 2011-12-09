@@ -46,6 +46,9 @@ log = logging.getLogger('rss')
 
 t = None
 t2 = None
+indexfeeds_callLater = None
+output_callLater = None
+
 # Config format:
 # database: rss.db
 # delays:
@@ -60,11 +63,18 @@ t2 = None
 
 def event_signedon(bot):
     """Starts rotators"""
+    global indexfeeds_callLater, output_callLater
     if not init_ok:
         log.error("Config not ok, not starting rotators")
         return False
     if (empty_database > 0):
+        if (indexfeeds_callLater != None):
+            log.info("Stopping previous indexfeeds thread")
+            indexfeeds_callLater.cancel()
         rotator_indexfeeds(bot, rssconfig["delays"]["rss_sync"])
+        if (output_callLater != None):
+            log.info("Stopping previous output thread")
+            output_callLater.cancel()
         rotator_output(bot, rssconfig["delays"]["output"])
 
 
@@ -410,7 +420,7 @@ def output(bot):
 def rotator_indexfeeds(bot, delay):
     """Timer for methods/functions"""
     try:
-        global t, t2
+        global t, t2, indexfeeds_callLater
         if (type(t2).__name__ == 'NoneType'):
             t = Thread(target=indexfeeds, args=(bot,))
             t.daemon = True
@@ -420,7 +430,7 @@ def rotator_indexfeeds(bot, delay):
             t.daemon = True
             t.start()
         if (empty_database > 0):
-            reactor.callLater(delay, rotator_indexfeeds, bot, delay)
+            indexfeeds_callLater = reactor.callLater(delay, rotator_indexfeeds, bot, delay)
     except Exception, e:
         print e
 
@@ -428,13 +438,13 @@ def rotator_indexfeeds(bot, delay):
 def rotator_output(bot, delay):
     """Timer for methods/functions"""
     try:
-        global t, t2
+        global t, t2, output_callLater
         if t.isAlive() == False:
             t2 = Thread(target=output, args=(bot,))
             t2.daemon = True
             t2.start()
             t2.join()
         if (empty_database > 0):
-            reactor.callLater(delay, rotator_output, bot, delay)
+            output_callLater = reactor.callLater(delay, rotator_output, bot, delay)
     except Exception, e:
         print e
