@@ -12,7 +12,11 @@ import fnmatch
 import urlparse
 import logging
 import re
-import json
+try:
+    import json
+    has_json = True
+except:
+    print "Unable to load json, not all title features will work"
 
 from types import TupleType
 
@@ -390,6 +394,7 @@ def _handle_salakuunneltua(url):
 
 def _handle_facebook(url):
     """*facebook.com/*"""
+    if not has_json: return
     if re.match("http(s?)://(.*?)facebook\.com/(.*?)id=(\\d+)", url):
         asd = urlparse.urlparse(url)
         id = asd.query.split('id=')[1].split('&')[0]
@@ -425,6 +430,7 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
+    if not has_json: return
     api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
     match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
