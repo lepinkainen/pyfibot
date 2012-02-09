@@ -267,20 +267,24 @@ def _handle_mol(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/status/*"""
-    bs = getUrl(url).getBS()
-    if not bs:
-        return
-    status = bs.first("span", {'class': 'entry-content'}).findAll(text=True)
-    content = ""
-    for i in status:
-        content += i
-    published = bs.first("span", {'class': 'published timestamp'})['data']
-    import time
-    # Fri Feb 05 17:40:13 +0000 2010
-    published = time.strptime(published[7:37], "%a %b %d %H:%M:%S +0000 %Y")
-    published = time.strftime("%Y-%m-%d %H:%M", published)
-    title = "(%s) %s" % (published, content)
-    return title
+    import simplejson as json
+    import urllib2
+    tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
+    test = re.match("https?://twitter\.com\/(.*?)/(\w+)/status/(\d+)",url)
+    #    matches for unique tweet id string
+    infourl = tweet_url % test.group(3)
+    
+    twitapi = urllib2.urlopen(infourl)
+    #loads into dict
+    json1 = json.load(twitapi)
+    
+    #reads dict
+    ##You can modify the fields below or add any fields you want to the returned string
+    text = json1['text']
+    user = json1['user']['screen_name']
+    name = json1['user']['name']
+    tweet = "Tweet by %s(@%s): %s" % (name, user, text)
+    return tweet
 
 
 def _handle_netanttila(url):
