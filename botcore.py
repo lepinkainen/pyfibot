@@ -206,7 +206,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
-        log.info("connection lost:", reason)
+        log.info("connection lost: %s", reason)
 
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
