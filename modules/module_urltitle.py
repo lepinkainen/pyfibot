@@ -266,18 +266,18 @@ def _handle_mol(url):
 
 
 def _handle_tweet(url):
-    """http*://twitter.com/*/status/*"""
+    """http*://twitter.com/*/statuses/*"""
     import simplejson as json
     import urllib2
     tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
-    test = re.match("https?://twitter\.com\/(.*?)/(\w+)/status/(\d+)",url)
+    test = re.match("https?://twitter\.com\/(\w+)/statuses/(\d+)",url)
     #    matches for unique tweet id string
-    infourl = tweet_url % test.group(3)
-    
+    infourl = tweet_url % test.group(2)
+
     twitapi = urllib2.urlopen(infourl)
     #loads into dict
     json1 = json.load(twitapi)
-    
+
     #reads dict
     ##You can modify the fields below or add any fields you want to the returned string
     text = json1['text']
