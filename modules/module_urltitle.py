@@ -264,15 +264,18 @@ def _handle_mol(url):
     title = bs.first("div", {'class': 'otsikko'}).string
     return title
 
+def _handle_tweet2(url):
+    """http*://twitter.com/*/status/*"""
+    return _handle_tweet(url)
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     import simplejson as json
     import urllib2
     tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
-    test = re.match("https?://twitter\.com\/(\w+)/statuses/(\d+)",url)
+    test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)",url)
     #    matches for unique tweet id string
-    infourl = tweet_url % test.group(2)
+    infourl = tweet_url % test.group(3)
 
     twitapi = urllib2.urlopen(infourl)
     #loads into dict
