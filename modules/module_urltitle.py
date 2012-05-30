@@ -76,11 +76,13 @@ def handle_url(bot, user, channel, url, msg):
 
     bs = getUrl(url).getBS()
     if not bs:
+        log.debug("No BS available, returning")
         return
 
     title = bs.first('title')
     # no title attribute
     if not title:
+        log.debug("No title found, returning")
         return
 
     try:
@@ -98,6 +100,7 @@ def handle_url(bot, user, channel, url, msg):
             return
 
         if _check_redundant(url, title):
+            log.debug("Redundant title, not displaying")
             return
 
         return _title(bot, channel, title)
@@ -235,16 +238,6 @@ def _handle_itviikko(url):
     if not bs:
         return
     return bs.first("h1", "headline").string
-
-
-def _handle_kauppalehti(url):
-    """http://www.kauppalehti.fi/4/i/uutiset/*"""
-    bs = getUrl(url).getBS()
-    if not bs:
-        return
-    title = bs.fetch("h1")[1].string.strip("\n ")
-    return title
-
 
 def _handle_verkkokauppa(url):
     """http://www.verkkokauppa.com/*/product/*"""
@@ -485,17 +478,6 @@ def _handle_hs(url):
     except Exception, e:
         log.error("Error when parsing hs.fi: %s" % e)
         return title
-
-
-def _handle_ksml(url):
-    """*ksml.fi/uutiset*"""
-    bs = getUrl(url).getBS()
-    if not bs:
-        return
-    title = bs.title.string
-    title = title.split("-")[0].strip()
-    return title
-
 
 def _handle_mtv3(url):
     """*mtv3.fi*"""
