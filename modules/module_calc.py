@@ -71,11 +71,10 @@ def calc_google_ig(args):
     opener = urllib2.build_opener()
     d = opener.open(request).read()
     d = d.replace('lhs', '"lhs"', 1).replace('rhs', '"rhs"', 1).replace('error', '"error"', 1).replace('icc', '"icc"', 1)
-    d = d.replace(u'\xa0', u'')
     res = json.loads(d)    
-    print res
     if not res['error']:
-        return str("%s = %s" % (res['lhs'], res['rhs']))
+        result =  "%s = %s" % (res['lhs'], res['rhs'])
+        return result.encode('ascii', 'ignore')
     else:
         return "Invalid calculation"
 
