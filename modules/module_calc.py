@@ -9,6 +9,7 @@ import re
 from operator import pow, add, sub, mul, div, mod
 
 import urllib2
+import json
 
 
 def doTheMath(matchobj):
@@ -62,7 +63,24 @@ def calc_google(args):
         return "Invalid calculation"
 
 
+def calc_google_ig(args):
+    google_url = "http://www.google.com/ig/calculator?hl=en&q=%s"
+    search_url = google_url % urllib2.quote(args)
+    request = urllib2.Request(search_url)
+    request.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.4) Gecko/20091016 Firefox/3.5.4')
+    opener = urllib2.build_opener()
+    d = opener.open(request).read()
+    d = d.replace('lhs', '"lhs"', 1).replace('rhs', '"rhs"', 1).replace('error', '"error"', 1).replace('icc', '"icc"', 1)
+    d = d.replace(u'\xa0', u'')
+    res = json.loads(d)    
+    print res
+    if not res['error']:
+        return str("%s = %s" % (res['lhs'], res['rhs']))
+    else:
+        return "Invalid calculation"
+
+
 def command_calc(bot, user, channel, args):
     if not args:
         return
-    return bot.say(channel, calc_google(args))
+    return bot.say(channel, calc_google_ig(args))

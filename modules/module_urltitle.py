@@ -167,12 +167,13 @@ def _levenshtein_distance(s, t):
     return d[len(s)][len(t)]
 
 
-def _title(bot, channel, title, smart=False):
+def _title(bot, channel, title, smart=False, prefix=None):
     """Say title to channel"""
 
     if not title: return
 
-    prefix = "Title:"
+    if not prefix:
+        prefix = "Title:"
     info = None
     # tuple, additional info
     if type(title) == TupleType:
