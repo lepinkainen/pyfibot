@@ -73,9 +73,7 @@ class URLCacheItem(object):
 
     def _checkstatus(self):
         """Check if all data has already been cached and close socket if so"""
-        if self.content and \
-           self.headers and \
-           self.bs:
+        if self.content and self.headers and self.bs:
             self.fp.close()
 
     def getSize(self):

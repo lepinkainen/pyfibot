@@ -86,7 +86,7 @@ def init(botconfig):
 
     global rssconfig
     # Read configuration
-    configfile = os.path.join(sys.path[0], 'modules', 'module_rss.conf')
+    configfile = os.path.join(sys.path[1], 'modules', 'module_rss.conf')
     rssconfig = yaml.load(file(configfile))
 
     db_conn = sqlite3.connect(rssconfig["database"])

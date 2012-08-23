@@ -9,6 +9,7 @@ import re
 from operator import pow, add, sub, mul, div, mod
 
 import urllib2
+import requests
 import json
 
 
@@ -66,14 +67,13 @@ def calc_google(args):
 def calc_google_ig(args):
     google_url = "http://www.google.com/ig/calculator?hl=en&q=%s"
     search_url = google_url % urllib2.quote(args)
-    request = urllib2.Request(search_url)
-    request.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.4) Gecko/20091016 Firefox/3.5.4')
-    opener = urllib2.build_opener()
-    d = opener.open(request).read()
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.4) Gecko/20091016 Firefox/3.5.4'}
+    r = requests.get(search_url, headers=headers)
+    d = r.text
     d = d.replace('lhs', '"lhs"', 1).replace('rhs', '"rhs"', 1).replace('error', '"error"', 1).replace('icc', '"icc"', 1)
-    res = json.loads(d)    
+    res = json.loads(d)
     if not res['error']:
-        result =  "%s = %s" % (res['lhs'], res['rhs'])
+        result = "%s = %s" % (res['lhs'], res['rhs'])
         return result.encode('ascii', 'ignore')
     else:
         return "Invalid calculation"

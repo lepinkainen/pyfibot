@@ -35,7 +35,7 @@ class CoreCommands(object):
         self.say(channel, "%s: %s" % (user, args))
 
     def command_ping(self, user, channel, args):
-        self.say(channel, "%s: My current ping is %.0fms" % \
+        self.say(channel, "%s: My current ping is %.0fms" %
                  (self.factory.getNick(user), self.pingAve * 100.0))
 
     def command_rehash(self, user, channel, args):

@@ -64,7 +64,7 @@ def handle_args(args, channel):
     message = ''
     nicks = list()
     rg = re.compile('.*?(!).*?(@).*?', re.IGNORECASE | re.DOTALL)    # regex for validating nick format
-    if re.match(rg, args[0].strip()) == None and args[0].strip()[0] == '#':
+    if re.match(rg, args[0].strip()) is None and args[0].strip()[0] == '#':
         op_channel = args[0].strip()
         for nick in args[1:]:
             if re.match(rg, nick):
@@ -146,10 +146,10 @@ def autoop_list(user, channel, args):
     if isAdmin(user):
         i = 0
         rg = re.compile('.*?(!).*?(@).*?', re.IGNORECASE | re.DOTALL)  # regex for validating nick format
-        if (len(args) == 0 or (re.match(rg, args[0].strip()) == None and args[0].strip()[0] == '#')) and args[0] != 'me':
+        if (len(args) == 0 or (re.match(rg, args[0].strip()) is None and args[0].strip()[0] == '#')) and args[0] != 'me':
             if len(args) == 0:
                 op_channel = channel
-            elif re.match(rg, args[0].strip()) == None and args[0].strip()[0] == '#':
+            elif re.match(rg, args[0].strip()) is None and args[0].strip()[0] == '#':
                 op_channel = args[0].strip()
             message = 'Auto-ops in %s: ' % op_channel
             for nick, channels in oplist.items():

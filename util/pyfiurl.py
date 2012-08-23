@@ -8,7 +8,7 @@
 
 """Find absolute URLs from strings"""
 
-__version__="3.0.3"
+__version__ = "3.0.3"
 
 import re
 from UserString import UserString
@@ -43,7 +43,7 @@ _countrycodes=['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
                'coop', 'edu', 'gov', 'info', 'int', 'mil', 'museum', 'name',
                'net', 'org', 'pro', 'me', 'mobi', 'xxx']
 
-_schemes=['http://', 'https://', 'ftp://', 'svn://']
+_schemes = ['http://', 'https://', 'ftp://', 'svn://']
 
 ## domainlabel   = alphanum | alphanum *( alphanum | "-" ) alphanum
 _domainlabel=r'''
