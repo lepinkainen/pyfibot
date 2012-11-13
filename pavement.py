@@ -14,7 +14,7 @@ options(
           )
     )
 
-install_requires = ['twisted', 'requests', 'pyyaml', 'imdbpy']
+install_requires = ['twisted', 'requests', 'pyyaml', 'imdbpy', 'beautifulsoup']
 
 setup(
       name="PyFiBot",
