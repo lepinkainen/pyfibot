@@ -170,10 +170,6 @@ class Network:
         self.linerate = linerate
         self.password = password
         self.is_ssl = is_ssl
-        # create network specific save directory
-        p = os.path.join(root, alias)
-        if not os.path.isdir(p):
-            os.mkdir(p)
 
     def __repr__(self):
         return 'Network(%r, %r)' % (self.alias, self.address)
