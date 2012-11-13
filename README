@@ -1,6 +1,6 @@
 Moving towards virtualenv, instructions to get everything running:
 
-1) virtualenv .
-2) ./run.sh
+1) python bootstrap.py
+2) copy config file to pyfibot/
+3) ./run.sh
 
-If it doesn't work, use bin/pip install to install any missing libraries
