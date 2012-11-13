@@ -1147,7 +1147,11 @@ def after_install(options, home_dir):
     else:
         bin_dir = join(home_dir, 'bin')
     subprocess.call([join(bin_dir, 'easy_install'), 'paver==1.1.1'])
-    subprocess.call([join(bin_dir, 'paver'),'develop'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'twisted'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'requests'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'pyyaml'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
+    subprocess.call([join(bin_dir, 'paver'),'prepare'])
 
 ##file site.py
 SITE_PY = """

@@ -14,7 +14,7 @@ options(
           )
     )
 
-install_requires = ['twisted', 'requests']
+install_requires = ['twisted', 'requests', 'pyyaml', 'imdbpy']
 
 setup(
       name="PyFiBot",
@@ -25,20 +25,20 @@ setup(
       install_requires=install_requires
       )
 
-
 @task
 def prepare(options):
       pass
 
 @task
 def bootstrap(options):
-    """create virtualenv in ./bootstrap"""
+    """create virtualenv"""
     try:
         import virtualenv
     except ImportError, e:
         raise RuntimeError("virtualenv is needed for bootstrap")
 
     options.virtualenv.no_site_packages = False
+    options.virtualenv.packages_to_install = install_requires
     options.bootstrap.no_site_packages = False
-    #options.virtualenv.paver_command_line='prepare'
+    options.virtualenv.paver_command_line='prepare'
     call_task('paver.virtual.bootstrap')
