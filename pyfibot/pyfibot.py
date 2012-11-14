@@ -441,8 +441,11 @@ if __name__ == '__main__':
             if channel[0] not in '&#!+':
                 channel = '#' + channel
             chanlist.append(channel)
+        # TODO: this might cause issues, but bypassing it for now
         # resolve server name here in case it's a round-robin address
-        server_name = socket.getfqdn(settings['server'])
+        #server_name = socket.getfqdn(settings['server'])
+        server_name = settings['server']
+        
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
