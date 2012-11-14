@@ -4,7 +4,7 @@ $HeadURL$
 """
 
 import urllib2
-from util.BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 import datetime
 import time
 

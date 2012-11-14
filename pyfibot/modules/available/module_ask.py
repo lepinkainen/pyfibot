@@ -18,7 +18,7 @@ import os
 import logging
 import yaml
 
-from util.BeautifulSoup import BeautifulStoneSoup, Comment
+from BeautifulSoup import BeautifulStoneSoup, Comment
 
 # Initialize logger
 log = logging.getLogger('ask')

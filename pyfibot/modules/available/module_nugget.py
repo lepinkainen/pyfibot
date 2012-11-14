@@ -6,7 +6,7 @@ $HeadURL$
 """
 
 from urllib import FancyURLopener
-from util.BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 import re
 import random
 

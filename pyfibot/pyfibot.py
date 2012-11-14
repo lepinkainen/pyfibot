@@ -37,8 +37,8 @@ except ImportError:
     sys.exit(1)
 
 from util import timeoutdict
-from util.BeautifulSoup import BeautifulSoup
-from util.BeautifulSoup import UnicodeDammit
+from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import UnicodeDammit
 
 # default timeout for socket connections
 import socket

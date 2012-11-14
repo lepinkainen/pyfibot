@@ -9,7 +9,8 @@ options(
     #  bootstrap=Bunch(bootstrap_dir="bootstrap"),
       virtualenv=Bunch(
               packages_to_install=[],
-              paver_command_line='develop',
+              install_paver = True,
+              paver_command_line=None,
               no_site_packages=True
           )
     )
