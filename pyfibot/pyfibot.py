@@ -226,18 +226,48 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.info("factory stopped")
 
     def buildProtocol(self, address):
+        # we are connecting to a server, don't know which yet
         log.info("Building protocol for %s", address)
-        fqdn = socket.getfqdn(address.host)
-        log.debug("Address: %s - %s", address, fqdn)
-        # TODO We do need to know which network the address belongs to
+
+        # Go through all defined networks
         for network, server in self.data['networks'].items():
-            log.debug("%s - %s", server, fqdn)
-            if server.address[0] == fqdn or server.address[0] == address.host:
+            log.debug("Looking for matching network: %s - %s", server, address)
+            # get all of the ipv4 and ipv6 addresses configured for this domain name
+            addrinfo = socket.getaddrinfo(server.address[0], server.address[1])
+            ips = set()
+            for ip in addrinfo:
+                ips.add(ip[4][0]) # (2, 1, 6, '', ('192.168.191.241', 6667))
+
+            # if the address we are connecting to matches one of the IP defined for
+            # this network, connect to it and stop looking
+            if address.host in ips:
                 log.debug("Connecting to %s / %s", server, address)
                 p = self.protocol(server)
                 self.allBots[server.alias] = p
                 p.factory = self
                 return p
+
+        # TODO: Remove this handling alltogether
+        log.debug("Fall back to old process...")
+        fqdn = socket.getfqdn(address.host)
+        log.debug("Address: %s - %s", address, fqdn)
+        # Fallback to the old, stupid, way of connecting
+        for network, server in self.data['networks'].items():
+            log.debug("Looking for matching network: %s - %s", server, fqdn)
+            found = False
+            if server.address[0] == fqdn:
+                log.debug("fqdn matches server address")
+                found = True
+            if server.address[0] == address.host:
+                log.debug("host matches server address")
+                found = True
+            if found:
+                log.debug("Connecting to %s / %s", server, address)
+                p = self.protocol(server)
+                self.allBots[server.alias] = p
+                p.factory = self
+                return p
+
         # No address found
         log.error("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
