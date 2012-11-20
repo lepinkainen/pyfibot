@@ -18,11 +18,25 @@ options(
 install_requires = ['twisted', 'requests', 'pyyaml', 'imdbpy', 'beautifulsoup']
 
 setup(
-      name="PyFiBot",
-      version="0.8",
-      packages="pyfibot",
-      description="The programmers' IRC bot",
-      license="BSD",
+      name='pyfibot',
+      version='0.9.2',
+      description='Python IRC bot',
+      long_description='An event-based IRC bot, based on twisted.protocols.irc.IRCClient',
+      url='http://code.google.com/p/pyfibot/',
+      author='Riku Lindblad',
+      author_email='riku.lindblad@gmail.com',
+      classifiers=[
+            'Development Status :: 5 - Production/Stable',
+            'License :: OSI Approved :: MIT License',
+            'Programming Language :: Python',
+            'Environment :: Console',
+            'Framework :: Twisted',
+            'Operating System :: OS Independent',
+            'Topic :: Communications :: Chat :: Internet Relay Chat'
+            ],
+      license='MIT',
+      packages=['pyfibot'],
+      zip_safe=False,
       install_requires=install_requires
       )
 

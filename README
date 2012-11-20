@@ -1,6 +1,6 @@
-Moving towards virtualenv, instructions to get everything running:
+Supports online module reloading - only major core changes require a restart. Extensive module & handler -support for easy extension and customization.
 
-1) python bootstrap.py
-2) copy config file to pyfibot/
-3) ./run.sh
+Modules:
+ - URL title fetching with custom handlers for IMDb, Youtube and many others
+ - Wolfram Alpha searches
 

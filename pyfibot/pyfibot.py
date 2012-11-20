@@ -445,7 +445,7 @@ if __name__ == '__main__':
         # resolve server name here in case it's a round-robin address
         #server_name = socket.getfqdn(settings['server'])
         server_name = settings['server']
-        
+
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
