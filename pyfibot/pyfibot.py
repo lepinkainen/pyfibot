@@ -413,7 +413,7 @@ def init_logging():
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
 
-if __name__ == '__main__':
+def main():
     init_logging()
     sys.path.append(os.path.join(sys.path[0], 'lib'))
     config = os.path.join(sys.path[0], "bot.config")
@@ -454,3 +454,6 @@ if __name__ == '__main__':
             log.info("connecting to %s:%d" % (server_name, port))
             reactor.connectTCP(server_name, port, factory)
     reactor.run()
+
+if __name__ == '__main__':
+    main()
