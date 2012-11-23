@@ -12,11 +12,18 @@ import fnmatch
 import urlparse
 import logging
 import re
+import requests
+
+has_json = True
+# import py2.6 json if available, fall back to simplejson
 try:
     import json
-    has_json = True
 except:
-    print "Unable to load json, not all title features will work"
+    try:
+        import simplejson as json
+    except ImportError, error:
+        print('Error starting rss module: %s' % error)
+        has_json = False
 
 from types import TupleType
 
@@ -264,22 +271,19 @@ def _handle_tweet2(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    import simplejson as json
-    import urllib2
+    if not has_json: return
     tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
     test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)",url)
     #    matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
-    twitapi = urllib2.urlopen(infourl)
-    #loads into dict
-    json1 = json.load(twitapi)
+    data = requests.get(infourl)
 
     #reads dict
     ##You can modify the fields below or add any fields you want to the returned string
-    text = json1['text']
-    user = json1['user']['screen_name']
-    name = json1['user']['name']
+    text = data.json['text']
+    user = data.json['user']['screen_name']
+    name = data.json['user']['name']
     tweet = "Tweet by %s(@%s): %s" % (name, user, text)
     return tweet
 
@@ -431,6 +435,7 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
+    if not has_json: return
     if not has_json: return
     api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
     match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
