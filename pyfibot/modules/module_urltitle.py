@@ -315,7 +315,7 @@ def _handle_youtube_gdata(url):
         match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
-        bs = getUrl(infourl, True).getBS()
+        bs = getUrl(infourl, True).getBS() # TODO: Use requests
 
         entry = bs.first("entry")
 

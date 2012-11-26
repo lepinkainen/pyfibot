@@ -3,7 +3,7 @@ $Id$
 $HeadURL$
 """
 
-import urllib2
+import requests
 from BeautifulSoup import BeautifulSoup
 import datetime
 import time
@@ -20,12 +20,10 @@ def command_posti(bot, user, channel, args):
 
 
 def getstatus(code, count=None):
+    """Parse the package status page"""
     url = baseurl % code
-    f = urllib2.urlopen(url)
-    d = f.read()
-    f.close()
-
-    bs = BeautifulSoup(d)
+    r = requests.get(url)
+    bs = BeautifulSoup(r.content)
 
     res = []
 

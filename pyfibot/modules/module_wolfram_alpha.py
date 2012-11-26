@@ -37,7 +37,7 @@ def command_wa(bot, user, channel, args):
     pods = root.findall("pod")
 
     # no answer pods found, check if there are didyoumeans-elements
-    if not pods: 
+    if not pods:
         didyoumeans = root.find("didyoumeans")
         # no support for future stuff yet, TODO?
         if not didyoumeans: return

@@ -48,7 +48,6 @@ import botcore
 
 log = logging.getLogger('core')
 
-
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
 

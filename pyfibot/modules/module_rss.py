@@ -236,6 +236,7 @@ def command_rss(bot, user, channel, args):
 
 def shorturl(url):
     try:
+        # TODO: Use requests
         req = urllib2.Request("http://api.bit.ly/v3/shorten?%s" % urllib.urlencode({'longUrl': url, 'login': rssconfig["bitly_login"], 'apiKey': rssconfig["bitly_api_key"], 'format': 'json'}))
         results = json.loads(urllib2.urlopen(req).read())
         #log.debug("Shorturl: %s" % results['id'].encode("UTF-8"))
