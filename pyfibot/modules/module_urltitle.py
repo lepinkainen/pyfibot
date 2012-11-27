@@ -255,7 +255,7 @@ def _handle_verkkokauppa(url):
     product = bs.first('h1', id='productName').string
     try:
         price = bs.first('strong', {'class':'product-price-label'}).next.next.next
-        price = price.replace('&nbsp;', '')
+        price = price.getText().replace('&nbsp;', '')
     except:
         price = "???€"
     return "%s | %s" % (product, price)
