@@ -16,6 +16,7 @@ def handle_url(bot, user, channel, url, msg):
         content_type = "Unknown"
     if not size:
         return
-    size = int(size) / 1024
+    size = float(size) / 1024 / 1024
+    # report files over 5 MB
     if size > 5:
-        return bot.say(channel, "File size: %s MB - Content-Type: %s" % (size, content_type))
+        return bot.say(channel, "File size: %s MB - Content-Type: %s" % (int(size), content_type))

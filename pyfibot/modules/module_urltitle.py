@@ -258,7 +258,11 @@ def _handle_verkkokauppa(url):
         price = price.getText().replace('&nbsp;', '')
     except:
         price = "???€"
-    return "%s | %s" % (product, price)
+    try:
+        availability = bs.first('div', {'id':'productAvailabilityInfo'}).firstText().getText()
+    except:
+        availability = ""
+    return "%s | %s (%s)" % (product, price, availability)
 
 
 def _handle_mol(url):
