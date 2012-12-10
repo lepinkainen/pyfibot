@@ -323,31 +323,35 @@ def _handle_youtube_gdata(url):
         match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
-        bs = getUrl(infourl, True).getBS() # TODO: Use requests
+        params= {'alt':'json', 'v':'2'}
+        r = requests.get(infourl, params)
 
-        entry = bs.first("entry")
-
-        if not entry:
+        if not r.status_code == 200:
             log.info("Video too recent, no info through API yet.")
             return
 
-        author = entry.author.next.string
-        # if an entry doesn't have a rating, the whole element is missing
+        entry = r.json['entry']
+
+        author = entry['author'][0]['name']['$t']
+
         try:
-            rating = float(entry.first("gd:rating")['average'])
+            rating = entry.get('gd$rating', None)['average']
         except TypeError:
             rating = 0.0
 
         stars = int(round(rating)) * "*"
-        statistics = entry.first("yt:statistics")
-        if statistics:
-            views = statistics['viewcount']
-        else:
-            views = "no"
-        racy = entry.first("yt:racy")
-        media = entry.first("media:group")
-        title = media.first("media:title").string
-        secs = int(media.first("yt:duration")['seconds'])
+
+        try:
+            views = entry['yt$statistics']['viewCount']
+        except:
+            views = 'no'
+
+        title = entry['title']['$t']
+
+        #racy = entry.first("yt:racy")
+        racy = None
+
+        secs = entry['media$group']['yt$duration']['seconds']
         lengthstr = []
         hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
         if hours > 0:
