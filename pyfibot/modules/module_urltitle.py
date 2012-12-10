@@ -194,9 +194,9 @@ def _title(bot, channel, title, smart=False, prefix=None):
     log.info(title)
 
     if not info:
-        return bot.say(channel, "%s '%s'" % (prefix, title))
+        return bot.say(channel, "%s %s" % (prefix, title))
     else:
-        return bot.say(channel, "%s '%s' [%s]" % (prefix, title, info))
+        return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
 
 
 # TODO: Some handlers does not have if not bs: return, but why do we even have this for every function
@@ -496,7 +496,7 @@ def _handle_hs(url):
 def _handle_mtv3(url):
     """*mtv3.fi*"""
     bs = getUrl(url).getBS()
-    title = bs.first("h1", "otsikko").next
+    title = bs.first("h1", "entry-title").text
     return title
 
 
