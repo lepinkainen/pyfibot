@@ -348,8 +348,8 @@ def _handle_youtube_gdata(url):
 
         title = entry['title']['$t']
 
-        #racy = entry.first("yt:racy")
-        racy = None
+        # https://developers.google.com/youtube/2.0/reference#youtube_data_api_tag_media:rating
+        rating = entry['media$group'].get('media$rating', None)
 
         secs = int(entry['media$group']['yt$duration']['seconds'])
         lengthstr = []
@@ -360,7 +360,7 @@ def _handle_youtube_gdata(url):
             lengthstr.append("%dm" % minutes)
         if seconds > 0:
             lengthstr.append("%ds" % seconds)
-        if racy:
+        if rating:
             adult = " - XXX"
         else:
             adult = ""
