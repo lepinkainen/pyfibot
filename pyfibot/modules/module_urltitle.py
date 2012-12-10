@@ -324,7 +324,7 @@ def _handle_youtube_gdata(url):
     if match:
         infourl = gdata_url % match.group(1)
         params= {'alt':'json', 'v':'2'}
-        r = requests.get(infourl, params)
+        r = requests.get(infourl, params=params)
 
         if not r.status_code == 200:
             log.info("Video too recent, no info through API yet.")
@@ -351,7 +351,7 @@ def _handle_youtube_gdata(url):
         #racy = entry.first("yt:racy")
         racy = None
 
-        secs = entry['media$group']['yt$duration']['seconds']
+        secs = int(entry['media$group']['yt$duration']['seconds'])
         lengthstr = []
         hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
         if hours > 0:
