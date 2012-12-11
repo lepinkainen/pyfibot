@@ -29,20 +29,44 @@ def command_weather(bot, user, channel, args):
         if 'list' in r.json:
             data = r.json['list'][0]
             location = data['name']
-            temperature = data['main']['temp'] - 273.15  # temperature converted from kelvins to celcius and rounded
-            humidity = data['main']['humidity']  # Humidity in %
-            pressure = data['main']['pressure']  # Atmospheric pressure in hPa
-            wind = data['wind']['speed']  # Wind speed in mps (m/s)
-            cloudiness = data['clouds']['all']  # Cloudiness in %
-            measured = datetime.utcfromtimestamp(data['dt'])
-            feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
 
-            if datetime.utcnow() - timedelta(minutes=threshold) > measured:  # Shows measurement time if older than threshold
-                text = '%s (%s UTC): Temperature: %.1fc, Feels like: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, measured.strftime('%Y-%m-%d %H:%M'), temperature, feels_like, humidity, pressure, wind, cloudiness)
+            if 'dt' in data:
+                measured = datetime.utcfromtimestamp(data['dt'])
+                if datetime.utcnow() - timedelta(minutes=threshold) > measured:
+                    text = '%s (%s UTC): ' % (location, measured.strftime('%Y-%m-%d %H:%M'))
+                else:
+                    text = '%s: ' % location
             else:
-                text = '%s: Temperature: %.1fc, Feels like: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, temperature, feels_like, humidity, pressure, wind, cloudiness)
+                text = '%s: ' % location
 
-            text = text.encode('utf-8')
-            return bot.say(channel, text)
+            main = data['main']
+            if 'temp' in main:
+                temperature = main['temp'] - 273.15  # temperature converted from kelvins to celcius and rounded
+                text += 'Temperature: %.1fc' % temperature
+            else:
+                temperature = None
+            if 'wind' in data and 'speed' in data['wind']:
+                wind = data['wind']['speed']  # Wind speed in mps (m/s)
+            else:
+                wind = None
+            if temperature and wind:
+                feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
+                text += ', Feels like: %.1fc' % feels_like
+            if wind:
+                text += ', Wind: %.1f m/s' % wind
+            if 'humidity' in main:
+                humidity = main['humidity']  # Humidity in %
+                text += ', Humidity: %d%%' % humidity
+            if 'pressure' in main:
+                pressure = main['pressure']  # Atmospheric pressure in hPa
+                text += ', Pressure: %d hPa' % pressure
+            if 'clouds' in data and 'all' in data['clouds']:
+                cloudiness = data['clouds']['all']  # Cloudiness in %
+                text += ', Cloudiness: %d%%' % cloudiness
+
+            if temperature:
+                return bot.say(channel, text.encode('utf-8'))
+            else:
+                return bot.say(channel, 'Error: No data.')
     else:
         return bot.say(channel, 'Error: Location not found.')
