@@ -35,10 +35,13 @@ def command_weather(bot, user, channel, args):
             wind = data['wind']['speed']  # Wind speed in mps (m/s)
             cloudiness = data['clouds']['all']  # Cloudiness in %
             measured = datetime.utcfromtimestamp(data['dt'])
+            feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
+
             if datetime.utcnow() - timedelta(minutes=threshold) > measured:  # Shows measurement time if older than threshold
-                text = '%s (%s UTC): Temperature: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, measured.strftime('%Y-%m-%d %H:%M'), temperature, humidity, pressure, wind, cloudiness)
+                text = '%s (%s UTC): Temperature: %.1fc, Feels like: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, measured.strftime('%Y-%m-%d %H:%M'), temperature, feels_like, humidity, pressure, wind, cloudiness)
             else:
-                text = '%s: Temperature: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, temperature, humidity, pressure, wind, cloudiness)
+                text = '%s: Temperature: %.1fc, Feels like: %.1fc, Humidity: %d%%, Pressure: %d hPa, Wind: %.1f m/s, Cloudiness: %d%%' % (location, temperature, feels_like, humidity, pressure, wind, cloudiness)
+
             text = text.encode('utf-8')
             return bot.say(channel, text)
     else:
