@@ -177,7 +177,8 @@ def _levenshtein_distance(s, t):
 def _title(bot, channel, title, smart=False, prefix=None):
     """Say title to channel"""
 
-    if not title: return
+    if not title:
+        return
 
     if not prefix:
         prefix = "Title:"
@@ -247,6 +248,7 @@ def _handle_itviikko(url):
         return
     return bs.first("h1", "headline").string
 
+
 def _handle_verkkokauppa(url):
     """http://www.verkkokauppa.com/*/product/*"""
     bs = getUrl(url).getBS()
@@ -254,12 +256,12 @@ def _handle_verkkokauppa(url):
         return
     product = bs.first('h1', id='productName').string
     try:
-        price = bs.first('strong', {'class':'product-price-label'}).next.next.next
+        price = bs.first('strong', {'class': 'product-price-label'}).next.next.next
         price = price.getText().replace('&nbsp;', '')
     except:
         price = "???€"
     try:
-        availability = bs.first('div', {'id':'productAvailabilityInfo'}).firstText().getText()
+        availability = bs.first('div', {'id': 'productAvailabilityInfo'}).firstText().getText()
     except:
         availability = ""
     return "%s | %s (%s)" % (product, price, availability)
@@ -273,15 +275,18 @@ def _handle_mol(url):
     title = bs.first("div", {'class': 'otsikko'}).string
     return title
 
+
 def _handle_tweet2(url):
     """http*://twitter.com/*/status/*"""
     return _handle_tweet(url)
 
+
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    if not has_json: return
+    if not has_json:
+        return
     tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
-    test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)",url)
+    test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)", url)
     #    matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
@@ -323,7 +328,7 @@ def _handle_youtube_gdata(url):
         match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         infourl = gdata_url % match.group(1)
-        params= {'alt':'json', 'v':'2'}
+        params = {'alt': 'json', 'v': '2'}
         r = requests.get(infourl, params=params)
 
         if not r.status_code == 200:
@@ -411,7 +416,8 @@ def _handle_salakuunneltua(url):
 
 def _handle_facebook(url):
     """*facebook.com/*"""
-    if not has_json: return
+    if not has_json:
+        return
     if re.match("http(s?)://(.*?)facebook\.com/(.*?)id=(\\d+)", url):
         asd = urlparse.urlparse(url)
         id = asd.query.split('id=')[1].split('&')[0]
@@ -447,8 +453,8 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
-    if not has_json: return
-    if not has_json: return
+    if not has_json:
+        return
     api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
     match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
@@ -496,6 +502,7 @@ def _handle_hs(url):
     except Exception, e:
         log.error("Error when parsing hs.fi: %s" % e)
         return title
+
 
 def _handle_mtv3(url):
     """*mtv3.fi*"""

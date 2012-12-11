@@ -23,7 +23,7 @@ def command_ep(bot, user, channel, args):
         airdate = datetime.strptime(firstaired, "%Y-%m-%d")
         td = airdate - now
         # find the next unaired episode
-        if td > timedelta(0,0,0):
+        if td > timedelta(0, 0, 0):
             msg = "Next episode of %s '%s' airs %s (%d days)" % (series.data['seriesname'], episode['episodename'], episode['firstaired'], td.days)
             bot.say(channel, msg.encode("UTF-8"))
             break

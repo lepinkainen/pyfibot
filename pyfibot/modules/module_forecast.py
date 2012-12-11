@@ -28,10 +28,10 @@ def command_forecast(bot, user, channel, args):
         return
 
     def format_day(day):
-        return (u'%s: %s (%.0f°C/%.0f°C)' % (day['day_of_week'], \
-                          day['condition'], \
-                          fahrenheit_to_celcius(day['low']), \
-                          fahrenheit_to_celcius(day['high'])))
+        return (u'%s: %s (%.0f°C/%.0f°C)' % (day['day_of_week'],
+                            day['condition'],
+                            fahrenheit_to_celcius(day['low']),
+                            fahrenheit_to_celcius(day['high'])))
 
     answerstr = u'%s: ' % (result_dict['forecast_information']['city'])
     answerstr += u", ".join(format_day(day) for day in result_dict['forecasts'])
