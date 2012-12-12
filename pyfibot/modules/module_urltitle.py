@@ -540,3 +540,9 @@ def _handle_aamulehti(url):
 def _handle_apina(url):
     """http://apina.biz/*"""
     return None
+
+def _handle_areena(url):
+    """http://areena.yle.fi/*"""
+    bs = getUrl(url).getBS()
+    title = bs.html.head.title.text.split(' | ')[0]
+    return title
