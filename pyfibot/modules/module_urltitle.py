@@ -283,8 +283,6 @@ def _handle_tweet2(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    if not has_json:
-        return
     tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
     test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)", url)
     #    matches for unique tweet id string
@@ -294,9 +292,9 @@ def _handle_tweet(url):
 
     #reads dict
     ##You can modify the fields below or add any fields you want to the returned string
-    text = data.json['text']
-    user = data.json['user']['screen_name']
-    name = data.json['user']['name']
+    text = data.json()['text']
+    user = data.json()['user']['screen_name']
+    name = data.json()['user']['name']
     tweet = "Tweet by %s(@%s): %s" % (name, user, text)
     return tweet
 
@@ -335,7 +333,7 @@ def _handle_youtube_gdata(url):
             log.info("Video too recent, no info through API yet.")
             return
 
-        entry = r.json['entry']
+        entry = r.json()['entry']
 
         author = entry['author'][0]['name']['$t']
 
@@ -414,40 +412,18 @@ def _handle_salakuunneltua(url):
     return None
 
 
-def _handle_facebook(url):
-    """*facebook.com/*"""
-    if not has_json:
-        return
-    if re.match("http(s?)://(.*?)facebook\.com/(.*?)id=(\\d+)", url):
-        asd = urlparse.urlparse(url)
-        id = asd.query.split('id=')[1].split('&')[0]
-        if id != '':
-            url = "https://graph.facebook.com/%s" % id
-            content = getUrl(url, True).getContent()
-            if content != 'false':
-                data = json.loads(content)
-                try:
-                    title = data['name']
-                except:
-                    return
-            else:
-                title = 'Private url'
-    else:
-        return
-    return title
-
-
 def _handle_vimeo(url):
     """*vimeo.com/*"""
-    data_url = "http://vimeo.com/api/v2/video/%s.xml"
+    data_url = "http://vimeo.com/api/v2/video/%s.json"
     match = re.match("http://.*?vimeo.com/(\d+)", url)
     if match:
         infourl = data_url % match.group(1)
-        bs = getUrl(infourl, True).getBS()
-        title = bs.first("title").string
-        user = bs.first("user_name").string
-        likes = bs.first("stats_number_of_likes").string
-        plays = bs.first("stats_number_of_plays").string
+        r = requests.get(infourl)
+        info = r.json()[0]
+        title = info['title']
+        user = info['user_name']
+        likes = info['stats_number_of_likes']
+        plays = info['stats_number_of_plays']
         return "%s by %s [%s likes, %s views]" % (title, user, likes, plays)
 
 
