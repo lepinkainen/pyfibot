@@ -16,6 +16,7 @@ import sys
 import os.path
 import time
 import urllib
+import requests
 import fnmatch
 import HTMLParser
 import logging
@@ -152,7 +153,8 @@ class BotURLOpener(urllib.FancyURLopener):
     """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
     def __init__(self, *args):
         # Latest Chrome on Windows XP
-        self.version = "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.16 Safari/534.30"
+        self.version = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+        
         urllib.FancyURLopener.__init__(self, *args)
 
     def prompt_user_passwd(self, host, realm):
@@ -185,6 +187,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
     failedDelay = 60
 
     def clientConnectionLost(self, connector, reason):
+        print connector.getDestination()
         log.info("connection lost (%s): reconnecting in %d seconds" % (reason, self.lostDelay))
         reactor.callLater(self.lostDelay, connector.connect)
 
@@ -237,7 +240,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             for ip in addrinfo:
                 ips.add(ip[4][0]) # (2, 1, 6, '', ('192.168.191.241', 6667))
 
-            # if the address we are connecting to matches one of the IP defined for
+            # if the address we are connecting to matches one of the IPs defined for
             # this network, connect to it and stop looking
             if address.host in ips:
                 log.debug("Connecting to %s / %s", server, address)
@@ -246,10 +249,11 @@ class PyFiBotFactory(ThrottledClientFactory):
                 p.factory = self
                 return p
 
-        # TODO: Remove this handling alltogether
+        # TODO: Remove this handling altogether
         log.debug("Fall back to old process...")
         fqdn = socket.getfqdn(address.host)
         log.debug("Address: %s - %s", address, fqdn)
+
         # Fallback to the old, stupid, way of connecting
         for network, server in self.data['networks'].items():
             log.debug("Looking for matching network: %s - %s", server, fqdn)
@@ -281,7 +285,7 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def clientConnectionLost(self, connector, reason):
         """Connection lost for some reason"""
-        log.info("connection to %s lost" % str(connector.getDestination().host))
+        log.info("connection to %s lost: %s" % (str(connector.getDestination().host), reason))
 
         # find bot that connects to the address that just disconnected
         for n in self.data['networks'].values():
@@ -339,6 +343,15 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
         # work around urllib bug, don't send fragment to server <http://bugs.python.org/issue8280>
         url = urllib.splittag(url)[0]
+
+        # http://docs.python-requests.org/en/latest/api/#configurations
+        # pool_maxsize
+        # pool_connections
+
+        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+        # Give this session object to all requests or something?
+        s = requests.session(headers={'User-Agent':browser})
+        s.get(url, prefetch=False, headers={}) # Don't get content unless specifically requested
 
         if url in self._urlcache and not nocache:
             log.info("cache hit : %s" % url)
