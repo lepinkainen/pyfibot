@@ -350,8 +350,8 @@ class PyFiBotFactory(ThrottledClientFactory):
 
         browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
         # Give this session object to all requests or something?
-        s = requests.session(headers={'User-Agent':browser})
-        s.get(url, prefetch=False, headers={}) # Don't get content unless specifically requested
+        #s = requests.session(headers={'User-Agent':browser})
+        #s.get(url, prefetch=False, headers={}) # Don't get content unless specifically requested
 
         if url in self._urlcache and not nocache:
             log.info("cache hit : %s" % url)
