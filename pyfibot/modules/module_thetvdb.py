@@ -3,6 +3,7 @@
 from datetime import datetime, timedelta
 import tvdb_api
 import tvdb_exceptions
+from operator import itemgetter
 
 def command_ep(bot, user, channel, args):
     t = tvdb_api.Tvdb()
@@ -30,12 +31,13 @@ def command_ep(bot, user, channel, args):
 
     # if any episodes were found, find out the one with airdate closest to now
     if episodes:
-        # sort the list just in case
-        episodes = sorted(episodes, key=firstaired)
+        # sort the list just in case it's out of order (specials are season 0)
+        episodes = sorted(episodes, key=itemgetter('firstaired'))
         episode = episodes[0]
         td = datetime.strptime(episode['firstaired'], "%Y-%m-%d") - now
 
-        msg = "Next episode of %s '%s' airs %s (%d days)" % (series.data['seriesname'], episode['episodename'], episode['firstaired'], td.days)
+        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
+        msg = "Next episode of %s %s '%s' airs %s (%d days)" % (series.data['seriesname'], season_ep, episode['episodename'], episode['firstaired'], td.days)
         bot.say(channel, msg.encode("UTF-8"))
     else:
         msg = "No new episode airdates found for %s" % series.data['seriesname']
