@@ -110,7 +110,11 @@ def handle_url(bot, user, channel, url, msg):
             log.debug("Redundant title, not displaying")
             return
 
-        return _title(bot, channel, title)
+        ignored_titles = ['404 Not Found', '403 Forbidden']
+        if title in ignored_titles:
+            return
+        else:
+            return _title(bot, channel, title)
 
     except AttributeError:
         # TODO: Nees a better way to handle this. Happens with empty <title> tags
