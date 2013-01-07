@@ -28,10 +28,10 @@ def open_DB(createTable=False):
     return conn, c
 
 
-def add_op(channel, hostmask):
+def add_op(channel, hostmask, modes='o'):
     if not get_op_status(channel, hostmask):
         conn, c = open_DB()
-        c.execute('INSERT INTO autoops VALUES (?, ?);', (channel, hostmask))
+        c.execute('INSERT INTO autoops VALUES (?, ?, ?);', (channel, hostmask, modes))
         conn.commit()
         conn.close()
         return True
