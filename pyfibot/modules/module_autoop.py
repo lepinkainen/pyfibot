@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Commands:
-.autoop add #channel nick!ident@example.org         adds hostmask to #channels auto-op list
-.autoop remove #channel nick!ident@example.org      removes hostmask from #channels auto-op list
-.autoop list <#channel>                             lists ops in current channel or #channel
+.autoop add channel nick!ident@example.org         adds hostmask to channels auto-op list
+.autoop remove channel nick!ident@example.org      removes hostmask from channels auto-op list
+.autoop list <channel>                             lists ops in current channel or channel
 .autoop status                                      lists channels where user is op
 .op
 """
@@ -13,6 +13,7 @@ import re
 
 
 COMMANDS = ['add', 'remove', 'list', 'status']
+CHANNEL_PREFIXES = '&#!+'
 
 
 def init(botconfig):
@@ -102,8 +103,8 @@ def command_autoop(bot, user, channel, args):
             list_channel = args[1]
         else:
             list_channel = channel
-        if not list_channel.startswith('#'):
-            return bot.say(channel, '#channel must start with #')
+        if list_channel[0] not in CHANNEL_PREFIXES:
+            return bot.say(channel, 'Channel name must start with one of "%s"' % CHANNEL_PREFIXES)
 
         ops = get_ops(list_channel)
         if ops:
@@ -111,18 +112,23 @@ def command_autoop(bot, user, channel, args):
         return bot.say(channel, "%s doesn't have any ops." % list_channel)
 
     elif command == 'status':
-        channel_list = get_user_channels(user)
-        if channel_list:
-            return bot.say(channel, "You're on the auto-opped on %s" % ', '.join(str(i[0]) for i in channel_list))
-        return bot.say(channel, "You're not on the auto-opped on any channel.")
+        if channel[0] not in CHANNEL_PREFIXES:
+            channel_list = get_user_channels(user)
+            if channel_list:
+                return bot.say(channel, "You're auto-opped on %s" % ', '.join(str(i[0]) for i in channel_list))
+            return bot.say(channel, "You're not auto-opped on any channel.")
+        else:
+            if get_op_status(channel, user):
+                return bot.say(channel, "You're op in %s." % channel)
+            return bot.say(channel, "You're not an op in %s." % channel)
 
     else:
         if isAdmin(user):
             if len(args) < 3:
-                return bot.say(channel, 'Command must have #channel and hostmask as arguments.')
+                return bot.say(channel, 'Command must have channel and hostmask as arguments.')
 
-            if not (args[1].startswith('#') and check_hostmask(args[2])):
-                return bot.say(channel, '#channel must start with # and hostmask must be in format nick!ident@hostma.sk')
+            if not (args[1][0] in CHANNEL_PREFIXES and check_hostmask(args[2])):
+                return bot.say(channel, 'Channel name must start with one of "%s" and hostmask must be in format nick!ident@hostma.sk' % CHANNEL_PREFIXES)
 
             if command == 'add':
                 if add_op(args[1], args[2]):
