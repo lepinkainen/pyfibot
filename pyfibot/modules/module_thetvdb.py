@@ -19,7 +19,8 @@ def command_ep(bot, user, channel, args):
         bot.say(channel, "Series '%s' not found" % args)
         return
 
-    episodes = []
+    future_episodes = []
+    all_episodes = []
 
     # find all episodes with airdate > now
     for season_no, season in series.items():
@@ -29,21 +30,40 @@ def command_ep(bot, user, channel, args):
                 continue
             airdate = datetime.strptime(firstaired, "%Y-%m-%d")
             td = airdate - now
+
+            all_episodes.append(episode)
             # find the next unaired episode
             if td > timedelta(0, 0, 0):
-                episodes.append(episode)
+                future_episodes.append(episode)
+
+    print len(all_episodes)
 
     # if any episodes were found, find out the one with airdate closest to now
-    if episodes:
+    if future_episodes:
         # sort the list just in case it's out of order (specials are season 0)
-        episodes = sorted(episodes, key=itemgetter('firstaired'))
-        episode = episodes[0]
+        future_episodes = sorted(future_episodes, key=itemgetter('firstaired'))
+        episode = future_episodes[0]
         td = datetime.strptime(episode['firstaired'], "%Y-%m-%d") - now
 
-        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
-        msg = "Next episode of %s %s '%s' airs %s (%d days)" % (series.data['seriesname'], season_ep, episode['episodename'], episode['firstaired'], td.days)
-        bot.say(channel, msg.encode("UTF-8"))
-    else:
-        msg = "No new episode airdates found for %s" % series.data['seriesname']
-        bot.say(channel, msg.encode("UTF-8"))
+        if td.days > 0:
+            airdate = "%s (%d days)" % (episode['firstaired'], td.days)
+        else:
+            airdate = "today"
 
+        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
+        msg = "Next episode of %s %s '%s' airs %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
+    # no future episodes found, show the latest one
+    elif all_episodes:
+        # find latst episode of the show
+        all_episodes = sorted(all_episodes, key=itemgetter('firstaired'))
+        episode = all_episodes[-1]
+
+        td = now - datetime.strptime(episode['firstaired'], "%Y-%m-%d")
+        airdate = "%s (%d days ago)" % (episode['firstaired'], td.days)
+
+        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
+        msg = "Latest episode of %s %s '%s' aired %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
+    else:
+        msg = "No new or past episode airdates found for %s" % series.data['seriesname']
+
+    bot.say(channel, msg.encode("UTF-8"))
