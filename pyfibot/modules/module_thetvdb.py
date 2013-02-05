@@ -6,8 +6,12 @@ import tvdb_exceptions
 from operator import itemgetter
 
 def command_ep(bot, user, channel, args):
+    """Usage: ep <series name>"""
     t = tvdb_api.Tvdb()
     now = datetime.now()
+
+    # prevent "Series '' not found"
+    if not args: return
 
     try:
         series = t[args]
