@@ -36,8 +36,6 @@ def command_ep(bot, user, channel, args):
             if td > timedelta(0, 0, 0):
                 future_episodes.append(episode)
 
-    print len(all_episodes)
-
     # if any episodes were found, find out the one with airdate closest to now
     if future_episodes:
         # sort the list just in case it's out of order (specials are season 0)
