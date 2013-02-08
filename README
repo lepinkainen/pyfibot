@@ -1,6 +1,0 @@
-Supports online module reloading - only major core changes require a restart. Extensive module & handler -support for easy extension and customization.
-
-Modules:
- - URL title fetching with custom handlers for IMDb, Youtube and many others
- - Wolfram Alpha searches
-
