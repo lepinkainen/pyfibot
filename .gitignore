@@ -1,3 +1,10 @@
+# configs, databases and virtualenv artifacts
+bot.config.example
+include/
+module_autoop.db
+pyfibot/bot.config
+rss.db
+
 *.py[cod]
 
 # C extensions

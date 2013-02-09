@@ -9,6 +9,7 @@ def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
     t = tvdb_api.Tvdb()
     now = datetime.now()
+    now = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     # prevent "Series '' not found"
     if not args: return
@@ -43,7 +44,9 @@ def command_ep(bot, user, channel, args):
         episode = future_episodes[0]
         td = datetime.strptime(episode['firstaired'], "%Y-%m-%d") - now
 
-        if td.days > 0:
+        if td.days == 1:
+            airdate = "tomorrow"
+        elif td.days > 1:
             airdate = "%s (%d days)" % (episode['firstaired'], td.days)
         else:
             airdate = "today"
