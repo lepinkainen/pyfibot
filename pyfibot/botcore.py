@@ -138,7 +138,7 @@ class CoreCommands(object):
     def command_channels(self, user, channel, args):
         """Usage: channels <network> - List channels the bot is on"""
         if not args:
-            self.say(channel, "Please specify a network")
+            self.say(channel, "Please specify a network: %s" % ", ".join(self.factory.allBots.keys()))
             return
 
         self.say(channel, "I am on %s" % self.network.channels)
