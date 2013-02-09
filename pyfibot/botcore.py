@@ -242,6 +242,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
         # wrap long text into suitable fragments
+
+        # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
+        if "!" and "@" in channel:
+            channel = self.factory.getNick(channel)
+
         msg = self.tw.wrap(message)
         cont = False
 
