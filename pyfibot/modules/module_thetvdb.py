@@ -9,6 +9,7 @@ def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
     t = tvdb_api.Tvdb()
     now = datetime.now()
+    # one day resolution maximum
     now = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     # prevent "Series '' not found"
@@ -33,11 +34,11 @@ def command_ep(bot, user, channel, args):
             td = airdate - now
 
             all_episodes.append(episode)
-            # find the next unaired episode
-            if td > timedelta(0, 0, 0):
+            # list all unaired episodes
+            if td >= timedelta(0, 0, 0):
                 future_episodes.append(episode)
 
-    # if any episodes were found, find out the one with airdate closest to now
+    # if any future episodes were found, find out the one with airdate closest to now
     if future_episodes:
         # sort the list just in case it's out of order (specials are season 0)
         future_episodes = sorted(future_episodes, key=itemgetter('firstaired'))
