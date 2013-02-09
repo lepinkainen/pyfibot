@@ -1152,6 +1152,7 @@ def after_install(options, home_dir):
     subprocess.call([join(bin_dir, 'easy_install'), 'pyyaml'])
     subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
     subprocess.call([join(bin_dir, 'easy_install'), 'beautifulsoup'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'tvdb-api'])
     subprocess.call([join(bin_dir, 'paver'),'prepare'])
 
 ##file site.py
