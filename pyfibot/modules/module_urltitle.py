@@ -81,6 +81,7 @@ def handle_url(bot, user, channel, url, msg):
                 # handler found, abort
                 return _title(bot, channel, title, True)
 
+    # Fall back to generic handler
     bs = getUrl(url).getBS()
     if not bs:
         log.debug("No BS available, returning")
