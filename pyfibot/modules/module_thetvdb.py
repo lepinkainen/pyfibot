@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import unicode_literals, print_function, division
 from datetime import datetime, timedelta
 import tvdb_api
 import tvdb_exceptions

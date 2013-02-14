@@ -8,6 +8,7 @@ $Id$
 $HeadURL$
 """
 
+from __future__ import unicode_literals, print_function, division
 import fnmatch
 import urlparse
 import logging

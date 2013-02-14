@@ -5,6 +5,7 @@ $Id$
 $HeadURL$
 """
 
+from __future__ import unicode_literals, print_function, division
 has_pywapi = False
 try:
     import pywapi

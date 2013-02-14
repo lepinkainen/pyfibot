@@ -1,12 +1,13 @@
+from __future__ import unicode_literals, print_function, division
 import requests
 import urllib
 import logging
 
 try:
-  from lxml import etree
-  print("running with lxml.etree")
+    from lxml import etree
+    print("running with lxml.etree")
 except ImportError:
-  print("module_wolfram_alpha requires lxml.etree for xpath support")
+    print("module_wolfram_alpha requires lxml.etree for xpath support")
 
 appid = None
 query = "http://api.wolframalpha.com/v2/query?input=%s&appid=%s"

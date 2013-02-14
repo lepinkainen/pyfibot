@@ -3,6 +3,7 @@ $Id$
 $HeadURL$
 """
 
+from __future__ import unicode_literals, print_function, division
 import requests
 from BeautifulSoup import BeautifulSoup
 import datetime

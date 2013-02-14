@@ -3,13 +3,14 @@ $Id$
 $HeadURL$
 """
 
+from __future__ import unicode_literals, print_function, division
 has_imdb = False
 
 try:
     from imdb import IMDb
     has_imdb = True
 except:
-    print "Could not find IMDbPY library, please install from http://imdbpy.sourceforge.net/"
+    print("Could not find IMDbPY library, please install from http://imdbpy.sourceforge.net/")
 import re
 
 
