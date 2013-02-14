@@ -5,6 +5,10 @@ module_autoop.db
 pyfibot/bot.config
 rss.db
 
+#imdbpy
+etc
+doc
+
 *.py[cod]
 
 # C extensions
