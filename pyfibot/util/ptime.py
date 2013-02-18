@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: iso8859-1 -*-
 ## (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
 
 import time
