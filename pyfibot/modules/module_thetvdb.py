@@ -2,12 +2,19 @@
 
 from __future__ import unicode_literals, print_function, division
 from datetime import datetime, timedelta
-import tvdb_api
-import tvdb_exceptions
+
+api_ok = True
+try:
+    import tvdb_api
+    import tvdb_exceptions
+except:
+    print("tvdb api not available")
+    api_ok = False
 from operator import itemgetter
 
 def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
+    if not api_ok: return
     t = tvdb_api.Tvdb()
     now = datetime.now()
     # one day resolution maximum
