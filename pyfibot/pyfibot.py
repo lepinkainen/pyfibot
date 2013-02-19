@@ -34,8 +34,6 @@ except ImportError:
     print("Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download")
     sys.exit(1)
 
-from util import timeoutdict
-
 # default timeout for socket connections
 import socket
 socket.setdefaulttimeout(20)
@@ -82,7 +80,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "20110425.0"
+    version = "2013-02-19"
     protocol = botcore.PyFiBot
     allBots = None
     moduledir = os.path.join(sys.path[0], "modules/")
@@ -262,38 +260,6 @@ class PyFiBotFactory(ThrottledClientFactory):
         return False
 
 
-def create_example_conf():
-    """Create an example configuration file"""
-    conf = """
-    nick: botnick
-
-    admins:
-      - 'foo!bar@example.com'
-
-    networks:
-      ircnet:
-        server: irc.ircnet.com
-        channels:
-          - mychannel
-        linerate: 3
-      quakenet:
-        server: irc.quakenet.org
-        authname: name
-        authpass: password
-        channels:
-          - channel, password
-    """
-
-    examplefile = 'bot.config.example'
-    if os.path.exists(examplefile):
-        return False
-    else:
-        f = file(examplefile, 'w')
-        yaml.dump(yaml.load(conf), f, default_flow_style=False)
-        f.close()
-        return True
-
-
 def init_logging():
     filename = os.path.join(sys.path[0], 'pyfibot.log')
     # get root logger
@@ -312,15 +278,13 @@ def init_logging():
 def main():
     init_logging()
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-    config = os.path.join(sys.path[0], "bot.config")
+    #config = os.path.join(sys.path[0], "config.yml")
+    config = sys.argv[1]
 
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
-        if create_example_conf():
-            print("No config file found, I created an example config (bot.config.example) for you. Please edit it and rename to bot.config.")
-        else:
-            print('No config file found, there is an example config (bot.config.example) for you. Please edit it and rename to bot.config or delete it to generate a new example config.')
+        print("No config file found, please edit example.yml and rename it to config.yml")
         sys.exit(1)
 
     factory = PyFiBotFactory(config)
@@ -331,15 +295,14 @@ def main():
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
+
         # normalize channel names to prevent internal confusion
         chanlist = []
         for channel in settings['channels']:
             if channel[0] not in '&#!+':
                 channel = '#' + channel
             chanlist.append(channel)
-        # TODO: this might cause issues, but bypassing it for now
-        # resolve server name here in case it's a round-robin address
-        #server_name = socket.getfqdn(settings['server'])
+
         server_name = settings['server']
 
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)

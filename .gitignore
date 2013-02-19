@@ -1,5 +1,6 @@
 # configs, databases and virtualenv artifacts
-bot.config.example
+config.yml
+example.yml
 include/
 module_autoop.db
 pyfibot/bot.config
