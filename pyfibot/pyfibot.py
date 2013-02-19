@@ -220,23 +220,25 @@ class PyFiBotFactory(ThrottledClientFactory):
         g['isAdmin'] = self.isAdmin
         return g
 
-    def getUrl(self, url, nocache=False):
+    def getUrl(self, url, nocache=False, params=None, headers=None):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
-        # http://docs.python-requests.org/en/latest/api/#configurations
-        # pool_maxsize
-        # pool_connections
 
+        # TODO: Make this configurable in the config
         browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
-        # Give this session object to all requests or something?
+
+        # Common session for all requests
         s = requests.session()
         s.verify = False
         s.stream = True  # Don't fetch content unless asked
         s.headers.update({'User-Agent':browser})
+        # Custom headers from requester
+        if headers:
+            s.headers.update(headers)
 
-        r = s.get(url)
+        r = s.get(url, params=params)
 
         size = int(r.headers.get('Content-Length', 0)) / 1024
-        log.debug("Content-Length: %dkB" % size)
+        #log.debug("Content-Length: %dkB" % size)
         if size > 2048:
             log.warn("Content too large, will not fetch: %s %s" % (size, url))
             r.close()
