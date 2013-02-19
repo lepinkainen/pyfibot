@@ -262,23 +262,28 @@ class PyFiBotFactory(ThrottledClientFactory):
         return False
 
 
-def init_logging():
+def init_logging(config):
     filename = os.path.join(sys.path[0], 'pyfibot.log')
+
     # get root logger
     logger = logging.getLogger()
+
     if False:
         handler = logging.handlers.RotatingFileHandler(filename, maxBytes=5000 * 1024, backupCount=20)
     else:
         handler = logging.StreamHandler()
-    # time format is same format of strftime
+
     formatter = logging.Formatter('%(asctime)-15s %(levelname)-8s %(name)-11s %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-    logger.setLevel(logging.DEBUG)
+
+    if config['debug']:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
 
 
 def main():
-    init_logging()
     sys.path.append(os.path.join(sys.path[0], 'lib'))
     #config = os.path.join(sys.path[0], "config.yml")
     config = sys.argv[1]
@@ -288,6 +293,8 @@ def main():
     else:
         print("No config file found, please edit example.yml and rename it to config.yml")
         sys.exit(1)
+
+    init_logging(config.get('logging',{}))
 
     factory = PyFiBotFactory(config)
     for network, settings in config['networks'].items():
