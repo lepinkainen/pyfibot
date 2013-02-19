@@ -2,7 +2,10 @@ import requests
 
 from pyfibot import botcore
 
+
 class BotMock(botcore.CoreCommands):
+    config = {}
+
     def getUrl(self, url, nocache=False):
         print("Getting url %s" % url)
         return requests.get(url)
