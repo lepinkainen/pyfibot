@@ -69,6 +69,9 @@ class CoreCommands(object):
 
         password = None
         # see if we have multiple arguments
+        print(user)
+        print(channel)
+        print(args)
         try:
             args, password = args.split(' ', 1)
         except ValueError:

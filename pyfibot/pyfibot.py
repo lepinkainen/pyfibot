@@ -106,7 +106,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def stopFactory(self):
         del self.allBots
         ThrottledClientFactory.stopFactory(self)
-        log.info("factory stopped")
+[6~        log.info("factory stopped")
 
     def buildProtocol(self, address):
         # we are connecting to a server, don't know which yet
