@@ -28,10 +28,10 @@ options(
 
 setup(
       name='pyfibot',
-      version='0.9.3',
+      version='0.9.4',
       description='Python IRC bot',
       long_description='An event-based IRC bot, based on twisted.words.protocols.irc',
-      url='http://code.google.com/p/pyfibot/',
+      url='https://github.com/lepinkainen/pyfibot',
       author='Riku Lindblad',
       author_email='riku.lindblad@gmail.com',
       classifiers=[
@@ -44,23 +44,26 @@ setup(
             'Topic :: Communications :: Chat :: Internet Relay Chat'
             ],
       license='MIT',
-      packages=['pyfibot'],
+      packages=['pyfibot', 'pyfibot.modules', 'pyfibot.util', 'pyfibot.lib'],
       zip_safe=False,
       install_requires=install_requires,
       entry_points={
-            'console_scripts' : ['pyfibot = pyfibot.pyfibot:main']
+            'console_scripts': ['pyfibot = pyfibot.pyfibot:main']
             }
       )
+
 
 @task
 @needs('generate_setup', 'minilib', 'setuptools.command.sdist')
 def sdist():
-      """Overrides sdist to make sure that our setup.py is generated."""
-      pass
+    """Overrides sdist to make sure that our setup.py is generated."""
+    pass
+
 
 @task
 def prepare(options):
-      pass
+    pass
+
 
 @task
 def bootstrap(options):
