@@ -1,0 +1,17 @@
+nick: botnick
+
+admins:
+  - 'foo!bar@example.com'
+
+networks:
+  ircnet:
+    server: irc.ircnet.com
+    channels:
+      - #pyfibot
+    linerate: 3
+  quakenet:
+    server: irc.quakenet.org
+    authname: name
+    authpass: password
+    channels:
+      - channel, password
