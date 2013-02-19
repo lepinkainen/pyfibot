@@ -50,6 +50,7 @@ import botcore
 
 log = logging.getLogger('core')
 
+
 class URLCacheItem(object):
     """URL cache item object, fetches data only when needed"""
 
@@ -155,7 +156,7 @@ class BotURLOpener(urllib.FancyURLopener):
     def __init__(self, *args):
         # Latest Chrome on Windows XP
         self.version = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
-        
+
         urllib.FancyURLopener.__init__(self, *args)
 
     def prompt_user_passwd(self, host, realm):
@@ -239,7 +240,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             addrinfo = socket.getaddrinfo(server.address[0], server.address[1])
             ips = set()
             for ip in addrinfo:
-                ips.add(ip[4][0]) # (2, 1, 6, '', ('192.168.191.241', 6667))
+                ips.add(ip[4][0])  # (2, 1, 6, '', ('192.168.191.241', 6667))
 
             # if the address we are connecting to matches one of the IPs defined for
             # this network, connect to it and stop looking
@@ -425,6 +426,7 @@ def init_logging():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
+
 
 def main():
     init_logging()
