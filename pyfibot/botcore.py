@@ -79,12 +79,13 @@ class CoreCommands(object):
             newchannel, network = args.split('@', 1)
         except ValueError:
             newchannel, network = args, self.network.alias
+
         try:
             bot = self.factory.allBots[network]
         except KeyError:
             self.say(channel, "I am not on that network.")
         else:
-            log.debug("Attempting to join channel %s", channel)
+            log.debug("Attempting to join channel %s on ", (newchannel, network))
             if newchannel in bot.network.channels:
                 self.say(channel, "I am already in %s on %s." % (newchannel, network))
                 log.debug("Already on channel %s" % channel)
@@ -92,7 +93,7 @@ class CoreCommands(object):
             else:
                 if password:
                     bot.join(newchannel, key=password)
-                    log.debug("Joined")
+                    log.debug("Joined with password")
                 else:
                     bot.join(newchannel)
                     log.debug("Joined")
@@ -124,6 +125,7 @@ class CoreCommands(object):
                 self.say(channel, "I am not in %s on %s." % (newchannel, network))
                 self.say(channel, "I am on %s" % bot.network.channels)
             else:
+                log.debug("Parted channel %s" % newchannel)
                 bot.network.channels.remove(newchannel)
                 bot.part(newchannel)
 

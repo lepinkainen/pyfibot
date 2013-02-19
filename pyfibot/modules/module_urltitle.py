@@ -8,7 +8,7 @@ $Id$
 $HeadURL$
 """
 
-from __future__ import unicode_literals, print_function, division
+from __future__ import print_function, division
 import fnmatch
 import urlparse
 import logging
@@ -28,6 +28,7 @@ except:
 
 from types import TupleType
 
+from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import BeautifulStoneSoup
 
 log = logging.getLogger("urltitle")
@@ -37,6 +38,16 @@ config = None
 def init(bot):
     global config
     config = bot.config.get("module_urltitle", {})
+
+
+def __get_bs(url):
+    #print("Fetching %s" % url.encode("UTF-8"))
+    #print(getUrl(url))
+    content = getUrl(url).content
+    if content:
+        return BeautifulSoup(content)
+    else:
+        return None
 
 
 def handle_url(bot, user, channel, url, msg):
@@ -83,7 +94,7 @@ def handle_url(bot, user, channel, url, msg):
                 return _title(bot, channel, title, True)
 
     # Fall back to generic handler
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         log.debug("No BS available, returning")
         return
@@ -210,7 +221,7 @@ def _title(bot, channel, title, smart=False, prefix=None):
 def _handle_iltalehti(url):
     """*iltalehti.fi*html"""
     # Go as normal
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.first('title').string
@@ -221,7 +232,7 @@ def _handle_iltalehti(url):
 
 def _handle_iltasanomat(url):
     """*iltasanomat.fi*uutinen.asp*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.title.string.rsplit(" - ", 1)[0]
@@ -230,7 +241,7 @@ def _handle_iltasanomat(url):
 
 def _handle_keskisuomalainen_sahke(url):
     """*keskisuomalainen.net*sahkeuutiset/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.first('p', {'class': 'jotsikko'})
@@ -241,7 +252,7 @@ def _handle_keskisuomalainen_sahke(url):
 
 def _handle_tietokone(url):
     """http://www.tietokone.fi/uutta/uutinen.asp?news_id=*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     sub = bs.first('h5').string
     main = bs.first('h2').string
     return "%s - %s" % (main, sub)
@@ -249,7 +260,7 @@ def _handle_tietokone(url):
 
 def _handle_itviikko(url):
     """http://www.itviikko.fi/*/*/*/*/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     return bs.first("h1", "headline").string
@@ -257,7 +268,7 @@ def _handle_itviikko(url):
 
 def _handle_verkkokauppa(url):
     """http://www.verkkokauppa.com/*/product/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     product = bs.first('h1', id='productName').string
@@ -275,7 +286,7 @@ def _handle_verkkokauppa(url):
 
 def _handle_mol(url):
     """http://www.mol.fi/paikat/Job.do?*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.first("div", {'class': 'otsikko'}).string
@@ -307,7 +318,7 @@ def _handle_tweet(url):
 
 def _handle_netanttila(url):
     """http://www.netanttila.com/webapp/wcs/stores/servlet/ProductDisplay*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     itemname = bs.first("h1").string.replace("\n", "").replace("\r", "").replace("\t", "").strip()
     price = bs.first("td", {'class': 'right highlight'}).string.split(" ")[0]
     return "%s | %s EUR" % (itemname, price)
@@ -378,7 +389,7 @@ def _handle_youtube_gdata(url):
 
 def _handle_helmet(url):
     """http://www.helmet.fi/record=*fin"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.find(attr={'class': 'bibInfoLabel'}, text='Teoksen nimi').next.next.next.next.string
@@ -387,7 +398,7 @@ def _handle_helmet(url):
 
 def _handle_ircquotes(url):
     """http://*ircquotes.fi/[?]*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     chan = bs.first("span", {'class': 'quotetitle'}).next.next.string
@@ -404,7 +415,7 @@ def _handle_alko2(url):
 
 def _handle_alko(url):
     """http://www.alko.fi/tuotteet/fi/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     name = bs.find('span', {'class': 'tuote_otsikko'}).string
@@ -458,7 +469,7 @@ def _handle_stackoverflow(url):
 
 def _handle_hs(url):
     """*hs.fi*artikkeli*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.title.string
@@ -488,14 +499,14 @@ def _handle_hs(url):
 
 def _handle_mtv3(url):
     """*mtv3.fi*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     title = bs.first("h1", "entry-title").text
     return title
 
 
 def _handle_yle(url):
     """http://*yle.fi/uutiset/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.title.string
@@ -505,14 +516,14 @@ def _handle_yle(url):
 
 def _handle_varttifi(url):
     """http://www.vartti.fi/artikkeli/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     title = bs.first("h2").string
     return title
 
 
 def _handle_aamulehti(url):
     """http://www.aamulehti.fi/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     if not bs:
         return
     title = bs.fetch("h1")[0].string
@@ -526,6 +537,6 @@ def _handle_apina(url):
 
 def _handle_areena(url):
     """http://areena.yle.fi/*"""
-    bs = getUrl(url).getBS()
+    bs = __get_bs(url)
     title = bs.html.head.title.text.split(' | ')[0]
     return title

@@ -16,14 +16,10 @@ from __future__ import print_function, division
 import sys
 import os.path
 import time
-import urllib
 import requests
 import fnmatch
-import HTMLParser
 import logging
 import logging.handlers
-from gzip import GzipFile
-from StringIO import StringIO
 
 try:
     import yaml
@@ -38,10 +34,6 @@ except ImportError:
     print("Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download")
     sys.exit(1)
 
-from util import timeoutdict
-from BeautifulSoup import BeautifulSoup
-from BeautifulSoup import UnicodeDammit
-
 # default timeout for socket connections
 import socket
 socket.setdefaulttimeout(20)
@@ -49,119 +41,6 @@ socket.setdefaulttimeout(20)
 import botcore
 
 log = logging.getLogger('core')
-
-
-class URLCacheItem(object):
-    """URL cache item object, fetches data only when needed"""
-
-    def __init__(self, url):
-        self.url = url
-        self.content = None
-        self.headers = None
-        self.bs = None
-        # maximum size in kB to download
-        self.max_size = 2048
-        self.fp = None
-
-    def _open(self, url):
-        """Returns the raw file pointer to the given URL"""
-        if not self.fp:
-            urllib._urlopener = BotURLOpener()
-            try:
-                self.fp = urllib.urlopen(self.url)
-            except IOError, e:
-                log.warn("IOError (%s) when opening url %s", e, url)
-        return self.fp
-
-    def _checkstatus(self):
-        """Check if all data has already been cached and close socket if so"""
-        if self.content and self.headers and self.bs:
-            self.fp.close()
-
-    def getSize(self):
-        """Get the content length of URL in kB
-
-        @return None if the server doesn't return a content-length header"""
-        if 'content-length' in self.getHeaders():
-            length = int(self.getHeaders()['content-length']) / 1024
-            return length
-        else:
-            return None
-
-    def getContent(self):
-        """Get the actual file at the URL
-
-        @return None if the file is too large (over 2MB)"""
-        if not self.content:
-            f = self._open(self.url)
-
-            size = self.getSize()
-            if size > self.max_size:
-                log.warn("CONTENT TOO LARGE, WILL NOT FETCH %s %s" % (size, self.url))
-                self.content = None
-            else:
-                if self.checkType():
-                    # handle gzipped content
-                    if f.info().get('Content-Encoding') == 'gzip':
-                        log.debug("Gzipped data, uncompressing")
-                        buf = StringIO(f.read())
-                        f = GzipFile(fileobj=buf)
-                    self.content = UnicodeDammit(f.read()).unicode
-                else:
-                    type = self.getHeaders().getsubtype()
-                    log.warn("WRONG CONTENT TYPE, WILL NOT FETCH size:%s, type:%s, %s" % (size, type, self.url))
-        self._checkstatus()
-        return self.content
-
-    def getHeaders(self):
-        """Get headers for the URL"""
-        if not self.headers:
-            f = self._open(self.url)
-            if f:
-                self.headers = f.info()
-            else:
-                self.headers = {}
-        self._checkstatus()
-        return self.headers
-
-    def checkType(self):
-        if self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml', 'json', 'javascript']:
-            return True
-        else:
-            return False
-
-    def getBS(self):
-        """Get a beautifulsoup instance for the URL
-
-        @return None if the url doesn't contain HTML
-        """
-        if not self.bs:
-            # only attempt a bs parsing if the content is html, xml or xhtml
-            if 'content-type' in self.getHeaders() and \
-               self.getHeaders().getsubtype() in ['html', 'xml', 'xhtml+xml', 'atom+xml']:
-                try:
-                    bs = BeautifulSoup(markup=self.getContent())
-                except HTMLParser.HTMLParseError:
-                    log.warn("BS unable to parse content")
-                    return None
-                self.bs = bs
-            else:
-                return None
-        self._checkstatus()
-        return self.bs
-
-
-class BotURLOpener(urllib.FancyURLopener):
-    """URL opener that fakes itself as a regular browser and ignores all basic auth prompts"""
-    def __init__(self, *args):
-        # Latest Chrome on Windows XP
-        self.version = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
-
-        urllib.FancyURLopener.__init__(self, *args)
-
-    def prompt_user_passwd(self, host, realm):
-        log.info("PASSWORD PROMPT:", host, realm)
-        return ('', '')
 
 
 class Network:
@@ -201,7 +80,7 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "20110425.0"
+    version = "2013-02-19"
     protocol = botcore.PyFiBot
     allBots = None
     moduledir = os.path.join(sys.path[0], "modules/")
@@ -215,7 +94,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         self.data['networks'] = {}
         self.ns = {}
         # Cache url contents for 5 minutes, check for old entries every minute
-        self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
+        #self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
 
     def startFactory(self):
         self.allBots = {}
@@ -343,27 +222,27 @@ class PyFiBotFactory(ThrottledClientFactory):
 
     def getUrl(self, url, nocache=False):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
-        # work around urllib bug, don't send fragment to server <http://bugs.python.org/issue8280>
-        url = urllib.splittag(url)[0]
-
         # http://docs.python-requests.org/en/latest/api/#configurations
         # pool_maxsize
         # pool_connections
 
         browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
         # Give this session object to all requests or something?
-        #s = requests.session(headers={'User-Agent':browser})
-        #s.get(url, prefetch=False, headers={}) # Don't get content unless specifically requested
+        s = requests.session()
+        s.verify = False
+        s.stream = True  # Don't fetch content unless asked
+        s.headers.update({'User-Agent':browser})
 
-        if url in self._urlcache and not nocache:
-            log.info("cache hit : %s" % url)
-        else:
-            if nocache:
-                log.info("cache pass: %s" % url)
-            else:
-                log.info("cache miss: %s" % url)
-            self._urlcache[url] = URLCacheItem(url)
-        return self._urlcache[url]
+        r = s.get(url)
+
+        size = int(r.headers.get('Content-Length', 0)) / 1024
+        log.debug("Content-Length: %dkB" % size)
+        if size > 2048:
+            log.warn("Content too large, will not fetch: %s %s" % (size, url))
+            r.close()
+            return None
+
+        return r
 
     def getNick(self, user):
         """Parses nick from nick!user@host
@@ -379,39 +258,6 @@ class PyFiBotFactory(ThrottledClientFactory):
             if fnmatch.fnmatch(user, pattern):
                 return True
         return False
-
-
-def create_example_conf():
-    """Create an example configuration file"""
-    conf = """
-    nick: botnick
-
-    admins:
-      - 'foo!bar@example.com'
-
-    networks:
-      ircnet:
-        server: irc.ircnet.com
-        channels:
-          - mychannel
-        linerate: 3
-      quakenet:
-        server: irc.quakenet.org
-        authname: name
-        authpass: password
-        channels:
-          - channel, password
-    """
-
-    botDir = os.path.dirname(os.path.relpath(__file__))
-    examplefile = os.path.join(botDir, 'bot.config.example')
-    if os.path.exists(examplefile):
-        return False
-    else:
-        f = file(examplefile, 'w')
-        yaml.dump(yaml.load(conf), f, default_flow_style=False)
-        f.close()
-        return True
 
 
 def init_logging():
@@ -432,16 +278,13 @@ def init_logging():
 def main():
     init_logging()
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-    config = os.path.join(sys.path[0], "bot.config")
+    #config = os.path.join(sys.path[0], "config.yml")
+    config = sys.argv[1]
 
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
-        botDir = os.path.dirname(os.path.relpath(__file__))
-        if create_example_conf():
-            print('No config file found, I created an example config ({0}/bot.config.example) for you. Please edit it and rename to {0}/bot.config'.format(botDir))
-        else:
-            print('No config file found, there is an example config ({0}/bot.config.example) for you. Please edit it and rename to {0}/bot.config or delete it to generate a new example config.'.format(botDir))
+        print("No config file found, please edit example.yml and rename it to config.yml")
         sys.exit(1)
 
     factory = PyFiBotFactory(config)
@@ -452,15 +295,14 @@ def main():
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
+
         # normalize channel names to prevent internal confusion
         chanlist = []
         for channel in settings['channels']:
             if channel[0] not in '&#!+':
                 channel = '#' + channel
             chanlist.append(channel)
-        # TODO: this might cause issues, but bypassing it for now
-        # resolve server name here in case it's a round-robin address
-        #server_name = socket.getfqdn(settings['server'])
+
         server_name = settings['server']
 
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
