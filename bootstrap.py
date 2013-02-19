@@ -1150,9 +1150,12 @@ def after_install(options, home_dir):
     subprocess.call([join(bin_dir, 'easy_install'), 'twisted > 12.0.0'])
     subprocess.call([join(bin_dir, 'easy_install'), 'requests >= 1.0.0'])
     subprocess.call([join(bin_dir, 'easy_install'), 'pyyaml'])
-    subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'jsonschema'])
     subprocess.call([join(bin_dir, 'easy_install'), 'beautifulsoup >= 3.0.0'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
     subprocess.call([join(bin_dir, 'easy_install'), 'tvdb_api'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'feedparser'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'pywapi'])
     subprocess.call([join(bin_dir, 'paver'),'prepare'])
 
 ##file site.py

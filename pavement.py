@@ -6,7 +6,15 @@ import paver.setuputils
 from paver import svn
 from paver.setuputils import setup, find_package_data, find_packages
 
-install_requires = ['twisted > 12.0.0', 'requests >= 1.0.0', 'pyyaml', 'imdbpy', 'beautifulsoup >= 3.0.0', 'tvdb_api']
+install_requires = ['twisted > 12.0.0',
+                    'requests >= 1.0.0',
+                    'pyyaml',
+                    'jsonschema',
+                    'beautifulsoup >= 3.0.0',
+                    'imdbpy',
+                    'tvdb_api',
+                    'feedparser',
+                    'pywapi']
 
 options(
       virtualenv=Bunch(
