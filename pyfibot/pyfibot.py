@@ -403,7 +403,8 @@ def create_example_conf():
           - channel, password
     """
 
-    examplefile = 'bot.config.example'
+    botDir = os.path.dirname(os.path.relpath(__file__))
+    examplefile = os.path.join(botDir, 'bot.config.example')
     if os.path.exists(examplefile):
         return False
     else:
@@ -436,10 +437,11 @@ def main():
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
+        botDir = os.path.dirname(os.path.relpath(__file__))
         if create_example_conf():
-            print("No config file found, I created an example config (bot.config.example) for you. Please edit it and rename to bot.config.")
+            print('No config file found, I created an example config ({0}/bot.config.example) for you. Please edit it and rename to {0}/bot.config'.format(botDir))
         else:
-            print('No config file found, there is an example config (bot.config.example) for you. Please edit it and rename to bot.config or delete it to generate a new example config.')
+            print('No config file found, there is an example config ({0}/bot.config.example) for you. Please edit it and rename to {0}/bot.config or delete it to generate a new example config.'.format(botDir))
         sys.exit(1)
 
     factory = PyFiBotFactory(config)
