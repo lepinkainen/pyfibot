@@ -20,6 +20,8 @@ import requests
 import fnmatch
 import logging
 import logging.handlers
+import json
+import jsonschema
 
 try:
     import yaml
@@ -283,16 +285,23 @@ def init_logging(config):
         logger.setLevel(logging.INFO)
 
 
+def validate_config(config, schema):
+    print("Validating configuration")
+    jsonschema.validate(config, schema)
+
+
 def main():
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-    #config = os.path.join(sys.path[0], "config.yml")
-    config = sys.argv[1]
+    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
+    config = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
     if os.path.exists(config):
         config = yaml.load(file(config))
     else:
         print("No config file found, please edit example.yml and rename it to config.yml")
         sys.exit(1)
+
+    validate_config(config, schema)
 
     init_logging(config.get('logging',{}))
 
