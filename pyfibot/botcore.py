@@ -243,12 +243,15 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
-        # wrap long text into suitable fragments
+
+        # Encode all outgoing messages to UTF-8
+        message = message.encode("UTF-8")
 
         # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
         if "!" and "@" in channel:
             channel = self.factory.getNick(channel)
 
+        # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
         cont = False
 
