@@ -243,6 +243,13 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         reactor.callLater(delay, self.repeatingPing, delay)
         self.ping(self.nickname)
 
+    # TODO: Move the function here completely
+    def getUrl(self, url, nocache=False, params=None, headers=None):
+        return self.factory.getUrl(url, nocache, params, headers)
+
+    # TODO: getNick
+    # TODO: isAdmin
+
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
 

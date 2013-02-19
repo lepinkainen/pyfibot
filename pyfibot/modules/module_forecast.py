@@ -6,12 +6,16 @@ $HeadURL$
 """
 
 from __future__ import unicode_literals, print_function, division
+import logging
+
+log = logging.getLogger("forecast")
+
 has_pywapi = False
 try:
     import pywapi
     has_pywapi = True
 except:
-    print('Error loading library pywapi. Probably you havent installed it yet.')
+    log.error('Error loading library pywapi. Library not found.')
 
 
 def fahrenheit_to_celcius(f):

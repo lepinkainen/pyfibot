@@ -1,18 +1,17 @@
 from __future__ import unicode_literals, print_function, division
-import requests
 import urllib
 import logging
 
+log = logging.getLogger('wolfram_alpha')
+
 try:
     from lxml import etree
-    print("running with lxml.etree")
+    log.debug("running with lxml.etree")
 except ImportError:
-    print("module_wolfram_alpha requires lxml.etree for xpath support")
+    log.debug("module_wolfram_alpha requires lxml.etree for xpath support")
 
 appid = None
 query = "http://api.wolframalpha.com/v2/query?input=%s&appid=%s"
-
-log = logging.getLogger('wolfram_alpha')
 
 
 def init(bot):
@@ -31,7 +30,7 @@ def command_wa(bot, user, channel, args):
         log.warn("Appid not specified in configuration!")
         return
 
-    r = getUrl(query % (urllib.quote(args), appid))
+    r = bot.getUrl(query % (urllib.quote(args), appid))
 
     if r.status_code != 200:
         return
