@@ -277,7 +277,7 @@ def init_logging(config):
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    if config['debug']:
+    if config.get('debug', False):
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)

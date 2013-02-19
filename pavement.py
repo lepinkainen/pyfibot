@@ -28,7 +28,7 @@ options(
 
 setup(
       name='pyfibot',
-      version='0.9.2',
+      version='0.9.3',
       description='Python IRC bot',
       long_description='An event-based IRC bot, based on twisted.words.protocols.irc',
       url='http://code.google.com/p/pyfibot/',
