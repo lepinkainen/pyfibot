@@ -14,6 +14,7 @@ query = "http://api.wolframalpha.com/v2/query?input=%s&appid=%s"
 
 log = logging.getLogger('wolfram_alpha')
 
+
 def init(bot):
     global appid
     config = bot.config.get("module_wolfram_alpha", {})
@@ -23,15 +24,17 @@ def init(bot):
     else:
         log.warning("Appid not found from config!")
 
+
 def command_wa(bot, user, channel, args):
     """Query Wolfram Alpha"""
     if not appid:
         log.warn("Appid not specified in configuration!")
         return
 
-    r = requests.get(query % (urllib.quote(args), appid))
+    r = getUrl(query % (urllib.quote(args), appid))
 
-    if r.status_code != 200: return
+    if r.status_code != 200:
+        return
 
     root = etree.fromstring(r.content)
     # find all pods
@@ -41,7 +44,8 @@ def command_wa(bot, user, channel, args):
     if not pods:
         didyoumeans = root.find("didyoumeans")
         # no support for future stuff yet, TODO?
-        if not didyoumeans: return
+        if not didyoumeans:
+            return
 
         options = []
         for didyoumean in didyoumeans:

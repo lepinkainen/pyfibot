@@ -23,7 +23,7 @@ def command_posti(bot, user, channel, args):
 def getstatus(code, count=None):
     """Parse the package status page"""
     url = baseurl % code
-    r = requests.get(url)
+    r = getUrl(url)
     bs = BeautifulSoup(r.content)
 
     res = []

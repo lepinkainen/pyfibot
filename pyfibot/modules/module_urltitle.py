@@ -13,7 +13,6 @@ import fnmatch
 import urlparse
 import logging
 import re
-import requests
 
 has_json = True
 # import py2.6+ json if available, fall back to simplejson
@@ -41,8 +40,6 @@ def init(bot):
 
 
 def __get_bs(url):
-    #print("Fetching %s" % url.encode("UTF-8"))
-    #print(getUrl(url))
     content = getUrl(url).content
     if content:
         return BeautifulSoup(content)
@@ -305,7 +302,7 @@ def _handle_tweet(url):
     #    matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
-    data = requests.get(infourl)
+    data = getUrl(infourl)
 
     #reads dict
     ##You can modify the fields below or add any fields you want to the returned string
@@ -344,7 +341,7 @@ def _handle_youtube_gdata(url):
     if match:
         infourl = gdata_url % match.group(1)
         params = {'alt': 'json', 'v': '2'}
-        r = requests.get(infourl, params=params)
+        r = getUrl(infourl, params=params)
 
         if not r.status_code == 200:
             log.info("Video too recent, no info through API yet.")
@@ -435,7 +432,7 @@ def _handle_vimeo(url):
     match = re.match("http://.*?vimeo.com/(\d+)", url)
     if match:
         infourl = data_url % match.group(1)
-        r = requests.get(infourl)
+        r = getUrl(infourl)
         info = r.json()[0]
         title = info['title']
         user = info['user_name']

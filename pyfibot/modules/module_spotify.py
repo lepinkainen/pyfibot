@@ -5,6 +5,15 @@ $HeadURL$
 
 from __future__ import unicode_literals, print_function, division
 import re
+from BeautifulSoup import BeautifulSoup
+
+
+def __get_bs(url):
+    content = getUrl(url).content
+    if content:
+        return BeautifulSoup(content)
+    else:
+        return None
 
 
 def handle_privmsg(bot, user, channel, args):
@@ -16,7 +25,10 @@ def handle_privmsg(bot, user, channel, args):
 
     apiurl = "http://ws.spotify.com/lookup/1/?uri=spotify:%s:%s" % (m.group(2), m.group(4))
 
-    bs = getUrl(apiurl).getBS()
+    bs = __get_bs(apiurl)
+    if not bs:
+        return
+
     data = '[Spotify] '
     if m.group(2) == 'album':
         artist = str(bs.first('album').first('artist').first('name').string)
