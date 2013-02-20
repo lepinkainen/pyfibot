@@ -7,7 +7,7 @@ Supports online module reloading - only major core changes require a restart. Ex
 
 Installation
 ------------
-<a href="https://github.com/lepinkainen/pyfibot/wiki/VirtualEnv-installation">Installation instructions</a>
+<a href="https://github.com/lepinkainen/pyfibot/wiki/Installation">Installation instructions</a>
 
 Module hilights
 ---------------
