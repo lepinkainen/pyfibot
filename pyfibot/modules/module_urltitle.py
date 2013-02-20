@@ -32,15 +32,24 @@ from BeautifulSoup import BeautifulStoneSoup
 
 log = logging.getLogger("urltitle")
 config = None
+bot = None
 
 
-def init(bot):
+def init(botref):
     global config
+    global bot
+    bot = botref
     config = bot.config.get("module_urltitle", {})
 
 
 def __get_bs(url):
-    content = getUrl(url).content
+    r = bot.getUrl(url)
+    content_type = r.headers['content-type'].split(';')[0]
+    if content_type not in ['text/html', 'text/xml', 'application/xhtml+xml']:
+        log.debug("Content-type %s not parseable" % content_type)
+        return None
+
+    content = r.content
     if content:
         return BeautifulSoup(content)
     else:
