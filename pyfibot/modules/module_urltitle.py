@@ -44,6 +44,9 @@ def init(botref):
 
 def __get_bs(url):
     r = bot.getUrl(url)
+    if not r:
+        return None
+
     content_type = r.headers['content-type'].split(';')[0]
     if content_type not in ['text/html', 'text/xml', 'application/xhtml+xml']:
         log.debug("Content-type %s not parseable" % content_type)
