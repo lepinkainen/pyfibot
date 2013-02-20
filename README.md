@@ -5,6 +5,10 @@ A Python IRC-bot made using the <a href="http://twistedmatrix.com/trac/">Twisted
 
 Supports online module reloading - only major core changes require a restart. Extensive module & handler -support for easy extension and customization.
 
+Installation
+------------
+<a href="https://github.com/lepinkainen/pyfibot/wiki/VirtualEnv-installation">Installation instructions</a>
+
 Module hilights
 ---------------
 
