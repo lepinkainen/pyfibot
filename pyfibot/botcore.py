@@ -247,33 +247,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def getUrl(self, url, nocache=False, params=None, headers=None):
         return self.factory.getUrl(url, nocache, params, headers)
 
-    # TODO: getNick
-    # TODO: isAdmin
-
-    def say(self, channel, message, length=None):
-        """Override default say to make replying to private messages easier"""
-
-        # Encode all outgoing messages to UTF-8
-        if isinstance(message, unicode):
-            log.debug("Converting message to UTF-8")
-            message = message.encode("UTF-8")
-
-        # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
-        if "!" and "@" in channel:
-            channel = self.factory.getNick(channel)
-
-        # wrap long text into suitable fragments
-        msg = self.tw.wrap(message)
-        cont = False
-
-        for m in msg:
-            if cont:
-                m = "..." + m
-            self.msg(channel, m, length)
-            cont = True
-
-        return ('botcore.say', channel, message)
-
     def log(self, message):
         botId = "%s@%s" % (self.nickname, self.network.alias)
         log.info("%s: %s", botId, message)
@@ -384,6 +357,62 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 d = threads.deferToThread(command, self, user, channel, args)
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
+
+    def _to_utf8(self, _string):
+        if isinstance(_string, unicode):
+            _string = _string.encode("UTF-8")
+        return _string
+
+    ### Overrides for twisted.words.irc core commands ###
+    def say(self, channel, message, length=None):
+        """Override default say to make replying to private messages easier"""
+
+        # Encode all outgoing messages to UTF-8
+        message = self._to_utf8(message)
+
+        # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
+        if "!" and "@" in channel:
+            channel = self.factory.getNick(channel)
+
+        # wrap long text into suitable fragments
+        msg = self.tw.wrap(message)
+        cont = False
+
+        for m in msg:
+            if cont:
+                m = "..." + m
+            self.msg(channel, m, length)
+            cont = True
+
+        return ('botcore.say', channel, message)
+
+    def mode(self, chan, set, modes, limit = None, user = None, mask = None):
+        chan  = self._to_utf8(chan)
+        _set   = self._to_utf8(set)
+        modes = self._to_utf8(chan)
+        return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
+
+    def join(self, channel, key=None):
+        channel = self._to_utf8(channel)
+        return super(PyFiBot, self).join(channel, key)
+
+    def leave(self, channel, key=None):
+        channel = self._to_utf8(channel)
+        return super(PyFiBot, self).leave(channel, key)
+
+    def quit(self, message = ''):
+        message = self._to_utf8(message)
+        return super(PyFiBot, self).quit(message)
+
+    ### Overrides for twisted.words.irc internal commands ###
+    def XXregister(self, nickname, hostname='foo', servername='bar'):
+        nickname   = self._to_utf8(nickname)
+        hostname   = self._to_utf8(hostname)
+        servername = self._to_utf8(servername)
+        return super(PyFiBot, self).register(nickname, hostname, servername)
+
+        self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
+        #self.register(nickname, hostname, servername)
 
     ### LOW-LEVEL IRC HANDLERS ###
 
