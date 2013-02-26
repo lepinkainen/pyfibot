@@ -53,6 +53,11 @@
                     "id": "youtube_devid",
                     "required": false,
                     "type": "string"
+                },
+                "check_redundant": {
+                    "id": "check_redundant",
+                    "required": false,
+                    "type": "boolean"
                 }
             },
             "required": false,

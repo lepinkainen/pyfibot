@@ -128,7 +128,7 @@ def handle_url(bot, user, channel, url, msg):
         if not title:
             return
 
-        if _check_redundant(url, title):
+        if config.get("check_redundant", True) and _check_redundant(url, title):
             log.debug("%s is redundant, not displaying" % title)
             return
 
