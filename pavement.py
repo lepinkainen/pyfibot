@@ -47,8 +47,9 @@ setup(
       packages=['pyfibot', 'pyfibot.modules', 'pyfibot.util', 'pyfibot.lib'],
       zip_safe=False,
       install_requires=install_requires,
+      test_suite='nose.collector',
       entry_points={
-            'console_scripts': ['pyfibot = pyfibot.pyfibot:main']
+            'console_scripts': ['pyfibot = pyfibot:main']
             }
       )
 
