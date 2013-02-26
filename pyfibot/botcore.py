@@ -359,6 +359,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 d.addErrback(self.printError, "command %s error" % cname)
 
     def _to_utf8(self, _string):
+        """Convert string to UTF-8 if it is unicode"""
         if isinstance(_string, unicode):
             _string = _string.encode("UTF-8")
         return _string
@@ -388,8 +389,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def mode(self, chan, set, modes, limit = None, user = None, mask = None):
         chan  = self._to_utf8(chan)
-        _set   = self._to_utf8(set)
-        modes = self._to_utf8(chan)
+        _set  = self._to_utf8(set)
+        modes = self._to_utf8(modes)
         return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
 
     def join(self, channel, key=None):
