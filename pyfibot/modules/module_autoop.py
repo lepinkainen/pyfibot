@@ -94,6 +94,11 @@ def handle_userJoined(bot, user, channel):
 
 
 def command_autoop(bot, user, channel, args):
+    """Usage: .autoop [add|remove|list|status]"""
+
+    if not args:
+        return bot.say(channel, 'Valid commands are %s' % ', '.join(map(str, COMMANDS)))
+
     args = args.split()
     command = args[0]
     if command not in COMMANDS:
@@ -144,5 +149,6 @@ def command_autoop(bot, user, channel, args):
 
 
 def command_op(bot, user, channel, args):
+    """Get op status from bot if you are authorized"""
     if isAdmin(user) or get_op_status(channel, user):
         op_user(bot, user, channel)
