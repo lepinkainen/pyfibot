@@ -1,7 +1,10 @@
-pyyaml
 twisted >= 12.0.0
 requests >= 1.0.0
-imdbpy
+pyyaml
+jsonschema
 beautifulsoup >= 3.0.0
+imdbpy
 pyopenssl
 tvdb_api
+feedparser
+pywapi
