@@ -286,7 +286,13 @@ def init_logging(config):
 
 def validate_config(config, schema):
     print("Validating configuration")
-    jsonschema.validate(config, schema)
+    v = jsonschema.Draft3Validator(schema)
+    if not v.is_valid(config):
+        print("Error(s) in configuration:")
+        for error in sorted(v.iter_errors(config), key=str):
+            print(error)
+    else:
+        print("config ok")
 
 
 def main():

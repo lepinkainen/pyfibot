@@ -218,7 +218,6 @@ def _title(bot, channel, title, smart=False, prefix=None):
         title = title[:200] + "..."
 
     title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
-    log.info(title)
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
