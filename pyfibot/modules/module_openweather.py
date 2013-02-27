@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals, print_function, division
-import requests
+from __future__ import print_function, division
 import logging
 from datetime import datetime, timedelta
 
@@ -25,6 +24,7 @@ def command_weather(bot, user, channel, args):
         location = args
     else:
         location = default_location
+
     r = bot.get_url(url % location)
     if 'cod' in r.json() and r.json()['cod'] == '200':
         if 'list' in r.json():
@@ -66,7 +66,7 @@ def command_weather(bot, user, channel, args):
                 text += ', Cloudiness: %d%%' % cloudiness
 
             if temperature:
-                return bot.say(channel, text.encode('utf-8'))
+                return bot.say(channel, text)
             else:
                 return bot.say(channel, 'Error: No data.')
     else:
