@@ -43,7 +43,7 @@ def init(botref):
 
 
 def __get_bs(url):
-    r = bot.getUrl(url)
+    r = bot.get_url(url)
     if not r:
         return None
 
@@ -313,7 +313,7 @@ def _handle_tweet(url):
     #    matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
-    data = getUrl(infourl)
+    data = get_url(infourl)
 
     #reads dict
     ##You can modify the fields below or add any fields you want to the returned string
@@ -352,7 +352,7 @@ def _handle_youtube_gdata(url):
     if match:
         infourl = gdata_url % match.group(1)
         params = {'alt': 'json', 'v': '2'}
-        r = getUrl(infourl, params=params)
+        r = get_url(infourl, params=params)
 
         if not r.status_code == 200:
             log.info("Video too recent, no info through API yet.")
@@ -443,7 +443,7 @@ def _handle_vimeo(url):
     match = re.match("http://.*?vimeo.com/(\d+)", url)
     if match:
         infourl = data_url % match.group(1)
-        r = getUrl(infourl)
+        r = get_url(infourl)
         info = r.json()[0]
         title = info['title']
         user = info['user_name']
@@ -461,12 +461,12 @@ def _handle_stackoverflow(url):
     if match is None:
         return
     question_id = match.group(1)
-    content = getUrl(api_url % question_id, True).getContent()
+    content = get_url(api_url % question_id, True).getContent()
     if not content:
         log.debug("No content received")
         return
     try:
-        data = json.loads(content)
+        data = content.json()
         title = data['questions'][0]['title']
         tags = "/".join(data['questions'][0]['tags'])
         score = data['questions'][0]['score']

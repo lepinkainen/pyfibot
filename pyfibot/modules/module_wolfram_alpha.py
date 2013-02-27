@@ -30,7 +30,7 @@ def command_wa(bot, user, channel, args):
         log.warn("Appid not specified in configuration!")
         return
 
-    r = bot.getUrl(query % (urllib.quote(args), appid))
+    r = bot.get_url(query % (urllib.quote(args), appid))
 
     if r.status_code != 200:
         return

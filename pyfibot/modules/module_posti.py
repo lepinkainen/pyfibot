@@ -14,17 +14,19 @@ baseurl = "http://www.verkkoposti.com/e3/TrackinternetServlet?lang=fi&LOTUS_hae=
 
 def command_posti(bot, user, channel, args):
     """Get the latest status for a package"""
-    result = getstatus(args, count=1)
+    result = getstatus(bot, args, count=1)
 
     for line in result:
         return bot.say(channel, line.encode("UTF-8"))
 
 
-def getstatus(code, count=None):
+def getstatus(bot, code, count=None):
     """Parse the package status page"""
     url = baseurl % code
-    r = getUrl(url)
+    r = bot.get_url(url)
     bs = BeautifulSoup(r.content)
+    if not bs:
+        return
 
     res = []
 

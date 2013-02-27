@@ -14,6 +14,10 @@ except:
 import re
 
 
+def command_imdb(bot, user, channel, args):
+    pass
+
+
 def handle_url(bot, user, channel, url, msg):
     """Handle IMDB urls"""
     if not has_imdb:

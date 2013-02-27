@@ -8,8 +8,8 @@ import re
 from BeautifulSoup import BeautifulSoup
 
 
-def __get_bs(url):
-    content = getUrl(url).content
+def __get_bs(bot, url):
+    content = bot.get_url(url).content
     if content:
         return BeautifulSoup(content)
     else:
@@ -25,7 +25,7 @@ def handle_privmsg(bot, user, channel, args):
 
     apiurl = "http://ws.spotify.com/lookup/1/?uri=spotify:%s:%s" % (m.group(2), m.group(4))
 
-    bs = __get_bs(apiurl)
+    bs = __get_bs(bot, apiurl)
     if not bs:
         return
 

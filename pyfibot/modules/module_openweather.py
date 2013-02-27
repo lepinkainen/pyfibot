@@ -25,7 +25,7 @@ def command_weather(bot, user, channel, args):
         location = args
     else:
         location = default_location
-    r = getUrl(url % location)
+    r = bot.get_url(url % location)
     if 'cod' in r.json() and r.json()['cod'] == '200':
         if 'list' in r.json():
             data = r.json()['list'][0]
