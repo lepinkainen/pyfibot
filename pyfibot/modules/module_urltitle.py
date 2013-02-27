@@ -556,13 +556,16 @@ def _handle_imgur(url):
     endpoint = "https://api.imgur.com/3/"
     headers = {"Authorization": "Client-ID %s" % client_id}
 
-    match = re.match(".*i.imgur.com/(.*)\.jpg", url)
+    match = re.search("i.imgur.com/(.*)\.jpg", url)
     if match:
         image_id = match.group(1)
-    else:
+    match = re.search("imgur.com/gallery/(.*)", url)
+    if match:
+        image_id = match.group(1)
+
+    if not match:
         return
 
     r = get_url("%simage/%s" % (endpoint, image_id), headers=headers)
     title = r.json()['data']['title']
-
     return title
