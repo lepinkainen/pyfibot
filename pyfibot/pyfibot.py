@@ -7,9 +7,6 @@ A modular python bot based on the twisted matrix irc library
 @author Riku 'Shrike' Lindblad (shrike@addiktit.net)
 @copyright Copyright (c) 2006 Riku Lindblad
 @license New-Style BSD
-
-$Id$
-$HeadURL$
 """
 
 from __future__ import print_function, division
@@ -50,7 +47,9 @@ log = logging.getLogger('core')
 
 
 class Network:
+    """Represents an IRC network"""
     def __init__(self, root, alias, address, nickname, channels=None, linerate=None, password=None, is_ssl=False):
+        self.root = root
         self.alias = alias                         # network name
         self.address = address                     # server address
         self.nickname = nickname                   # nick to use
@@ -316,7 +315,7 @@ def main():
 
     validate_config(config, schema)
 
-    init_logging(config.get('logging',{}))
+    init_logging(config.get('logging', {}))
 
     factory = PyFiBotFactory(config)
     for network, settings in config['networks'].items():
