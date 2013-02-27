@@ -244,6 +244,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self.ping(self.nickname)
 
     # TODO: Move the function here completely
+    def get_url(self, url, nocache=False, params=None, headers=None):
+        return self.factory.getUrl(url, nocache, params, headers)
+
     def getUrl(self, url, nocache=False, params=None, headers=None):
         return self.factory.getUrl(url, nocache, params, headers)
 
