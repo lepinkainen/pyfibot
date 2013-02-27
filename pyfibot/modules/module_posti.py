@@ -9,7 +9,8 @@ from BeautifulSoup import BeautifulSoup
 import datetime
 import time
 
-baseurl = "http://www.verkkoposti.com/e3/TrackinternetServlet?lang=fi&LOTUS_hae=Hae&LOTUS_side=1&LOTUS_trackId=%s&LOTUS_hae=Hae"
+lang = 'en'
+baseurl = 'http://www.verkkoposti.com/e3/TrackinternetServlet?lang=%s&LOTUS_hae=Hae&LOTUS_side=1&LOTUS_trackId=%s&LOTUS_hae=Hae'
 
 
 def command_posti(bot, user, channel, args):
@@ -22,7 +23,7 @@ def command_posti(bot, user, channel, args):
 
 def getstatus(bot, code, count=None):
     """Parse the package status page"""
-    url = baseurl % code
+    url = baseurl % (lang, code)
     r = bot.get_url(url)
     bs = BeautifulSoup(r.content)
     if not bs:
@@ -34,7 +35,13 @@ def getstatus(bot, code, count=None):
     for status in statuslist:
         date, statustext, location = status.contents
         statustext = statustext.string
-        date = time.strptime(date, "%d.%m.%Y, klo %H:%M&nbsp;")
+        if lang == 'fi':
+            date = time.strptime(date, "%d.%m.%Y, klo %H:%M&nbsp;")  # finnish
+        elif lang == 'en':
+            date = time.strptime(date, "%d.%m.%Y, %H:%M&nbsp;")  # english
+        else:
+            date = time.time()
+
         location = location[6:].strip()
 
         dt = datetime.datetime(*date[0:6])
@@ -54,7 +61,11 @@ def getstatus(bot, code, count=None):
         if minutes > 0:
             agestr.append("%dm" % minutes)
 
-        res.append("%s - %s - %s" % (" ".join(agestr) + " ago", statustext, location))
+        if lang == 'fi':
+            res.append("%s - %s - %s" % (" ".join(agestr) + " sitten", statustext, location))
+        elif lang == 'en':
+            res.append("%s - %s - %s" % (" ".join(agestr) + " ago", statustext, location))
+
 
     if count:
         return res[:count]
