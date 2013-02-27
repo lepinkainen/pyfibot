@@ -548,3 +548,21 @@ def _handle_areena(url):
     bs = __get_bs(url)
     title = bs.html.head.title.text.split(' | ')[0]
     return title
+
+
+def _handle_imgur(url):
+    """http://*imgur.com*"""
+    client_id = "a7a5d6bc929d48f"
+    endpoint = "https://api.imgur.com/3/"
+    headers = {"Authorization": "Client-ID %s" % client_id}
+
+    match = re.match(".*i.imgur.com/(.*)\.jpg", url)
+    if match:
+        image_id = match.group(1)
+    else:
+        return
+
+    r = get_url("%simage/%s" % (endpoint, image_id), headers=headers)
+    title = r.json()['data']['title']
+
+    return title

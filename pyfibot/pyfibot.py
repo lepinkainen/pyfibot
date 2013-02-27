@@ -221,7 +221,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Global methods for modules"""
         g = {}
 
-        g['getUrl'] = self.getUrl
+        g['getUrl'] = self.get_url
+        g['get_url'] = self.get_url
         g['getNick'] = self.getNick
         g['isAdmin'] = self.isAdmin
         return g
