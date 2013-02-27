@@ -7,4 +7,3 @@ imdbpy
 pyopenssl
 tvdb_api
 feedparser
-pywapi

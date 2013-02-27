@@ -27,7 +27,7 @@ def command_forecast(bot, user, channel, args):
     if not has_pywapi:
         return
 
-    result_dict = pywapi.get_weather_from_google(args)
+    result_dict = pywapi.get_weather_from_yahoo(args)
     if not all(result_dict.values()):
         bot.say(channel, 'unknown location')
         return
