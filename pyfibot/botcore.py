@@ -390,6 +390,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         return ('botcore.say', channel, message)
 
+    def act(self, channel, message, length=None):
+        """Use act instead of describe for actions"""
+        return super(PyFiBot, self).describe(channel, message)
+
     def mode(self, chan, set, modes, limit = None, user = None, mask = None):
         chan  = self._to_utf8(chan)
         _set  = self._to_utf8(set)
