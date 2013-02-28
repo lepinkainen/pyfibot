@@ -217,7 +217,7 @@ def _title(bot, channel, title, smart=False, prefix=None):
     if len(title) > 200:
         title = title[:200] + "..."
 
-    title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES)
+    title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES).contents[0]
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
@@ -553,19 +553,24 @@ def _handle_areena(url):
 def _handle_imgur(url):
     """http://*imgur.com*"""
     client_id = "a7a5d6bc929d48f"
-    endpoint = "https://api.imgur.com/3/"
+    api = "https://api.imgur.com/3/"
     headers = {"Authorization": "Client-ID %s" % client_id}
 
-    match = re.search("i.imgur.com/(.*)\.jpg", url)
-    if match:
-        image_id = match.group(1)
-    match = re.search("imgur.com/gallery/(.*)", url)
-    if match:
-        image_id = match.group(1)
+    # regexes and matching API endpoints
+    endpoints = {"i.imgur.com/(.*)\.jpg": "image",
+                 "imgur.com/gallery/(.*)": "image",
+                 "imgur.com/a/(.*)": "album"}
 
-    if not match:
+    for regex, _endpoint in endpoints.items():
+        match = re.search(regex, url)
+        if match:
+            resource_id = match.group(1)
+            endpoint = _endpoint
+
+    if not endpoint:
         return
 
-    r = get_url("%simage/%s" % (endpoint, image_id), headers=headers)
+    r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
     title = r.json()['data']['title']
+
     return title
