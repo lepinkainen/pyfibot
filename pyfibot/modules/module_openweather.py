@@ -65,9 +65,6 @@ def command_weather(bot, user, channel, args):
                 cloudiness = data['clouds']['all']  # Cloudiness in %
                 text += ', Cloudiness: %d%%' % cloudiness
 
-            if temperature:
-                return bot.say(channel, text)
-            else:
-                return bot.say(channel, 'Error: No data.')
+            return bot.say(channel, text)
     else:
         return bot.say(channel, 'Error: Location not found.')
