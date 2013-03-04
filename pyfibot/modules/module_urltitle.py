@@ -27,12 +27,17 @@ except:
 
 from types import TupleType
 
-from BeautifulSoup import BeautifulSoup
-from BeautifulSoup import BeautifulStoneSoup
+from repoze.lru import ExpiringLRUCache
+
+from bs4 import BeautifulSoup
+from bs4 import BeautifulStoneSoup
 
 log = logging.getLogger("urltitle")
 config = None
 bot = None
+cache_timeout = 300  # 300 second timeout for cache
+
+cache = ExpiringLRUCache(10, cache_timeout)
 
 
 def init(botref):
@@ -91,14 +96,21 @@ def handle_url(bot, user, channel, url, msg):
     # this can manage twitter + gawker sites for now
     url = url.replace("#!", "?_escaped_fragment_=")
 
-    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
+    # Check if the url already has a title cached
+    title = cache.get(url)
+    if title:
+        log.debug("Cache hit")
+        return _title(bot, channel, title, True)
 
     # try to find a specific handler for the URL
+    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
+
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
             title = ref(url)
             if title:
+                cache.put(url, title)
                 # handler found, abort
                 return _title(bot, channel, title, True)
 
@@ -127,6 +139,9 @@ def handle_url(bot, user, channel, url, msg):
         # nothing left in title (only spaces, newlines and linefeeds)
         if not title:
             return
+
+        # Cache generic titles
+        cache.put(url, title)
 
         if config.get("check_redundant", True) and _check_redundant(url, title):
             log.debug("%s is redundant, not displaying" % title)
