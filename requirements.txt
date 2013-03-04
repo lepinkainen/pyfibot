@@ -3,6 +3,7 @@ requests >= 1.0.0
 pyyaml
 jsonschema >= 1.0.0
 beautifulsoup4
+lxml
 imdbpy
 pyopenssl
 tvdb_api
