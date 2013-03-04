@@ -30,7 +30,6 @@ from types import TupleType
 from repoze.lru import ExpiringLRUCache
 
 from bs4 import BeautifulSoup
-from bs4 import BeautifulStoneSoup
 
 log = logging.getLogger("urltitle")
 config = None
@@ -231,8 +230,6 @@ def _title(bot, channel, title, smart=False, prefix=None):
     # crop obscenely long titles
     if len(title) > 200:
         title = title[:200] + "..."
-
-    title = BeautifulStoneSoup(title, convertEntities=BeautifulStoneSoup.ALL_ENTITIES).contents[0]
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
