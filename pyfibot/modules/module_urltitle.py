@@ -34,8 +34,9 @@ from bs4 import BeautifulSoup
 log = logging.getLogger("urltitle")
 config = None
 bot = None
-cache_timeout = 300  # 300 second timeout for cache
 
+# Caching for url titles
+cache_timeout = 300  # 300 second timeout for cache
 cache = ExpiringLRUCache(10, cache_timeout)
 
 
@@ -118,8 +119,6 @@ def handle_url(bot, user, channel, url, msg):
     if not bs:
         log.debug("No BS available, returning")
         return
-    else:
-        log.debug("BS generated")
 
     title = bs.find('title')
     # no title attribute
