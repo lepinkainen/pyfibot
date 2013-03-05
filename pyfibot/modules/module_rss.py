@@ -245,7 +245,7 @@ def shorturl(url):
             return results['data']['url'].encode("UTF-8")
         raise Exception("Error in function shorturl: %s" % results['status_txt'])
     except HTTPError, e:
-        log.debug('Error in function shorturl (url => %s): %s' % (url, e.read()))
+        log.error('Error in function shorturl (url => %s): %s' % (url, e.read()))
 
 
 def unescape(text):
@@ -296,7 +296,7 @@ def sqlite_add_item(bot, feed_url, title, url, channel, cleanup):
         return
     except Exception, e:
         # Database is already opened
-        log.debug('Error in sqlite_add_item: %s' % e)
+        log.error('Error in sqlite_add_item: %s' % e)
         pass
 
 
@@ -345,7 +345,7 @@ def indexfeeds(bot):
         db_conn.close()
         log.debug("indexfeeds thread terminated")
     except Exception, e:
-        log.debug('Error in indexfeeds: %s', e)
+        log.error('Error in indexfeeds: %s', e)
 
 
 def command_url(bot, user, channel, args):
@@ -366,7 +366,7 @@ def command_url(bot, user, channel, args):
             bot.say(channel, "%s" % (url))
     except Exception, e:
         # Database is already opened
-        log.debug("Exception in command showurl: %s" % e)
+        log.error("Exception in command showurl: %s" % e)
 
 
 def output(bot):
@@ -415,7 +415,7 @@ def output(bot):
         pass
     except Exception, e:
         # Database is already opened
-        log.debug("Exception in function output: %s" % e)
+        log.error("Exception in function output: %s" % e)
         pass
 
 
