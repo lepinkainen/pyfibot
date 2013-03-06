@@ -17,7 +17,12 @@ def handle_url(bot, user, channel, url, msg):
     s = requests.session()
     s.stream = True  # Don't fetch content unless asked
     s.headers.update({'User-Agent':browser})
-    r = s.get(url)
+
+    # Be quiet on errors as this is not that important
+    try:
+        r = s.get(url)
+    except:
+        return None
 
     size = int(r.headers.get('Content-Length', 0))
     content_type = r.headers.get('content-type', None)

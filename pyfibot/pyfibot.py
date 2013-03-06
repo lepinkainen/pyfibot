@@ -244,7 +244,14 @@ class PyFiBotFactory(ThrottledClientFactory):
         if headers:
             s.headers.update(headers)
 
-        r = s.get(url, params=params)
+        try:
+            r = s.get(url, params=params)
+        except requests.exceptions.InvalidSchema:
+            log.error("Invalid schema in URI: %s" % url)
+            return None
+        except requests.exceptions.ConnectionError:
+            log.error("Connection error when connecting to %s" % url)
+            return None
 
         size = int(r.headers.get('Content-Length', 0)) // 1024
         #log.debug("Content-Length: %dkB" % size)
