@@ -574,6 +574,7 @@ def _handle_imgur(url):
                  "imgur.com/gallery/(.*)": "image",
                  "imgur.com/a/(.*)": "album"}
 
+    endpoint = None
     for regex, _endpoint in endpoints.items():
         match = re.search(regex, url)
         if match:
