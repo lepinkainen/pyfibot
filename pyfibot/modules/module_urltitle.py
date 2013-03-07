@@ -114,7 +114,7 @@ def handle_url(bot, user, channel, url, msg):
                 # handler found, abort
                 return _title(bot, channel, title, True)
 
-    log.debug("No speicific handler found, using generic")
+    log.debug("No specific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
     if not bs:
@@ -468,14 +468,12 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
-    if not has_json:
-        return
     api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
     match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
         return
     question_id = match.group(1)
-    content = get_url(api_url % question_id, True).getContent()
+    content = get_url(api_url % question_id)
     if not content:
         log.debug("No content received")
         return
@@ -598,9 +596,15 @@ def _handle_imgur(url):
 
         # sometimes images need to be fetched using the gallery endpoint..
         if not title and endpoint == "image":
+            log.debug("Using gallery endpoint as backup")
             endpoint = "gallery"
-            r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
-            title = r.json()['data']['title']
+            data = r.json()
+            print(data)
+            if data['status'] == 200:
+                r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+                title = data['data'].get('title', None)
+            else:
+                return None
     else:
         log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
         return None
