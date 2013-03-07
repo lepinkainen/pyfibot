@@ -574,7 +574,8 @@ def _handle_imgur(url):
     endpoints = {"i.imgur.com/(.*)\.jpg": "image",
                  "imgur.com/gallery/(.*)": "image",
                  "imgur.com/a/(.*)": "album",
-                 "imgur.com/([^\.]+)": "image"}
+                 "imgur.com/gallery/(.*)": "gallery",
+                 "imgur.com/([^\./]+)": "image"}
 
     endpoint = None
     for regex, _endpoint in endpoints.items():
