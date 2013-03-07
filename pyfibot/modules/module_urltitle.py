@@ -3,9 +3,6 @@
 
 Smart title functionality for sites which could have clear titles,
 but still decide show idiotic bulk data in the HTML title element
-
-$Id$
-$HeadURL$
 """
 
 from __future__ import print_function, division
@@ -97,10 +94,10 @@ def handle_url(bot, user, channel, url, msg):
     url = url.replace("#!", "?_escaped_fragment_=")
 
     # Check if the url already has a title cached
-    title = cache.get(url)
-    if title:
-        log.debug("Cache hit")
-        return _title(bot, channel, title, True)
+    # title = cache.get(url)
+    # if title:
+    #     log.debug("Cache hit")
+    #     return _title(bot, channel, title, True)
 
     # try to find a specific handler for the URL
     handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
@@ -569,42 +566,37 @@ def _handle_imgur(url):
     headers = {"Authorization": "Client-ID %s" % client_id}
 
     # regexes and matching API endpoints
-    endpoints = {"i.imgur.com/(.*)\.jpg": "image",
-                 "imgur.com/gallery/(.*)": "image",
-                 "imgur.com/a/(.*)": "album",
-                 "imgur.com/gallery/(.*)": "gallery",
-                 "imgur.com/([^\./]+)": "image"}
+    endpoints = [("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
+                 ("imgur.com/gallery/(.*)", "gallery"),
+                 ("imgur.com/a/([^\?]+)", "album"),
+                 ("imgur.com/([^\./]+)", "gallery")
+        ]
 
     endpoint = None
-    for regex, _endpoint in endpoints.items():
+    for regex, _endpoint in endpoints:
         match = re.search(regex, url)
         if match:
             resource_id = match.group(1)
             endpoint = _endpoint
-            log.debug("found endpoint %s for resource %s" % (endpoint, resource_id))
+            log.debug("using endpoint %s for resource %s" % (endpoint, resource_id))
             break
 
     if not endpoint:
         log.debug("No matching imgur endpoint found for %s" % url)
-        return None
+        return "No endpoint found"
 
     r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
     data = r.json()
-    print(data)
+
+    log.debug(data)
+
     if data['status'] == 200:
         title = r.json()['data']['title']
-
-        # sometimes images need to be fetched using the gallery endpoint..
-        if not title and endpoint == "image":
-            log.debug("Using gallery endpoint as backup")
-            endpoint = "gallery"
-            data = r.json()
-            print(data)
-            if data['status'] == 200:
-                r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
-                title = data['data'].get('title', None)
-            else:
-                return None
+        # append album size to album urls if it's relevant
+        if endpoint == "album":
+            imgcount = len(data['data']['images'])
+            if imgcount > 1:
+                title += " [%d images]" % len(data['data']['images'])
     else:
         log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
         return None
