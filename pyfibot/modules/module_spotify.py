@@ -5,7 +5,7 @@ $HeadURL$
 
 from __future__ import unicode_literals, print_function, division
 import re
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 
 def __get_bs(bot, url):
@@ -31,16 +31,14 @@ def handle_privmsg(bot, user, channel, args):
 
     data = '[Spotify] '
     if m.group(2) == 'album':
-        artist = str(bs.first('album').first('artist').first('name').string)
-        name = str(bs.first('album').first('name').string)
-        year = str(bs.first('album').first('released').string)
-        data += '%s - %s (%s)' % (artist, name, year)
+        artist = bs.find('artist').find('name').string
+        album = bs.find('album').find('name').string
+        year = bs.find('album').find('released').string
+        data += '%s - %s (%s)' % (artist, album, year)
     if m.group(2) == 'artist':
-        data += str(bs.first('artist').first('name').string)
+        data += bs.find('artist').find('name').string
     if m.group(2) == 'track':
-        artist = str(bs.first('track').first('artist').first('name').string)
-        #album = str(bs.first('track').first('album').first('name').string)
-        title = str(bs.first('track').first('name').string)
+        artist = bs.find('artist').find('name').string
+        title = bs.find('track').find('name').string
         data += '%s - %s' % (artist, title)
-
     return bot.say(channel, data)
