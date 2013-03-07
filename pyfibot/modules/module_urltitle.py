@@ -114,6 +114,7 @@ def handle_url(bot, user, channel, url, msg):
                 # handler found, abort
                 return _title(bot, channel, title, True)
 
+    log.debug("No speicific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
     if not bs:
@@ -572,7 +573,8 @@ def _handle_imgur(url):
     # regexes and matching API endpoints
     endpoints = {"i.imgur.com/(.*)\.jpg": "image",
                  "imgur.com/gallery/(.*)": "image",
-                 "imgur.com/a/(.*)": "album"}
+                 "imgur.com/a/(.*)": "album",
+                 "imgur.com/([^\.]+)": "image"}
 
     endpoint = None
     for regex, _endpoint in endpoints.items():
@@ -580,11 +582,26 @@ def _handle_imgur(url):
         if match:
             resource_id = match.group(1)
             endpoint = _endpoint
+            log.debug("found endpoint %s for resource %s" % (endpoint, resource_id))
+            break
 
     if not endpoint:
-        return
+        log.debug("No matching imgur endpoint found for %s" % url)
+        return None
 
     r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
-    title = r.json()['data']['title']
+    data = r.json()
+    print(data)
+    if data['status'] == 200:
+        title = r.json()['data']['title']
+
+        # sometimes images need to be fetched using the gallery endpoint..
+        if not title and endpoint == "image":
+            endpoint = "gallery"
+            r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+            title = r.json()['data']['title']
+    else:
+        log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
+        return None
 
     return title
