@@ -30,7 +30,6 @@ def handle_privmsg(bot, user, channel, args):
         return
 
     data = '[Spotify] '
-    print(bs)
     if m.group(2) == 'album':
         artist = bs.find('artist').find('name').string
         album = bs.find('album').find('name').string
