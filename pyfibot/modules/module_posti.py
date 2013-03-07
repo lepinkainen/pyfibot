@@ -4,8 +4,7 @@ $HeadURL$
 """
 
 from __future__ import unicode_literals, print_function, division
-import requests
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import datetime
 import time
 
@@ -35,10 +34,11 @@ def getstatus(bot, code, count=None):
     for status in statuslist:
         date, statustext, location = status.contents
         statustext = statustext.string
+        date = date.strip()
         if lang == 'fi':
-            date = time.strptime(date, "%d.%m.%Y, klo %H:%M&nbsp;")  # finnish
+            date = time.strptime(date, "%d.%m.%Y, klo %H:%M")  # finnish
         elif lang == 'en':
-            date = time.strptime(date, "%d.%m.%Y, %H:%M&nbsp;")  # english
+            date = time.strptime(date, "%d.%m.%Y, %H:%M")  # english
         else:
             date = time.time()
 
@@ -65,7 +65,6 @@ def getstatus(bot, code, count=None):
             res.append("%s - %s - %s" % (" ".join(agestr) + " sitten", statustext, location))
         elif lang == 'en':
             res.append("%s - %s - %s" % (" ".join(agestr) + " ago", statustext, location))
-
 
     if count:
         return res[:count]
