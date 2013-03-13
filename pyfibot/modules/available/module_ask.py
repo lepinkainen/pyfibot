@@ -92,7 +92,7 @@ def getSTARTReply(q):
             # Cleanups on html depth
             [sup.replaceWith(("^%s" % sup.string) if sup.string != None else " ") for sup in answer.findAll('sup')]   # Handle <SUP> tags
             [br.replaceWith(" ") for br in answer.findAll('br')]                                                      # Handle <BR> tags
-            [td.extract() for td in answer.findAll('td') if len("".join(td.findAll(text=True))) < 10]                   # Handle <TABLE> data
+            [td.extract() for td in answer.findAll('td') if len("".join(td.findAll(text=True))) < 10]                 # Handle <TABLE> data
             [cm.extract() for cm in answer.findAll(text=lambda text:isinstance(text, Comment))]                       # Handle <!-- Comments -->
 
             # Find media by looking for tags like img and script and words like doctype, map, click (It sometimes embeds a whole HTML-document to the results. :S)
