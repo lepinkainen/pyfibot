@@ -460,7 +460,18 @@ def _handle_vimeo(url):
         user = info['user_name']
         likes = info['stats_number_of_likes']
         plays = info['stats_number_of_plays']
-        return "%s by %s [%s likes, %s views]" % (title, user, likes, plays)
+
+        secs = info['duration']
+        lengthstr = []
+        hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
+        if hours > 0:
+            lengthstr.append("%dh" % hours)
+        if minutes > 0:
+            lengthstr.append("%dm" % minutes)
+        if seconds > 0:
+            lengthstr.append("%ds" % seconds)
+
+        return "%s by %s [%s - %s likes, %s views]" % (title, user, "".join(lengthstr), likes, plays)
 
 
 def _handle_stackoverflow(url):
