@@ -10,6 +10,7 @@ import fnmatch
 import urlparse
 import logging
 import re
+from datetime import datetime
 
 has_json = True
 # import py2.6+ json if available, fall back to simplejson
@@ -381,8 +382,13 @@ def _handle_youtube_gdata(url):
         stars = int(round(rating)) * "*"
 
         try:
-            views = entry['yt$statistics']['viewCount']
-        except:
+            views = int(entry['yt$statistics']['viewCount'])
+
+            import math
+            millnames=['','k','M','Billion','Trillion']
+            millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
+            views = '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
+        except IOError:
             views = 'no'
 
         title = entry['title']['$t']
@@ -403,7 +409,21 @@ def _handle_youtube_gdata(url):
             adult = " - XXX"
         else:
             adult = ""
-        return "%s by %s [%s - %s - %s views%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, adult)
+
+        # TODO: Add .5 year precision for older videos
+        published = entry['published']['$t']
+        published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
+        age = datetime.now() - published
+        halfyears, days = age.days // 182, age.days % 365
+        agestr = []
+        years = halfyears * 0.5
+        if years >= 1:
+            agestr.append("%.1fy" % years)
+        # don't display days for videos older than 6 months
+        if years < 1 and days > 0:
+            agestr.append("%dd" % days)
+
+        return "%s by %s [%s - %s - %s views - %s old%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, "".join(agestr), adult)
 
 
 def _handle_helmet(url):
@@ -504,7 +524,6 @@ def _handle_hs(url):
     title = title.split("-")[0].strip()
     try:
         # determine article age and warn if it is too old
-        from datetime import datetime
         # handle updated news items of format, and get the latest update stamp
         # 20.7.2010 8:02 | PÃ¤ivitetty: 20.7.2010 12:53
         date = bs.find('p', {'class': 'date'}).next
