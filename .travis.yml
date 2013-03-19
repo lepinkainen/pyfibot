@@ -8,3 +8,8 @@ install:
   - pip install .
 # command to run tests, e.g. python setup.py test
 script: nosetests
+notifications:
+  irc:
+    channels:
+      - "irc.nerv.fi#pyfibot"
+    skip_join: true
