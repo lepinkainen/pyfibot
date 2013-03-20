@@ -3,11 +3,11 @@ from __future__ import unicode_literals, print_function, division
 
 
 def command_btc(bot, user, channel, args):
-    """Display BTC exchange rates"""
+    """Display current BTC exchange rates from mtgox"""
 
-    r = bot.get_url("http://bitcoincharts.com/t/weighted_prices.json")
-    data = r.json()
-    eur_rate = float(data['EUR']['24h'])
-    usd_rate = float(data['USD']['24h'])
+    r = bot.get_url("http://data.mtgox.com/api/1/BTCUSD/ticker")
+    btcusd = r.json()['return']['avg']['display_short']
+    r = bot.get_url("http://data.mtgox.com/api/1/BTCEUR/ticker")
+    btceur = r.json()['return']['avg']['display_short']
 
-    return bot.say(channel, "1 BTC = $%.2f / %.2f€" % (usd_rate, eur_rate))
+    return bot.say(channel, "1 BTC = %s / %s" % (btcusd, btceur))
