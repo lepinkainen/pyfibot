@@ -64,14 +64,26 @@ def command_ep(bot, user, channel, args):
         msg = "Next episode of %s %s '%s' airs %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
     # no future episodes found, show the latest one
     elif all_episodes:
-        # find latst episode of the show
+        # find latest episode of the show
         all_episodes = sorted(all_episodes, key=itemgetter('firstaired'))
         episode = all_episodes[-1]
 
+        ## episode age in years and days
         td = now - datetime.strptime(episode['firstaired'], "%Y-%m-%d")
-        airdate = "%s (%d days ago)" % (episode['firstaired'], td.days)
+        years, days = td.days // 365, td.days % 365
+        agestr = []
+        if years > 1:
+            agestr.append("%d years" % years)
+        if days > 0:
+            agestr.append("%d days" % days)
 
-        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
+        airdate = "%s (%s ago)" % (episode['firstaired'], " ".join(agestr))
+
+        season_no = int(episode['combined_season'])
+        # the episode number is sometimes returned as a float, hack it.
+        episode_no = int(float(episode['combined_episodenumber']))
+
+        season_ep = "%dx%02d" % (season_no, episode_no)
         msg = "Latest episode of %s %s '%s' aired %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
     else:
         msg = "No new or past episode airdates found for %s" % series.data['seriesname']
