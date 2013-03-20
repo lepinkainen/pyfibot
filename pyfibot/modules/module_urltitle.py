@@ -425,7 +425,7 @@ def _handle_youtube_gdata(url):
         agestr = []
         years = halfyears * 0.5
         if years >= 1:
-            agestr.append("%.1fy" % years)
+            agestr.append("%gy" % years)
         # don't display days for videos older than 6 months
         if years < 1 and days > 0:
             agestr.append("%dd" % days)
