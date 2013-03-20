@@ -372,8 +372,10 @@ def _handle_youtube_gdata(url):
 
         entry = r.json()['entry']
 
+        ## Author
         author = entry['author'][0]['name']['$t']
 
+        ## Rating in stars
         try:
             rating = entry.get('gd$rating', None)['average']
         except TypeError:
@@ -381,6 +383,7 @@ def _handle_youtube_gdata(url):
 
         stars = int(round(rating)) * "*"
 
+        ## View count
         try:
             views = int(entry['yt$statistics']['viewCount'])
 
@@ -388,14 +391,18 @@ def _handle_youtube_gdata(url):
             millnames=['','k','M','Billion','Trillion']
             millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
             views = '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
-        except IOError:
+        except KeyError:
+            # No views at all, the whole yt$statistics block is missing
             views = 'no'
 
+        ## Title
         title = entry['title']['$t']
 
+        ## Age restricted?
         # https://developers.google.com/youtube/2.0/reference#youtube_data_api_tag_media:rating
         rating = entry['media$group'].get('media$rating', None)
 
+        ## Content length
         secs = int(entry['media$group']['yt$duration']['seconds'])
         lengthstr = []
         hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
@@ -410,7 +417,7 @@ def _handle_youtube_gdata(url):
         else:
             adult = ""
 
-        # TODO: Add .5 year precision for older videos
+        ## Content age
         published = entry['published']['$t']
         published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
         age = datetime.now() - published
@@ -422,8 +429,15 @@ def _handle_youtube_gdata(url):
         # don't display days for videos older than 6 months
         if years < 1 and days > 0:
             agestr.append("%dd" % days)
+        # complete the age string
+        if agestr and days != 0:
+            agestr.append(" ago")
+        elif years == 0 and days == 0:  # uploaded TODAY, whoa.
+            agestr.append("FRESH")
+        else:
+            agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
 
-        return "%s by %s [%s - %s - %s views - %s old%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, "".join(agestr), adult)
+        return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, "".join(agestr), adult)
 
 
 def _handle_helmet(url):
