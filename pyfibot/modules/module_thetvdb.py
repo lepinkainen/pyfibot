@@ -60,7 +60,7 @@ def command_ep(bot, user, channel, args):
         else:
             airdate = "today"
 
-        season_ep = "%dx%02d" % (int(episode['combined_season']),int(episode['combined_episodenumber']))
+        season_ep = "%dx%02d" % (int(float(episode['combined_season'])),int(float(episode['combined_episodenumber'])))
         msg = "Next episode of %s %s '%s' airs %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
     # no future episodes found, show the latest one
     elif all_episodes:
