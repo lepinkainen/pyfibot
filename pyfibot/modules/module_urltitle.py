@@ -610,7 +610,8 @@ def _handle_imgur(url):
     headers = {"Authorization": "Client-ID %s" % client_id}
 
     # regexes and matching API endpoints
-    endpoints = [("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
+    endpoints = [("imgur.com/r/.*?/(.*)", "gallery"),
+                 ("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
                  ("imgur.com/gallery/(.*)", "gallery"),
                  ("imgur.com/a/([^\?]+)", "album"),
                  ("imgur.com/([^\./]+)", "gallery")
