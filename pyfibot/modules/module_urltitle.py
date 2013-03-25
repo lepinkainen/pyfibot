@@ -610,7 +610,7 @@ def _handle_imgur(url):
     headers = {"Authorization": "Client-ID %s" % client_id}
 
     # regexes and matching API endpoints
-    endpoints = [("imgur.com/r/.*?/(.*)", "gallery"),
+    endpoints = [("imgur.com/r/.*?/(.*)", "gallery/r/all"),
                  ("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
                  ("imgur.com/gallery/(.*)", "gallery"),
                  ("imgur.com/a/([^\?]+)", "album"),
@@ -642,6 +642,13 @@ def _handle_imgur(url):
             imgcount = len(data['data']['images'])
             if imgcount > 1:
                 title += " [%d images]" % len(data['data']['images'])
+    elif data['status'] == 404 and endpoint != "gallery/r/all":
+        endpoint = "gallery/r/all"
+        log.debug("Not found, seeing if it is a subreddit image")
+        r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+        data = r.json()
+        if data['status'] == 200:
+            title = r.json()['data']['title']
     else:
         log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
         return None

@@ -12,10 +12,10 @@ try:
 except:
     init_ok = False
 
-consumer_key = 'cbcbcaf338bc7b430428dc4b64500e7004c761bbd'
-consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
-oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
-oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
+#consumer_key = 'cbcbcaf338bc7b430428dc4b64500e7004c761bbd'
+#consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
+#oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
+#oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
 consumer = None
 token = None
 
