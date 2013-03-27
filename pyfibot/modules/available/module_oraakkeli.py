@@ -1,8 +1,3 @@
-"""
-$Id$
-$HeadURL$
-"""
-
 import urllib
 
 
@@ -11,7 +6,5 @@ def command_oraakkeli(bot, user, channel, args):
     if not args:
         return
     args = urllib.quote_plus(args)
-    answer = getUrl("http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args).getContent()
-    answer = unicode(answer)
-    answer = answer.encode("utf-8")
-    return bot.say(channel, "Oraakkeli vastaa: %s" % answer)
+    r = getUrl("http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args)
+    return bot.say(channel, "Oraakkeli vastaa: %s" % r.text)

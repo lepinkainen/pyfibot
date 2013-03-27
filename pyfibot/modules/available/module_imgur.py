@@ -1,8 +1,4 @@
-"""Upload images to imgur.com
-
-$Id$
-$HeadURL$
-"""
+"""Upload images encountered on channels to imgur.com"""
 
 import urllib
 try:
@@ -12,10 +8,6 @@ try:
 except:
     init_ok = False
 
-#consumer_key = 'cbcbcaf338bc7b430428dc4b64500e7004c761bbd'
-#consumer_secret = '1e4f5bdff44ce1b2a8ec069d8a293991'
-#oauth_token = 'a0b19c8a764017234fedd83c095911d804c762172'
-#oauth_token_secret = '9b2033e1d48be6aca606bacba2901300'
 consumer = None
 token = None
 
@@ -40,11 +32,13 @@ def init(bot):
     consumer = oauth.Consumer(key=consumer_key, secret=consumer_secret)
 
 
+# Upload all files ending in jpg and gif
 def handle_url(bot, user, channel, url, msg):
     if init_ok and (url.endswith(".jpg") or url.endswith(".gif")):
-        print channel, upload_images([url])
+        print(channel, upload_images([url]))
 
 
+# Upload a page of images
 def upload_gallery(url):
     from mechanize import Browser
     br = Browser()
@@ -67,7 +61,7 @@ def upload_images(urls):
 
     # Transload image(s) to imgur
     for url in urls:
-        print "Transloading %s..." % url
+        print("Transloading %s..." % url)
 
         metadata = {
             'image': url,
@@ -77,11 +71,11 @@ def upload_images(urls):
         resp, cont = client.request("http://api.imgur.com/2/account/images.json", "POST", body=urllib.urlencode(metadata))
         data = json.loads(cont)
         if resp.status != 200:
-            print resp
+            print(resp)
             errmsg = data['error']['message']
-            print "Transload error for %s: %s " % (url, errmsg)
+            print("Transload error for %s: %s " % (url, errmsg))
             if errmsg == "API limits exceeded":
-                print "API limits exceeded, aborting uploads"
+                print("API limits exceeded, aborting uploads")
                 return
             else:
                 continue
@@ -93,7 +87,7 @@ def upload_images(urls):
     data = json.loads(cont)
     album = [album for album in data['albums'] if album['title'] == "Pyfibot"]
     if len(album) != 1:
-        print "Album not found, please create it"
+        print("Album not found, please create it")
         return
 
     album = album[0]

@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-$Id$
-$HeadURL$
-"""
-
 from urllib import FancyURLopener
 from BeautifulSoup import BeautifulSoup
 import re
