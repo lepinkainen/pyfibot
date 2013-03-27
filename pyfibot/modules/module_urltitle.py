@@ -33,6 +33,8 @@ log = logging.getLogger("urltitle")
 config = None
 bot = None
 
+TITLE_LAG_MAXIMUM = 10
+
 # Caching for url titles
 cache_timeout = 300  # 300 second timeout for cache
 cache = ExpiringLRUCache(10, cache_timeout)
@@ -46,8 +48,17 @@ def init(botref):
 
 
 def __get_bs(url):
+    # Fetch the content and measure how long it took
+    start = datetime.now()
     r = bot.get_url(url)
+    end = datetime.now()
+
     if not r:
+        return None
+
+    duration = (end-start).seconds
+    if duration > TITLE_LAG_MAXIMUM:
+        log.error("Fetching title took %d seconds, not displaying title" % duration)
         return None
 
     content_type = r.headers['content-type'].split(';')[0]
@@ -115,6 +126,7 @@ def handle_url(bot, user, channel, url, msg):
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
+    log.debug("got BS")
     if not bs:
         log.debug("No BS available, returning")
         return
