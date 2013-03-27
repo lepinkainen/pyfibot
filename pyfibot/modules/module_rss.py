@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""pyfibot module_rss.py
+"""
+Parse RSS feeds and display new entries on channel
+
 @author Henri 'fgeek' Salo <henri@nerv.fi>, Tomi 'dmc' Nykänen
 @copyright Copyright (c) 2010 Henri Salo
 @licence BSD
-
-$Id$
-$HeadURL$
 """
 
 from __future__ import unicode_literals, print_function, division

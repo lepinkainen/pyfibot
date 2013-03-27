@@ -1,6 +1,5 @@
 """
-$Id$
-$HeadURL$
+Get package tracking information from the Finnish postal service
 """
 
 from __future__ import unicode_literals, print_function, division

@@ -1,6 +1,5 @@
 """
-$Id$
-$HeadURL$
+Display webchat users' actual hostnames on join and when requested
 """
 
 from __future__ import unicode_literals, print_function, division

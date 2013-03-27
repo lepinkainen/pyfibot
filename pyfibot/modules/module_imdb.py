@@ -1,6 +1,5 @@
-B"""
-$Id$
-$HeadURL$
+"""
+Parse IMDB urls and display movie information for them
 """
 from __future__ import unicode_literals, print_function, division
 has_imdb = False

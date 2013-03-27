@@ -1,4 +1,8 @@
 #!/usr/bin/python
+"""
+Fetch series data from thetvdb.com via their API
+Displays next episode if one exists, previous if no future episodes are known
+"""
 
 from __future__ import unicode_literals, print_function, division
 from datetime import datetime, timedelta
@@ -12,16 +16,19 @@ except:
     api_ok = False
 from operator import itemgetter
 
+
 def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
-    if not api_ok: return
+    if not api_ok:
+        return
     t = tvdb_api.Tvdb()
     now = datetime.now()
     # one day resolution maximum
     now = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
     # prevent "Series '' not found"
-    if not args: return
+    if not args:
+        return
 
     try:
         series = t[args]

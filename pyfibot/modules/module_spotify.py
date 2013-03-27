@@ -1,6 +1,5 @@
 """
-$Id$
-$HeadURL$
+Parse spotify URLs
 """
 
 from __future__ import unicode_literals, print_function, division
