@@ -561,7 +561,7 @@ def _handle_hs(url):
 def _handle_mtv3(url):
     """*mtv3.fi*"""
     bs = __get_bs(url)
-    title = bs.find("h1", "entry-title").text
+    title = bs.find("h1", "otsikko").text
     return title
 
 
