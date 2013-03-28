@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 
-currencies = ["EUR"]
-
 
 def command_btc(bot, user, channel, args):
     """Display current BTC exchange rates from mtgox. Usage: btc [whitespace separated list of currency codes]"""
+    currencies = ["EUR"]
+
     if args:
         currencies = args.split(" ")
 
@@ -32,4 +32,4 @@ def gen_string(bot, currency):
     low  = data['low']['display_short']
     high = data['high']['display_short']
 
-    return "avg:%s low:%s high:%s" % (avg, low, high)
+    return "%s avg:%s low:%s high:%s" % (currency.upper(), avg, low, high)
