@@ -126,7 +126,6 @@ def handle_url(bot, user, channel, url, msg):
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
-    log.debug("got BS")
     if not bs:
         log.debug("No BS available, returning")
         return
