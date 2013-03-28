@@ -21,8 +21,12 @@ def command_update(bot, user, channel, args):
     out, err = p.communicate()
 
     if res:
-        bot.say(channel, "Update failed: %s" % out)
+        bot.say(channel, "Update failed")
+        for line in out.split("\n"):
+            bot.say(channel, "%s" % line)
     else:
-        bot.say(channel, "Update done: %s" % out)
+        bot.say(channel, "Update OK")
+        for line in out.split("\n"):
+            bot.say(channel, "%s" % line)
     if err:
         bot.say(channel, "Errors: %s" % err)
