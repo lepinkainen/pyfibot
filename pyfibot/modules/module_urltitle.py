@@ -338,12 +338,17 @@ def _handle_tweet(url):
 
     data = get_url(infourl)
 
-    #reads dict
-    ##You can modify the fields below or add any fields you want to the returned string
     text = data.json()['text']
     user = data.json()['user']['screen_name']
     name = data.json()['user']['name']
-    tweet = "Tweet by %s(@%s): %s" % (name, user, text)
+
+    retweets  = data.json()['retweet_count']
+    favorites = data.json()['favorite_count']
+    created   = data.json()['created_at']
+    created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
+    tweet_age = datetime.now()-created_date
+
+    tweet = "@%s (%s): %s" % (user, name, text)
     return tweet
 
 
