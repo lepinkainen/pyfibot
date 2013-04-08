@@ -577,7 +577,7 @@ def _handle_hs(url):
 def _handle_mtv3(url):
     """*mtv3.fi*"""
     bs = __get_bs(url)
-    title = bs.find("h1", "otsikko").text
+    title = bs.find("h1", "entry-title").text
     return title
 
 
@@ -617,6 +617,28 @@ def _handle_areena(url):
     bs = __get_bs(url)
     title = bs.html.head.title.text.split(' | ')[0]
     return title
+
+
+def _handle_wikipedia(url):
+    """*wikipedia.org*"""
+    api = "http://en.wikipedia.org/w/api.php"
+    params = {'format':'json',
+              'action':'query',
+              'prop':'revisions',
+              'rvprop':'content',
+              'rvsection':'rvsection',  # Only get the first section
+        }
+
+    # rvexpandtemplates
+
+    params['titles'] = 'Kancho'
+
+    r = get_url(api, params=params)
+
+    pages = r.json()['query']['pages'].keys()
+    content = r.json()['query']['pages'][pages[0]]['revisions'][0]['*']
+
+    return content[:20]
 
 
 def _handle_imgur(url):
@@ -665,6 +687,8 @@ def _handle_imgur(url):
         data = r.json()
         if data['status'] == 200:
             title = r.json()['data']['title']
+        else:
+            return None
     else:
         log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
         return None
