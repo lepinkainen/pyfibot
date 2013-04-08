@@ -31,5 +31,6 @@ def gen_string(bot, currency):
     avg  = data['avg']['display_short']
     low  = data['low']['display_short']
     high = data['high']['display_short']
+    vol = data['vol']['display_short']
 
-    return "%s avg:%s low:%s high:%s" % (currency.upper(), avg, low, high)
+    return "%s avg:%s low:%s high:%s vol:%s" % (currency.upper(), avg, low, high, vol)
