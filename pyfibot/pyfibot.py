@@ -20,6 +20,9 @@ import logging.handlers
 import json
 import jsonschema
 
+import colorlogger
+USE_COLOR = True
+
 # Make requests quieter by default
 requests_log = logging.getLogger("requests")
 requests_log.setLevel(logging.WARNING)
@@ -278,24 +281,30 @@ class PyFiBotFactory(ThrottledClientFactory):
 
 
 def init_logging(config):
-    filename = os.path.join(sys.path[0], 'pyfibot.log')
-
-    # get root logger
     logger = logging.getLogger()
-
-    if False:
-        handler = logging.handlers.RotatingFileHandler(filename, maxBytes=5000 * 1024, backupCount=20)
-    else:
-        handler = logging.StreamHandler()
-
-    formatter = logging.Formatter('%(asctime)-15s %(levelname)-8s %(name)-11s %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
 
     if config.get('debug', False):
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
+
+    if USE_COLOR:
+        FORMAT = "[%(asctime)-15s][%(levelname)-20s][$BOLD%(name)-15s$RESET]  %(message)s"
+        # Append file name + number if debug is enabled
+        if config.get('debug', False):
+            FORMAT  = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
+        COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
+        formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
+    else:
+        FORMAT = "%(asctime)-15s %(levelname)-8s %(name)-11s %(message)s"
+        formatter = logging.Formatter(FORMAT)
+        # Append file name + number if debug is enabled
+        if config.get('debug', False):
+            FORMAT  = "%s %s" % (FORMAT, " (%(filename)s:%(lineno)d)")
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 
 def validate_config(config, schema):
