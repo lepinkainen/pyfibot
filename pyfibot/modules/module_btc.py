@@ -9,19 +9,36 @@ def command_btc(bot, user, channel, args):
     if args:
         currencies = args.split(" ")
 
+    return bot.say(channel, get_coin_value(bot, "BTC", currencies))
+
+
+def command_ltc(bot, user, channel, args):
+    """Display current LTC exchange rates from mtgox. Usage: ltc [whitespace separated list of currency codes]"""
+    currencies = ["EUR"]
+
+    if args:
+        currencies = args.split(" ")
+
+    return bot.say(channel, get_coin_value(bot, "LTC", currencies))
+
+
+def get_coin_value(bot, coin, currencies):
+
     rates = []
 
     for currency in currencies:
-        rate = gen_string(bot, currency)
+        rate = gen_string(bot, coin, currency)
         if rate:
             rates.append(rate)
 
     if rates:
-        return bot.say(channel, "1 BTC = %s" % " | ".join(rates))
+        return "1 %s = %s" % (coin, " | ".join(rates))
+    else:
+        return None
 
 
-def gen_string(bot, currency):
-    r = bot.get_url("http://data.mtgox.com/api/1/BTC%s/ticker" % currency)
+def gen_string(bot, coin="BTC", currency="EUR"):
+    r = bot.get_url("http://data.mtgox.com/api/1/%s%s/ticker" % (coin, currency))
 
     if r.json()['result'] != 'success':
         return None
