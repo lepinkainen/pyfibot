@@ -94,7 +94,7 @@ def init(botconfig):
     d.execute("CREATE TABLE IF NOT EXISTS feeds (id INTEGER PRIMARY KEY,feed_url TEXT,channel TEXT,feed_title TEXT, output_syntax_id INTEGER);")
     d.execute("CREATE TABLE IF NOT EXISTS titles_with_urls (id INTEGER PRIMARY KEY,feed_url TEXT,title TEXT,url TEXT,channel TEXT,printed INTEGER,hash TEXT UNIQUE);")
     db_conn.commit()
-    #Check if database is empty
+    # Check if database is empty
     global empty_database
     empty_database = d.execute("SELECT COUNT(*) FROM feeds").fetchone()[0]
     d.close()
@@ -236,7 +236,6 @@ def command_rss(bot, user, channel, args):
 
 def shorturl(url):
     try:
-        # TODO: Use requests
         req = urllib2.Request("http://api.bit.ly/v3/shorten?%s" % urllib.urlencode({'longUrl': url, 'login': rssconfig["bitly_login"], 'apiKey': rssconfig["bitly_api_key"], 'format': 'json'}))
         results = json.loads(urllib2.urlopen(req).read())
         #log.debug("Shorturl: %s" % results['id'].encode("UTF-8"))
@@ -306,12 +305,10 @@ def indexfeeds(bot):
         log.debug("indexfeeds thread started")
         db_conn = sqlite3.connect(rssconfig["database"])
         d = db_conn.cursor()
-
         # If table is removed, then create a new one
         titles_table_exists = d.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='titles_with_urls'").fetchone()
         if (titles_table_exists[0] == 0):
             init(None)
-
         # Let's count all rows to index
         rowcount = 0
         rows = d.execute("SELECT id, feed_url, channel FROM feeds ORDER BY id")
