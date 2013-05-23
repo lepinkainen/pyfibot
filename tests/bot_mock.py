@@ -12,6 +12,3 @@ class BotMock(botcore.CoreCommands):
 
     def say(self, channel, message, length=None):
         return("%s|%s" % (channel, message))
-
-## TODO: Mock other functions too
-
