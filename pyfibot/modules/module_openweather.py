@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function, division
+from __future__ import print_function, division, unicode_literals
 import logging
 from datetime import datetime, timedelta
 
@@ -57,7 +57,7 @@ def command_weather(bot, user, channel, args):
     temperature = None
     if 'temp' in main:
         temperature = main['temp'] - 273.15  # temperature converted from kelvin to celcius
-        text += 'Temperature: %.1fc' % temperature
+        text += u'Temperature: %.1f°C' % temperature
     if temperature is None:
         return bot.say(channel, 'Error: Temperature not found.')
 
@@ -67,7 +67,7 @@ def command_weather(bot, user, channel, args):
 
     if temperature is not None and wind is not None:
         feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
-        text += ', feels like: %.1fc' % feels_like
+        text += ', feels like: %.1f°C' % feels_like
 
     if wind is not None:
         text += ', wind: %.1f m/s' % wind
