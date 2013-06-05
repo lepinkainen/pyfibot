@@ -4,8 +4,9 @@
 """
 Parse RSS feeds and display new entries on channel
 
-@author Henri 'fgeek' Salo <henri@nerv.fi>, Tomi 'dmc' Nykänen
-@copyright Copyright (c) 2010 Henri Salo
+@author Henri 'fgeek' Salo <henri@nerv.fi>, Tomi 'dmc' Nykänen,
+Riku 'Shrike' Lindblad
+@copyright Copyright (c) 2010-2013 pyfibot developers
 @licence BSD
 """
 
@@ -117,7 +118,6 @@ def rss_addfeed(bot, user, channel, feed_url, output_syntax):
         fileinfo = os.stat(rssconfig["database"])
 
         if not os.path.isfile(rssconfig["database"]) or fileinfo.st_size == 0:
-            # TODO: Update schema creation after database schema is ready
             d.execute("CREATE TABLE feeds int primary key unique, url text)")
             db_conn.commit()
             bot.say(channel, "Database \"%s\" created." % rssconfig["database"])
