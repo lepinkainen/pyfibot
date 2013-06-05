@@ -79,7 +79,7 @@ def command_ep(bot, user, channel, args):
         td = now - datetime.strptime(episode['firstaired'], "%Y-%m-%d")
         years, days = td.days // 365, td.days % 365
         agestr = []
-        if years > 1:
+        if years >= 1:
             agestr.append("%d years" % years)
         if days > 0:
             agestr.append("%d days" % days)
