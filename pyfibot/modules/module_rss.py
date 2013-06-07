@@ -11,16 +11,17 @@ Riku 'Shrike' Lindblad
 """
 
 from __future__ import unicode_literals, print_function, division
-import sys
-import os
-import re
-import urllib
+from threading import Thread
+import hashlib
 import logging
 import logging.handlers
-import hashlib
-from threading import Thread
-import urllib2
+import os
+import re
 import sqlite3
+import sys
+import traceback
+import urllib
+import urllib2
 
 # import py2.6 json if available, fall back to simplejson
 try:
@@ -292,9 +293,8 @@ def sqlite_add_item(bot, feed_url, title, url, channel, cleanup):
     except sqlite3.IntegrityError, e:
         # Couldn't add entry twice
         return
-    except Exception, e:
-        # Database is already opened
-        log.error('Error in sqlite_add_item: %s' % e)
+    except Exception:
+        log.error(traceback.format_exc())
         pass
 
 
@@ -319,7 +319,7 @@ def indexfeeds(bot):
         for feed in feeds:
             id = feed[0]
             feed_url = feed[1]
-            log.debug('Indexing feed: %s' % feed_url)
+            log.debug('Indexing feed %s: %s' % (id, feed_url))
             channel = feed[2]
             # If first run of current feed, insert new elements as "printed" so bot won't flood whole feed on startup/insert
             cleanup = 0
