@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-"""
-$Id$
-$HeadURL$
-"""
-
 from __future__ import unicode_literals, print_function, division
 import logging
 

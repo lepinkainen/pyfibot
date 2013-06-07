@@ -1,8 +1,3 @@
-"""
-$Id$
-$HeadURL$
-"""
-
 try:
     import sqlite3
     sqlite = sqlite3

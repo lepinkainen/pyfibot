@@ -6,8 +6,6 @@
 @copyright Copyright (c) 2011 Ville Lahdenvuo
 @licence BSD
 
-$Id$
-$HeadURL$
 """
 
 import urllib

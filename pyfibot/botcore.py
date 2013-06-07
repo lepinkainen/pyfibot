@@ -7,8 +7,6 @@ Bot core
 @copyright Copyright (c) 2004 Riku Lindblad
 @license New-Style BSD
 
-$Id$
-$HeadURL$
 """
 
 from __future__ import print_function, division
