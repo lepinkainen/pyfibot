@@ -8,6 +8,18 @@ Parse RSS feeds and display new entries on channel
 Riku 'Shrike' Lindblad
 @copyright Copyright (c) 2010-2013 pyfibot developers
 @licence BSD
+
+Config format:
+database: rss.db
+delays:
+  rss_sync: 300 #How often we synchronize rss-feeds (in seconds)
+  output: 7 #How often to output new elements to channels
+output_syntax: 0 #0 == feed_title: title - url, 1 == feed_title: title - shorturl, 2 == feed_title: title (id), 3 == feed_title: title, 4 == title
+bitly_login: #Needed if using shorturl format
+bitly_api_key: #Needed if using shorturl format
+
+With output_syntax #2 you could get url via .url <id>
+
 """
 
 from __future__ import unicode_literals, print_function, division
@@ -43,24 +55,11 @@ except ImportError, error:
     print('Error starting rss module: %s' % error)
     init_ok = False
 
-# Initialize logger
-log = logging.getLogger('rss')
-
+log = logging.getLogger('rss')  # Initialize logger
 t = None
 t2 = None
 indexfeeds_callLater = None
 output_callLater = None
-
-# Config format:
-# database: rss.db
-# delays:
-#   rss_sync: 300 #How often we synchronize rss-feeds (in seconds)
-#   output: 7 #How often to output new elements to channels
-# output_syntax: 0 #0 == feed_title: title - url, 1 == feed_title: title - shorturl, 2 == feed_title: title (id), 3 == feed_title: title, 4 == title
-# bitly_login: #Needed if using shorturl format
-# bitly_api_key: #Needed if using shorturl format
-
-# With output_syntax #2 you could get url via .url <id>
 
 
 def event_signedon(bot):
@@ -239,7 +238,6 @@ def shorturl(url):
     try:
         req = urllib2.Request("http://api.bit.ly/v3/shorten?%s" % urllib.urlencode({'longUrl': url, 'login': rssconfig["bitly_login"], 'apiKey': rssconfig["bitly_api_key"], 'format': 'json'}))
         results = json.loads(urllib2.urlopen(req).read())
-        #log.debug("Shorturl: %s" % results['id'].encode("UTF-8"))
         if (results['status_code'] == 200):
             return results['data']['url'].encode("UTF-8")
         raise Exception("Error in function shorturl: %s" % results['status_txt'])
@@ -294,6 +292,7 @@ def sqlite_add_item(bot, feed_url, title, url, channel, cleanup):
         # Couldn't add entry twice
         return
     except Exception:
+        log.error('Error in sqlite_add_item')
         log.error(traceback.format_exc())
         pass
 
@@ -340,8 +339,9 @@ def indexfeeds(bot):
                     log.debug('indexfeeds first: Exception %s' % e)
         db_conn.close()
         log.debug("indexfeeds thread terminated")
-    except Exception, e:
-        log.error('Error in indexfeeds: %s', e)
+    except Exception:
+        log.error('Error in indexfeeds')
+        log.error(traceback.format_exc())
 
 
 def command_url(bot, user, channel, args):
@@ -360,9 +360,9 @@ def command_url(bot, user, channel, args):
             channel = row[4].encode("UTF-8")
             url = url.encode("UTF-8")
             bot.say(channel, "%s" % (url))
-    except Exception, e:
-        # Database is already opened
-        log.error("Exception in command showurl: %s" % e)
+    except Exception:
+        log.error('Error in command_url')
+        log.error(traceback.format_exc())
 
 
 def output(bot):
@@ -374,24 +374,18 @@ def output(bot):
         row = d.fetchone()
         if (row != None):
             log.debug("New row found for output")
-            log.debug(row)
-
             id = row[0]
             feed_url = row[1]
             feed_output_syntax = d.execute("SELECT output_syntax_id FROM feeds WHERE feed_url = ?", (feed_url,)).fetchone()[0]
             if (feed_output_syntax == None):
                 feed_output_syntax = rssconfig["output_syntax"]
-
             title = row[2]
             url = row[3]
             channel = row[4]
-
             title = unicode(unescape(title)).encode("UTF-8")
             channel = channel.encode("UTF-8")
             url = url.encode("UTF-8")
-
             feed_title = d.execute("SELECT feed_title from feeds where feed_url = ?", (feed_url,)).fetchone()[0].encode('UTF-8')
-
             if (feed_output_syntax == 0):
                 bot.say(channel, "%s: %s – %s" % (feed_title, title, url))
             elif (feed_output_syntax == 1):
@@ -402,16 +396,15 @@ def output(bot):
                 bot.say(channel, "%s: %s" % (feed_title, title))
             elif (feed_output_syntax == 4):
                 bot.say(channel, "%s" % title)
-
             data = [url, channel]
             d.execute("UPDATE titles_with_urls SET printed=1 WHERE URL=? and channel=?", data)
             db_conn.commit()
             log.debug("output thread terminated cleanly")
     except StopIteration:
         pass
-    except Exception, e:
-        # Database is already opened
-        log.error("Exception in function output: %s" % e)
+    except Exception:
+        log.error('Error in output')
+        log.error(traceback.format_exc())
         pass
 
 
@@ -429,8 +422,9 @@ def rotator_indexfeeds(bot, delay):
             t.start()
         if (empty_database > 0):
             indexfeeds_callLater = reactor.callLater(delay, rotator_indexfeeds, bot, delay)
-    except Exception, e:
-        print(e)
+    except Exception:
+        log.error('Error in rotator_indexfeeds')
+        log.error(traceback.format_exc())
 
 
 def rotator_output(bot, delay):
@@ -445,4 +439,5 @@ def rotator_output(bot, delay):
         if (empty_database > 0):
             output_callLater = reactor.callLater(delay, rotator_output, bot, delay)
     except Exception, e:
-        print(e)
+        log.error('Error in rotator_output')
+        log.error(traceback.format_exc())
