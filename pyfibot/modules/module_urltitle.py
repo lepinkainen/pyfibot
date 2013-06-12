@@ -640,7 +640,11 @@ def _handle_wikipedia(url):
     rg = re.compile('<p>(.*)<\/p>')
     m = rg.search(content)
     tag_re = re.compile(r'<[^>]+>')
-    return tag_re.sub('', m.group(1)).split('.')[0] + '.'
+    to_return = tag_re.sub('', m.group(1)).split('.')[0]
+
+    if len(to_return) > 100:
+        return to_return[:-100] + '...'
+    return to_return + '.'
 
 
 def _handle_imgur(url):
