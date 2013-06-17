@@ -28,5 +28,6 @@ def command_update(bot, user, channel, args):
         bot.say(channel, "Update OK")
         for line in out.split("\n"):
             bot.say(channel, "%s" % line)
-    if err:
+    # only report errors when the update failed, git uses stderr for normal output..
+    if res and err:
         bot.say(channel, "Errors: %s" % err)
