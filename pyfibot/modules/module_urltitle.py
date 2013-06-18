@@ -620,7 +620,6 @@ def _handle_areena(url):
 
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
-    api = "http://en.wikipedia.org/w/api.php"
     params = {
         'format': 'json',
         'action': 'parse',
@@ -631,6 +630,9 @@ def _handle_wikipedia(url):
     # rvexpandtemplates
 
     params['page'] = url.split('/')[-1]
+    language = url.split('/')[2].split('.')[0]
+
+    api = "http://%s.wikipedia.org/w/api.php" % (language)
 
     r = get_url(api, params=params)
 
@@ -639,7 +641,7 @@ def _handle_wikipedia(url):
     rg = re.compile('<p>(.*)<\/p>')
     m = rg.search(content)
     tag_re = re.compile(r'<[^>]+>')
-    to_return = tag_re.sub('', m.group(1)).split('.')[0]
+    to_return = tag_re.sub('', m.group(1)).split('. ')[0]
 
     if len(to_return) > 100:
         return to_return[:-100] + '...'
