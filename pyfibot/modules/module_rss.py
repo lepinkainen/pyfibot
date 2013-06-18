@@ -15,7 +15,6 @@ delays:
   rss_sync: 300 #How often we synchronize rss-feeds (in seconds)
   output: 7 #How often to output new elements to channels
 output_syntax: 0 #0 == feed_title: title - url, 1 == feed_title: title - shorturl, 2 == feed_title: title (id), 3 == feed_title: title, 4 == title
-bitly_login: #Needed if using shorturl format
 bitly_api_key: #Needed if using shorturl format
 
 With output_syntax #2 you could get url via .url <id>
@@ -236,7 +235,7 @@ def command_rss(bot, user, channel, args):
 
 def shorturl(url):
     try:
-        req = urllib2.Request("http://api.bit.ly/v3/shorten?%s" % urllib.urlencode({'longUrl': url, 'login': rssconfig["bitly_login"], 'apiKey': rssconfig["bitly_api_key"], 'format': 'json'}))
+        req = urllib2.Request("https://api-ssl.bitly.com/v3/shorten?%s" % urllib.urlencode({'access_token': rssconfig["bitly_api_key"], 'longUrl': url}))
         results = json.loads(urllib2.urlopen(req).read())
         if (results['status_code'] == 200):
             return results['data']['url'].encode("UTF-8")
