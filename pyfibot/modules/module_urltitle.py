@@ -621,23 +621,29 @@ def _handle_areena(url):
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
     api = "http://en.wikipedia.org/w/api.php"
-    params = {'format':'json',
-              'action':'query',
-              'prop':'revisions',
-              'rvprop':'content',
-              'rvsection':'rvsection',  # Only get the first section
-        }
+    params = {
+        'format': 'json',
+        'action': 'parse',
+        'prop': 'text',
+        'section': 0,
+    }
 
     # rvexpandtemplates
 
-    params['titles'] = 'Kancho'
+    params['page'] = url.split('/')[-1]
 
     r = get_url(api, params=params)
 
-    pages = r.json()['query']['pages'].keys()
-    content = r.json()['query']['pages'][pages[0]]['revisions'][0]['*']
+    content = r.json()['parse']['text']['*']
 
-    return content[:20]
+    rg = re.compile('<p>(.*)<\/p>')
+    m = rg.search(content)
+    tag_re = re.compile(r'<[^>]+>')
+    to_return = tag_re.sub('', m.group(1)).split('.')[0]
+
+    if len(to_return) > 100:
+        return to_return[:-100] + '...'
+    return to_return + '.'
 
 
 def _handle_imgur(url):
