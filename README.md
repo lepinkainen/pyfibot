@@ -13,7 +13,9 @@ Module hilights
 ---------------
 
  - URL title fetching with custom handlers for IMDb, Youtube and many others
+ - URL size
  - Wolfram Alpha searches
+ - RSS
 
 Features
 --------
