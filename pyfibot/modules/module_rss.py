@@ -28,21 +28,10 @@ import logging
 import logging.handlers
 import os
 import re
+import requests
 import sqlite3
 import sys
 import traceback
-import urllib
-import urllib2
-
-# import py2.6 json if available, fall back to simplejson
-try:
-    import json
-except:
-    try:
-        import simplejson as json
-    except ImportError, error:
-        print('Error starting rss module: %s' % error)
-        init_ok = False
 
 try:
     import feedparser
@@ -235,13 +224,15 @@ def command_rss(bot, user, channel, args):
 
 def shorturl(url):
     try:
-        req = urllib2.Request("https://api-ssl.bitly.com/v3/shorten?%s" % urllib.urlencode({'access_token': rssconfig["bitly_api_key"], 'longUrl': url}))
-        results = json.loads(urllib2.urlopen(req).read())
-        if (results['status_code'] == 200):
-            return results['data']['url'].encode("UTF-8")
-        raise Exception("Error in function shorturl: %s" % results['status_txt'])
-    except HTTPError, e:
-        log.error('Error in function shorturl (url => %s): %s' % (url, e.read()))
+        payload = {
+            'access_token': rssconfig["bitly_api_key"],
+            'longUrl': url
+        }
+        r = requests.get("https://api-ssl.bitly.com/v3/shorten", params=payload)
+        if r.status_code == int('200'):
+            return r.json['data']['url']
+    except Exception:
+        og.error(traceback.format_exc())
 
 
 def unescape(text):
