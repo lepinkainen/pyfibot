@@ -9,13 +9,20 @@ Riku 'Shrike' Lindblad
 @copyright Copyright (c) 2010-2013 pyfibot developers
 @licence BSD
 
+Possible output syntax:
+    0 == feed_title: title - url
+    1 == feed_title: title - shorturl
+    2 == feed_title: title (id)
+    3 == feed_title: title
+    4 == title
+
 Config format:
-database: rss.db
-delays:
-  rss_sync: 300 #How often we synchronize rss-feeds (in seconds)
-  output: 7 #How often to output new elements to channels
-output_syntax: 0 #0 == feed_title: title - url, 1 == feed_title: title - shorturl, 2 == feed_title: title (id), 3 == feed_title: title, 4 == title
-bitly_api_key: #Needed if using shorturl format
+    database: rss.db
+    delays:
+      rss_sync: 300  # How often we synchronize rss-feeds in seconds
+      output: 7  # Delay in output to channels in seconds
+    output_syntax: 0
+    bitly_api_key:  # Only needed if using shorturl format
 
 With output_syntax #2 you could get url via .url <id>
 
