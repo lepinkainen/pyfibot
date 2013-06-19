@@ -658,17 +658,15 @@ def _handle_wikipedia(url):
     if len(first_sentence) <= length_threshold:
         return first_sentence
 
-    cutoff = length_threshold  # set initial cutoff
     # go through the first sentence and find either a space or dot to cut to.
     for i in range(length_threshold, len(first_sentence)):
         char = first_sentence[i]
         if char == ' ' or char == '.':
-            cutoff = i + 1
             # if dot was found, the sentence probably ended, so no need to print "..."
             if char == '.':
                 return first_sentence[:i + 1]
             # if we ended up on a space, print "..."
-            return first_sentence[:cutoff] + '...'
+            return first_sentence[:i + 1] + '...'
 
 
 
