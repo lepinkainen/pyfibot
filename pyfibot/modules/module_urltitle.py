@@ -371,7 +371,10 @@ def _handle_youtube_gdata_new(url):
 
 def _handle_youtube_gdata(url):
     """http*://*youtube.com/watch?*v=*"""
-    gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
+    # Fetches everything the api knows about the video
+    #gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
+    # This fetches everything that is needed by the handle, using partial response.
+    gdata_url = "https://gdata.youtube.com/feeds/api/videos/%s?fields=title,author,gd:rating,media:group(yt:duration),media:group(media:rating),yt:statistics,published&alt=json&v=2"
 
     match = re.match("https?://youtu.be/(.*)", url)
     if not match:
