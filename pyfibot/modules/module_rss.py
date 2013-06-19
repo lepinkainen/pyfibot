@@ -239,7 +239,7 @@ def shorturl(url):
         if r.status_code == int('200'):
             return r.json['data']['url']
     except Exception:
-        og.error(traceback.format_exc())
+        log.error(traceback.format_exc())
 
 
 def unescape(text):
