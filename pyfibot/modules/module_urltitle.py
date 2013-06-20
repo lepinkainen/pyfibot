@@ -547,6 +547,33 @@ def _handle_stackoverflow(url):
         return "Json parsing failed %s" % e
 
 
+def _handle_reddit(url):
+    """*reddit.com/r/*/comments/*/*"""
+    if url[-1] != "/":
+        ending = "/.json"
+    else:
+        ending = ".json"
+    json_url = url + ending
+    content = get_url(json_url)
+    if not content:
+        log.debug("No content received")
+        return
+    try:
+        data = content.json()
+        title = data[0]['data']['children'][0]['data']['title']
+        ups = data[0]['data']['children'][0]['data']['ups']
+        downs = data[0]['data']['children'][0]['data']['downs']
+        score = ups - downs
+        num_comments = data[0]['data']['children'][0]['data']['num_comments']
+        over_18 = data[0]['data']['children'][0]['data']['over_18']
+        result = "%s - %dpts (%d ups, %d downs) - %d comments" % (title, score, ups, downs, num_comments)
+        if over_18 is True:
+            result = result + " (NSFW)"
+        return result
+    except Exception, e:
+        return "Json parsing failed %s" % e
+
+
 def _handle_hs(url):
     """*hs.fi*artikkeli*"""
     bs = __get_bs(url)
