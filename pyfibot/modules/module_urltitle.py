@@ -657,8 +657,6 @@ def _handle_wikipedia(url):
         'section': 0,
     }
 
-    # rvexpandtemplates
-
     params['page'] = url.split('/')[-1]
     language = url.split('/')[2].split('.')[0]
 
@@ -666,16 +664,37 @@ def _handle_wikipedia(url):
 
     r = get_url(api, params=params)
 
-    content = r.json()['parse']['text']['*']
+    try:
+        content = r.json()['parse']['text']['*']
+    except KeyError:
+        return
 
-    rg = re.compile('<p>(.*)<\/p>')
-    m = rg.search(content)
-    tag_re = re.compile(r'<[^>]+>')
-    to_return = tag_re.sub('', m.group(1)).split('. ')[0]
+    if not content:
+        return
 
-    if len(to_return) > 100:
-        return to_return[:-100] + '...'
-    return to_return + '.'
+    content = BeautifulSoup(content)
+    first_paragraph = content.find('p')
+
+    if not first_paragraph:
+        return
+
+    first_sentence = ''.join(first_paragraph.findAll(text=True)).split('. ')[0] + '.'
+
+    length_threshold = 140
+
+    if len(first_sentence) <= length_threshold:
+        return first_sentence
+
+    # go through the first sentence and find either a space or dot to cut to.
+    for i in range(length_threshold, len(first_sentence)):
+        char = first_sentence[i]
+        if char == ' ' or char == '.':
+            # if dot was found, the sentence probably ended, so no need to print "..."
+            if char == '.':
+                return first_sentence[:i + 1]
+            # if we ended up on a space, print "..."
+            return first_sentence[:i + 1] + '...'
+
 
 
 def _handle_imgur(url):
