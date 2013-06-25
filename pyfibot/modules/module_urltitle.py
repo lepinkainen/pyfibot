@@ -559,13 +559,13 @@ def _handle_reddit(url):
         log.debug("No content received")
         return
     try:
-        data = content.json()
-        title = data[0]['data']['children'][0]['data']['title']
-        ups = data[0]['data']['children'][0]['data']['ups']
-        downs = data[0]['data']['children'][0]['data']['downs']
+        data = content.json()[0]['data']['children'][0]['data']
+        title = data['title']
+        ups = data['ups']
+        downs = data['downs']
         score = ups - downs
-        num_comments = data[0]['data']['children'][0]['data']['num_comments']
-        over_18 = data[0]['data']['children'][0]['data']['over_18']
+        num_comments = data['num_comments']
+        over_18 = data['over_18']
         result = "%s - %dpts (%d ups, %d downs) - %d comments" % (title, score, ups, downs, num_comments)
         if over_18 is True:
             result = result + " (NSFW)"
