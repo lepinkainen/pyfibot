@@ -26,7 +26,7 @@ def command_weather(bot, user, channel, args):
     else:
         location = default_location
 
-    url = 'http://openweathermap.org/data/2.5/weather?q=%s'
+    url = 'http://openweathermap.org/data/2.5/weather?q=%s&units=metric'
     r = bot.get_url(url % location)
 
     if 'cod' not in r.json() or int(r.json()['cod']) != 200:
@@ -53,7 +53,7 @@ def command_weather(bot, user, channel, args):
 
     temperature = None
     if 'temp' in main:
-        temperature = main['temp'] - 273.15  # temperature converted from kelvin to celcius
+        temperature = main['temp']  # temperature converted from kelvin to celcius
         text += u'Temperature: %.1f°C' % temperature
     if temperature is None:
         return bot.say(channel, 'Error: Temperature not found.')
