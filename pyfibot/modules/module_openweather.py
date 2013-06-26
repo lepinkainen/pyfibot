@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 
 
 log = logging.getLogger('openweather')
-url = 'http://openweathermap.org/data/2.1/find/name?q=%s'
 default_location = 'Helsinki'
 threshold = 120
 
@@ -23,18 +22,16 @@ def command_weather(bot, user, channel, args):
     global default_location
     global threshold
     if args:
-        location = args
+        location = args.decode('utf-8')
     else:
         location = default_location
 
+    url = 'http://openweathermap.org/data/2.5/weather?q=%s'
     r = bot.get_url(url % location)
 
     if 'cod' not in r.json() or int(r.json()['cod']) != 200:
         return bot.say(channel, 'Error: API error.')
-    if 'list' not in r.json():
-        return bot.say(channel, 'Error: Location not found.')
-
-    data = r.json()['list'][0]
+    data = r.json()
 
     if 'name' not in data:
         return bot.say(channel, 'Error: Location not found.')
