@@ -2,6 +2,7 @@
 from __future__ import print_function, division, unicode_literals
 import logging
 from datetime import datetime, timedelta
+from math import ceil
 
 
 log = logging.getLogger('openweather')
@@ -74,4 +75,47 @@ def command_weather(bot, user, channel, args):
         cloudiness = data['clouds']['all']  # Cloudiness in %
         text += ', cloudiness: %d%%' % cloudiness
 
+    return bot.say(channel, text)
+
+
+def command_forecast(bot, user, channel, args):
+    def hours_to_text(hours):
+        if hours < 24:
+            return 'tomorrow'
+        return 'in %i days' % ceil(hours / 24)
+
+    global default_location
+    if args:
+        location = args.decode('utf-8')
+    else:
+        location = default_location
+
+    url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=4&mode=json&units=metric'
+    r = bot.get_url(url % location)
+
+    if 'cod' not in r.json() or int(r.json()['cod']) != 200:
+        return bot.say(channel, 'Error: API error.')
+
+    data = r.json()
+
+    if 'city' not in data or 'name' not in data['city']:
+        return bot.say(channel, 'Error: Location not found.')
+
+    if not data['list']:
+        return bot.say(channel, 'Error: No forecast data.')
+
+    text = '%s, %s: ' % (data['city']['name'], data['city']['country'])
+
+    cur_date = datetime.now()
+    forecast_text = []
+    for d in data['list']:
+        date = datetime.fromtimestamp(d['dt'])
+        hours = hours_to_text((date - cur_date).total_seconds() / 3600)
+        if date.day == cur_date.day:
+            continue
+        forecast_text.append('%s: %.1f-%.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+        if len(forecast_text) >= 3:
+            break
+
+    text += ', '.join(forecast_text)
     return bot.say(channel, text)
