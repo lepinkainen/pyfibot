@@ -38,7 +38,7 @@ def command_weather(bot, user, channel, args):
     if 'main' not in data:
         return bot.say(channel, 'Error: Unknown error.')
 
-    location = data['name']
+    location = '%s, %s' % (data['name'], data['sys']['country'])
     main = data['main']
 
     old_data = False
@@ -51,23 +51,19 @@ def command_weather(bot, user, channel, args):
     else:
         text = '%s: ' % location
 
-    temperature = None
-    if 'temp' in main:
-        temperature = main['temp']  # temperature converted from kelvin to celcius
-        text += u'Temperature: %.1f°C' % temperature
-    if temperature is None:
-        return bot.say(channel, 'Error: Temperature not found.')
+    if 'temp' not in main:
+        return bot.say(channel, 'Error: Data not found.')
 
-    wind = None
+    temperature = main['temp']  # temperature converted from kelvin to celcius
+    text += u'Temperature: %.1f°C' % temperature
+
     if 'wind' in data and 'speed' in data['wind']:
         wind = data['wind']['speed']  # Wind speed in mps (m/s)
 
-    if temperature is not None and wind is not None:
         feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
         text += ', feels like: %.1f°C' % feels_like
-
-    if wind is not None:
         text += ', wind: %.1f m/s' % wind
+
     if 'humidity' in main:
         humidity = main['humidity']  # Humidity in %
         text += ', humidity: %d%%' % humidity
