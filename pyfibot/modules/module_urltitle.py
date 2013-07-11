@@ -696,7 +696,6 @@ def _handle_wikipedia(url):
             return first_sentence[:i + 1] + '...'
 
 
-
 def _handle_imgur(url):
     """http://*imgur.com*"""
     client_id = "a7a5d6bc929d48f"
