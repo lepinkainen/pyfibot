@@ -330,22 +330,34 @@ def _handle_tweet2(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    tweet_url = "http://api.twitter.com/1/statuses/show/%s.json"
+    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
     test = re.match("https?://twitter\.com\/(\w+)/status(es)?/(\d+)", url)
-    #    matches for unique tweet id string
+    # matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
-    data = get_url(infourl)
+    bearer_token = config.get("twitter_bearer")
+    if not bearer_token:
+        log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
+        return
+    headers = {'Authorization': 'Bearer '+bearer_token}
 
-    text = data.json()['text']
-    user = data.json()['user']['screen_name']
-    name = data.json()['user']['name']
+    data = get_url(infourl, headers=headers)
 
-    retweets  = data.json()['retweet_count']
-    favorites = data.json()['favorite_count']
-    created   = data.json()['created_at']
-    created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
-    tweet_age = datetime.now()-created_date
+    tweet = data.json()
+    if tweet.has_key('errors'):
+        for error in tweet['errors']:
+            log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
+        return
+
+    text = tweet['text']
+    user = tweet['user']['screen_name']
+    name = tweet['user']['name']
+
+    #retweets  = tweet['retweet_count']
+    #favorites = tweet['favorite_count']
+    #created   = tweet['created_at']
+    #created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
+    #tweet_age = datetime.now()-created_date
 
     tweet = "@%s (%s): %s" % (user, name, text)
     return tweet
