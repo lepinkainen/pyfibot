@@ -110,7 +110,9 @@ def command_forecast(bot, user, channel, args):
     forecast_text = []
     for d in data['list']:
         date = datetime.fromtimestamp(d['dt'])
-        hours = hours_to_text((date - cur_date).total_seconds() / 3600)
+        td = cur_date - date
+        seconds = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
+        hours = hours_to_text(seconds / 3600)
         if date.day == cur_date.day:
             continue
         forecast_text.append('%s: %.1f-%.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
