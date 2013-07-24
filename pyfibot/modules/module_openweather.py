@@ -110,7 +110,7 @@ def command_forecast(bot, user, channel, args):
     forecast_text = []
     for d in data['list']:
         date = datetime.fromtimestamp(d['dt'])
-        td = cur_date - date
+        td = date - cur_date
         seconds = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
         hours = hours_to_text(seconds / 3600)
         if date.day == cur_date.day:
