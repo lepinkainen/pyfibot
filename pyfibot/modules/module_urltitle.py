@@ -762,3 +762,44 @@ def _handle_imgur(url):
         return None
 
     return title
+
+def _handle_liveleak(url):
+    """http://*liveleak.com/view?i=*"""
+    try:
+        id = url.split('view?i=')[1]
+    except IndexError:
+        log.debug('ID not found')
+        return
+
+    bs = __get_bs(url)
+    title = bs.find('span', 'section_title').text
+    info = str(bs.find('span', id='item_info_%s' % id))
+
+    added_by = '???'
+    tags = 'none'
+    date_added = '???'
+    views = '???'
+
+    # need to do this kind of crap, as the data isn't contained by a span
+    try:
+        added_by = BeautifulSoup(info.split('<strong>By:</strong>')[1].split('<br')[0]).find('a').text
+    except:
+        pass
+
+    try:
+        date_added = info.split('</span>')[1].split('<span>')[0].strip()
+    except:
+        pass
+
+    try:
+        views = info.split('<strong>Views:</strong>')[1].split('|')[0].strip()
+    except:
+        pass
+
+    try:
+        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0]).text
+    except:
+        pass
+
+    return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
+    
