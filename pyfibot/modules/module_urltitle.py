@@ -583,7 +583,8 @@ def _handle_reddit(url):
             result = result + " (NSFW)"
         return result
     except Exception, e:
-        return "Json parsing failed %s" % e
+        # parsing error, use default title
+        return
 
 
 def _handle_hs(url):
