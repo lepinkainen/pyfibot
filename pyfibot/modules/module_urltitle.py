@@ -682,6 +682,17 @@ def _handle_wikipedia(url):
     except KeyError:
         return
 
+    if 'REDIRECT' in content:
+        try:
+            params['page'] = BeautifulSoup(content).find('li').find('a').get('href').split('/')[-1]
+        except:
+            return
+        r = get_url(api, params=params)
+        try:
+            content = r.json()['parse']['text']['*']
+        except KeyError:
+            return
+
     if not content:
         return
 
