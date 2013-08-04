@@ -4,12 +4,12 @@ admins:
   - 'foo!bar@example.com'
 
 networks:
-  ircnet:
+  IRCnet:
     server: irc.ircnet.com
     channels:
-      - #pyfibot
+      - '#pyfibot'
     linerate: 3
-  quakenet:
+  QuakeNet:
     server: irc.quakenet.org
     authname: name
     authpass: password
