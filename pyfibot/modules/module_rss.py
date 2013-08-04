@@ -236,6 +236,9 @@ def shorturl(url):
             'longUrl': url
         }
         r = requests.get("https://api-ssl.bitly.com/v3/shorten", params=payload)
+        if r.status_code == int('500'):
+            log.error('Error in bitly functionality. Check if login or API key is missing from configuration.')
+            return
         if r.status_code == int('200'):
             return r.json['data']['url']
     except Exception:
