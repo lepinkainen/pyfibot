@@ -119,13 +119,20 @@ class CoreCommands(object):
         except KeyError:
             self.say(channel, "I am not on that network.")
         else:
-            if newchannel not in bot.network.channels:
-                self.say(channel, "I am not in %s on %s." % (newchannel, network))
-                self.say(channel, "I am on %s" % bot.network.channels)
-            else:
+            # no arguments, attempt to part current channel
+            if not newchannel:
+                log.debug("Parted channel %s" % channel)
+                bot.network.channels.remove(channel)
+                bot.part(channel)
+                return
+
+            if newchannel in bot.network.channels:
                 log.debug("Parted channel %s" % newchannel)
                 bot.network.channels.remove(newchannel)
                 bot.part(newchannel)
+            else:
+                log.debug("Attempted to part channel I am not on: %s@%s" % (newchannel, network))
+                log.debug("Channels on network: %s" % bot.network.channels)
 
     def command_quit(self, user, channel, args):
         """Usage: logoff - Leave this network"""
