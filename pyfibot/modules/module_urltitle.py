@@ -722,8 +722,14 @@ def _handle_wikipedia(url):
 
 def _handle_imgur(url):
     """http://*imgur.com*"""
+
+    def create_title(data):
+        section = data['data']['section']
+        title = data['data']['title']
+        return "%s (/r/%s)" % (title, section)
+
     client_id = "a7a5d6bc929d48f"
-    api = "https://api.imgur.com/3/"
+    api = "https://api.imgur.com/3"
     headers = {"Authorization": "Client-ID %s" % client_id}
 
     # regexes and matching API endpoints
@@ -748,12 +754,22 @@ def _handle_imgur(url):
         return "No endpoint found"
 
     r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+    if not r.content:
+        if endpoint != "gallery/r/all":
+            endpoint = "gallery/r/all"
+            log.debug("switching to endpoint gallery/r/all because of empty response")
+            r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+            if not r.content:
+                log.warn("Empty response after retry!")
+                return
+        else:
+            log.warn("Empty response!")
+            return
+
     data = r.json()
 
-    log.debug(data)
-
     if data['status'] == 200:
-        title = r.json()['data']['title']
+        title = create_title(r.json())
         # append album size to album urls if it's relevant
         if endpoint == "album":
             imgcount = len(data['data']['images'])
@@ -765,7 +781,7 @@ def _handle_imgur(url):
         r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
         data = r.json()
         if data['status'] == 200:
-            title = r.json()['data']['title']
+            title = create_title(r.json())
         else:
             return None
     else:
@@ -773,6 +789,7 @@ def _handle_imgur(url):
         return None
 
     return title
+
 
 def _handle_liveleak(url):
     """http://*liveleak.com/view?i=*"""
@@ -813,4 +830,3 @@ def _handle_liveleak(url):
         pass
 
     return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
-    
