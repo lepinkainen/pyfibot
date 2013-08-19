@@ -697,15 +697,34 @@ def _handle_wikipedia(url):
         return
 
     content = BeautifulSoup(content)
-    first_paragraph = content.find('p')
+    paragraphs = content.findAll('p')
 
-    if not first_paragraph:
+    if not paragraphs:
         return
 
-    first_sentence = ''.join(first_paragraph.findAll(text=True)).split('. ')[0] + '.'
+    # find the first paragraph for real, sometimes the first "<p>" is empty
+    for i in range(len(paragraphs)):
+        first_paragraph = paragraphs[i].text.strip()
+        if first_paragraph:
+            break
+
+    sentences = re.split('\. [A-Z]', first_paragraph)
+    sentences = filter(None, sentences)
+
+    if not sentences:
+        return
+
+
+    first_sentence = sentences[0]
+    # cleanup brackets
+    first_sentence = re.sub(r'\([^)]*\)', '', first_sentence)
+    # remove multiple spaces
+    first_sentence = re.sub(' +', ' ', first_sentence)
+    # if the sentence doesn't end to a dot, add it (some kind of problem with regex?).
+    if first_sentence[-1] != '.':
+        first_sentence += '.'
 
     length_threshold = 140
-
     if len(first_sentence) <= length_threshold:
         return first_sentence
 
