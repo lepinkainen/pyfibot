@@ -11,6 +11,7 @@ import urlparse
 import logging
 import re
 from datetime import datetime
+import math
 
 has_json = True
 # import py2.6+ json if available, fall back to simplejson
@@ -72,6 +73,40 @@ def __get_bs(url):
     else:
         return None
 
+def __get_length_str(secs):
+    lengthstr = []
+    hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
+    if hours > 0:
+        lengthstr.append("%dh" % hours)
+    if minutes > 0:
+        lengthstr.append("%dm" % minutes)
+    if seconds > 0:
+        lengthstr.append("%ds" % seconds)
+    return ''.join(lengthstr)
+
+def __get_age_str(published):
+    age = datetime.now() - published
+    halfyears, days = age.days // 182, age.days % 365
+    agestr = []
+    years = halfyears * 0.5
+    if years >= 1:
+        agestr.append("%gy" % years)
+    # don't display days for videos older than 6 months
+    if years < 1 and days > 0:
+        agestr.append("%dd" % days)
+    # complete the age string
+    if agestr and days != 0:
+        agestr.append(" ago")
+    elif years == 0 and days == 0:  # uploaded TODAY, whoa.
+        agestr.append("FRESH")
+    else:
+        agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
+    return "".join(agestr)
+
+def __get_views(views):
+    millnames=['','k','M','Billion','Trillion']
+    millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
+    return '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
 
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
@@ -411,16 +446,12 @@ def _handle_youtube_gdata(url):
         except TypeError:
             rating = 0.0
 
-        stars = int(round(rating)) * "*"
+        stars = "[%-5s]" % (int(round(rating)) * "*")
 
         ## View count
         try:
             views = int(entry['yt$statistics']['viewCount'])
-
-            import math
-            millnames=['','k','M','Billion','Trillion']
-            millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
-            views = '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
+            views = __get_views(views)
         except KeyError:
             # No views at all, the whole yt$statistics block is missing
             views = 'no'
@@ -434,14 +465,8 @@ def _handle_youtube_gdata(url):
 
         ## Content length
         secs = int(entry['media$group']['yt$duration']['seconds'])
-        lengthstr = []
-        hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
-        if hours > 0:
-            lengthstr.append("%dh" % hours)
-        if minutes > 0:
-            lengthstr.append("%dm" % minutes)
-        if seconds > 0:
-            lengthstr.append("%ds" % seconds)
+        lengthstr = __get_length_str(secs)
+
         if rating:
             adult = " - XXX"
         else:
@@ -450,24 +475,9 @@ def _handle_youtube_gdata(url):
         ## Content age
         published = entry['published']['$t']
         published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
-        age = datetime.now() - published
-        halfyears, days = age.days // 182, age.days % 365
-        agestr = []
-        years = halfyears * 0.5
-        if years >= 1:
-            agestr.append("%gy" % years)
-        # don't display days for videos older than 6 months
-        if years < 1 and days > 0:
-            agestr.append("%dd" % days)
-        # complete the age string
-        if agestr and days != 0:
-            agestr.append(" ago")
-        elif years == 0 and days == 0:  # uploaded TODAY, whoa.
-            agestr.append("FRESH")
-        else:
-            agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
+        agestr = __get_age_str(published)
 
-        return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, "".join(lengthstr), "[%-5s]" % stars, views, "".join(agestr), adult)
+        return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, lengthstr, stars, views, agestr, adult)
 
 
 def _handle_helmet(url):
@@ -517,25 +527,19 @@ def _handle_vimeo(url):
     data_url = "http://vimeo.com/api/v2/video/%s.json"
     match = re.match("http://.*?vimeo.com/(\d+)", url)
     if match:
+        # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
         infourl = data_url % match.group(1)
         r = get_url(infourl)
         info = r.json()[0]
         title = info['title']
         user = info['user_name']
         likes = info['stats_number_of_likes']
-        plays = info['stats_number_of_plays']
+        views = __get_views(info['stats_number_of_plays'])
 
-        secs = info['duration']
-        lengthstr = []
-        hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
-        if hours > 0:
-            lengthstr.append("%dh" % hours)
-        if minutes > 0:
-            lengthstr.append("%dm" % minutes)
-        if seconds > 0:
-            lengthstr.append("%ds" % seconds)
+        agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
+        lengthstr = __get_length_str(info['duration'])
 
-        return "%s by %s [%s - %s likes, %s views]" % (title, user, "".join(lengthstr), likes, plays)
+        return "%s by %s [%s - %s likes, %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
 def _handle_stackoverflow(url):
@@ -853,3 +857,36 @@ def _handle_liveleak(url):
         pass
 
     return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
+
+def _handle_dailymotion(url):
+    """http://*dailymotion.com/video/*"""
+    video_id = url.split('/')[-1].split('_')[0]
+    params = {
+        'fields': ','.join([
+            'owner.screenname',
+            'title',
+            'modified_time',
+            'duration',
+            'rating',
+            'views_total',
+            'explicit'
+        ]),
+        'family_filter': 0,
+        'localization': 'en'
+    }
+    api = 'https://api.dailymotion.com/video/%s'
+    try:
+        r = get_url(api % video_id, params=params).json()
+
+        lengthstr = __get_length_str(r['duration'])
+        stars = "[%-5s]" % (int(round(r['rating'])) * "*")
+        views = __get_views(r['views_total'])
+        agestr = __get_age_str(datetime.fromtimestamp(r['modified_time']))
+        if r['explicit']:
+            adult = ' - XXX'
+        else:
+            adult = ''
+
+        return "%s by %s [%s - %s - %s views - %s%s]" % (r['title'], r['owner.screenname'], lengthstr, stars, views, agestr, adult)
+    except:
+        return
