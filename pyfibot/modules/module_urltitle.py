@@ -319,6 +319,8 @@ def _handle_keskisuomalainen_sahke(url):
 def _handle_tietokone(url):
     """http://www.tietokone.fi/uutta/uutinen.asp?news_id=*"""
     bs = __get_bs(url)
+    if not bs:
+        return
     sub = bs.find('h5').string
     main = bs.find('h2').string
     return "%s - %s" % (main, sub)
@@ -401,6 +403,8 @@ def _handle_tweet(url):
 def _handle_netanttila(url):
     """http://www.netanttila.com/webapp/wcs/stores/servlet/ProductDisplay*"""
     bs = __get_bs(url)
+    if not bs:
+        return
     itemname = bs.find("h1").string.replace("\n", "").replace("\r", "").replace("\t", "").strip()
     price = bs.find("td", {'class': 'right highlight'}).string.split(" ")[0]
     return "%s | %s EUR" % (itemname, price)
@@ -623,6 +627,8 @@ def _handle_hs(url):
 def _handle_mtv3(url):
     """*mtv3.fi*"""
     bs = __get_bs(url)
+    if not bs:
+        return
     title = bs.find("h1", "entry-title").text
     return title
 
@@ -640,6 +646,8 @@ def _handle_yle(url):
 def _handle_varttifi(url):
     """http://www.vartti.fi/artikkeli/*"""
     bs = __get_bs(url)
+    if not bs:
+        return
     title = bs.find("h2").string
     return title
 
@@ -661,6 +669,8 @@ def _handle_apina(url):
 def _handle_areena(url):
     """http://areena.yle.fi/*"""
     bs = __get_bs(url)
+    if not bs:
+        return
     title = bs.html.head.title.text.split(' | ')[0]
     return title
 
@@ -827,6 +837,8 @@ def _handle_liveleak(url):
         return
 
     bs = __get_bs(url)
+    if not bs:
+        return
     title = bs.find('span', 'section_title').text
     info = str(bs.find('span', id='item_info_%s' % id))
 
