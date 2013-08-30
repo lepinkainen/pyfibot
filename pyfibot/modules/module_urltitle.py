@@ -73,6 +73,7 @@ def __get_bs(url):
     else:
         return None
 
+
 def __get_length_str(secs):
     lengthstr = []
     hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
@@ -83,6 +84,7 @@ def __get_length_str(secs):
     if seconds > 0:
         lengthstr.append("%ds" % seconds)
     return ''.join(lengthstr)
+
 
 def __get_age_str(published):
     age = datetime.now() - published
@@ -103,10 +105,12 @@ def __get_age_str(published):
         agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
     return "".join(agestr)
 
+
 def __get_views(views):
     millnames=['','k','M','Billion','Trillion']
     millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
     return '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
+
 
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
@@ -728,7 +732,6 @@ def _handle_wikipedia(url):
     if not sentences:
         return
 
-
     first_sentence = sentences[0]
     # cleanup brackets
     first_sentence = re.sub(r'\([^)]*\)', '', first_sentence)
@@ -738,7 +741,7 @@ def _handle_wikipedia(url):
     if first_sentence[-1] != '.':
         first_sentence += '.'
 
-    length_threshold = 140
+    length_threshold = 450
     if len(first_sentence) <= length_threshold:
         return first_sentence
 
@@ -869,6 +872,7 @@ def _handle_liveleak(url):
         pass
 
     return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
+
 
 def _handle_dailymotion(url):
     """http://*dailymotion.com/video/*"""
