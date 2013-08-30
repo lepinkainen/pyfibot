@@ -726,7 +726,11 @@ def _handle_wikipedia(url):
         if first_paragraph:
             break
 
-    sentences = re.split('\. [A-Z]', first_paragraph)
+    # Remove all annotations to make splitting easier
+    first_paragraph = re.sub('\[[\d+]\]', '', first_paragraph)
+    # Define sentence break as something ending in a period and starting with a non-number
+    # (Accurate enough for wikipedia first paragraphs)
+    sentences = re.split('\. \D', first_paragraph)
     sentences = filter(None, sentences)
 
     if not sentences:
