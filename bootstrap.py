@@ -1792,12 +1792,13 @@ def after_install(options, home_dir):
     subprocess.call([join(bin_dir, 'easy_install'), 'requests >= 1.0.0'])
     subprocess.call([join(bin_dir, 'easy_install'), 'pyyaml'])
     subprocess.call([join(bin_dir, 'easy_install'), 'jsonschema >= 1.0.0'])
-    subprocess.call([join(bin_dir, 'easy_install'), 'beautifulsoup >= 3.0.0'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'beautifulsoup4'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'lxml'])
     subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
     subprocess.call([join(bin_dir, 'easy_install'), 'pyopenssl'])
     subprocess.call([join(bin_dir, 'easy_install'), 'tvdb_api'])
     subprocess.call([join(bin_dir, 'easy_install'), 'feedparser'])
-    subprocess.call([join(bin_dir, 'easy_install'), 'pywapi'])
+    subprocess.call([join(bin_dir, 'easy_install'), 'repoze.lru'])
     subprocess.call([join(bin_dir, 'paver'),'prepare'])
 
 def convert(s):
