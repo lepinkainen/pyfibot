@@ -301,41 +301,12 @@ def _handle_iltalehti(url):
 
 
 def _handle_iltasanomat(url):
-    """*iltasanomat.fi*uutinen.asp*"""
+    """*iltasanomat.fi*"""
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.title.string.rsplit(" - ", 1)[0]
+    title = bs.title.string.rsplit(" - ", 3)[0]
     return title
-
-
-def _handle_keskisuomalainen_sahke(url):
-    """*keskisuomalainen.net*sahkeuutiset/*"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    title = bs.find('p', {'class': 'jotsikko'})
-    if title:
-        title = title.next.strip()
-        return title
-
-
-def _handle_tietokone(url):
-    """http://www.tietokone.fi/uutta/uutinen.asp?news_id=*"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    sub = bs.find('h5').string
-    main = bs.find('h2').string
-    return "%s - %s" % (main, sub)
-
-
-def _handle_itviikko(url):
-    """http://www.itviikko.fi/*/*/*/*/*"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    return bs.find("h1", "headline").string
 
 
 def _handle_verkkokauppa(url):
@@ -355,6 +326,7 @@ def _handle_verkkokauppa(url):
     return "%s | %s (%s)" % (product, price, availability)
 
 
+# TODO: Unit test
 def _handle_mol(url):
     """http://www.mol.fi/paikat/Job.do?*"""
     bs = __get_bs(url)
@@ -382,7 +354,7 @@ def _handle_tweet(url):
         return
     headers = {'Authorization': 'Bearer '+bearer_token}
 
-    data = get_url(infourl, headers=headers)
+    data = bot.get_url(infourl, headers=headers)
 
     tweet = data.json()
     if tweet.has_key('errors'):
@@ -402,16 +374,6 @@ def _handle_tweet(url):
 
     tweet = "@%s (%s): %s" % (user, name, text)
     return tweet
-
-
-def _handle_netanttila(url):
-    """http://www.netanttila.com/webapp/wcs/stores/servlet/ProductDisplay*"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    itemname = bs.find("h1").string.replace("\n", "").replace("\r", "").replace("\t", "").strip()
-    price = bs.find("td", {'class': 'right highlight'}).string.split(" ")[0]
-    return "%s | %s EUR" % (itemname, price)
 
 
 def _handle_youtube_shorturl(url):
@@ -437,7 +399,7 @@ def _handle_youtube_gdata(url):
     if match:
         infourl = gdata_url % match.group(1)
         params = {'alt': 'json', 'v': '2'}
-        r = get_url(infourl, params=params)
+        r = bot.get_url(infourl, params=params)
 
         if not r.status_code == 200:
             log.info("Video too recent, no info through API yet.")
@@ -537,7 +499,7 @@ def _handle_vimeo(url):
     if match:
         # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
         infourl = data_url % match.group(1)
-        r = get_url(infourl)
+        r = bot.get_url(infourl)
         info = r.json()[0]
         title = info['title']
         user = info['user_name']
@@ -557,7 +519,7 @@ def _handle_stackoverflow(url):
     if match is None:
         return
     question_id = match.group(1)
-    content = get_url(api_url % question_id)
+    content = bot.get_url(api_url % question_id)
     if not content:
         log.debug("No content received")
         return
@@ -578,7 +540,7 @@ def _handle_reddit(url):
     else:
         ending = ".json"
     json_url = url + ending
-    content = get_url(json_url)
+    content = bot.get_url(json_url)
     if not content:
         log.debug("No content received")
         return
@@ -694,7 +656,7 @@ def _handle_wikipedia(url):
 
     api = "http://%s.wikipedia.org/w/api.php" % (language)
 
-    r = get_url(api, params=params)
+    r = bot.get_url(api, params=params)
 
     try:
         content = r.json()['parse']['text']['*']
@@ -706,7 +668,7 @@ def _handle_wikipedia(url):
             params['page'] = BeautifulSoup(content).find('li').find('a').get('href').split('/')[-1]
         except:
             return
-        r = get_url(api, params=params)
+        r = bot.get_url(api, params=params)
         try:
             content = r.json()['parse']['text']['*']
         except KeyError:
@@ -801,12 +763,12 @@ def _handle_imgur(url):
         log.debug("No matching imgur endpoint found for %s" % url)
         return "No endpoint found"
 
-    r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+    r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
     if not r.content:
         if endpoint != "gallery/r/all":
             endpoint = "gallery/r/all"
             log.debug("switching to endpoint gallery/r/all because of empty response")
-            r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+            r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
             if not r.content:
                 log.warn("Empty response after retry!")
                 return
@@ -826,7 +788,7 @@ def _handle_imgur(url):
     elif data['status'] == 404 and endpoint != "gallery/r/all":
         endpoint = "gallery/r/all"
         log.debug("Not found, seeing if it is a subreddit image")
-        r = get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+        r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
         data = r.json()
         if data['status'] == 200:
             title = create_title(r.json())
@@ -900,7 +862,7 @@ def _handle_dailymotion(url):
     }
     api = 'https://api.dailymotion.com/video/%s'
     try:
-        r = get_url(api % video_id, params=params).json()
+        r = bot.get_url(api % video_id, params=params).json()
 
         lengthstr = __get_length_str(r['duration'])
         stars = "[%-5s]" % (int(round(r['rating'])) * "*")
