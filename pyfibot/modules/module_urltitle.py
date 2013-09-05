@@ -722,12 +722,12 @@ def _handle_wikipedia(url):
         return
 
     # find the first paragraph for real, sometimes the first "<p>" is empty
-    for i in range(len(paragraphs)):
+    for paragraph in paragraphs:
         # if there's an image in the paragraph, it's most likely incorrectly formatted page
         #   -> select next paragraph
-        if paragraphs[i].find('img'):
+        if paragraph.find('img'):
             continue
-        first_paragraph = paragraphs[i].text.strip()
+        first_paragraph = paragraph.text.strip()
         if first_paragraph:
             break
 
