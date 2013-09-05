@@ -688,7 +688,8 @@ def _handle_wikipedia(url):
         'section': 0,
     }
 
-    params['page'] = url.split('/')[-1]
+    # select part after '/' as article and unquote it (replace stuff like %20) and decode from utf-8
+    params['page'] = urlparse.unquote(url.split('/')[-1]).decode('utf8')
     language = url.split('/')[2].split('.')[0]
 
     api = "http://%s.wikipedia.org/w/api.php" % (language)
@@ -722,6 +723,10 @@ def _handle_wikipedia(url):
 
     # find the first paragraph for real, sometimes the first "<p>" is empty
     for i in range(len(paragraphs)):
+        # if there's an image in the paragraph, it's most likely incorrectly formatted page
+        #   -> select next paragraph
+        if paragraphs[i].find('img'):
+            continue
         first_paragraph = paragraphs[i].text.strip()
         if first_paragraph:
             break
