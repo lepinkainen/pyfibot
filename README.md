@@ -27,3 +27,5 @@ Features
  - Optional virtualenv-support
 
 Support can be found at #pyfibot on irc.nerv.fi and please contact yllapito@nerv.fi if you want to connect outside of Finland (will be changed) or need help with IRC-network.
+
+[![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
