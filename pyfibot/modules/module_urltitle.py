@@ -730,7 +730,6 @@ def _handle_imgur(url):
     """http://*imgur.com*"""
 
     def create_title(data):
-        print(data)
         section = data['data']['section']
         title = data['data']['title']
         if section:
