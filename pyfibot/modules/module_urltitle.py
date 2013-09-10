@@ -634,9 +634,85 @@ def _handle_apina(url):
 
 def _handle_areena(url):
     """http://areena.yle.fi/*"""
+    def areena_get_exit_str(text):
+        dt = datetime.strptime(text, '%Y-%m-%dT%H:%M:%S') - datetime.now()
+        if dt.days > 7:
+            return u'%i weeks' % (dt.days / 7)
+        if dt.days >= 1:
+            return u'%i days' % (dt.days)
+        if dt.seconds >= 3600:
+            return u'%i hours' % (dt.seconds / 3600)
+        return u'%i minutes' % (dt.seconds / 60)
+
     bs = __get_bs(url)
     if not bs:
         return
+
+    try:
+        # handles single programs
+        if bs.find('article', {'class': 'program'}):
+            name = bs.find('article', {'class': 'program'}).find('h1').text.strip()
+
+            # duration needs some work, as the layout doesn't seem to be stable...
+            duration = bs.find('li', {'class': 'duration'}).find('span')
+            if duration.text.startswith('Kesto'):
+                duration = bs.find('li', {'class': 'duration'})
+                try:
+                    duration.span.decompose()
+                except:
+                    pass
+            duration = duration.text.strip()
+            play_count = bs.find(attrs={'class': 'playCount'}).text.strip().split(' ')[0]
+
+            try:
+                broadcasted = __get_age_str(
+                    datetime.strptime(
+                        bs.find('li', {'class': 'broadcasted'}).find('time')['datetime'],
+                        '%Y-%m-%dT%H:%M:%S'))
+            except:
+                broadcasted = '???'
+
+            try:
+                exits = areena_get_exit_str(bs.find('li', {'class': 'expires'}).find('time')['datetime'])
+            except:
+                exits = '???'
+
+            return "%s [%s - %s plays - %s - exits in %s]" % (name, duration, play_count, broadcasted, exits)
+
+        # handles series pages
+        elif bs.find('article', {'class': 'series'}):
+            name = bs.find('article', {'class': 'series'}).find('h1')
+            try:
+                # remove unwanted span, containing "Sarja" -label
+                name.span.decompose()
+            except:
+                pass
+            name = name.text.strip()
+
+            episodes = '???'
+            try:
+                # first try to get the number of episodes from the correct meta-field
+                episodes = bs.find('div', {'data-content': 'episodes'})['data-total']
+            except:
+                try:
+                    # if first try fails, try to get number of episodes
+                    # from "Series name (age rating) (number of episodes)" -tag
+                    episodes = re.findall(r'\d+', bs.find('section', {'class': 'episodes'}).find('h1').text)[-1]
+                except:
+                    pass
+            try:
+                # get the latest episodes age
+                latest_episode = __get_age_str(
+                    datetime.strptime(
+                        bs.find('div', {'class': 'latest'}).find('time')['datetime'],
+                        '%Y-%m-%dT%H:%M:%S'))
+            except:
+                latest_episode = '???'
+
+            return "%s [SERIES - %s episodes - latest episode: %s]" % (name, episodes, latest_episode)
+    except:
+        pass
+    # fallback to original (stripped) title
     title = bs.html.head.title.text.split(' | ')[0]
     return title
 
