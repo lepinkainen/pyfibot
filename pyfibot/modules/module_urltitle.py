@@ -13,17 +13,6 @@ import re
 from datetime import datetime
 import math
 
-has_json = True
-# import py2.6+ json if available, fall back to simplejson
-try:
-    import json
-except:
-    try:
-        import simplejson as json
-    except ImportError, error:
-        print('Error starting rss module: %s' % error)
-        has_json = False
-
 from types import TupleType
 
 from repoze.lru import ExpiringLRUCache
@@ -556,7 +545,7 @@ def _handle_reddit(url):
         if over_18 is True:
             result = result + " (NSFW)"
         return result
-    except Exception, e:
+    except:
         # parsing error, use default title
         return
 
