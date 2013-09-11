@@ -653,16 +653,26 @@ def _handle_areena(url):
         if bs.find('article', {'class': 'program'}):
             name = bs.find('article', {'class': 'program'}).find('h1').text.strip()
 
-            # duration needs some work, as the layout doesn't seem to be stable...
-            duration = bs.find('li', {'class': 'duration'}).find('span')
-            if duration.text.startswith('Kesto'):
-                duration = bs.find('li', {'class': 'duration'})
+            try:
+                # duration needs some work, as the layout doesn't seem to be stable...
+                duration = bs.find('li', {'class': 'duration'}).find('span')
+                if duration.text.startswith('Kesto'):
+                    duration = bs.find('li', {'class': 'duration'})
+                    try:
+                        duration.span.decompose()
+                    except:
+                        pass
+                duration = duration.text.strip()
+            except:
                 try:
-                    duration.span.decompose()
+                    duration = bs.find('span', {'id': 'duration'}).text.strip()
                 except:
-                    pass
-            duration = duration.text.strip()
-            play_count = bs.find(attrs={'class': 'playCount'}).text.strip().split(' ')[0]
+                    duration = '???'
+
+            try:
+                play_count = bs.find(attrs={'class': 'playCount'}).text.strip().split(' ')[0]
+            except:
+                play_count = '???'
 
             try:
                 broadcasted = __get_age_str(
@@ -675,7 +685,7 @@ def _handle_areena(url):
             try:
                 exits = areena_get_exit_str(bs.find('li', {'class': 'expires'}).find('time')['datetime'])
             except:
-                exits = '???'
+                return "%s [%s - %s plays - %s]" % (name, duration, play_count, broadcasted)
 
             return "%s [%s - %s plays - %s - exits in %s]" % (name, duration, play_count, broadcasted, exits)
 
@@ -689,7 +699,6 @@ def _handle_areena(url):
                 pass
             name = name.text.strip()
 
-            episodes = '???'
             try:
                 # first try to get the number of episodes from the correct meta-field
                 episodes = bs.find('div', {'data-content': 'episodes'})['data-total']
@@ -699,7 +708,7 @@ def _handle_areena(url):
                     # from "Series name (age rating) (number of episodes)" -tag
                     episodes = re.findall(r'\d+', bs.find('section', {'class': 'episodes'}).find('h1').text)[-1]
                 except:
-                    pass
+                    episodes = '???'
             try:
                 # get the latest episodes age
                 latest_episode = __get_age_str(
