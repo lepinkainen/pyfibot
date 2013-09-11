@@ -81,7 +81,7 @@ def test_areena_tv():
 
 
 def test_areena_series():
-    regex = 'Title: (.*?) \[SERIES - \d+ episodes - latest episode: (FRESH|(\d+(\.\d+)?(y|d) ago))\]'
+    regex = 'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
     msg = "http://areena.yle.fi/tv/serranonperhe"
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
