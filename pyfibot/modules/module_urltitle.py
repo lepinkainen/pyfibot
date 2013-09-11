@@ -13,17 +13,6 @@ import re
 from datetime import datetime
 import math
 
-has_json = True
-# import py2.6+ json if available, fall back to simplejson
-try:
-    import json
-except:
-    try:
-        import simplejson as json
-    except ImportError, error:
-        print('Error starting rss module: %s' % error)
-        has_json = False
-
 from types import TupleType
 
 from repoze.lru import ExpiringLRUCache
@@ -107,9 +96,9 @@ def __get_age_str(published):
 
 
 def __get_views(views):
-    millnames=['','k','M','Billion','Trillion']
-    millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
-    return '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
+    millnames = ['', 'k', 'M', 'Billion', 'Trillion']
+    millidx = max(0, min(len(millnames) - 1, int(math.floor(math.log10(abs(views)) / 3.0))))
+    return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
 
 
 def handle_url(bot, user, channel, url, msg):
@@ -357,7 +346,7 @@ def _handle_tweet(url):
     data = bot.get_url(infourl, headers=headers)
 
     tweet = data.json()
-    if tweet.has_key('errors'):
+    if 'errors' in tweet:
         for error in tweet['errors']:
             log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
         return
@@ -509,7 +498,7 @@ def _handle_vimeo(url):
         agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
         lengthstr = __get_length_str(info['duration'])
 
-        return "%s by %s [%s - %s likes, %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
+        return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
 def _handle_stackoverflow(url):
@@ -556,7 +545,7 @@ def _handle_reddit(url):
         if over_18 is True:
             result = result + " (NSFW)"
         return result
-    except Exception, e:
+    except:
         # parsing error, use default title
         return
 
@@ -837,8 +826,7 @@ def _handle_imgur(url):
                  ("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
                  ("imgur.com/gallery/(.*)", "gallery"),
                  ("imgur.com/a/([^\?]+)", "album"),
-                 ("imgur.com/([^\./]+)", "gallery")
-        ]
+                 ("imgur.com/([^\./]+)", "gallery")]
 
     endpoint = None
     for regex, _endpoint in endpoints:
@@ -902,7 +890,7 @@ def _handle_liveleak(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.find('span', 'section_title').text
+    title = bs.find('span', 'section_title').text.strip()
     info = str(bs.find('span', id='item_info_%s' % id))
 
     added_by = '???'
@@ -922,7 +910,7 @@ def _handle_liveleak(url):
         pass
 
     try:
-        views = info.split('<strong>Views:</strong>')[1].split('|')[0].strip()
+        views = __get_views(int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
     except:
         pass
 
@@ -931,7 +919,7 @@ def _handle_liveleak(url):
     except:
         pass
 
-    return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
+    return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
 
 
 def _handle_dailymotion(url):
