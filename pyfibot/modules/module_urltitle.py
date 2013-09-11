@@ -107,9 +107,9 @@ def __get_age_str(published):
 
 
 def __get_views(views):
-    millnames=['','k','M','Billion','Trillion']
-    millidx=max(0,min(len(millnames)-1, int(math.floor(math.log10(abs(views))/3.0))))
-    return '%.0f%s'%(views/10**(3*millidx),millnames[millidx])
+    millnames = ['', 'k', 'M', 'Billion', 'Trillion']
+    millidx = max(0, min(len(millnames) - 1, int(math.floor(math.log10(abs(views)) / 3.0))))
+    return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
 
 
 def handle_url(bot, user, channel, url, msg):
@@ -357,7 +357,7 @@ def _handle_tweet(url):
     data = bot.get_url(infourl, headers=headers)
 
     tweet = data.json()
-    if tweet.has_key('errors'):
+    if 'errors' in tweet:
         for error in tweet['errors']:
             log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
         return
@@ -837,8 +837,7 @@ def _handle_imgur(url):
                  ("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
                  ("imgur.com/gallery/(.*)", "gallery"),
                  ("imgur.com/a/([^\?]+)", "album"),
-                 ("imgur.com/([^\./]+)", "gallery")
-        ]
+                 ("imgur.com/([^\./]+)", "gallery")]
 
     endpoint = None
     for regex, _endpoint in endpoints:
