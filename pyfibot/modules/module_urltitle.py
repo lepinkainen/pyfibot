@@ -498,7 +498,7 @@ def _handle_vimeo(url):
         agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
         lengthstr = __get_length_str(info['duration'])
 
-        return "%s by %s [%s - %s likes, %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
+        return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
 def _handle_stackoverflow(url):
