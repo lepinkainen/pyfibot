@@ -890,7 +890,7 @@ def _handle_liveleak(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.find('span', 'section_title').text
+    title = bs.find('span', 'section_title').text.strip()
     info = str(bs.find('span', id='item_info_%s' % id))
 
     added_by = '???'
@@ -910,7 +910,7 @@ def _handle_liveleak(url):
         pass
 
     try:
-        views = info.split('<strong>Views:</strong>')[1].split('|')[0].strip()
+        views = __get_views(int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
     except:
         pass
 
@@ -919,7 +919,7 @@ def _handle_liveleak(url):
     except:
         pass
 
-    return '%s by %s | [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
+    return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
 
 
 def _handle_dailymotion(url):

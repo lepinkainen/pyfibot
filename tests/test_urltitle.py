@@ -99,3 +99,10 @@ def test_vimeo():
     msg = 'http://vimeo.com/29996808'
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_liveleak():
+    regex = 'Title: (.*?) by (.*?) \[%s - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
+    msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
+    module_urltitle.init(bot)
+    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
