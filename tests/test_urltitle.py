@@ -2,6 +2,8 @@
 from nose.tools import eq_
 import bot_mock
 from pyfibot.modules import module_urltitle
+from utils import check_re
+
 
 bot = bot_mock.BotMock()
 
@@ -58,3 +60,24 @@ def test_wiki_en():
     msg = "http://en.wikipedia.org/wiki/IPhone"
     module_urltitle.init(bot)
     eq_(("#channel", u"Title: The iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_areena_radio():
+    regex = 'Title: (.*?) \[(\d+) min - (\d+) plays - (FRESH|(\d+(y|d) ago))( - exits in (\d+) (weeks|days|hours|minutes))?\]'
+    msg = "http://areena.yle.fi/radio/2006973"
+    module_urltitle.init(bot)
+    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_areena_tv():
+    regex = 'Title: (.*?) \[(\d+) min - (\d+) plays - (FRESH|(\d+(y|d) ago))( - exits in (\d+) (weeks|days|hours|minutes))?\]'
+    msg = "http://areena.yle.fi/tv/1999860"
+    module_urltitle.init(bot)
+    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_areena_series():
+    regex = 'Title: (.*?) \[SERIES - (\d+) episodes - latest episode: (FRESH|(\d+(y|d) ago))\]'
+    msg = "http://areena.yle.fi/tv/serranonperhe"
+    module_urltitle.init(bot)
+    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
