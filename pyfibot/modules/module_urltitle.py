@@ -754,6 +754,11 @@ def _handle_wikipedia(url):
         return
 
     content = BeautifulSoup(content)
+    try:
+        # remove first table as un-necessary (usually the information table on the right)
+        content.table.decompose()
+    except:
+        pass
     paragraphs = content.findAll('p')
 
     if not paragraphs:
@@ -763,6 +768,7 @@ def _handle_wikipedia(url):
     for paragraph in paragraphs:
         # if there's an image in the paragraph, it's most likely incorrectly formatted page
         #   -> select next paragraph
+        # NOTE: This might not be needed after removing the table, leaving it for now...
         if paragraph.find('img'):
             continue
         first_paragraph = paragraph.text.strip()

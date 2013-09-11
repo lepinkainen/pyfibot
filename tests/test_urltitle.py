@@ -46,3 +46,15 @@ def test_stackoverflow():
     msg = "http://stackoverflow.com/questions/6905508/python-search-html-document-for-capital-letters"
     module_urltitle.init(bot)
     eq_(("#channel", u"Title: Python search HTML document for capital letters - 0pts - python/regex/coda/letters/capitalize"), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_wiki_fi():
+    msg = "http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
+    module_urltitle.init(bot)
+    eq_(("#channel", u"Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1:n maailmanmestari."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_wiki_en():
+    msg = "http://en.wikipedia.org/wiki/IPhone"
+    module_urltitle.init(bot)
+    eq_(("#channel", u"Title: The iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
