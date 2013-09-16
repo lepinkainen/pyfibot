@@ -293,7 +293,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self._command(user, reply, cmnd)
 
         # Run privmsg handlers
-        self._runhandler("privmsg", user, reply, msg)
+        self._runhandler("privmsg", user, reply, self._to_unicode(msg))
 
         # run URL handlers
         urls = pyfiurl.grab(msg)
@@ -372,6 +372,18 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             _string = _string.encode("UTF-8")
         return _string
 
+    def _to_unicode(self, _string):
+        """Convert string to UTF-8 if it is unicode"""
+        if not isinstance(_string, unicode):
+            try:
+                _string = unicode(_string)
+            except:
+                try:
+                    _string = _string.decode('utf-8')
+                except:
+                    _string = _string
+        return _string
+
     ### Overrides for twisted.words.irc core commands ###
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
@@ -399,9 +411,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """Use act instead of describe for actions"""
         return super(PyFiBot, self).describe(channel, message)
 
-    def mode(self, chan, set, modes, limit = None, user = None, mask = None):
-        chan  = self._to_utf8(chan)
-        _set  = self._to_utf8(set)
+    def mode(self, chan, set, modes, limit=None, user=None, mask=None):
+        chan = self._to_utf8(chan)
+        _set = self._to_utf8(set)
         modes = self._to_utf8(modes)
         return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
 
@@ -413,14 +425,14 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         channel = self._to_utf8(channel)
         return super(PyFiBot, self).leave(channel, key)
 
-    def quit(self, message = ''):
+    def quit(self, message=''):
         message = self._to_utf8(message)
         return super(PyFiBot, self).quit(message)
 
     ### Overrides for twisted.words.irc internal commands ###
     def XXregister(self, nickname, hostname='foo', servername='bar'):
-        nickname   = self._to_utf8(nickname)
-        hostname   = self._to_utf8(hostname)
+        nickname = self._to_utf8(nickname)
+        hostname = self._to_utf8(hostname)
         servername = self._to_utf8(servername)
         return super(PyFiBot, self).register(nickname, hostname, servername)
 
