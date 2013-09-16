@@ -381,7 +381,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 try:
                     _string = _string.decode('utf-8')
                 except:
-                    _string = _string
+                    _string = _string.decode('iso-8859-1')
         return _string
 
     ### Overrides for twisted.words.irc core commands ###
