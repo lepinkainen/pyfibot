@@ -362,7 +362,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             for cname, command in commands:
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 # Defer commands to threads
-                d = threads.deferToThread(command, self, user, channel, args)
+                d = threads.deferToThread(command, self, user, channel, self._to_unicode(args))
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
 
