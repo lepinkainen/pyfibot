@@ -8,7 +8,7 @@ from utils import check_re
 bot = bot_mock.BotMock()
 
 lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
-views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)? views'
+views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
 age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
 
 
@@ -88,21 +88,21 @@ def test_areena_series():
 
 
 def test_youtube():
-    regex = 'Title: (.*?) by (.*?) \[%s - \[\**\] - %s - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = 'Title: (.*?) by (.*?) \[%s - \[\**\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
     msg = "http://www.youtube.com/watch?v=awsolTK175c"
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_vimeo():
-    regex = 'Title: (.*?) by (.*?) \[%s - \d+ likes - %s - %s]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = 'Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]' % (lengh_str_regex, views_str_regex, views_str_regex, age_str_regex)
     msg = 'http://vimeo.com/29996808'
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_liveleak():
-    regex = 'Title: (.*?) by (.*?) \[%s - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
+    regex = 'Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
     msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
