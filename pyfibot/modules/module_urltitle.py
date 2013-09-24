@@ -285,9 +285,7 @@ def _handle_iltalehti(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.find('title').string
-    # The first part is the actual story title, lose the rest
-    title = title.split("|")[0].strip()
+    title = bs.find('meta', {'property': 'og:title'})['content']
     return title
 
 
@@ -296,7 +294,8 @@ def _handle_iltasanomat(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.title.string.rsplit(" - ", 3)[0]
+    title = bs.find('meta', {'property': 'og:title'})['content']
+
     return title
 
 
@@ -586,7 +585,7 @@ def _handle_mtv3(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.find("h1", "entry-title").text
+    title = bs.find('meta', {'property': 'og:title'})['content']
     return title
 
 
@@ -595,8 +594,7 @@ def _handle_yle(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.title.string
-    title = title.split("|")[0].strip()
+    title = bs.find('meta', {'property': 'og:title'})['content']
     return title
 
 
