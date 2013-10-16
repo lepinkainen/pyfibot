@@ -45,7 +45,7 @@ def test_iltasanomat():
 def test_verkkokauppacom():
     msg = "http://www.verkkokauppa.com/fi/product/34214/dkqht/Sony-NEX-3N-mikrojarjestelmakamera-16-50-mm-objektiivi-musta"
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Sony NEX-3N mikrojärjestelmäkamera + 16-50 mm objektiivi, musta. | 399,90 € (heti)"), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Sony NEX-3N mikrojärjestelmäkamera + 16-50 mm objektiivi, musta. | 369,90 € (heti)"), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_stackoverflow():
