@@ -306,11 +306,11 @@ def _handle_verkkokauppa(url):
         return
     product = bs.find('h1', id='productName').string
     try:
-        price = bs.find('h4', {'itemprop': 'price'}).text
+        price = bs.find('h4', {'itemprop': 'price'}).text.strip()
     except:
         price = "???€"
     try:
-        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).next.next.text
+        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).next.next.text.strip()
     except:
         availability = ""
     return "%s | %s (%s)" % (product, price, availability)
