@@ -125,7 +125,7 @@ validPathChars=[string.ascii_letters,
                 string.digits,
                 '/;?:@&=+$,%#'
                 '-_.!~*()',
-                'åäö[]<>{}^\|\'`', ## not so valid but used
+                'åäö[]<>{}^\|\'`–', ## not so valid but used
                 ]
 
 validUserinfoChars=[string.ascii_letters,
