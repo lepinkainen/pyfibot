@@ -752,11 +752,8 @@ def _handle_wikipedia(url):
         return
 
     content = BeautifulSoup(content)
-    try:
-        # remove first table as un-necessary (usually the information table on the right)
-        content.table.decompose()
-    except:
-        pass
+    # remove tables as un-necessary (don't contain any info we'd want, usually tables on the right)
+    [x.extract() for x in content.findAll('table')]
     paragraphs = content.findAll('p')
 
     if not paragraphs:
@@ -774,7 +771,14 @@ def _handle_wikipedia(url):
             break
 
     # Remove all annotations to make splitting easier
-    first_paragraph = re.sub('\[[\d+]\]', '', first_paragraph)
+    first_paragraph = re.sub(r'\[.*?\]', '', first_paragraph)
+    # cleanup brackets
+    first_paragraph = re.sub(r'\(.*?\)', '', first_paragraph)
+    # remove " , ", which might be left behind after cleaning up the brackets
+    first_paragraph = first_paragraph.replace(' , ', ', ')
+    # remove multiple spaces
+    first_paragraph = re.sub(' +', ' ', first_paragraph)
+
     # Define sentence break as something ending in a period and starting with a capital letter, with a whitespace or newline in between
     sentences = re.split('\.\s[A-ZÅÄÖ]', first_paragraph)
     sentences = filter(None, sentences)
@@ -783,10 +787,6 @@ def _handle_wikipedia(url):
         return
 
     first_sentence = sentences[0]
-    # cleanup brackets
-    first_sentence = re.sub(r'\([^)]*\)', '', first_sentence)
-    # remove multiple spaces
-    first_sentence = re.sub(' +', ' ', first_sentence)
     # if the sentence doesn't end to a dot, add it (some kind of problem with regex?).
     if first_sentence[-1] != '.':
         first_sentence += '.'
