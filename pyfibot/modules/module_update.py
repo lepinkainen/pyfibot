@@ -21,13 +21,17 @@ def command_update(bot, user, channel, args):
     out, err = p.communicate()
 
     if res:
-        bot.say(channel, "Update failed")
+        bot.say(channel, "Update failed:")
         for line in out.split("\n"):
             bot.say(channel, "%s" % line)
     else:
-        bot.say(channel, "Update OK")
+        bot.say(channel, "Update OK:")
         for line in out.split("\n"):
             bot.say(channel, "%s" % line)
+
+        # Rehash after successful update
+        bot.command_rehash(user, channel, args)
+
     # only report errors when the update failed, git uses stderr for normal output..
     if res and err:
         bot.say(channel, "Errors: %s" % err)
