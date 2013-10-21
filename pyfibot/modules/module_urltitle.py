@@ -766,6 +766,10 @@ def _handle_wikipedia(url):
         # NOTE: This might not be needed after removing the table, leaving it for now...
         if paragraph.find('img'):
             continue
+        # ignore if the paragraph has coordinates in it
+        # (most likely it's the coordinates in top right corner then)
+        if paragraph.find('span', attrs={'id': 'coordinates'}):
+            continue
         first_paragraph = paragraph.text.strip()
         if first_paragraph:
             break
