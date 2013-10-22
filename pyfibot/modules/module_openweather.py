@@ -23,16 +23,21 @@ def command_weather(bot, user, channel, args):
     global default_location
     global threshold
     if args:
-        location = args.decode('utf-8')
+        location = args
     else:
         location = default_location
 
     url = 'http://openweathermap.org/data/2.5/weather?q=%s&units=metric'
     r = bot.get_url(url % location)
 
-    if 'cod' not in r.json() or int(r.json()['cod']) != 200:
+    try:
+        data = r.json()
+    except:
+        log.debug("Couldn't parse JSON.")
         return bot.say(channel, 'Error: API error.')
-    data = r.json()
+
+    if 'cod' not in data or int(data['cod']) != 200:
+        return bot.say(channel, 'Error: API error.')
 
     if 'name' not in data:
         return bot.say(channel, 'Error: Location not found.')
