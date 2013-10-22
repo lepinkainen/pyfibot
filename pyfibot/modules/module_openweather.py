@@ -91,7 +91,7 @@ def command_forecast(bot, user, channel, args):
 
     global default_location
     if args:
-        location = args.decode('utf-8')
+        location = args
     else:
         location = default_location
 
