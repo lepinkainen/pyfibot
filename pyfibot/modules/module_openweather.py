@@ -61,7 +61,7 @@ def command_weather(bot, user, channel, args):
     if 'wind' in data and 'speed' in data['wind']:
         wind = data['wind']['speed']  # Wind speed in mps (m/s)
 
-        feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
+        feels_like = 13.12 + 0.6215 * temperature - 13.956 * (wind ** 0.16) + 0.4867 * temperature * (wind ** 0.16)
         text += ', feels like: %.1f°C' % feels_like
         text += ', wind: %.1f m/s' % wind
 
