@@ -67,14 +67,14 @@ def test_wiki_en():
 
 
 def test_areena_radio():
-    regex = 'Title: (.*?) \[\d+ min - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (age_str_regex)
+    regex = 'Title: (.*?) \[%s - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, age_str_regex)
     msg = "http://areena.yle.fi/radio/2006973"
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_areena_tv():
-    regex = 'Title: (.*?) \[\d+ min - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (age_str_regex)
+    regex = 'Title: (.*?) \[%s - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, age_str_regex)
     msg = "http://areena.yle.fi/tv/1999860"
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
