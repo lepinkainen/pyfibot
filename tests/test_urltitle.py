@@ -66,27 +66,6 @@ def test_wiki_en():
     eq_(("#channel", u"Title: The iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
-def test_areena_radio():
-    regex = 'Title: (.*?) \[%s - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, age_str_regex)
-    msg = "http://areena.yle.fi/radio/2006973"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
-def test_areena_tv():
-    regex = 'Title: (.*?) \[%s - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, age_str_regex)
-    msg = "http://areena.yle.fi/tv/1999860"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
-def test_areena_series():
-    regex = 'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
-    msg = "http://areena.yle.fi/tv/serranonperhe"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
 def test_youtube():
     regex = 'Title: (.*?) by (.*?) \[%s - \[\**\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
     msg = "http://www.youtube.com/watch?v=awsolTK175c"

@@ -674,8 +674,8 @@ def _handle_areena(url):
                 expires = ' - exits in %s' % areena_get_exit_str(data['expires'])
             else:
                 expires = ''
-            play_count = data['playCount']
-            return '%s [%s - %d plays - %s%s]' % (name, duration, play_count, broadcasted, expires)
+            play_count = __get_views(data['playCount'])
+            return '%s [%s - %s plays - %s%s]' % (name, duration, play_count, broadcasted, expires)
 
         elif content_type == 'SERIES':
             name = data['name']
