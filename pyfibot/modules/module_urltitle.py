@@ -310,7 +310,7 @@ def _handle_verkkokauppa(url):
     except:
         price = "???€"
     try:
-        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).next.next.text.strip()
+        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).find('strong').text.strip()
     except:
         availability = ""
     return "%s | %s (%s)" % (product, price, availability)
