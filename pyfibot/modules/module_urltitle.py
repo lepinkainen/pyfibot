@@ -633,6 +633,19 @@ def _handle_areena(url):
             return u'%i hours' % (dt.seconds / 3600)
         return u'%i minutes' % (dt.seconds / 60)
 
+    splitted = url.split('/')
+    # if "suora" found in url (and in the correct place),
+    # needs a bit more special handling as no api is available
+    if len(splitted) > 4 and splitted[4] == 'suora':
+        bs = __get_bs(url)
+        try:
+            container = bs.find('section', {'class': 'simulcast'})
+        except:
+            return
+        channel = container.find('a', {'class': 'active'}).text.strip()
+        return '%s (LIVE)' % (channel)
+
+    # create json_url from original url
     json_url = '%s.json' % url.split('?')[0]
     r = bot.get_url(json_url)
 
@@ -640,14 +653,16 @@ def _handle_areena(url):
         data = r.json()
     except:
         log.debug("Couldn't parse JSON.")
-        return 'API error.'
+        return
 
     try:
         content_type = data['contentType']
     except KeyError:
+        # there's no clear identifier for series
         if 'episodeCountTotal' in data:
             content_type = 'SERIES'
         else:
+            # assume EPISODE
             content_type = 'EPISODE'
 
     try:
@@ -659,14 +674,16 @@ def _handle_areena(url):
                 expires = ' - exits in %s' % areena_get_exit_str(data['expires'])
             else:
                 expires = ''
-            play_count = data['playCount']
-            return '%s [%s - %d plays - %s%s]' % (name, duration, play_count, broadcasted, expires)
+            play_count = __get_views(data['playCount'])
+            return '%s [%s - %s plays - %s%s]' % (name, duration, play_count, broadcasted, expires)
+
         elif content_type == 'SERIES':
             name = data['name']
             episodes = data['episodeCountViewable']
             latest_episode = __get_age_str(datetime.strptime(data['previousEpisode']['published'], '%Y-%m-%dT%H:%M:%S'))
             return '%s [SERIES - %d episodes - latest episode: %s]' % (name, episodes, latest_episode)
     except:
+        # We want to exit cleanly, so it falls back to default url handler
         log.debug('Unhandled error in Areena.')
         return
 
