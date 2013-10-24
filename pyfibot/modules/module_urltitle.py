@@ -931,3 +931,39 @@ def _handle_dailymotion(url):
         return "%s by %s [%s - %s - %s views - %s%s]" % (r['title'], r['owner.screenname'], lengthstr, stars, views, agestr, adult)
     except:
         return
+
+def _handle_dealextreme(url):
+    """http*://dx.com/p/*"""
+    sku = url.split('?')[0].split('-')[-1]
+    cookies = {'DXGlobalization': 'lang=en&locale=en-US&currency=EUR'}
+    api_url = 'http://dx.com/bi/GetSKUInfo?sku=%s' % sku
+
+    r = bot.get_url(api_url, cookies=cookies)
+
+    try:
+        data = r.json()
+    except:
+        log.debug('DX.com API error.')
+        return
+
+    if 'success' not in data or data['success'] != True:
+        log.debug('DX.com unsuccessful')
+        return
+
+    if 'products' not in data or len(data['products']) < 1:
+        log.debug("DX.com couldn't find products")
+        return
+
+    product = data['products'][0]
+    name = product['headLine']
+    price = float(product['price'].replace(u'€', ''))
+
+    if product['reviewCount'] > 0:
+        reviews = product['reviewCount']
+        stars = "[%-5s]" % (product['avgRating'] * "*")
+        return '%s [%.2fe - %s - %i reviews]' % (name, price, stars, reviews)
+    return '%s [%.2fe]' % (name, price)
+
+def _handle_dealextreme_www(url):
+    """http*://www.dx.com/p/*"""
+    return _handle_dealextreme(url)
