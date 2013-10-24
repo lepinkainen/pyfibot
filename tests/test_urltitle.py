@@ -67,7 +67,7 @@ def test_wiki_en():
 
 
 def test_youtube():
-    regex = 'Title: (.*?) by (.*?) \[%s - \[\**\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = 'Title: (.*?) by (.*?) \[%s - \[\** *\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
     msg = "http://www.youtube.com/watch?v=awsolTK175c"
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
@@ -83,5 +83,11 @@ def test_vimeo():
 def test_liveleak():
     regex = 'Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
     msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
+    module_urltitle.init(bot)
+    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+def test_dx():
+    regex = 'Title: Wireless Bluetooth Audio Music Receiver Adapter - Black \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
+    msg = 'http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659'
     module_urltitle.init(bot)
     assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
