@@ -282,6 +282,20 @@ class PyFiBotFactory(ThrottledClientFactory):
                 return True
         return False
 
+    def reload_config(self):
+        config = read_config()
+        if not config:
+            return
+
+        valid_config = validate_config(config)
+        if valid_config:
+            log.info('Valid config file found, reloading...')
+            ignored = ['nick', 'networks']
+            for k, v in config.iteritems():
+                if k not in ignored:
+                    self.config[k] = v
+        log.info('Invalid config file!')
+
 
 def init_logging(config):
     logger = logging.getLogger()
@@ -310,29 +324,38 @@ def init_logging(config):
     logger.addHandler(handler)
 
 
-def validate_config(config, schema):
+def read_config():
+    config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
+
+    if os.path.exists(config_file):
+        config = yaml.load(file(config_file))
+    else:
+        print("No config file found, please edit example.yml and rename it to config.yml")
+        return
+    return config
+
+
+def validate_config(config):
+    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
     print("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
     if not v.is_valid(config):
         print("Error(s) in configuration:")
         for error in sorted(v.iter_errors(config), key=str):
             print(error)
-    else:
-        print("config ok")
+        return False
+    print("config ok")
+    return True
 
 
 def main():
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
-    config = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
-    if os.path.exists(config):
-        config = yaml.load(file(config))
-    else:
-        print("No config file found, please edit example.yml and rename it to config.yml")
+    config = read_config()
+    if not config:
         sys.exit(1)
 
-    validate_config(config, schema)
+    validate_config(config)
 
     init_logging(config.get('logging', {}))
 

@@ -45,6 +45,7 @@ class CoreCommands(object):
                 # rebuild core & update
                 log.info("rebuilding %r" % self)
                 rebuild.updateInstance(self)
+                self.factory.reload_config()
 
                 self.factory._loadmodules()
 
