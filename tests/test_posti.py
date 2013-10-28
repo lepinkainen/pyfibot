@@ -10,5 +10,5 @@ bot = bot_mock.BotMock()
 
 def test_posti():
     '''11d 1h 45m ago - Item delivered to the recipient. - TAALINTEHDAS 25900'''
-    regex = '(\d+d\ )?(\d+h\ )?(\d+m)? ago - (.*?) - (.*?) (\d+)'
+    regex = u'(\d+d\ )?(\d+h\ )?(\d+m )?ago - (.*?) - (.*?) (\d+)'
     assert check_re(regex, command_posti(bot, 'example!example@example.com', '#example', 'JJFI')[1])
