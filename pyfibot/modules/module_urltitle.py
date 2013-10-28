@@ -690,6 +690,11 @@ def _handle_areena(url):
 
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
+    def get_redirect(content):
+        if 'REDIRECT' in content or '<li>redirect' in content:
+            return True
+        return False
+
     params = {
         'format': 'json',
         'action': 'parse',
@@ -710,7 +715,10 @@ def _handle_wikipedia(url):
     except KeyError:
         return
 
-    if 'REDIRECT' in content:
+    # index to keep track of redirections
+    redirection_index = 0
+    # loop while we get a redirection
+    while get_redirect(content):
         try:
             params['page'] = BeautifulSoup(content).find('li').find('a').get('href').split('/')[-1]
         except:
@@ -719,6 +727,11 @@ def _handle_wikipedia(url):
         try:
             content = r.json()['parse']['text']['*']
         except KeyError:
+            return
+        # increase redirection index and if it seems like we're in endless loop,
+        # fall back to default handler
+        redirection_index += 1
+        if redirection_index > 5:
             return
 
     if not content:
@@ -932,6 +945,7 @@ def _handle_dailymotion(url):
     except:
         return
 
+
 def _handle_dealextreme(url):
     """http*://dx.com/p/*"""
     sku = url.split('?')[0].split('-')[-1]
@@ -946,7 +960,7 @@ def _handle_dealextreme(url):
         log.debug('DX.com API error.')
         return
 
-    if 'success' not in data or data['success'] != True:
+    if 'success' not in data or data['success'] is not True:
         log.debug('DX.com unsuccessful')
         return
 
@@ -963,6 +977,7 @@ def _handle_dealextreme(url):
         stars = "[%-5s]" % (product['avgRating'] * "*")
         return '%s [%.2fe - %s - %i reviews]' % (name, price, stars, reviews)
     return '%s [%.2fe]' % (name, price)
+
 
 def _handle_dealextreme_www(url):
     """http*://www.dx.com/p/*"""
