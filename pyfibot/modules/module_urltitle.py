@@ -451,8 +451,10 @@ def _handle_alko(url):
     bottle_size = float(bs.find('div', {'class': 'product-details'}).contents[0].strip().replace(',', '.'))
     e_per_l = float(bs.find('div', {'class': 'product-details'}).contents[4].strip().replace(',', '.'))
     drinktype = bs.find('h3', {'itemprop': 'category'}).text
+    alcohol_content = bs.find('td', {'class': 'label'}, text='Alkoholi:') \
+        .parent.find_all('td')[-1].text.strip().replace(',', '.').replace(' ', '')
 
-    return '%s [%.2fe, %.2fl, %.2fe/l, %s]' % (name, price, bottle_size, e_per_l, drinktype)
+    return '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content)
 
 
 def _handle_salakuunneltua(url):
