@@ -715,7 +715,10 @@ def _handle_wikipedia(url):
     except KeyError:
         return
 
-    if get_redirect(content):
+    # index to keep track of redirections
+    redirection_index = 0
+    # loop while we get a redirection
+    while get_redirect(content):
         try:
             params['page'] = BeautifulSoup(content).find('li').find('a').get('href').split('/')[-1]
         except:
@@ -724,6 +727,11 @@ def _handle_wikipedia(url):
         try:
             content = r.json()['parse']['text']['*']
         except KeyError:
+            return
+        # increase redirection index and if it seems like we're in endless loop,
+        # fall back to default handler
+        redirection_index += 1
+        if redirection_index > 5:
             return
 
     if not content:
