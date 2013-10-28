@@ -691,93 +691,102 @@ def _handle_areena(url):
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
     def get_redirect(content):
-        if 'REDIRECT' in content or '<li>redirect' in content:
+        if '#redirect' in content.lower() or \
+           '<li>redirect' in content.lower():
             return True
         return False
 
-    params = {
-        'format': 'json',
-        'action': 'parse',
-        'prop': 'text',
-        'section': 0,
-    }
+    def clean_page_name(url):
+        # select part after '/' as article and unquote it (replace stuff like %20) and decode to unicode
+        page = bot.to_unicode(urlparse.unquote(url.split('/')[-1]))
+        if page.startswith('index.php') and 'title' in page:
+            page = page.split('?title=')[1]
+        print(page)
+        return page
 
-    # select part after '/' as article and unquote it (replace stuff like %20) and decode from utf-8
-    params['page'] = urlparse.unquote(url.split('/')[-1]).decode('utf8')
-    language = url.split('/')[2].split('.')[0]
+    def get_content(url):
+        params = {
+            'format': 'json',
+            'action': 'parse',
+            'prop': 'text',
+            'section': 0,
+            'page': clean_page_name(url)
+        }
 
-    api = "http://%s.wikipedia.org/w/api.php" % (language)
+        language = url.split('/')[2].split('.')[0]
+        api = "http://%s.wikipedia.org/w/api.php" % (language)
 
-    r = bot.get_url(api, params=params)
-
-    try:
-        content = r.json()['parse']['text']['*']
-    except KeyError:
-        return
-
-    # index to keep track of redirections
-    redirection_index = 0
-    # loop while we get a redirection
-    while get_redirect(content):
-        try:
-            params['page'] = BeautifulSoup(content).find('li').find('a').get('href').split('/')[-1]
-        except:
-            return
         r = bot.get_url(api, params=params)
         try:
             content = r.json()['parse']['text']['*']
         except KeyError:
             return
-        # increase redirection index and if it seems like we're in endless loop,
-        # fall back to default handler
-        redirection_index += 1
-        if redirection_index > 5:
-            return
+        # index to keep track of redirections
+        redirection_index = 0
+        # loop while we get a redirection
+        while get_redirect(content):
+            try:
+                params['page'] = clean_page_name(BeautifulSoup(content).find('li').find('a').get('href'))
+            except:
+                return
+            r = bot.get_url(api, params=params)
+            try:
+                content = r.json()['parse']['text']['*']
+            except KeyError:
+                return
+            # increase redirection index and if it seems like we're in endless loop,
+            # fall back to default handler
+            redirection_index += 1
+            if redirection_index > 5:
+                return
+        content = BeautifulSoup(content)
+        # remove tables as un-necessary (don't contain any info we'd want, usually tables on the right)
+        [x.extract() for x in content.findAll('table')]
+        return content
 
+    def find_first_paragraph(content):
+        # find the first paragraph, sometimes the first "<p>" is empty
+        for paragraph in content.findAll('p'):
+            # if there's an image in the paragraph, it's most likely incorrectly formatted page
+            #   -> select next paragraph
+            # NOTE: This might not be needed after removing the table, leaving it for now...
+            if paragraph.find('img'):
+                continue
+            # ignore if the paragraph has coordinates in it
+            # (most likely it's the coordinates in top right corner then)
+            if paragraph.find('span', attrs={'id': 'coordinates'}):
+                continue
+            first_paragraph = paragraph.text.strip()
+            if first_paragraph:
+                # Remove all annotations to make splitting easier
+                first_paragraph = re.sub(r'\[.*?\]', '', first_paragraph)
+                # Cleanup brackets (usually includes useless information to IRC)
+                first_paragraph = re.sub(r'\(.*?\)', '', first_paragraph)
+                # Remove " , ", which might be left behind after cleaning up the brackets
+                first_paragraph = first_paragraph.replace(' , ', ', ')
+                # Remove multiple spaces
+                first_paragraph = re.sub(' +', ' ', first_paragraph)
+                return first_paragraph
+
+    content = get_content(url)
     if not content:
         return
 
-    content = BeautifulSoup(content)
-    # remove tables as un-necessary (don't contain any info we'd want, usually tables on the right)
-    [x.extract() for x in content.findAll('table')]
-    paragraphs = content.findAll('p')
-
-    if not paragraphs:
+    first_paragraph = find_first_paragraph(content)
+    if not first_paragraph:
         return
 
-    # find the first paragraph for real, sometimes the first "<p>" is empty
-    for paragraph in paragraphs:
-        # if there's an image in the paragraph, it's most likely incorrectly formatted page
-        #   -> select next paragraph
-        # NOTE: This might not be needed after removing the table, leaving it for now...
-        if paragraph.find('img'):
-            continue
-        # ignore if the paragraph has coordinates in it
-        # (most likely it's the coordinates in top right corner then)
-        if paragraph.find('span', attrs={'id': 'coordinates'}):
-            continue
-        first_paragraph = paragraph.text.strip()
-        if first_paragraph:
-            break
-
-    # Remove all annotations to make splitting easier
-    first_paragraph = re.sub(r'\[.*?\]', '', first_paragraph)
-    # cleanup brackets
-    first_paragraph = re.sub(r'\(.*?\)', '', first_paragraph)
-    # remove " , ", which might be left behind after cleaning up the brackets
-    first_paragraph = first_paragraph.replace(' , ', ', ')
-    # remove multiple spaces
-    first_paragraph = re.sub(' +', ' ', first_paragraph)
-
-    # Define sentence break as something ending in a period and starting with a capital letter, with a whitespace or newline in between
+    # Define sentence break as something ending in a period and starting with a capital letter,
+    # with a whitespace or newline in between
     sentences = re.split('\.\s[A-ZÅÄÖ]', first_paragraph)
+    # Remove empty values from list.
     sentences = filter(None, sentences)
 
     if not sentences:
         return
 
     first_sentence = sentences[0]
-    # if the sentence doesn't end to a dot, add it (some kind of problem with regex?).
+    # After regex splitting, the dot shold be removed, add it.
     if first_sentence[-1] != '.':
         first_sentence += '.'
 
@@ -785,7 +794,8 @@ def _handle_wikipedia(url):
     if len(first_sentence) <= length_threshold:
         return first_sentence
 
-    # go through the first sentence and find either a space or dot to cut to.
+    # go through the first sentence from threshold to end
+    # and find either a space or dot to cut to.
     for i in range(length_threshold, len(first_sentence)):
         char = first_sentence[i]
         if char == ' ' or char == '.':
