@@ -324,6 +324,13 @@ class PyFiBotFactory(ThrottledClientFactory):
             for k, v in config.items():
                 if k not in ignored:
                     self.config[k] = v
+
+            # change logging level, default to INFO
+            log_level = config.get('logging', {}).get('debug', False)
+            if log_level:
+                logging.root.setLevel(logging.DEBUG)
+            else:
+                logging.root.setLevel(logging.INFO)
             return
         log.info('Invalid config file!')
 
