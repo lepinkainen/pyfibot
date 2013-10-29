@@ -83,4 +83,4 @@ def command_wa(bot, user, channel, args):
     question = clean_question(pods_as_text[0].replace(' | ', ' ').replace('\n', ' '))
     # and second is the best answer
     answer = clean_answer(pods_as_text[1])
-    return bot.say(channel, '%s - %s' % (question, answer))
+    return bot.say(channel, '%s = %s' % (question, answer))
