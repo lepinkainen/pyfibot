@@ -13,5 +13,5 @@ def test_weather():
 
 
 def test_forecast():
-    regex = u'Lappeenranta, FI: tomorrow: \d+.\d-\d+.\d \xb0C \(.*?\), in 2 days: \d+.\d-\d+.\d \xb0C \(.*?\), in 3 days: \d+.\d-\d+.\d \xb0C \(.*?\)'
+    regex = u'Lappeenranta, Finland: tomorrow: \d+.\d-\d+.\d \xb0C \(.*?\), in 2 days: \d+.\d-\d+.\d \xb0C \(.*?\), in 3 days: \d+.\d-\d+.\d \xb0C \(.*?\)'
     check_re(regex, module_openweather.command_forecast(bot, None, "#channel", 'lappeenranta')[1])
