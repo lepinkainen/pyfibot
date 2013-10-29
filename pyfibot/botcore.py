@@ -47,6 +47,7 @@ class CoreCommands(object):
                 rebuild.updateInstance(self)
                 self.factory.reload_config()
 
+                self.factory._unload_removed_modules()
                 self.factory._loadmodules()
 
             except Exception, e:

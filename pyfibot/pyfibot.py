@@ -214,6 +214,16 @@ class PyFiBotFactory(ThrottledClientFactory):
             # Add to namespace so we can find it later
             self.ns[module] = (env, env)
 
+    def _unload_removed_modules(self):
+        removed_modules = [m for m in self.ns if not m in self._findmodules()]
+
+        for m in removed_modules:
+            if 'finalize' in self.ns[m][0]:
+                log.info("finalize - %s" % m)
+                self.ns[m][0]['finalize']()
+            del self.ns[m]
+            log.info('removed module - %s' % m)
+
     def _findmodules(self):
         """Find all modules"""
         modules = [m for m in os.listdir(self.moduledir) if m.startswith("module_") and m.endswith(".py")]
@@ -311,9 +321,10 @@ class PyFiBotFactory(ThrottledClientFactory):
         if valid_config:
             log.info('Valid config file found, reloading...')
             ignored = ['nick', 'networks']
-            for k, v in config.iteritems():
+            for k, v in config.items():
                 if k not in ignored:
                     self.config[k] = v
+            return
         log.info('Invalid config file!')
 
 
