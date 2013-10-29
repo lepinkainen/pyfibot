@@ -318,21 +318,22 @@ class PyFiBotFactory(ThrottledClientFactory):
             return
 
         valid_config = validate_config(config)
-        if valid_config:
-            log.info('Valid config file found, reloading...')
-            ignored = ['nick', 'networks']
-            for k, v in config.items():
-                if k not in ignored:
-                    self.config[k] = v
-
-            # change logging level, default to INFO
-            log_level = config.get('logging', {}).get('debug', False)
-            if log_level:
-                logging.root.setLevel(logging.DEBUG)
-            else:
-                logging.root.setLevel(logging.INFO)
+        if not valid_config:
+            log.info('Invalid config file!')
             return
-        log.info('Invalid config file!')
+
+        log.info('Valid config file found, reloading...')
+        ignored = ['nick', 'networks']
+        for k, v in config.items():
+            if k not in ignored:
+                self.config[k] = v
+
+        # change logging level, default to INFO
+        log_level = config.get('logging', {}).get('debug', False)
+        if log_level:
+            logging.root.setLevel(logging.DEBUG)
+        else:
+            logging.root.setLevel(logging.INFO)
 
 
 def init_logging(config):
