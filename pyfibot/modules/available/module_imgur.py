@@ -1,8 +1,9 @@
 """Upload images encountered on channels to imgur.com"""
 
 import urllib
+import logging
+import json
 try:
-    import json
     import oauth2 as oauth
     init_ok = True
 except:
@@ -12,8 +13,12 @@ consumer = None
 token = None
 
 
+log = logging.getLogger("urltitle")
+
+
 def init(bot):
     if not init_ok:
+        log.error("Module not initialized, oauth2 library not found")
         return False
     global config
     global consumer_key, consumer_secret, oauth_token, oauth_token_secret
@@ -34,8 +39,14 @@ def init(bot):
 
 # Upload all files ending in jpg and gif
 def handle_url(bot, user, channel, url, msg):
-    if init_ok and (url.endswith(".jpg") or url.endswith(".gif")):
-        print(channel, upload_images([url]))
+    if not init_ok:
+        return
+    # TODO: smarter checking, using content-type perhaps?
+    if url.endswith(".jpg") or url.endswith(".gif"):
+        #log.info(channel, upload_images([url]))
+        images, link, aid = upload_images([url], user, channel)
+        for image in images:
+            log.info("Uploaded image http://imgur.com/%s by %s from %s to gallery %s" % (image, user, channel, link))
 
 
 # Upload a page of images
@@ -53,7 +64,7 @@ def upload_gallery(url):
     upload_images(urls)
 
 
-def upload_images(urls):
+def upload_images(urls, user=None, channel=None):
     # uploaded images
     images = []
 
@@ -61,21 +72,21 @@ def upload_images(urls):
 
     # Transload image(s) to imgur
     for url in urls:
-        print("Transloading %s..." % url)
+        log.debug("Transloading %s" % url)
 
         metadata = {
             'image': url,
             'type': 'url',
-            'caption': 'Original url: %s' % url}
+            'caption': 'Original url: %s by: %s from: %s' % (url, user, channel)}
 
         resp, cont = client.request("http://api.imgur.com/2/account/images.json", "POST", body=urllib.urlencode(metadata))
         data = json.loads(cont)
         if resp.status != 200:
-            print(resp)
+            log.debug(resp)
             errmsg = data['error']['message']
-            print("Transload error for %s: %s " % (url, errmsg))
+            log.error("Transload error for %s: %s " % (url, errmsg))
             if errmsg == "API limits exceeded":
-                print("API limits exceeded, aborting uploads")
+                log.error("API limits exceeded, aborting uploads")
                 return
             else:
                 continue
@@ -87,7 +98,7 @@ def upload_images(urls):
     data = json.loads(cont)
     album = [album for album in data['albums'] if album['title'] == "Pyfibot"]
     if len(album) != 1:
-        print("Album not found, please create it")
+        log.error("Album not found, please create it")
         return
 
     album = album[0]
@@ -97,4 +108,4 @@ def upload_images(urls):
     # add images to bot album
     resp, cont = client.request("http://api.imgur.com/2/account/albums/%s.json" % aid, "POST", body=urllib.urlencode({'add_images': ",".join(images)}))
 
-    return "Images (%s) uploaded to %s (%s)" % (",".join(images), link, aid)
+    return (images, link, aid)
