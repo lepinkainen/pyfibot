@@ -9,4 +9,3 @@ pyopenssl
 tvdb_api
 feedparser
 repoze.lru
-oauth2
