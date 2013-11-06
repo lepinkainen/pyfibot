@@ -2,8 +2,16 @@
 
 import requests
 import logging
+import os.path
+import sys
 
-log = logging.getLogger("urltitle")
+log = logging.getLogger("imgur")
+
+# Bot application ID
+CLIENT_ID     = "a7a5d6bc929d48f"
+CLIENT_SECRET = "57b1f90a12d4d72762b4b1bf644af5157f73fed5"
+
+DATAFILE = os.path.join(sys.path[0], "modules", "imgur_auth.dat")
 
 album_id = ""
 access_token = ""
@@ -20,13 +28,23 @@ def init(bot):
 
     global album_id
     album_id = config.get('album_id', '')
-    global access_token
-    access_token = config.get('access_token', '')
-    global refresh_token
-    refresh_token = config.get('refresh_token', '')
+
+    # If refreshed tokens exist, get them from the file
+    # else load seed values from config
+    global access_token, refresh_token
+    if os.path.exists(DATAFILE):
+        f = open('imgur_auth.dat', 'r')
+        access_token = f.readline().strip()
+        refresh_token = f.readline().strip()
+        f.close()
+        log.info("Loaded imgur credentials from %s" % DATAFILE)
+    else:
+        access_token = config.get('access_token', '')
+        refresh_token = config.get('refresh_token', '')
 
     global init_ok
     if access_token and refresh_token:
+        log.info("imgur auth tokens found")
         init_ok = True
 
 
@@ -58,6 +76,7 @@ def upload_gallery(url):
 
 
 def upload_images(urls, user=None, channel=None):
+    global access_token, refresh_token
     # uploaded images
     images = []
 
@@ -78,14 +97,21 @@ def upload_images(urls, user=None, channel=None):
 
         r = requests.post("%s/upload" % api, headers=headers, data=metadata)
 
+        # error handling
         if r.status_code != 200:
-            log.error("Transload error for %s: %s " % (url, r.json()))
-            # TODO: Handle token refresh
-            # TODO: store tokens somewhere smart?
+            if r.status_code == 403 and \
+               r.json()['data']['error'] == "The access token provided has expired.":
+                print("OLD:", access_token, refresh_token)
+                access_token, refresh_token = _refresh_token(CLIENT_ID, CLIENT_SECRET, refresh_token)
+                print("NEW:", access_token, refresh_token)
+                # recursive retry, kinda dangerous, but what the heck
+                return upload_images([url], user, channel)
+            else:
+                log.error("Transload error for %s: %s " % (url, r.json()))
 
         images.append(r.json()['data'])
 
-        log.info("%s uploaded to imgur gallery" % r.json()['data']['link'])
+        log.info("%s uploaded to imgur gallery" % r.json()['data'].get('link', ''))
 
     return images
 
@@ -97,8 +123,19 @@ def _refresh_token(client_id, client_secret, refresh_token):
                             'grant_type':'refresh_token',
                             'refresh_token':refresh_token})
 
-    new_access_token = r.json()['access_token']
-    new_refresh_token = r.json()['refresh_token']
-    log.info("Updated imgur access token for account %s" % r.json()['account_username'])
+    if r.status_code == 200:
+        new_access_token = r.json()['access_token']
+        new_refresh_token = r.json()['refresh_token']
+        log.info("Updated imgur access token for account %s" % r.json()['account_username'])
 
-    return new_access_token, new_refresh_token
+        f = open(DATAFILE, 'w')
+        f.write(new_access_token+"\n")
+        f.write(new_refresh_token+"\n")
+        f.close()
+
+        # TODO: store refreshed tokens somewhere smart?
+
+        return new_access_token, new_refresh_token
+    else:
+        log.error("error refreshing tokens: %s", r.json())
+        return None, None
