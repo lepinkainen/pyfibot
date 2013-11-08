@@ -9,4 +9,4 @@ pyopenssl
 tvdb_api
 feedparser
 repoze.lru
-pygeopip
+pygeoip
