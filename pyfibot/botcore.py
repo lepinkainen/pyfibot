@@ -481,7 +481,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def noticed(self, user, channel, message):
         """I received a notice"""
-        self._runhandler("noticed", user, channel, message)
+        self._runhandler("noticed", user, channel, self.factory.to_unicode(message))
 
     def modeChanged(self, user, channel, set, modes, args):
         """Mode changed on user or channel"""
@@ -489,7 +489,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def kickedFrom(self, channel, kicker, message):
         """I was kicked from a channel"""
-        self._runhandler("kickedFrom", channel, kicker, message)
+        self._runhandler("kickedFrom", channel, kicker, self.factory.to_unicode(message))
 
     def nickChanged(self, nick):
         """I changed my nick"""
@@ -502,11 +502,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def userLeft(self, user, channel, message):
         """Someone left"""
-        self._runhandler("userLeft", user, channel, message)
+        self._runhandler("userLeft", user, channel, self.factory.to_unicode(message))
 
     def userKicked(self, kickee, channel, kicker, message):
         """Someone got kicked by someone"""
-        self._runhandler("userKicked", kickee, channel, kicker, message)
+        self._runhandler("userKicked", kickee, channel, kicker, self.factory.to_unicode(message))
 
     def action(self, user, channel, data):
         """An action"""
@@ -522,7 +522,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def receivedMOTD(self, motd):
         """MOTD"""
-        self._runhandler("receivedMOTD", motd)
+        self._runhandler("receivedMOTD", self.factory.to_unicode(motd))
 
     ## SERVER INFORMATION
 
