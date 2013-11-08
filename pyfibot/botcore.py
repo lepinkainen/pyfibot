@@ -179,7 +179,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     password = None
 
     # send 1 msg per second max
-    linerate = 1
+    linerate = None
     hasQuit = False
 
     CMDCHAR = "."
@@ -398,6 +398,10 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         _set = self.factory.to_utf8(set)
         modes = self.factory.to_utf8(modes)
         return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
+
+    def kick(self, channel, user, reason=None):
+        reason = self.factory.to_utf8(reason)
+        return super(PyFiBot, self).kick(channel, user, reason)
 
     def join(self, channel, key=None):
         channel = self.factory.to_utf8(channel)
