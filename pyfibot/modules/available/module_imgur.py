@@ -33,7 +33,7 @@ def init(bot):
     # else load seed values from config
     global access_token, refresh_token
     if os.path.exists(DATAFILE):
-        f = open('imgur_auth.dat', 'r')
+        f = open(DATAFILE, 'r')
         access_token = f.readline().strip()
         refresh_token = f.readline().strip()
         f.close()
@@ -101,9 +101,7 @@ def upload_images(urls, user=None, channel=None):
         if r.status_code != 200:
             if r.status_code == 403 and \
                r.json()['data']['error'] == "The access token provided has expired.":
-                print("OLD:", access_token, refresh_token)
                 access_token, refresh_token = _refresh_token(CLIENT_ID, CLIENT_SECRET, refresh_token)
-                print("NEW:", access_token, refresh_token)
                 # recursive retry, kinda dangerous, but what the heck
                 return upload_images([url], user, channel)
             else:
@@ -111,7 +109,7 @@ def upload_images(urls, user=None, channel=None):
 
         images.append(r.json()['data'])
 
-        log.info("%s uploaded to imgur gallery" % r.json()['data'].get('link', ''))
+        #log.info("%s uploaded to imgur gallery" % r.json()['data'].get('link', ''))
 
     return images
 
@@ -132,8 +130,6 @@ def _refresh_token(client_id, client_secret, refresh_token):
         f.write(new_access_token+"\n")
         f.write(new_refresh_token+"\n")
         f.close()
-
-        # TODO: store refreshed tokens somewhere smart?
 
         return new_access_token, new_refresh_token
     else:
