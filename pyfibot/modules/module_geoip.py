@@ -3,7 +3,6 @@ import pygeoip
 import os.path
 import sys
 import socket
-import logging
 
 DATAFILE = os.path.join(sys.path[0], "GeoIP.dat")
 # STANDARD = reload from disk
@@ -14,6 +13,8 @@ gi4 = pygeoip.GeoIP(DATAFILE, pygeoip.MEMORY_CACHE)
 
 def command_geoip(bot, user, channel, args):
     """Determine the user's country based on host"""
+    if not args:
+        return bot.say(channel, 'usage: .geoip HOST')
 
     try:
         country = gi4.country_name_by_name(args)
