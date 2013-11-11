@@ -120,7 +120,7 @@ def command_forecast(bot, user, channel, args):
         hours = hours_to_text(seconds / 3600)
         if date.day == cur_date.day:
             continue
-        forecast_text.append('%s: %.1f-%.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+        forecast_text.append('%s: %.1f - %.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
         if len(forecast_text) >= 3:
             break
 
