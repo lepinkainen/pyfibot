@@ -53,11 +53,14 @@ def handle_url(bot, user, channel, url, msg):
     if not init_ok:
         return
     # TODO: smarter checking, using content-type perhaps?
-    if url.endswith(".jpg") or url.endswith(".gif"):
+    r = bot.get_url(url)
+    content_type = r.headers['content-type'].split(';')[0]
+
+    if content_type.startswith("image/"):
         #log.info(channel, upload_images([url]))
         responses = upload_images([url], user, channel)
         for r in responses:
-            log.debug("Uploaded image http://imgur.com/%s by %s from %s to gallery" % (r['id'], user, channel))
+            log.debug("Uploaded image http://imgur.com/%s by %s from %s to gallery" % (r.get('id', ''), user, channel))
 
 
 # Upload a page of images
@@ -105,7 +108,8 @@ def upload_images(urls, user=None, channel=None):
                 # recursive retry, kinda dangerous, but what the heck
                 return upload_images([url], user, channel)
             else:
-                log.error("Transload error for %s: %s " % (url, r.json()))
+                log.error("Transload error for %s: %s " % (url, r.text))
+                continue
 
         images.append(r.json()['data'])
 
