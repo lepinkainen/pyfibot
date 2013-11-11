@@ -454,7 +454,7 @@ def _handle_alko(url):
     alcohol_content = bs.find('td', {'class': 'label'}, text='Alkoholi:') \
         .parent.find_all('td')[-1].text.strip().replace(',', '.').replace(' ', '')
 
-    return '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content)
+    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content))
 
 
 def _handle_salakuunneltua(url):
