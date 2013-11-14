@@ -888,7 +888,7 @@ def _handle_ebay(url):
         log.debug("Couldn't find item ID.")
         return
 
-    app_id = config.get('ebay_appid', 'KimmoHuo-ea9c-47cd-8c68-4a9e5f91bbe1')
+    app_id = config.get('ebay_appid', 'RikuLind-3b6d-4c30-937c-6e7d87b5d8be')
     # 77 == Germany, prices in EUR
     site_id = config.get('ebay_siteid', 77)
     currency = config.get('ebay_currency', 'e')
@@ -919,12 +919,12 @@ def _handle_ebay(url):
 
     ended = ''
     if item['ListingStatus'] != 'Active':
-        ended = ' | ENDED'
+        ended = ' - ENDED'
 
     if 'ShippingCostSummary' in item and \
        'ShippingServiceCost' in item['ShippingCostSummary'] and \
        item['ShippingCostSummary']['ShippingServiceCost']['Value'] != 0:
-            price = '%.1f %s (postage %.1f%s)' % (
+            price = '%.1f%s (postage %.1f%s)' % (
                 price, currency,
                 item['ShippingCostSummary']['ShippingServiceCost']['Value'], currency)
     else:
@@ -935,10 +935,10 @@ def _handle_ebay(url):
             availability = '>%i available' % item['QuantityThreshold']
         else:
             availability = '%d available' % item['QuantityThreshold']
-        return '%s | %s | %s | ships from %s%s' % (name, price, availability, location, ended)
+        return '%s [%s - %s - ships from %s%s]' % (name, price, availability, location, ended)
     except KeyError:
         log.debug('eBay: quantity available not be found.')
-        return '%s | %s | ships from %s%s' % (name, price, location, ended)
+        return '%s [%s - ships from %s%s]' % (name, price, location, ended)
 
 
 def _handle_ebay_no_prefix(url):

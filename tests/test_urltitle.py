@@ -89,7 +89,9 @@ def test_liveleak():
 
 def test_ebay():
     msg = 'https://ebay.com/itm/390629338875'
-    eq_(("#channel", u"Title: New Nano V3 Sensor Shield I/O Extension Board Expansion Module Uno IO f Arduino | 1.2 e (postage 2.6e) | >10 available | ships from Hong Kong, HK | active"), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    regex = u'Title: (.*?) \[\d+\.\de \(postage \d+\.\de\) - >\d+ available - ships from Hong Kong, HK\]'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_dx():
