@@ -89,7 +89,7 @@ def test_liveleak():
 
 def test_ebay():
     msg = 'https://ebay.com/itm/390629338875'
-    regex = u'Title: (.*?) \[\d+\.\de \(postage \d+\.\de\) - >\d+ available - ships from Hong Kong, HK\]'
+    regex = u'Title: (.*?) \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from Hong Kong, HK\]'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 

@@ -932,7 +932,7 @@ def _handle_ebay(url):
 
     try:
         if item['QuantityAvailableHint'] == 'MoreThan':
-            availability = '>%i available' % item['QuantityThreshold']
+            availability = 'over %i available' % item['QuantityThreshold']
         else:
             availability = '%d available' % item['QuantityThreshold']
         return '%s [%s - %s - ships from %s%s]' % (name, price, availability, location, ended)
