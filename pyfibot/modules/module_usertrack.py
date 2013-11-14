@@ -40,6 +40,10 @@ def get_base_data(user):
 
 
 def handle_privmsg(bot, user, channel, message):
+    # if user == channel -> this is a query -> don't log
+    if user == channel:
+        return
+
     data = get_base_data(user)
     data['last_action'] = 'message'
     data['last_message'] = message
@@ -93,5 +97,14 @@ def handle_userRenamed(bot, user, newnick):
             table.update(data, ['id'])
 
 
-def handle_action(bot, user, channel, data):
-    print(data)
+def handle_action(bot, user, channel, message):
+    # if action is directed to bot instead of channel -> don't log
+    if (channel == bot.nickname):
+        return
+
+    data = get_base_data(user)
+    data['last_action'] = 'action'
+    data['last_message'] = message
+    data['message_time'] = datetime.now()
+
+    upsert_row(bot, channel, data)
