@@ -5,6 +5,7 @@ man/
 module_autoop.db
 pyfibot/bot.config
 rss.db
+databases/
 
 #imdbpy
 etc
