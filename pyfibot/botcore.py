@@ -457,6 +457,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 params.append("")
             self.userLeft(prefix, channel, params[1])
 
+    def irc_NICK(self, prefix, params):
+        """override the twisted version to preserve full userhost info"""
+        newnick = params[0]
+        self.userRenamed(prefix, newnick)
+
     def irc_QUIT(self, prefix, params):
         """QUIT-handler.
 

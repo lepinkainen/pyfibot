@@ -226,6 +226,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         g['getUrl'] = self.get_url
         g['get_url'] = self.get_url
         g['getNick'] = self.getNick
+        g['getIdent'] = self.getIdent
+        g['getHost'] = self.getHost
         g['isAdmin'] = self.isAdmin
         g['to_utf8'] = self.to_utf8
         g['to_unicode'] = self.to_unicode
@@ -275,6 +277,20 @@ class PyFiBotFactory(ThrottledClientFactory):
         @param user: nick!user@host
         @return: nick"""
         return user.split('!', 1)[0]
+
+    def getIdent(self, user):
+        """Parses ident from nick!user@host
+        @type user: string
+        @param user: nick!user@host
+        @return: ident"""
+        return user.split('!', 1)[1].split('@')[0]
+
+    def getHost(self, user):
+        """Parses host from nick!user@host
+        @type user: string
+        @param user: nick!user@host
+        @return: host"""
+        return user.split('@', 1)[1]
 
     def isAdmin(self, user):
         """Check if an user has admin privileges.
