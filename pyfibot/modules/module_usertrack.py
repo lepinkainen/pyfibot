@@ -57,6 +57,11 @@ def handle_userJoined(bot, user, channel):
 
     upsert_row(bot, channel, data)
 
+    table = get_table(bot, channel)
+    if table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user), op=True):
+        log.info('auto-opping %s' % user)
+        bot.mode(channel, True, 'o', user=getNick(user))
+
 
 def handle_userLeft(bot, user, channel, message):
     data = get_base_data(user)
@@ -131,7 +136,7 @@ def command_add_op(bot, user, channel, args):
 
 
 def command_remove_op(bot, user, channel, args):
-    if not isAdmin(user):
+    if not isAdmin(user) or not args:
         return
 
     nick = args
