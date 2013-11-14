@@ -112,3 +112,35 @@ def handle_action(bot, user, channel, message):
     data['message_time'] = datetime.now()
 
     upsert_row(bot, channel, data)
+
+
+def command_add_op(bot, user, channel, args):
+    if not isAdmin(user):
+        return
+
+    nick = args
+
+    table = get_table(bot, channel)
+    res = table.find_one(nick=nick)
+    if not res:
+        return bot.say(channel, 'user not found')
+
+    data = {'id': res[0], 'op': True}
+    table.upsert(data, ['id'])
+    return bot.say(channel, 'auto-opping %s!%s@%s' % (res['nick'], res['ident'], res['host']))
+
+
+def command_remove_op(bot, user, channel, args):
+    if not isAdmin(user):
+        return
+
+    nick = args
+
+    table = get_table(bot, channel)
+    res = table.find_one(nick=nick)
+    if not res:
+        return bot.say(channel, 'user not found')
+
+    data = {'id': res[0], 'op': False}
+    table.upsert(data, ['id'])
+    return bot.say(channel, 'removed auto-op from %s!%s@%s' % (res['nick'], res['ident'], res['host']))
