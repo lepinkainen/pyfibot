@@ -89,7 +89,14 @@ def test_liveleak():
 
 def test_ebay():
     msg = 'https://ebay.com/itm/390629338875'
-    regex = u'Title: (.*?) \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from Hong Kong, HK\]'
+    regex = u'Title: .*? \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from .*?\]'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_ebay_cgi():
+    msg = 'http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&item=121136837564'
+    regex = u'Title: .*? \[\d+\.\de - over \d+ available - ships from .*?\]'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 

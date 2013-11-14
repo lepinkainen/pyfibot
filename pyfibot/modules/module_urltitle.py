@@ -946,6 +946,13 @@ def _handle_ebay_no_prefix(url):
     return _handle_ebay(url)
 
 
+def _handle_ebay_cgi(url):
+    """http*://cgi.ebay.*/ws/eBayISAPI.dll?ViewItem&item=*"""
+    item_id = url.split('item=')[1].split('&')[0]
+    fake_url = 'http://ebay.com/itm/%s' % item_id
+    return _handle_ebay(fake_url)
+
+
 def _handle_dealextreme(url):
     """http*://dx.com/p/*"""
     sku = url.split('?')[0].split('-')[-1]
