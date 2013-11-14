@@ -10,3 +10,4 @@ tvdb_api
 feedparser
 repoze.lru
 pygeoip
+dataset
