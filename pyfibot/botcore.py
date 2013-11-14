@@ -179,7 +179,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     password = None
 
     # send 1 msg per second max
-    linerate = 1
+    linerate = None
     hasQuit = False
 
     CMDCHAR = "."
@@ -249,11 +249,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self.ping(self.nickname)
 
     # TODO: Move the function here completely
-    def get_url(self, url, nocache=False, params=None, headers=None):
-        return self.factory.getUrl(url, nocache, params, headers)
+    def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
+        return self.factory.getUrl(url, nocache, params, headers, cookies)
 
-    def getUrl(self, url, nocache=False, params=None, headers=None):
-        return self.factory.getUrl(url, nocache, params, headers)
+    def getUrl(self, url, nocache=False, params=None, headers=None, cookies=None):
+        return self.factory.getUrl(url, nocache, params, headers, cookies)
 
     def log(self, message):
         botId = "%s@%s" % (self.nickname, self.network.alias)
@@ -293,7 +293,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self._command(user, reply, cmnd)
 
         # Run privmsg handlers
-        self._runhandler("privmsg", user, reply, self._to_unicode(msg))
+        self._runhandler("privmsg", user, reply, self.factory.to_unicode(msg))
 
         # run URL handlers
         urls = pyfiurl.grab(msg)
@@ -362,34 +362,16 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             for cname, command in commands:
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 # Defer commands to threads
-                d = threads.deferToThread(command, self, user, channel, self._to_unicode(args))
+                d = threads.deferToThread(command, self, user, channel, self.factory.to_unicode(args.strip()))
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
-
-    def _to_utf8(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if isinstance(_string, unicode):
-            _string = _string.encode("UTF-8")
-        return _string
-
-    def _to_unicode(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if not isinstance(_string, unicode):
-            try:
-                _string = unicode(_string)
-            except:
-                try:
-                    _string = _string.decode('utf-8')
-                except:
-                    _string = _string.decode('iso-8859-1')
-        return _string
 
     ### Overrides for twisted.words.irc core commands ###
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
 
         # Encode all outgoing messages to UTF-8
-        message = self._to_utf8(message)
+        message = self.factory.to_utf8(message)
 
         # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
         if "!" and "@" in channel:
@@ -412,28 +394,32 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         return super(PyFiBot, self).describe(channel, message)
 
     def mode(self, chan, set, modes, limit=None, user=None, mask=None):
-        chan = self._to_utf8(chan)
-        _set = self._to_utf8(set)
-        modes = self._to_utf8(modes)
+        chan = self.factory.to_utf8(chan)
+        _set = self.factory.to_utf8(set)
+        modes = self.factory.to_utf8(modes)
         return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
 
+    def kick(self, channel, user, reason=None):
+        reason = self.factory.to_utf8(reason)
+        return super(PyFiBot, self).kick(channel, user, reason)
+
     def join(self, channel, key=None):
-        channel = self._to_utf8(channel)
+        channel = self.factory.to_utf8(channel)
         return super(PyFiBot, self).join(channel, key)
 
     def leave(self, channel, key=None):
-        channel = self._to_utf8(channel)
+        channel = self.factory.to_utf8(channel)
         return super(PyFiBot, self).leave(channel, key)
 
     def quit(self, message=''):
-        message = self._to_utf8(message)
+        message = self.factory.to_utf8(message)
         return super(PyFiBot, self).quit(message)
 
     ### Overrides for twisted.words.irc internal commands ###
     def XXregister(self, nickname, hostname='foo', servername='bar'):
-        nickname = self._to_utf8(nickname)
-        hostname = self._to_utf8(hostname)
-        servername = self._to_utf8(servername)
+        nickname = self.factory.to_utf8(nickname)
+        hostname = self.factory.to_utf8(hostname)
+        servername = self.factory.to_utf8(servername)
         return super(PyFiBot, self).register(nickname, hostname, servername)
 
         self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
@@ -495,7 +481,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def noticed(self, user, channel, message):
         """I received a notice"""
-        self._runhandler("noticed", user, channel, message)
+        self._runhandler("noticed", user, channel, self.factory.to_unicode(message))
 
     def modeChanged(self, user, channel, set, modes, args):
         """Mode changed on user or channel"""
@@ -503,7 +489,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def kickedFrom(self, channel, kicker, message):
         """I was kicked from a channel"""
-        self._runhandler("kickedFrom", channel, kicker, message)
+        self._runhandler("kickedFrom", channel, kicker, self.factory.to_unicode(message))
 
     def nickChanged(self, nick):
         """I changed my nick"""
@@ -516,11 +502,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def userLeft(self, user, channel, message):
         """Someone left"""
-        self._runhandler("userLeft", user, channel, message)
+        self._runhandler("userLeft", user, channel, self.factory.to_unicode(message))
 
     def userKicked(self, kickee, channel, kicker, message):
         """Someone got kicked by someone"""
-        self._runhandler("userKicked", kickee, channel, kicker, message)
+        self._runhandler("userKicked", kickee, channel, kicker, self.factory.to_unicode(message))
 
     def action(self, user, channel, data):
         """An action"""
@@ -536,7 +522,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def receivedMOTD(self, motd):
         """MOTD"""
-        self._runhandler("receivedMOTD", motd)
+        self._runhandler("receivedMOTD", self.factory.to_unicode(motd))
 
     ## SERVER INFORMATION
 

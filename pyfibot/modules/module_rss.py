@@ -218,7 +218,7 @@ def command_rss(bot, user, channel, args):
                 rss_listfeeds(bot, user, channel, None)
             elif (subcommand == "set"):
                 target = args[2]
-                tvalue = args[3].decode("UTF-8")
+                tvalue = args[3]
                 if (target == "title"):
                     rss_modify_feed_setting(bot, feed_ident, channel, "title", tvalue)
                 elif (target == "syntax"):

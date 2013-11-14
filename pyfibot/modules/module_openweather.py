@@ -23,16 +23,21 @@ def command_weather(bot, user, channel, args):
     global default_location
     global threshold
     if args:
-        location = args.decode('utf-8')
+        location = args
     else:
         location = default_location
 
     url = 'http://openweathermap.org/data/2.5/weather?q=%s&units=metric'
     r = bot.get_url(url % location)
 
-    if 'cod' not in r.json() or int(r.json()['cod']) != 200:
+    try:
+        data = r.json()
+    except:
+        log.debug("Couldn't parse JSON.")
         return bot.say(channel, 'Error: API error.')
-    data = r.json()
+
+    if 'cod' not in data or int(data['cod']) != 200:
+        return bot.say(channel, 'Error: API error.')
 
     if 'name' not in data:
         return bot.say(channel, 'Error: Location not found.')
@@ -61,7 +66,7 @@ def command_weather(bot, user, channel, args):
     if 'wind' in data and 'speed' in data['wind']:
         wind = data['wind']['speed']  # Wind speed in mps (m/s)
 
-        feels_like = 13.12 + 0.6215 * temperature - 11.37 * (wind * 3.6) ** 0.16 + 0.3965 * temperature * (wind * 3.6) ** 0.16
+        feels_like = 13.12 + 0.6215 * temperature - 13.956 * (wind ** 0.16) + 0.4867 * temperature * (wind ** 0.16)
         text += ', feels like: %.1f°C' % feels_like
         text += ', wind: %.1f m/s' % wind
 
@@ -86,7 +91,7 @@ def command_forecast(bot, user, channel, args):
 
     global default_location
     if args:
-        location = args.decode('utf-8')
+        location = args
     else:
         location = default_location
 
@@ -115,7 +120,7 @@ def command_forecast(bot, user, channel, args):
         hours = hours_to_text(seconds / 3600)
         if date.day == cur_date.day:
             continue
-        forecast_text.append('%s: %.1f-%.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+        forecast_text.append('%s: %.1f - %.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
         if len(forecast_text) >= 3:
             break
 

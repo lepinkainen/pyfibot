@@ -59,3 +59,15 @@ def test_nine():
     msg = "http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
     module_urltitle.init(bot)
     eq_(("#channel", u"Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1:n maailmanmestari."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_ten():
+    msg = 'http://en.wikipedia.org/wiki/802.11ac'
+    module_urltitle.init(bot)
+    eq_(("#channel", u"Title: IEEE 802.11ac is a wireless computer networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5 GHz ..."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_eleven():
+    msg = 'http://en.wikipedia.org/wiki/Edison_Arantes_do_Nascimento'
+    module_urltitle.init(bot)
+    eq_(("#channel", u"Title: Edson Arantes do Nascimento, better known as Pelé, is a retired Brazilian footballer."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))

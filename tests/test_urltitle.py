@@ -7,9 +7,9 @@ from utils import check_re
 
 bot = bot_mock.BotMock()
 
-lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
-views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
-age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
+lengh_str_regex = u'\d+(h|m|s)(\d+(m))?(\d+s)?'
+views_str_regex = u'\d+(\.\d+)?(k|M|Billion|Trillion)?'
+age_str_regex = u'(FRESH|(\d+(\.\d+)?(y|d) ago))'
 
 
 def test_imdb_ignore():
@@ -66,48 +66,41 @@ def test_wiki_en():
     eq_(("#channel", u"Title: The iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
-def test_areena_radio():
-    regex = 'Title: (.*?) \[\d+ min - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (age_str_regex)
-    msg = "http://areena.yle.fi/radio/2006973"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
-def test_areena_tv():
-    regex = 'Title: (.*?) \[\d+ min - \d+ plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (age_str_regex)
-    msg = "http://areena.yle.fi/tv/1999860"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
-def test_areena_series():
-    regex = 'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
-    msg = "http://areena.yle.fi/tv/serranonperhe"
-    module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
-
-
 def test_youtube():
-    regex = 'Title: (.*?) by (.*?) \[%s - \[\**\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = u'Title: (.*?) by (.*?) \[%s - \[\** *\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
     msg = "http://www.youtube.com/watch?v=awsolTK175c"
     module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_vimeo():
-    regex = 'Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]' % (lengh_str_regex, views_str_regex, views_str_regex, age_str_regex)
+    regex = u'Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]' % (lengh_str_regex, views_str_regex, views_str_regex, age_str_regex)
     msg = 'http://vimeo.com/29996808'
     module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_liveleak():
-    regex = 'Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
+    regex = u'Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
     msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
     module_urltitle.init(bot)
-    assert check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_ebay():
     msg = 'https://ebay.com/itm/390629338875'
     eq_(("#channel", u"Title: New Nano V3 Sensor Shield I/O Extension Board Expansion Module Uno IO f Arduino | 1.2 e (postage 2.6e) | >10 available | ships from Hong Kong, HK | active"), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_dx():
+    regex = u'Title: Wireless Bluetooth Audio Music Receiver Adapter - Black \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
+    msg = 'http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_alko():
+    regex = u'Title: Sandels IV A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\de/l, oluet, 5\.30\%\]'
+    msg = 'http://www.alko.fi/tuotteet/798684/'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])

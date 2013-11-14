@@ -227,12 +227,14 @@ class PyFiBotFactory(ThrottledClientFactory):
         g['get_url'] = self.get_url
         g['getNick'] = self.getNick
         g['isAdmin'] = self.isAdmin
+        g['to_utf8'] = self.to_utf8
+        g['to_unicode'] = self.to_unicode
         return g
 
-    def get_url(self, url, nocache=False, params=None, headers=None):
-        return self.getUrl(url, nocache, params, headers)
+    def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
+        return self.getUrl(url, nocache, params, headers, cookies)
 
-    def getUrl(self, url, nocache=False, params=None, headers=None):
+    def getUrl(self, url, nocache=False, params=None, headers=None, cookies=None):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
 
         # TODO: Make this configurable in the config
@@ -242,10 +244,13 @@ class PyFiBotFactory(ThrottledClientFactory):
         s = requests.session()
         s.verify = False
         s.stream = True  # Don't fetch content unless asked
-        s.headers.update({'User-Agent':browser})
+        s.headers.update({'User-Agent': browser})
         # Custom headers from requester
         if headers:
             s.headers.update(headers)
+        # Custom cookies from requester
+        if cookies:
+            s.cookies.update(cookies)
 
         try:
             r = s.get(url, params=params)
@@ -279,6 +284,24 @@ class PyFiBotFactory(ThrottledClientFactory):
                 return True
         return False
 
+    def to_utf8(self, _string):
+        """Convert string to UTF-8 if it is unicode"""
+        if isinstance(_string, unicode):
+            _string = _string.encode("UTF-8")
+        return _string
+
+    def to_unicode(self, _string):
+        """Convert string to UTF-8 if it is unicode"""
+        if not isinstance(_string, unicode):
+            try:
+                _string = unicode(_string)
+            except:
+                try:
+                    _string = _string.decode('utf-8')
+                except:
+                    _string = _string.decode('iso-8859-1')
+        return _string
+
 
 def init_logging(config):
     logger = logging.getLogger()
@@ -292,7 +315,7 @@ def init_logging(config):
         FORMAT = "[%(asctime)-15s][%(levelname)-20s][$BOLD%(name)-15s$RESET]  %(message)s"
         # Append file name + number if debug is enabled
         if config.get('debug', False):
-            FORMAT  = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
+            FORMAT = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
         COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
         formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
     else:
@@ -300,7 +323,7 @@ def init_logging(config):
         formatter = logging.Formatter(FORMAT)
         # Append file name + number if debug is enabled
         if config.get('debug', False):
-            FORMAT  = "%s %s" % (FORMAT, " (%(filename)s:%(lineno)d)")
+            FORMAT = "%s %s" % (FORMAT, " (%(filename)s:%(lineno)d)")
 
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
