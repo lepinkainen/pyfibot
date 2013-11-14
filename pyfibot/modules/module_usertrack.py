@@ -149,3 +149,10 @@ def command_remove_op(bot, user, channel, args):
     data = {'id': res[0], 'op': False}
     table.upsert(data, ['id'])
     return bot.say(channel, 'removed auto-op from %s!%s@%s' % (res['nick'], res['ident'], res['host']))
+
+
+def command_op(bot, user, channel, args):
+    table = get_table(bot, channel)
+    if table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user), op=True):
+        log.info('opping %s by request' % user)
+        bot.mode(channel, True, 'o', user=getNick(user))
