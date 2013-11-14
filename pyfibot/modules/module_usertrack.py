@@ -21,10 +21,9 @@ def upsert_row(bot, channel, data, keys=['nick', 'ident', 'host']):
 
 def get_base_data(user):
     data = {
+        'nick': getNick(user),
         'action_time': datetime.now()
     }
-
-    data['nick'] = getNick(user)
 
     # For example kickee doesn't get full hostmask -> needs some work...
     try:
