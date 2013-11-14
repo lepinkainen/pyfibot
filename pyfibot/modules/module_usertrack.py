@@ -81,6 +81,11 @@ def handle_userKicked(bot, kickee, channel, kicker, message):
     # We don't get full info from kickee, need to update by nick only
     upsert_row(bot, channel, data, ['nick'])
 
+    # Update the kickers action also...
+    data = get_base_data(kicker)
+    data['last_action'] = 'kicked %s [%s]' % (getNick(kickee), message)
+    upsert_row(bot, channel, data)
+
 
 def handle_userRenamed(bot, user, newnick):
     data = get_base_data(user)
