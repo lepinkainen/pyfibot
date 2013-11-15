@@ -143,7 +143,7 @@ def command_add_op(bot, user, channel, args):
     if not isAdmin(user) or user == channel or not args:
         return
 
-    nick = args
+    nick = args.strip()
 
     table = get_table(bot, channel)
     res = table.find_one(nick=nick)
@@ -159,7 +159,7 @@ def command_remove_op(bot, user, channel, args):
     if not isAdmin(user) or user == channel or not args:
         return
 
-    nick = args
+    nick = args.strip()
 
     table = get_table(bot, channel)
     res = table.find_one(nick=nick)
@@ -183,7 +183,7 @@ def command_list_ops(bot, user, channel, args):
         return
 
     table = get_table(bot, channel)
-    if args == 'full':
+    if args.strip() == 'full':
         ops = ', '.join(['%s!%s@%s' % (r['nick'], r['ident'], r['host']) for r in table.find(op=True)])
     else:
         ops = ', '.join(['%s' % r['nick'] for r in table.find(op=True)])
