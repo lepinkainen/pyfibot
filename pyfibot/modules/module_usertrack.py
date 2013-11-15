@@ -176,3 +176,15 @@ def command_op(bot, user, channel, args):
     if table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user), op=True) or isAdmin(user):
         log.info('opping %s on %s by request' % (user, channel))
         bot.mode(channel, True, 'o', user=getNick(user))
+
+
+def command_list_ops(bot, user, channel, args):
+    if not isAdmin(user) or user == channel:
+        return
+
+    table = get_table(bot, channel)
+    if args == 'full':
+        ops = ', '.join(['%s!%s@%s' % (r['nick'], r['ident'], r['host']) for r in table.find(op=True)])
+    else:
+        ops = ', '.join(['%s' % r['nick'] for r in table.find(op=True)])
+    return bot.say(channel, 'ops: %s' % ops)
