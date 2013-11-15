@@ -36,6 +36,7 @@ def command_weather(bot, user, channel, args):
         return bot.say(channel, 'Error: API error.')
 
     if 'cod' not in data or int(data['cod']) != 200:
+        log.debug('status != 200')
         return bot.say(channel, 'Error: API error.')
 
     if 'name' not in data:
@@ -92,10 +93,15 @@ def command_forecast(bot, user, channel, args):
     url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=4&mode=json&units=metric'
     r = bot.get_url(url % location)
 
-    if 'cod' not in r.json() or int(r.json()['cod']) != 200:
+    try:
+        data = r.json()
+    except:
+        log.debug("Couldn't parse JSON.")
         return bot.say(channel, 'Error: API error.')
 
-    data = r.json()
+    if 'cod' not in data or int(data['cod']) != 200:
+        log.debug('status != 200')
+        return bot.say(channel, 'Error: API error.')
 
     if 'city' not in data or 'name' not in data['city']:
         return bot.say(channel, 'Error: Location not found.')
