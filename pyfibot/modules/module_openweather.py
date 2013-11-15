@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, division, unicode_literals
 import logging
-from datetime import datetime, timedelta
-from math import ceil
+from datetime import date, datetime, timedelta
 
 
 log = logging.getLogger('openweather')
@@ -84,11 +83,6 @@ def command_weather(bot, user, channel, args):
 
 
 def command_forecast(bot, user, channel, args):
-    def hours_to_text(hours):
-        if hours < 24:
-            return 'tomorrow'
-        return 'in %i days' % ceil(hours / 24)
-
     global default_location
     if args:
         location = args
@@ -111,16 +105,20 @@ def command_forecast(bot, user, channel, args):
 
     text = '%s, %s: ' % (data['city']['name'], data['city']['country'])
 
-    cur_date = datetime.now()
+    cur_date = date.today()
     forecast_text = []
     for d in data['list']:
-        date = datetime.fromtimestamp(d['dt'])
-        td = date - cur_date
-        seconds = (td.microseconds + (td.seconds + td.days * 24 * 3600) * 10**6) / 10**6
-        hours = hours_to_text(seconds / 3600)
-        if date.day == cur_date.day:
+        forecast_date = date.fromtimestamp(d['dt'])
+        date_delta = (forecast_date - cur_date).days
+
+        if date_delta == 0:
             continue
-        forecast_text.append('%s: %.1f - %.1f °C (%s)' % (hours, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+
+        if date_delta == 1:
+            forecast_text.append('tomorrow: %.1f - %.1f °C (%s)' % (d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+        else:
+            forecast_text.append('in %d days: %.1f - %.1f °C (%s)' % (date_delta, d['temp']['min'], d['temp']['max'], d['weather'][0]['description']))
+
         if len(forecast_text) >= 3:
             break
 
