@@ -73,6 +73,8 @@ def handle_userLeft(bot, user, channel, message):
     else:
         data['last_action'] = 'quit'
         for t in db.tables:
+            if not t.startswith('%s_' % bot.network.alias):
+                continue
             table = db.load_table(t)
             res = table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user))
             if res:
@@ -95,10 +97,12 @@ def handle_userKicked(bot, kickee, channel, kicker, message):
 def handle_userRenamed(bot, user, newnick):
     data = get_base_data(user)
     data['nick'] = newnick
-    data['last_action'] = 'nick change'
+    data['last_action'] = 'nick change from %s to %s' % (getNick(user), newnick)
 
     # loop through all the tables, if user exists, update nick to match
     for t in db.tables:
+        if not t.startswith('%s_' % bot.network.alias):
+            continue
         table = db.load_table(t)
         res = table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user))
         if res:
@@ -108,7 +112,7 @@ def handle_userRenamed(bot, user, newnick):
 
 def handle_action(bot, user, channel, message):
     # if action is directed to bot instead of channel -> don't log
-    if (channel == bot.nickname):
+    if channel == bot.nickname:
         return
 
     data = get_base_data(user)
@@ -120,7 +124,7 @@ def handle_action(bot, user, channel, message):
 
 
 def command_add_op(bot, user, channel, args):
-    if not isAdmin(user):
+    if not isAdmin(user) or user == channel or not args:
         return
 
     nick = args
@@ -136,7 +140,7 @@ def command_add_op(bot, user, channel, args):
 
 
 def command_remove_op(bot, user, channel, args):
-    if not isAdmin(user) or not args:
+    if not isAdmin(user) or user == channel or not args:
         return
 
     nick = args
@@ -153,6 +157,6 @@ def command_remove_op(bot, user, channel, args):
 
 def command_op(bot, user, channel, args):
     table = get_table(bot, channel)
-    if table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user), op=True):
-        log.info('opping %s by request' % user)
+    if table.find_one(nick=getNick(user), ident=getIdent(user), host=getHost(user), op=True) or isAdmin(user):
+        log.info('opping %s on %s by request' % (user, channel))
         bot.mode(channel, True, 'o', user=getNick(user))
