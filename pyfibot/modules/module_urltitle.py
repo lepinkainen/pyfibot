@@ -72,6 +72,8 @@ def __get_length_str(secs):
         lengthstr.append("%dm" % minutes)
     if seconds > 0:
         lengthstr.append("%ds" % seconds)
+    if not lengthstr:
+        lengthstr = ['0s']
     return ''.join(lengthstr)
 
 
