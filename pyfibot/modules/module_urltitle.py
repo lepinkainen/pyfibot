@@ -28,6 +28,7 @@ TITLE_LAG_MAXIMUM = 10
 # Caching for url titles
 cache_timeout = 300  # 300 second timeout for cache
 cache = ExpiringLRUCache(10, cache_timeout)
+CACHE_ENABLED = True
 
 
 def init(botref):
@@ -105,6 +106,18 @@ def __get_views(views):
     return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
 
 
+def command_cache(bot, user, channel, args):
+    global CACHE_ENABLED
+    if isAdmin(user):
+        CACHE_ENABLED = not CACHE_ENABLED
+        # cache was just disabled, clear it
+        if CACHE_ENABLED == False:
+            cache.clear()
+            bot.say(channel, 'Cache cleared')
+        msg = 'Cache status: %s'
+        bot.say(channel, msg%'ENABLED' if CACHE_ENABLED else msg%'DISABLED')
+
+
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
 
@@ -138,10 +151,11 @@ def handle_url(bot, user, channel, url, msg):
     url = url.replace("#!", "?_escaped_fragment_=")
 
     # Check if the url already has a title cached
-    # title = cache.get(url)
-    # if title:
-    #     log.debug("Cache hit")
-    #     return _title(bot, channel, title, True)
+    if CACHE_ENABLED:
+        title = cache.get(url)
+        if title:
+            log.debug("Cache hit")
+            return _title(bot, channel, title, True)
 
     # try to find a specific handler for the URL
     handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
