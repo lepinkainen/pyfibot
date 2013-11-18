@@ -19,7 +19,7 @@ def test_simple():
 
 
 def test_complex():
-    query = "what is the airspeed of an unladen swallow?"
-    target = ("#channel", u"estimated average cruising airspeed of an unladen European swallow = 11 m/s (meters per second) | (asked, but not answered, about a general swallow in the 1975 film Monty Python and the Holy Grail)")
+    query = "answer to the life universe and everything"
+    target = ("#channel", u"Answer to the Ultimate Question of Life, the Universe, and Everything = 42 | (according to Douglas Adams' humorous science-fiction novel The Hitchhiker's Guide to the Galaxy)")
     result = module_wolfram_alpha.command_wa(bot, None, "#channel", query)
     eq_(target, result)
