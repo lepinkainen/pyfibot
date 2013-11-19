@@ -45,6 +45,12 @@ class CoreCommands(object):
                 # rebuild core & update
                 log.info("rebuilding %r" % self)
                 rebuild.updateInstance(self)
+
+                # reload config file
+                if args == 'conf':
+                    self.factory.reload_config()
+                    self.say(channel, 'Configuration reloaded.')
+
                 # unload removed modules
                 self.factory._unload_removed_modules()
                 # reload modules
@@ -55,11 +61,6 @@ class CoreCommands(object):
             else:
                 self.say(channel, "Rehash OK")
                 log.info("Rehash OK")
-
-    def command_reload_conf(self, user, channel, args):
-        if self.factory.isAdmin(user):
-            # reload config file
-            self.factory.reload_config()
 
     def say(self, channel, message, length=None):
         """Must be implemented by the inheriting class"""
