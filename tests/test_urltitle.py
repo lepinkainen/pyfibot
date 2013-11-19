@@ -87,6 +87,20 @@ def test_liveleak():
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
+def test_ebay():
+    msg = 'https://ebay.com/itm/390629338875'
+    regex = u'Title: .*? \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from .*?\]'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_ebay_cgi():
+    msg = 'http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&item=121136837564'
+    regex = u'Title: .*? \[\d+\.\de - over \d+ available - ships from .*?\]'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 def test_dx():
     regex = u'Title: Wireless Bluetooth Audio Music Receiver Adapter - Black \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
     msg = 'http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659'

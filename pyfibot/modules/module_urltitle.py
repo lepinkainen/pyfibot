@@ -28,6 +28,7 @@ TITLE_LAG_MAXIMUM = 10
 # Caching for url titles
 cache_timeout = 300  # 300 second timeout for cache
 cache = ExpiringLRUCache(10, cache_timeout)
+CACHE_ENABLED = True
 
 
 def init(botref):
@@ -46,7 +47,7 @@ def __get_bs(url):
     if not r:
         return None
 
-    duration = (end-start).seconds
+    duration = (end - start).seconds
     if duration > TITLE_LAG_MAXIMUM:
         log.error("Fetching title took %d seconds, not displaying title" % duration)
         return None
@@ -72,6 +73,8 @@ def __get_length_str(secs):
         lengthstr.append("%dm" % minutes)
     if seconds > 0:
         lengthstr.append("%ds" % seconds)
+    if not lengthstr:
+        lengthstr = ['0s']
     return ''.join(lengthstr)
 
 
@@ -101,6 +104,18 @@ def __get_views(views):
     millnames = ['', 'k', 'M', 'Billion', 'Trillion']
     millidx = max(0, min(len(millnames) - 1, int(math.floor(math.log10(abs(views)) / 3.0))))
     return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
+
+
+def command_cache(bot, user, channel, args):
+    global CACHE_ENABLED
+    if isAdmin(user):
+        CACHE_ENABLED = not CACHE_ENABLED
+        # cache was just disabled, clear it
+        if not CACHE_ENABLED:
+            cache.clear()
+            bot.say(channel, 'Cache cleared')
+        msg = 'Cache status: %s' % ('ENABLED' if CACHE_ENABLED else 'DISABLED')
+        bot.say(channel, msg)
 
 
 def handle_url(bot, user, channel, url, msg):
@@ -136,10 +151,11 @@ def handle_url(bot, user, channel, url, msg):
     url = url.replace("#!", "?_escaped_fragment_=")
 
     # Check if the url already has a title cached
-    # title = cache.get(url)
-    # if title:
-    #     log.debug("Cache hit")
-    #     return _title(bot, channel, title, True)
+    if CACHE_ENABLED:
+        title = cache.get(url)
+        if title:
+            log.debug("Cache hit")
+            return _title(bot, channel, title, True)
 
     # try to find a specific handler for the URL
     handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
@@ -317,7 +333,7 @@ def _handle_tweet(url):
     if not bearer_token:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
         return
-    headers = {'Authorization': 'Bearer '+bearer_token}
+    headers = {'Authorization': 'Bearer ' + bearer_token}
 
     data = bot.get_url(infourl, headers=headers)
 
@@ -454,7 +470,7 @@ def _handle_alko(url):
     alcohol_content = bs.find('td', {'class': 'label'}, text='Alkoholi:') \
         .parent.find_all('td')[-1].text.strip().replace(',', '.').replace(' ', '')
 
-    return '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content)
+    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content))
 
 
 def _handle_salakuunneltua(url):
@@ -590,8 +606,9 @@ def _handle_areena(url):
             content_type = 'EPISODE'
 
     try:
-        if content_type in ['EPISODE', 'CLIP']:
-            name = data['reportingTitle']
+        if content_type in ['EPISODE', 'CLIP', 'PROGRAM']:
+            # sometimes there's a ": " in front of the name for some reason...
+            name = data['reportingTitle'].lstrip(': ')
             duration = __get_length_str(data['durationSec'])
             broadcasted = __get_age_str(datetime.strptime(data['published'], '%Y-%m-%dT%H:%M:%S'))
             if data['expires']:
@@ -878,6 +895,79 @@ def _handle_dailymotion(url):
         return "%s by %s [%s - %s - %s views - %s%s]" % (r['title'], r['owner.screenname'], lengthstr, stars, views, agestr, adult)
     except:
         return
+
+
+def _handle_ebay(url):
+    """http*://*.ebay.*/itm/*"""
+    try:
+        item_id = url.split('/')[-1].split('?')[0]
+    except IndexError:
+        log.debug("Couldn't find item ID.")
+        return
+
+    app_id = config.get('ebay_appid', 'RikuLind-3b6d-4c30-937c-6e7d87b5d8be')
+    # 77 == Germany, prices in EUR
+    site_id = config.get('ebay_siteid', 77)
+    currency = config.get('ebay_currency', 'e')
+
+    api_url = 'http://open.api.ebay.com/shopping'
+    params = {
+        'callname': 'GetSingleItem',
+        'responseencoding': 'JSON',
+        'appid': app_id,
+        'siteid': site_id,
+        'version': 515,
+        'ItemID': item_id,
+        'IncludeSelector': 'ShippingCosts'
+    }
+
+    r = bot.get_url(api_url, params=params)
+    # if status_code != 200 or Ack != 'Success', something went wrong and data couldn't be found.
+    if r.status_code != 200 or r.json()['Ack'] != 'Success':
+        log.debug("eBay: data couldn't be fetched.")
+        return
+
+    item = r.json()['Item']
+
+    name = item['Title']
+    # ConvertedCurrentPrice holds the value of item in currency determined by site id
+    price = item['ConvertedCurrentPrice']['Value']
+    location = '%s, %s' % (item['Location'], item['Country'])
+
+    ended = ''
+    if item['ListingStatus'] != 'Active':
+        ended = ' - ENDED'
+
+    if 'ShippingCostSummary' in item and \
+       'ShippingServiceCost' in item['ShippingCostSummary'] and \
+       item['ShippingCostSummary']['ShippingServiceCost']['Value'] != 0:
+            price = '%.1f%s (postage %.1f%s)' % (
+                price, currency,
+                item['ShippingCostSummary']['ShippingServiceCost']['Value'], currency)
+    else:
+        price = '%.1f%s' % (price, currency)
+
+    try:
+        if item['QuantityAvailableHint'] == 'MoreThan':
+            availability = 'over %i available' % item['QuantityThreshold']
+        else:
+            availability = '%d available' % item['QuantityThreshold']
+        return '%s [%s - %s - ships from %s%s]' % (name, price, availability, location, ended)
+    except KeyError:
+        log.debug('eBay: quantity available not be found.')
+        return '%s [%s - ships from %s%s]' % (name, price, location, ended)
+
+
+def _handle_ebay_no_prefix(url):
+    """http*://ebay.*/itm/*"""
+    return _handle_ebay(url)
+
+
+def _handle_ebay_cgi(url):
+    """http*://cgi.ebay.*/ws/eBayISAPI.dll?ViewItem&item=*"""
+    item_id = url.split('item=')[1].split('&')[0]
+    fake_url = 'http://ebay.com/itm/%s' % item_id
+    return _handle_ebay(fake_url)
 
 
 def _handle_dealextreme(url):

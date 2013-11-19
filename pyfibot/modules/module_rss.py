@@ -55,11 +55,12 @@ t = None
 t2 = None
 indexfeeds_callLater = None
 output_callLater = None
+rssconfig = None
 
 
 def event_signedon(bot):
     """Starts rotators"""
-    global indexfeeds_callLater, output_callLater
+    global indexfeeds_callLater, output_callLater, rssconfig
     if not init_ok:
         log.error("Config not ok, not starting rotators")
         return False
@@ -104,11 +105,11 @@ def rss_addfeed(bot, user, channel, feed_url, output_syntax):
         feed_title = feed_data['feed']['title']
     except KeyError, e:
         return bot.say(channel, "Nothing inserted to database. Probably you mistyped URL?")
-    """Initialize connection to database-file"""
+    # Initialize connection to database-file
     db_conn = sqlite3.connect(rssconfig["database"])
     d = db_conn.cursor()
 
-    """Lets create scheme if the database-file does not exist"""
+    # Lets create scheme if the database-file does not exist
     try:
         fileinfo = os.stat(rssconfig["database"])
 

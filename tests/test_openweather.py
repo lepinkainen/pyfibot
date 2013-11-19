@@ -8,10 +8,10 @@ bot = bot_mock.BotMock()
 
 
 def test_weather():
-    regex = u'Lappeenranta, FI: Temperature: \d+.\d\xb0C, feels like: \d+.\d\xb0C, wind: \d+.\d m/s, humidity: \d+%, pressure: \d+ hPa, cloudiness: \d+%'
+    regex = u'(Lappeenranta, FI: Temperature: -?\d+.\d\xb0C, feels like: -?\d+.\d\xb0C, wind: \d+.\d m/s, humidity: \d+%, pressure: \d+ hPa, cloudiness: \d+%)|(Error: API error.)'
     check_re(regex, module_openweather.command_weather(bot, None, "#channel", 'lappeenranta')[1])
 
 
 def test_forecast():
-    regex = u'Lappeenranta, FI: tomorrow: \d+.\d-\d+.\d \xb0C \(.*?\), in 2 days: \d+.\d-\d+.\d \xb0C \(.*?\), in 3 days: \d+.\d-\d+.\d \xb0C \(.*?\)'
+    regex = u'(Lappeenranta, FI: tomorrow: -?\d+.\d - -?\d+.\d \xb0C \(.*?\), in 2 days: -?\d+.\d - -?\d+.\d \xb0C \(.*?\), in 3 days: -?\d+.\d - -?\d+.\d \xb0C \(.*?\))|(Error: API error.)'
     check_re(regex, module_openweather.command_forecast(bot, None, "#channel", 'lappeenranta')[1])
