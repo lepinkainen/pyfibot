@@ -4,7 +4,7 @@ from __future__ import unicode_literals, print_function, division
 
 
 def calc_bmi(height, weight):
-    return  (float(weight) / height ** 2) * 10000
+    return (float(weight) / height ** 2) * 10000
 
 
 def print_bmi(bmi):

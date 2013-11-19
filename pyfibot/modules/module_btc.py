@@ -50,8 +50,8 @@ def gen_string(bot, coin="BTC", currency="EUR"):
 
     data = r.json()['data']
 
-    avg  = data['avg']['display_short']
-    low  = data['low']['display_short']
+    avg = data['avg']['display_short']
+    low = data['low']['display_short']
     high = data['high']['display_short']
     vol = data['vol']['display_short']
 
