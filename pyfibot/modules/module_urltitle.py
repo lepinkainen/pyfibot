@@ -111,11 +111,11 @@ def command_cache(bot, user, channel, args):
     if isAdmin(user):
         CACHE_ENABLED = not CACHE_ENABLED
         # cache was just disabled, clear it
-        if CACHE_ENABLED == False:
+        if not CACHE_ENABLED:
             cache.clear()
             bot.say(channel, 'Cache cleared')
-        msg = 'Cache status: %s'
-        bot.say(channel, msg%'ENABLED' if CACHE_ENABLED else msg%'DISABLED')
+        msg = 'Cache status: %s' % ('ENABLED' if CACHE_ENABLED else 'DISABLED')
+        bot.say(channel, msg)
 
 
 def handle_url(bot, user, channel, url, msg):
