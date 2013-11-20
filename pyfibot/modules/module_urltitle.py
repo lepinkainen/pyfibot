@@ -642,7 +642,6 @@ def _handle_wikipedia(url):
         page = bot.to_unicode(urlparse.unquote(url.split('/')[-1]))
         if page.startswith('index.php') and 'title' in page:
             page = page.split('?title=')[1]
-        print(page)
         return page
 
     def get_content(url):
