@@ -40,7 +40,7 @@ def command_wa(bot, user, channel, args):
     """Query Wolfram Alpha"""
     if not appid:
         log.warn("Appid not specified in configuration!")
-        return
+        return False
 
     r = bot.get_url(query % (urllib.quote(args.encode('utf-8')), appid))
 
