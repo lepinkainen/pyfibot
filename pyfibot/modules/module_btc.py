@@ -12,7 +12,11 @@ def command_btc(bot, user, channel, args):
     if args:
         currencies = args.split(" ")
 
-    return bot.say(channel, get_coin_value(bot, "BTC", currencies))
+    value = get_coin_value(bot, "BTC", currencies)
+    if value:
+        return bot.say(channel, value)
+    log.debug('Failed to fetch value with currencies "%s"' % args)
+    return bot.say(channel, 'Failed to fetch BTC value.')
 
 
 def command_ltc(bot, user, channel, args):
@@ -22,7 +26,11 @@ def command_ltc(bot, user, channel, args):
     if args:
         currencies = args.split(" ")
 
-    return bot.say(channel, get_coin_value(bot, "LTC", currencies))
+    value = get_coin_value(bot, "LTC", currencies)
+    if value:
+        return bot.say(channel, value)
+    log.debug('Failed to fetch value with currencies "%s"' % args)
+    return bot.say(channel, 'Failed to fetch LTC value.')
 
 
 def get_coin_value(bot, coin, currencies):
