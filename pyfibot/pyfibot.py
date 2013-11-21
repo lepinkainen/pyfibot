@@ -412,14 +412,14 @@ def read_config():
 
 def validate_config(config):
     schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
-    print("Validating configuration")
+    log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
     if not v.is_valid(config):
-        print("Error(s) in configuration:")
+        log.error("Error(s) in configuration:")
         for error in sorted(v.iter_errors(config), key=str):
-            print(error)
+            log.error(error)
         return False
-    print("config ok")
+    log.info("Config ok")
     return True
 
 
