@@ -13,7 +13,7 @@ def handle_url(bot, user, channel, url, msg):
 
     s = requests.session()
     s.stream = True  # Don't fetch content unless asked
-    s.headers.update({'User-Agent':browser})
+    s.headers.update({'User-Agent': browser})
 
     # Be quiet on errors as this is not that important
     try:

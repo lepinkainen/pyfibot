@@ -4,7 +4,9 @@ import os.path
 import sys
 import socket
 
+# http://dev.maxmind.com/geoip/legacy/geolite/
 DATAFILE = os.path.join(sys.path[0], "GeoIP.dat")
+
 # STANDARD = reload from disk
 # MEMORY_CACHE = load to memory
 # MMAP_CACHE = memory using mmap

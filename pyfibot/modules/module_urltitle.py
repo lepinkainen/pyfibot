@@ -28,6 +28,7 @@ TITLE_LAG_MAXIMUM = 10
 # Caching for url titles
 cache_timeout = 300  # 300 second timeout for cache
 cache = ExpiringLRUCache(10, cache_timeout)
+CACHE_ENABLED = True
 
 
 def init(botref):
@@ -72,6 +73,8 @@ def __get_length_str(secs):
         lengthstr.append("%dm" % minutes)
     if seconds > 0:
         lengthstr.append("%ds" % seconds)
+    if not lengthstr:
+        lengthstr = ['0s']
     return ''.join(lengthstr)
 
 
@@ -101,6 +104,18 @@ def __get_views(views):
     millnames = ['', 'k', 'M', 'Billion', 'Trillion']
     millidx = max(0, min(len(millnames) - 1, int(math.floor(math.log10(abs(views)) / 3.0))))
     return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
+
+
+def command_cache(bot, user, channel, args):
+    global CACHE_ENABLED
+    if isAdmin(user):
+        CACHE_ENABLED = not CACHE_ENABLED
+        # cache was just disabled, clear it
+        if not CACHE_ENABLED:
+            cache.clear()
+            bot.say(channel, 'Cache cleared')
+        msg = 'Cache status: %s' % ('ENABLED' if CACHE_ENABLED else 'DISABLED')
+        bot.say(channel, msg)
 
 
 def handle_url(bot, user, channel, url, msg):
@@ -136,10 +151,11 @@ def handle_url(bot, user, channel, url, msg):
     url = url.replace("#!", "?_escaped_fragment_=")
 
     # Check if the url already has a title cached
-    # title = cache.get(url)
-    # if title:
-    #     log.debug("Cache hit")
-    #     return _title(bot, channel, title, True)
+    if CACHE_ENABLED:
+        title = cache.get(url)
+        if title:
+            log.debug("Cache hit")
+            return _title(bot, channel, title, True)
 
     # try to find a specific handler for the URL
     handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
@@ -590,8 +606,9 @@ def _handle_areena(url):
             content_type = 'EPISODE'
 
     try:
-        if content_type in ['EPISODE', 'CLIP']:
-            name = data['reportingTitle']
+        if content_type in ['EPISODE', 'CLIP', 'PROGRAM']:
+            # sometimes there's a ": " in front of the name for some reason...
+            name = data['reportingTitle'].lstrip(': ')
             duration = __get_length_str(data['durationSec'])
             broadcasted = __get_age_str(datetime.strptime(data['published'], '%Y-%m-%dT%H:%M:%S'))
             if data['expires']:
@@ -625,7 +642,6 @@ def _handle_wikipedia(url):
         page = bot.to_unicode(urlparse.unquote(url.split('/')[-1]))
         if page.startswith('index.php') and 'title' in page:
             page = page.split('?title=')[1]
-        print(page)
         return page
 
     def get_content(url):

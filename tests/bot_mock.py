@@ -6,6 +6,9 @@ from pyfibot import botcore
 class BotMock(botcore.CoreCommands):
     config = {}
 
+    def __init__(self, config={}):
+        self.config = config
+
     def get_url(self, url, params={}, nocache=False, cookies=None):
         print("Getting url %s" % url)
         if cookies:
