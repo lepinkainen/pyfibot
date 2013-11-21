@@ -46,8 +46,15 @@ class CoreCommands(object):
                 log.info("rebuilding %r" % self)
                 rebuild.updateInstance(self)
 
-                self.factory._loadmodules()
+                # reload config file
+                if args == 'conf':
+                    self.factory.reload_config()
+                    self.say(channel, 'Configuration reloaded.')
 
+                # unload removed modules
+                self.factory._unload_removed_modules()
+                # reload modules
+                self.factory._loadmodules()
             except Exception, e:
                 self.say(channel, "Rehash error: %s" % e)
                 log.error("Rehash error: %s" % e)
@@ -198,7 +205,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def __repr__(self):
         return 'PyFiBot(%r, %r)' % (self.nickname, self.network.address)
 
-    """Core"""
+    # Core
     def printResult(self, msg, info):
         # Don't print results if there is nothing to say (usually non-operation on module)
         if msg:
@@ -262,7 +269,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def callLater(self, delay, callable):
         self.callLater(delay, callable)
 
-    """Communication"""
+    # Communication
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message.
         @param user: nick!user@host
@@ -422,7 +429,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         servername = self.factory.to_utf8(servername)
         return super(PyFiBot, self).register(nickname, hostname, servername)
 
-        self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
+        #self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
         #self.register(nickname, hostname, servername)
 
     ### LOW-LEVEL IRC HANDLERS ###

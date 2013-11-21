@@ -19,6 +19,7 @@ import logging
 import logging.handlers
 import json
 import jsonschema
+from copy import deepcopy
 
 import colorlogger
 USE_COLOR = True
@@ -45,6 +46,7 @@ import socket
 socket.setdefaulttimeout(20)
 
 import botcore
+from util.dictdiffer import DictDiffer
 
 log = logging.getLogger('core')
 
@@ -214,6 +216,20 @@ class PyFiBotFactory(ThrottledClientFactory):
             # Add to namespace so we can find it later
             self.ns[module] = (env, env)
 
+    def _unload_removed_modules(self):
+        """Unload modules removed from modules -directory"""
+        # find all modules in namespace, which aren't present in modules -directory
+        removed_modules = [m for m in self.ns if not m in self._findmodules()]
+
+        for m in removed_modules:
+            # finalize module before deleting it
+            # TODO: use general _finalize_modules instead of copy-paste
+            if 'finalize' in self.ns[m][0]:
+                log.info("finalize - %s" % m)
+                self.ns[m][0]['finalize']()
+            del self.ns[m]
+            log.info('removed module - %s' % m)
+
     def _findmodules(self):
         """Find all modules"""
         modules = [m for m in os.listdir(self.moduledir) if m.startswith("module_") and m.endswith(".py")]
@@ -302,6 +318,59 @@ class PyFiBotFactory(ThrottledClientFactory):
                     _string = _string.decode('iso-8859-1')
         return _string
 
+    def reload_config(self):
+        """Reload config-file while bot is running (on rehash)"""
+        log = logging.getLogger('reload_config')
+
+        config = read_config()
+        if not config:
+            return
+
+        valid_config = validate_config(config)
+        if not valid_config:
+            log.info('Invalid config file!')
+            return
+
+        log.info('Valid config file found, reloading...')
+        # ignore nick and networks, as we don't want rehash to change these values
+        ignored = ['nick', 'networks']
+        # make a deep copy of old config, so we don't remove values from it
+        old_config = deepcopy(self.config)
+        # remove ignored values to make comparing/updating easier and safer
+        for k in ignored:
+            old_config.pop(k, {})
+            config.pop(k, {})
+
+        # Get diff between configs
+        dd = DictDiffer(config, old_config)
+
+        for k in dd.added():
+            log.info('%s added (%s: %s' % (k, k, config[k]))
+            self.config[k] = config[k]
+        for k in dd.removed():
+            log.info('%s removed (%s: %s)' % (k, k, old_config[k]))
+            del self.config[k]
+        for k in dd.changed():
+            log.info('%s changed' % k)
+            # compare configs
+            d = DictDiffer(config[k], old_config[k])
+            # add all changes to a big list
+            changes = list(d.added())
+            changes.extend(list(d.removed()))
+            changes.extend(list(d.changed()))
+            # loop through changes and log them individually
+            for x in changes:
+                log.info('%s[\'%s\']: \'%s\' -> \'%s\'' % (k, x, old_config[k].get(x, {}), config[k].get(x, {})))
+            # replace the whole object
+            self.config[k] = config[k]
+
+        # change logging level, default to INFO
+        log_level = config.get('logging', {}).get('debug', False)
+        if log_level:
+            logging.root.setLevel(logging.DEBUG)
+        else:
+            logging.root.setLevel(logging.INFO)
+
 
 def init_logging(config):
     logger = logging.getLogger()
@@ -330,29 +399,37 @@ def init_logging(config):
     logger.addHandler(handler)
 
 
-def validate_config(config, schema):
-    print("Validating configuration")
+def read_config():
+    config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
+
+    if os.path.exists(config_file):
+        config = yaml.load(file(config_file))
+    else:
+        print("No config file found, please edit example.yml and rename it to config.yml")
+        return
+    return config
+
+
+def validate_config(config):
+    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
+    log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
     if not v.is_valid(config):
-        print("Error(s) in configuration:")
+        log.error("Error(s) in configuration:")
         for error in sorted(v.iter_errors(config), key=str):
-            print(error)
-    else:
-        print("config ok")
+            log.error(error)
+        return False
+    log.info("Config ok")
+    return True
 
 
 def main():
     sys.path.append(os.path.join(sys.path[0], 'lib'))
-    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
-    config = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
-    if os.path.exists(config):
-        config = yaml.load(file(config))
-    else:
-        print("No config file found, please edit example.yml and rename it to config.yml")
+    config = read_config()
+    # if config not found or can't validate it, exit with error
+    if not config or not validate_config(config):
         sys.exit(1)
-
-    validate_config(config, schema)
 
     init_logging(config.get('logging', {}))
 
