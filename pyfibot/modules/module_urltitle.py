@@ -164,6 +164,9 @@ def handle_url(bot, user, channel, url, msg):
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
             title = ref(url)
+            if title is False:
+                log.debug("Title disabled by handler.")
+                return
             if title:
                 cache.put(url, title)
                 # handler found, abort
@@ -475,7 +478,7 @@ def _handle_alko(url):
 
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
-    return None
+    return False
 
 
 def _handle_vimeo(url):
@@ -558,7 +561,7 @@ def _handle_aamulehti(url):
 
 def _handle_apina(url):
     """http://apina.biz/*"""
-    return None
+    return False
 
 
 def _handle_areena(url):
@@ -1036,3 +1039,8 @@ def _handle_instagram(url):
         user = media.user.username
 
     return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
+
+
+def _handle_github(url):
+    """http*://*github.com*"""
+    return False
