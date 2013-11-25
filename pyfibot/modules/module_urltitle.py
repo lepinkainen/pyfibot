@@ -1016,7 +1016,7 @@ def _handle_instagram(url):
     api = InstagramAPI(client_id=CLIENT_ID)
 
     # todo: instagr.am
-    m = re.search('instagram\.com/p/([\w]+)/', url)
+    m = re.search('instagram\.com/p/([^/]+)/', url)
     if not m:
         return
 
@@ -1026,6 +1026,13 @@ def _handle_instagram(url):
 
     media = api.media(r.json()['media_id'])
 
-    # media type?
+    # media type video/image?
     # age/date? -> media.created_time  # (datetime object)
-    return "%s (%s): %s [%d likes, %d comments]" % (media.user.full_name, media.user.username, media.caption.text, media.like_count, media.comment_count)
+
+    # full name = username for some users, don't bother displaying both
+    if media.user.full_name != media.user.username:
+        user = "%s (%s)" % (media.user.full_name, media.user.username)
+    else:
+        user = media.user.username
+
+    return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
