@@ -10,3 +10,7 @@ tvdb_api
 feedparser
 repoze.lru
 pygeoip
+dataset
+python-instagram
+simplejson >= 3.0.0
+httplib2 >= 0.8.0

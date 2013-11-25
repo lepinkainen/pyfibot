@@ -1005,3 +1005,27 @@ def _handle_dealextreme(url):
 def _handle_dealextreme_www(url):
     """http*://www.dx.com/p/*"""
     return _handle_dealextreme(url)
+
+
+def _handle_instagram(url):
+    """http*://instagram.com/p/*"""
+    from instagram.client import InstagramAPI
+
+    CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
+
+    api = InstagramAPI(client_id=CLIENT_ID)
+
+    # todo: instagr.am
+    m = re.search('instagram\.com/p/([\w]+)/', url)
+    if not m:
+        return
+
+    shortcode = m.group(1)
+
+    r = bot.get_url("http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
+
+    media = api.media(r.json()['media_id'])
+
+    # media type?
+    # age/date? -> media.created_time  # (datetime object)
+    return "%s (%s): %s [%d likes, %d comments]" % (media.user.full_name, media.user.username, media.caption.text, media.like_count, media.comment_count)
