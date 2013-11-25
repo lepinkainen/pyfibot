@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 log = logging.getLogger("urltitle")
 config = None
 bot = None
+handlers = []
 
 TITLE_LAG_MAXIMUM = 10
 
@@ -34,8 +35,11 @@ CACHE_ENABLED = True
 def init(botref):
     global config
     global bot
+    global handlers
     bot = botref
     config = bot.config.get("module_urltitle", {})
+    # load handlers in init, as the data doesn't change between rehashes anyways
+    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
 
 
 def __get_bs(url):
@@ -157,9 +161,8 @@ def handle_url(bot, user, channel, url, msg):
             log.debug("Cache hit")
             return _title(bot, channel, title, True)
 
+    global handlers
     # try to find a specific handler for the URL
-    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
-
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
