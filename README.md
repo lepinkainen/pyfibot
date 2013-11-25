@@ -12,19 +12,27 @@ Installation
 Module hilights
 ---------------
 
- - URL title fetching with custom handlers for IMDb, Youtube and many others
- - URL size
- - Wolfram Alpha searches
- - RSS
+ - URL title fetching with custom handlers via API calls for speed and efficiency
+   - IMDb
+   - Youtube / Dailymotion / Liveleak
+   - Wikipedia
+   - Imgur
+   - Instagram
+   - eBay
+   - Spotify
+ - Bitcoin exchange rates
+ - Wolfram Alpha queries
+ - Weather
+ - RSS support
 
 Features
 --------
  - Modular
- - Live refresh of modules
+ - Live refresh of modules and configuration
  - Coder friendly (a basic module requires just 2 lines of boilerplate code)
  - SSL-support
  - IPv6-support
- - Optional virtualenv-support
+ - virtualenv-support
 
 Support can be found at #pyfibot on irc.nerv.fi and please contact yllapito@nerv.fi if you want to connect outside of Finland (will be changed) or need help with IRC-network.
 
