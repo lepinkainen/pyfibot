@@ -244,3 +244,35 @@ def command_list_ops(bot, user, channel, args):
     else:
         ops = ', '.join(['%s' % r['nick'] for r in table.find(op=True)])
     return bot.say(channel, 'ops: %s' % ops)
+
+
+def __get_length_str(secs):
+    lengthstr = []
+    hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
+    if hours > 0:
+        lengthstr.append("%dh" % hours)
+    if minutes > 0:
+        lengthstr.append("%dm" % minutes)
+    if seconds > 0:
+        lengthstr.append("%ds" % seconds)
+    if not lengthstr:
+        lengthstr = ['0s']
+    return ''.join(lengthstr)
+
+
+def command_seen(bot, user, channel, args):
+    '''Displays the last action by the given user'''
+    table = get_table(bot, channel)
+
+    # TODO: Implement quits and parts, others?
+    # Return the first match, there shouldn't be multiples anyway
+    user = table.find_one(nick=args)
+    if user:
+        return bot.say(channel, "Last message by %s: '%s' at %s (%s ago)" %
+                       (user['nick'],
+                        user['last_message'],
+                        '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
+                        __get_length_str( (datetime.now() - user['message_time']).seconds)
+                        ))
+    else:
+        return bot.say(channel, "I haven't seen %s on %s" % (args, channel))
