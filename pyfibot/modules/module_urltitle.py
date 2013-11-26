@@ -481,21 +481,23 @@ def _handle_salakuunneltua(url):
 def _handle_vimeo(url):
     """*vimeo.com/*"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
-    match = re.match("http://.*?vimeo.com/(\d+)", url)
-    if match:
-        # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
-        infourl = data_url % match.group(1)
-        r = bot.get_url(infourl)
-        info = r.json()[0]
-        title = info['title']
-        user = info['user_name']
-        likes = __get_views(info['stats_number_of_likes'])
-        views = __get_views(info['stats_number_of_plays'])
+    match = re.match("http(s?)://.*?vimeo.com/(\d+)", url)
+    if not match:
+        return None
 
-        agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
-        lengthstr = __get_length_str(info['duration'])
+    # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
+    infourl = data_url % match.group(2)
+    r = bot.get_url(infourl)
+    info = r.json()[0]
+    title = info['title']
+    user = info['user_name']
+    likes = __get_views(info.get('stats_number_of_likes', 0))
+    views = __get_views(info.get('stats_number_of_plays', 0))
 
-        return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
+    agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
+    lengthstr = __get_length_str(info['duration'])
+
+    return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
 def _handle_stackoverflow(url):
