@@ -1038,10 +1038,10 @@ def _handle_instagram(url):
     # age/date? -> media.created_time  # (datetime object)
 
     # full name = username for some users, don't bother displaying both
-    if media.user.full_name != media.user.username:
+    if media.user.full_name.lower() != media.user.username.lower():
         user = "%s (%s)" % (media.user.full_name, media.user.username)
     else:
-        user = media.user.username
+        user = media.user.full_name
 
     return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
 
