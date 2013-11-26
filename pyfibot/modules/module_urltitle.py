@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 log = logging.getLogger("urltitle")
 config = None
 bot = None
+handlers = []
 
 TITLE_LAG_MAXIMUM = 10
 
@@ -34,8 +35,11 @@ CACHE_ENABLED = True
 def init(botref):
     global config
     global bot
+    global handlers
     bot = botref
     config = bot.config.get("module_urltitle", {})
+    # load handlers in init, as the data doesn't change between rehashes anyways
+    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
 
 
 def __get_bs(url):
@@ -157,13 +161,15 @@ def handle_url(bot, user, channel, url, msg):
             log.debug("Cache hit")
             return _title(bot, channel, title, True)
 
+    global handlers
     # try to find a specific handler for the URL
-    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
-
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
             title = ref(url)
+            if title is False:
+                log.debug("Title disabled by handler.")
+                return
             if title:
                 cache.put(url, title)
                 # handler found, abort
@@ -475,27 +481,29 @@ def _handle_alko(url):
 
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
-    return None
+    return False
 
 
 def _handle_vimeo(url):
     """*vimeo.com/*"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
-    match = re.match("http://.*?vimeo.com/(\d+)", url)
-    if match:
-        # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
-        infourl = data_url % match.group(1)
-        r = bot.get_url(infourl)
-        info = r.json()[0]
-        title = info['title']
-        user = info['user_name']
-        likes = __get_views(info['stats_number_of_likes'])
-        views = __get_views(info['stats_number_of_plays'])
+    match = re.match("http(s?)://.*?vimeo.com/(\d+)", url)
+    if not match:
+        return None
 
-        agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
-        lengthstr = __get_length_str(info['duration'])
+    # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
+    infourl = data_url % match.group(2)
+    r = bot.get_url(infourl)
+    info = r.json()[0]
+    title = info['title']
+    user = info['user_name']
+    likes = __get_views(info.get('stats_number_of_likes', 0))
+    views = __get_views(info.get('stats_number_of_plays', 0))
 
-        return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
+    agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
+    lengthstr = __get_length_str(info['duration'])
+
+    return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
 def _handle_stackoverflow(url):
@@ -558,7 +566,7 @@ def _handle_aamulehti(url):
 
 def _handle_apina(url):
     """http://apina.biz/*"""
-    return None
+    return False
 
 
 def _handle_areena(url):
@@ -1016,7 +1024,7 @@ def _handle_instagram(url):
     api = InstagramAPI(client_id=CLIENT_ID)
 
     # todo: instagr.am
-    m = re.search('instagram\.com/p/([\w]+)/', url)
+    m = re.search('instagram\.com/p/([^/]+)/', url)
     if not m:
         return
 
@@ -1026,6 +1034,18 @@ def _handle_instagram(url):
 
     media = api.media(r.json()['media_id'])
 
-    # media type?
+    # media type video/image?
     # age/date? -> media.created_time  # (datetime object)
-    return "%s (%s): %s [%d likes, %d comments]" % (media.user.full_name, media.user.username, media.caption.text, media.like_count, media.comment_count)
+
+    # full name = username for some users, don't bother displaying both
+    if media.user.full_name != media.user.username:
+        user = "%s (%s)" % (media.user.full_name, media.user.username)
+    else:
+        user = media.user.username
+
+    return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
+
+
+def _handle_github(url):
+    """http*://*github.com*"""
+    return False
