@@ -22,6 +22,7 @@ from bs4 import BeautifulSoup
 log = logging.getLogger("urltitle")
 config = None
 bot = None
+handlers = []
 
 TITLE_LAG_MAXIMUM = 10
 
@@ -34,8 +35,11 @@ CACHE_ENABLED = True
 def init(botref):
     global config
     global bot
+    global handlers
     bot = botref
     config = bot.config.get("module_urltitle", {})
+    # load handlers in init, as the data doesn't change between rehashes anyways
+    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
 
 
 def __get_bs(url):
@@ -157,13 +161,15 @@ def handle_url(bot, user, channel, url, msg):
             log.debug("Cache hit")
             return _title(bot, channel, title, True)
 
+    global handlers
     # try to find a specific handler for the URL
-    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
-
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):
             title = ref(url)
+            if title is False:
+                log.debug("Title disabled by handler.")
+                return
             if title:
                 cache.put(url, title)
                 # handler found, abort
@@ -475,7 +481,7 @@ def _handle_alko(url):
 
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
-    return None
+    return False
 
 
 def _handle_vimeo(url):
@@ -560,7 +566,7 @@ def _handle_aamulehti(url):
 
 def _handle_apina(url):
     """http://apina.biz/*"""
-    return None
+    return False
 
 
 def _handle_areena(url):
@@ -1038,3 +1044,8 @@ def _handle_instagram(url):
         user = media.user.username
 
     return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
+
+
+def _handle_github(url):
+    """http*://*github.com*"""
+    return False
