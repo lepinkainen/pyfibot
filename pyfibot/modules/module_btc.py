@@ -5,6 +5,14 @@ import logging
 log = logging.getLogger("mtgox")
 
 
+def command_bsbtc(bot, user, channel, args):
+    """Display current BTC exchange rates from bitstamp"""
+    r = bot.get_url("https://www.bitstamp.net/api/ticker/")
+    j = r.json()
+
+    bot.say(channel, "BitStamp: bid:$%s last:$%s low:$%s high:$%s vol:%s" % (j['bid'], j['last'], j['low'], j['high'], j['volume']))
+
+
 def command_btc(bot, user, channel, args):
     """Display current BTC exchange rates from mtgox. Usage: btc [whitespace separated list of currency codes]"""
     currencies = ["EUR"]
@@ -12,43 +20,29 @@ def command_btc(bot, user, channel, args):
     if args:
         currencies = args.split(" ")
 
-    value = get_coin_value(bot, "BTC", currencies)
+    value = _get_coin_value(bot, "BTC", currencies)
     if value:
-        return bot.say(channel, value)
+        return bot.say(channel, "MtGox: %s" % value)
     log.debug('Failed to fetch value with currencies "%s"' % args)
     return bot.say(channel, 'Failed to fetch BTC value.')
 
 
-def command_ltc(bot, user, channel, args):
-    """Display current LTC exchange rates from mtgox. Usage: ltc [whitespace separated list of currency codes]"""
-    currencies = ["EUR"]
-
-    if args:
-        currencies = args.split(" ")
-
-    value = get_coin_value(bot, "LTC", currencies)
-    if value:
-        return bot.say(channel, value)
-    log.debug('Failed to fetch value with currencies "%s"' % args)
-    return bot.say(channel, 'Failed to fetch LTC value.')
-
-
-def get_coin_value(bot, coin, currencies):
+def _get_coin_value(bot, coin, currencies):
 
     rates = []
 
     for currency in currencies:
-        rate = gen_string(bot, coin, currency)
+        rate = _gen_string(bot, coin, currency)
         if rate:
             rates.append(rate)
 
     if rates:
-        return "1 %s = %s" % (coin, " | ".join(rates))
+        return " | ".join(rates)
     else:
         return None
 
 
-def gen_string(bot, coin="BTC", currency="EUR"):
+def _gen_string(bot, coin="BTC", currency="EUR"):
     r = bot.get_url("http://data.mtgox.com/api/2/%s%s/money/ticker" % (coin, currency.upper()))
 
     if r.json()['result'] != 'success':
