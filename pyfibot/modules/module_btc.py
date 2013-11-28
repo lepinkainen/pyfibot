@@ -2,7 +2,15 @@
 from __future__ import unicode_literals, print_function, division
 import logging
 
-log = logging.getLogger("mtgox")
+log = logging.getLogger("cryptocoin")
+
+
+def command_ltc(bot, user, channel, args):
+    """Display current LRC exchange rates from BTC-E"""
+    r = bot.get_url("https://btc-e.com/api/2/ltc_usd/ticker")
+    j = r.json()['ticker']
+
+    return bot.say(channel, "BTC-E: avg:$%s last:$%s low:$%s high:$%s vol:%s" % (j['avg'], j['last'], j['low'], j['high'], j['vol']))
 
 
 def command_bsbtc(bot, user, channel, args):
