@@ -8,9 +8,13 @@ log = logging.getLogger("mtgox")
 def command_bsbtc(bot, user, channel, args):
     """Display current BTC exchange rates from bitstamp"""
     r = bot.get_url("https://www.bitstamp.net/api/ticker/")
-    j = r.json()
+    try:
+        j = r.json()
+    except AttributeError:
+        print r.text
+        return
 
-    bot.say(channel, "BitStamp: bid:$%s last:$%s low:$%s high:$%s vol:%s" % (j['bid'], j['last'], j['low'], j['high'], j['volume']))
+    return bot.say(channel, "BitStamp: bid:$%s last:$%s low:$%s high:$%s vol:%s" % (j['bid'], j['last'], j['low'], j['high'], j['volume']))
 
 
 def command_btc(bot, user, channel, args):
