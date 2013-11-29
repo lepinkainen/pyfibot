@@ -83,7 +83,16 @@ def __get_length_str(secs):
 
 
 def __get_age_str(published):
-    age = datetime.now() - published
+    now = datetime.now()
+
+    # Check if the publish date is in the future (upcoming episode)
+    if published > now:
+        age = published - now
+        future = True
+    else:
+        age = now - published
+        future = False
+
     halfyears, days = age.days // 182, age.days % 365
     agestr = []
     years = halfyears * 0.5
@@ -94,7 +103,7 @@ def __get_age_str(published):
         agestr.append("%dd" % days)
     # complete the age string
     if agestr and days != 0:
-        agestr.append(" ago")
+        agestr.append(" from now" if future else " ago")
     elif years == 0 and days == 0:  # uploaded TODAY, whoa.
         agestr.append("FRESH")
     else:
