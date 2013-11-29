@@ -19,7 +19,7 @@ def command_bsbtc(bot, user, channel, args):
     try:
         j = r.json()
     except AttributeError:
-        print r.text
+        print(r.text)
         return
 
     return bot.say(channel, "BitStamp: bid:$%s last:$%s low:$%s high:$%s vol:%s" % (j['bid'], j['last'], j['low'], j['high'], j['volume']))
