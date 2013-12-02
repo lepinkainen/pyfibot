@@ -68,7 +68,7 @@ def command_ep(bot, user, channel, args):
             airdate = "today"
 
         season_ep = "%dx%02d" % (int(float(episode['combined_season'])), int(float(episode['combined_episodenumber'])))
-        msg = "Next episode of %s %s '%s' airs %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
+        msg = "Next episode of %s %s '%s' airs %s on %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate, series.data['network'])
     # no future episodes found, show the latest one
     elif all_episodes:
         # find latest episode of the show
@@ -91,8 +91,11 @@ def command_ep(bot, user, channel, args):
         episode_no = int(float(episode['combined_episodenumber']))
 
         season_ep = "%dx%02d" % (season_no, episode_no)
-        msg = "Latest episode of %s %s '%s' aired %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate)
+        msg = "Latest episode of %s %s '%s' aired %s on %s" % (series.data['seriesname'], season_ep, episode['episodename'], airdate, series.data['network'])
     else:
         msg = "No new or past episode airdates found for %s" % series.data['seriesname']
+
+    if series.data['status'] != "Continuing":
+        msg += " [Ended]"
 
     bot.say(channel, msg.encode("UTF-8"))
