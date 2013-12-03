@@ -1061,32 +1061,61 @@ def _handle_github(url):
 
 
 def fetch_nettiX(url, fields_to_fetch):
+    '''
+    Creates a title for NettiX -services.
+    Uses the mobile site, so at the moment of writing fetching data from
+    NettiAsunto and NettiMökki isn't possible.
+
+    All handlers must be implemented elsewhere, this only provides a constant
+    function to fetch the data (and creates an uniform title).
+    '''
+
+    # Strip useless stuff from url
     site = re.split('https?\:\/\/(www.)?(m.)?', url)[-1]
+    # Fetch BS from mobile site, as it's a lot easier to parse
     bs = __get_bs('http://m.%s' % site)
     if not bs:
         return
 
-    main = bs.find('div', {'class': 'fl'}).find('b').text.strip()
+    # Find "main name" for the item
+    try:
+        main = bs.find('div', {'class': 'fl'}).find('b').text.strip()
+    except AttributeError:
+        # If not found, probably doesn't work -> fallback to default
+        return
+    if not main:
+        return
+
     fields = []
 
-    ad_info = bs.find('div', {'class': 'ad_info'})
-
     try:
+        # Try to find price for the item, if found -> add to fields
         price = bs.find('div', {'class': 'pl10 mt10 lnht22'}).find('span').text.strip()
         if price:
             fields.append(price)
     except AttributeError:
         pass
 
-    for f in ad_info.findAll('li'):
-        field = f.text.split(':')[0]
-        if field and field in fields_to_fetch:
-            [s.extract() for s in f.findAll('span')]
-            field_info = f.find('b').text.strip()
-            if field_info and field_info != 'Ei ilmoitettu':
-                fields.append(field_info)
+    # All sites have the same basic structure, find the "data" table
+    ad_info = bs.find('div', {'class': 'ad_info'})
+    if ad_info:
+        for f in ad_info.findAll('li'):
+            # Get field name
+            field = f.text.split(':')[0]
+            # If the name was found and it's in fields_to_fetch
+            if field and field in fields_to_fetch:
+                # Remove spans
+                # For example cars might have registeration date includet in a span
+                [s.extract() for s in f.findAll('span')]
+                # The "main data" is always in a "b" element
+                field_info = f.find('b').text.strip()
+                # If the data was found and it's not "Ei ilmoitettu", add to fields
+                if field_info and field_info != 'Ei ilmoitettu':
+                    fields.append(field_info)
 
-    return '%s [%s]' % (main, ', '.join(fields))
+    if fields:
+        return '%s [%s]' % (main, ', '.join(fields))
+    return '%s' % (main)
 
 
 def _handle_nettiauto(url):
