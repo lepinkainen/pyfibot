@@ -1058,3 +1058,62 @@ def _handle_instagram(url):
 def _handle_github(url):
     """http*://*github.com*"""
     return False
+
+
+def fetch_nettiX(url, fields_to_fetch):
+    site = re.split('https?\:\/\/(www.)?(m.)?', url)[-1]
+    bs = __get_bs('http://m.%s' % site)
+    if not bs:
+        return
+
+    main = bs.find('div', {'class': 'fl'}).find('b').text.strip()
+    fields = []
+
+    ad_info = bs.find('div', {'class': 'ad_info'})
+
+    try:
+        price = bs.find('div', {'class': 'pl10 mt10 lnht22'}).find('span').text.strip()
+        if price:
+            fields.append(price)
+    except AttributeError:
+        pass
+
+    for f in ad_info.findAll('li'):
+        field = f.text.split(':')[0]
+        if field and field in fields_to_fetch:
+            [s.extract() for s in f.findAll('span')]
+            field_info = f.find('b').text.strip()
+            if field_info and field_info != 'Ei ilmoitettu':
+                fields.append(field_info)
+
+    return '%s [%s]' % (main, ', '.join(fields))
+
+
+def _handle_nettiauto(url):
+    """http*://*nettiauto.com/*/*/*"""
+    return fetch_nettiX(url, ['Vuosimalli', 'Mittarilukema', 'Moottori', 'Vaihteisto', 'Vetotapa'])
+
+
+def _handle_nettivene(url):
+    """http*://*nettivene.com/*/*/*"""
+    return fetch_nettiX(url, ['Vuosimalli', 'Runkomateriaali', 'Pituus', 'Leveys'])
+
+
+def _handle_nettimoto(url):
+    """http*://*nettimoto.com/*/*/*"""
+    return fetch_nettiX(url, ['Vuosimalli', 'Moottorin tilavuus', 'Mittarilukema', 'Tyyppi'])
+
+
+def _handle_nettikaravaani(url):
+    """http*://*nettikaravaani.com/*/*/*"""
+    return fetch_nettiX(url, ['Vm./Rek. vuosi', 'Mittarilukema', 'Moottori', 'Vetotapa'])
+
+
+def _handle_nettivaraosa(url):
+    """http*://*nettivaraosa.com/*/*"""
+    return fetch_nettiX(url, ['Varaosan osasto'])
+
+
+def _handle_nettikone(url):
+    """http*://*nettikone.com/*/*/*"""
+    return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
