@@ -27,7 +27,7 @@ def command_bsbtc(bot, user, channel, args):
 
 def command_btc(bot, user, channel, args):
     """Display current BTC exchange rates from mtgox. Usage: btc [whitespace separated list of currency codes]"""
-    currencies = ["EUR"]
+    currencies = ["USD"]
 
     if args:
         currencies = args.split(" ")
