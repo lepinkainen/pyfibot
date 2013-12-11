@@ -28,7 +28,7 @@ def test_three():
 def test_four():
     msg = "http://en.wikipedia.org/wiki/Dynamo_(magician)"
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Dynamo is an English magician, best known for his fly on the wall documentary show Dynamo: Magician Impossible."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Steven Frayne is an English magician, best known for his fly on the wall documentary show Dynamo: Magician Impossible."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_five():
@@ -46,7 +46,7 @@ def test_six():
 def test_seven():
     msg = "http://en.wikipedia.org/wiki/Ramon_Llull"
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Ramon Llull was a Majorcan writer and philosopher, logician and a Franciscan tertiary."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Ramon Llull, T.O.S.F. was a Majorcan writer and philosopher, logician and a Franciscan tertiary."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_eight():
