@@ -247,32 +247,47 @@ def command_list_ops(bot, user, channel, args):
 
 
 def __get_length_str(secs):
-    lengthstr = []
-    hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
+    days, hours, minutes, seconds = secs // 86400, secs // 3600, secs // 60 % 60, secs % 60
+
+    if days > 0:
+        return '%dd' % days
     if hours > 0:
-        lengthstr.append("%dh" % hours)
+        return '%dh' % hours
     if minutes > 0:
-        lengthstr.append("%dm" % minutes)
+        return '%dm' % minutes
     if seconds > 0:
-        lengthstr.append("%ds" % seconds)
-    if not lengthstr:
-        lengthstr = ['0s']
-    return ''.join(lengthstr)
+        return '%ds' % seconds
+    return '0s'
 
 
 def command_seen(bot, user, channel, args):
     '''Displays the last action by the given user'''
     table = get_table(bot, channel)
 
-    # TODO: Implement quits and parts, others?
     # Return the first match, there shouldn't be multiples anyway
     user = table.find_one(nick=args)
-    if user:
-        return bot.say(channel, "Last message by %s: '%s' at %s (%s ago)" %
-                       (user['nick'],
-                        user['last_message'],
-                        '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
-                        __get_length_str( (datetime.now() - user['message_time']).seconds)
-                        ))
-    else:
+    if not user:
         return bot.say(channel, "I haven't seen %s on %s" % (args, channel))
+
+    # Calculate last seen in seconds
+    last_seen = datetime.now() - user['message_time']
+    # Get string for last seen
+    last_seen = __get_length_str(last_seen.days * 86400 + last_seen.seconds)
+
+    # If the last action was part or quit, show also the message
+    if user['last_action'] in ['left', 'quit']:
+        return bot.say(channel, "%s was last seen at %s (%s ago) [%s, %s]" %
+                       (user['nick'],
+                        '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
+                        last_seen,
+                        user['last_action'],
+                        user['last_message']
+                        ))
+
+    # Otherwise just show the time and action
+    return bot.say(channel, "%s was last seen at %s (%s ago) [%s]" %
+                   (user['nick'],
+                    '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
+                    last_seen,
+                    user['last_action']
+                    ))
