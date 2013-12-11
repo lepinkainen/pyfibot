@@ -488,11 +488,6 @@ def _handle_alko(url):
     return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content))
 
 
-def _handle_salakuunneltua(url):
-    """*salakuunneltua.fi*"""
-    return False
-
-
 def _handle_vimeo(url):
     """*vimeo.com/*"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
@@ -571,11 +566,6 @@ def _handle_aamulehti(url):
         return
     title = bs.find("h1").string
     return title
-
-
-def _handle_apina(url):
-    """http://apina.biz/*"""
-    return False
 
 
 def _handle_areena(url):
@@ -1055,11 +1045,6 @@ def _handle_instagram(url):
     return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
 
 
-def _handle_github(url):
-    """http*://*github.com*"""
-    return False
-
-
 def fetch_nettiX(url, fields_to_fetch):
     '''
     Creates a title for NettiX -services.
@@ -1146,3 +1131,29 @@ def _handle_nettivaraosa(url):
 def _handle_nettikone(url):
     """http*://*nettikone.com/*/*/*"""
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
+
+
+# IGNORED TITLES
+def _handle_salakuunneltua(url):
+    """*salakuunneltua.fi*"""
+    return False
+
+
+def _handle_apina(url):
+    """http://apina.biz/*"""
+    return False
+
+
+def _handle_github(url):
+    """http*://*github.com*"""
+    return False
+
+
+def _handle_gitio(url):
+    """http*://git.io/*"""
+    return False
+
+
+def _handle_travis(url):
+    """http*://travis-ci.org/*"""
+    return False
