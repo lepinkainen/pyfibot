@@ -270,7 +270,7 @@ def command_seen(bot, user, channel, args):
         return bot.say(channel, "I haven't seen %s on %s" % (args, channel))
 
     # Calculate last seen in seconds
-    last_seen = datetime.now() - user['message_time']
+    last_seen = datetime.now() - user['action_time']
     # Get string for last seen
     last_seen = __get_length_str(last_seen.days * 86400 + last_seen.seconds)
 
@@ -278,7 +278,7 @@ def command_seen(bot, user, channel, args):
     if user['last_action'] in ['left', 'quit']:
         return bot.say(channel, "%s was last seen at %s (%s ago) [%s, %s]" %
                        (user['nick'],
-                        '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
+                        '{0:%Y-%m-%d %H:%M:%S}'.format(user['action_time']),
                         last_seen,
                         user['last_action'],
                         user['last_message']
@@ -287,7 +287,7 @@ def command_seen(bot, user, channel, args):
     # Otherwise just show the time and action
     return bot.say(channel, "%s was last seen at %s (%s ago) [%s]" %
                    (user['nick'],
-                    '{0:%Y-%m-%d %H:%M:%S}'.format(user['message_time']),
+                    '{0:%Y-%m-%d %H:%M:%S}'.format(user['action_time']),
                     last_seen,
                     user['last_action']
                     ))
