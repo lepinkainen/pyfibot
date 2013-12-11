@@ -42,8 +42,8 @@ def command_geoip(bot, user, channel, args):
 
     if country:
         if nick:
-            return bot.say(channel, "%s is in %s" % (nick, country))
+            return bot.say(channel, "%s (%s) is in %s" % (nick, host, country))
         return bot.say(channel, "%s is in %s" % (host, country))
     if nick:
-        return bot.say(channel, 'Host not found for %s' % nick)
+        return bot.say(channel, 'Host not found for %s (%s)' % (nick, host))
     return bot.say(channel, 'Host not found for %s' % host)
