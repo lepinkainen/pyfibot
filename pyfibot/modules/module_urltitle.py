@@ -673,7 +673,7 @@ def _handle_wikipedia(url):
         # loop while we get a redirection
         while get_redirect(content):
             try:
-                params['page'] = clean_page_name(BeautifulSoup(content).find('li').find('a').get('href'))
+                params['page'] = clean_page_name(BeautifulSoup(content).find('a').get('href'))
             except:
                 return
             r = bot.get_url(api, params=params)
