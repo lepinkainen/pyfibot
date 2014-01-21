@@ -28,7 +28,7 @@ def test_three():
 def test_four():
     msg = "http://en.wikipedia.org/wiki/Dynamo_(magician)"
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Steven Frayne is an English magician, best known for his fly on the wall documentary show Dynamo: Magician Impossible."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Steven Frayne, commonly known by his stage name \"Dynamo\", is an English magician, best known for his show Dynamo: Magician Impossible."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_five():
@@ -64,7 +64,7 @@ def test_nine():
 def test_ten():
     msg = 'http://en.wikipedia.org/wiki/802.11ac'
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: IEEE 802.11ac is a wireless computer networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5 GHz ..."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: IEEE 802.11ac is a wireless computer networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5\xa0GHz ..."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_eleven():
