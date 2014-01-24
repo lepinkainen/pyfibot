@@ -10,7 +10,9 @@ tvdb_api
 feedparser
 repoze.lru
 pygeoip
-dataset
+sqlalchemy < 0.9.0
+dataset < 0.4.0
 python-instagram
 simplejson >= 3.0.0
 httplib2 >= 0.8.0
+
