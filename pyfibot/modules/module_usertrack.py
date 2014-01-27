@@ -266,6 +266,9 @@ def __get_length_str(secs):
 
 def command_seen(bot, user, channel, args):
     '''Displays the last action by the given user'''
+    if not args:
+        return bot.say(channel, 'Please provide a nick to search...')
+
     table = get_table(bot, channel)
 
     # Return the first match, there shouldn't be multiples anyway
