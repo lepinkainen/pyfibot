@@ -38,7 +38,7 @@ class CoreCommands(object):
                  (self.factory.getNick(user), self.pingAve * 100.0))
 
     def command_rehash(self, user, channel, args):
-        """Reload modules. Usage: rehash [debug]"""
+        """Reload modules and optionally the configuration file. Usage: rehash [conf]"""
 
         if self.factory.isAdmin(user):
             try:
