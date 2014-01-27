@@ -5,9 +5,13 @@ import logging
 import re
 from datetime import datetime
 from copy import deepcopy
+import os
 
 
 log = logging.getLogger('usertrack')
+
+if not os.path.exists('databases'):
+    os.makedirs('databases')
 db = dataset.connect('sqlite:///databases/usertrack.db')
 
 
