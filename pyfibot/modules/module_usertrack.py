@@ -189,17 +189,25 @@ def handle_action(bot, user, channel, message):
 
 
 def command_add_op(bot, user, channel, args):
-    ''' Adds op-status according to nickname. Only for admins.
+    ''' Adds op-status according to nickname or full hostmask. Only for admins.
     If user is found from database, set op = True and return info with full hostmask.
     Else returns user not found. '''
 
     if not isAdmin(user) or user == channel or not args:
         return
 
-    nick = args.strip()
-
     table = get_table(bot, channel)
-    res = table.find_one(nick=nick)
+
+    # Get basedata for user to be opped
+    u = get_base_data(args)
+
+    # If we got full mask, use it..
+    if 'nick' in u and 'ident' in u and 'host' in u:
+        res = table.find_one(nick=u['nick'], ident=u['ident'], host=u['host'])
+    # else use just nickname
+    else:
+        res = table.find_one(nick=u['nick'])
+
     if not res:
         return bot.say(channel, 'user not found')
 
@@ -214,10 +222,18 @@ def command_remove_op(bot, user, channel, args):
     if not isAdmin(user) or user == channel or not args:
         return
 
-    nick = args.strip()
-
     table = get_table(bot, channel)
-    res = table.find_one(nick=nick)
+
+    # Get basedata for user to be opped
+    u = get_base_data(args)
+
+    # If we got full mask, use it..
+    if 'nick' in u and 'ident' in u and 'host' in u:
+        res = table.find_one(nick=u['nick'], ident=u['ident'], host=u['host'])
+    # else use just nickname
+    else:
+        res = table.find_one(nick=u['nick'])
+
     if not res:
         return bot.say(channel, 'user not found')
 
