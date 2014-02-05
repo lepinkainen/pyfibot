@@ -114,3 +114,10 @@ def test_alko():
     msg = 'http://www.alko.fi/tuotteet/798684/'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_poliisi():
+    msg = 'http://www.poliisi.fi/poliisi/lappi14/home.nsf/PFBD/76D41E0F8B4A85E5C2257C760045DAC6'
+    title = 'Title: Poliisi kaipaa ajoneuvoyhdistelmää kolaroinutta henkilöä'
+    module_urltitle.init(bot)
+    eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])

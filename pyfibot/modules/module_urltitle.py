@@ -64,8 +64,7 @@ def __get_bs(url):
     content = r.content
     if content:
         return BeautifulSoup(content)
-    else:
-        return None
+    return None
 
 
 def __get_length_str(secs):
@@ -1174,6 +1173,19 @@ def _handle_hitbox(url):
         return '%s%s - %s - OFFLINE' % (streamgame, hitboxname, streamtitle)
 
     return False
+
+
+def _handle_poliisi(url):
+    """http*://*poliisi.fi/poliisi/*"""
+    bs = __get_bs(url)
+    # If there's no BS, the default handler can't get it either...
+    if not bs:
+        return False
+
+    try:
+        return bs.find('div', {'id': 'contentbody'}).find('h1').text.strip()
+    except AttributeError:
+        return False
 
 
 # IGNORED TITLES
