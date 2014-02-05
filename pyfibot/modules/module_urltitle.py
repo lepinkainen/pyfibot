@@ -1163,7 +1163,7 @@ def _handle_hitbox(url):
     if streamlive == '1':
         return '[%s] %s - %s LIVE' % (streamgame,hitboxname,streamtitle)
     else:
-        return '[%s] %s - %s' & (streamgame,hitboxname,streamtitle)
+        return '[%s] %s - %s' % (streamgame,hitboxname,streamtitle)
 
     return False
 
