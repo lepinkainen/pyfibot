@@ -1138,12 +1138,14 @@ def _handle_nettikone(url):
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
 
 def _handle_hitbox(url):
+    """http*://*hitbox.tv/*"""
+
     '''
-    Fetch hitbox.tv stream title from hitbox api. 
+    Fetch hitbox.tv stream title from hitbox api.
     Webpages are done in angularJS so you can't fetch the title with
     generic handler.
     '''
-    
+
     streamname = url.rsplit('/',2)[2]
     api_url = 'http://api.hitbox.tv/media/live/%s' % streamname
 
@@ -1159,13 +1161,19 @@ def _handle_hitbox(url):
     streamtitle = data['livestream'][0]['media_status']
     streamgame = data['livestream'][0]['category_name_short']
     streamlive = data['livestream'][0]['media_is_live']
-    
-    if streamlive == '1':
-        return '[%s] %s - %s LIVE' % (streamgame,hitboxname,streamtitle)
+
+    if streamgame == None:
+        streamgame = "";
     else:
-        return '[%s] %s - %s' & (streamgame,hitboxname,streamtitle)
+        streamgame = '[%s] ' % (streamgame)
+
+    if streamlive == '1':
+        return '%s%s - %s - LIVE' % (streamgame,hitboxname,streamtitle)
+    else:
+        return '%s%s - %s - OFFLINE' % (streamgame,hitboxname,streamtitle)
 
     return False
+
 
 # IGNORED TITLES
 def _handle_salakuunneltua(url):
