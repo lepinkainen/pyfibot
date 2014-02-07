@@ -1212,3 +1212,8 @@ def _handle_gitio(url):
 def _handle_travis(url):
     """http*://travis-ci.org/*"""
     return False
+
+
+def _handle_ubuntupaste(url):
+    """http*://paste.ubuntu.com/*"""
+    return False
