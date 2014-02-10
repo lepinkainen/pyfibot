@@ -17,11 +17,28 @@ except:
 from operator import itemgetter
 
 
+class SmartUI(tvdb_api.BaseUI):
+    """Returns the latest series that is actually airing"""
+    def selectSeries(self, allSeries):
+        t = tvdb_api.Tvdb()
+        # reverse order, latest shows first(?)
+        for series in reversed(allSeries):
+            # search with ID directly to skip name->ID lookup in library
+            status = t[series['id']].data['status']
+            if status == "Continuing":
+                return series
+
+if __name__ == "__main__":
+    api = tvdb_api.Tvdb(custom_ui=SmartUI)
+    print(api['doctor who']) # Doctor Who 2005
+    print(api['castle'])     # Castle 2009
+    print(api['house of cards']) # House of Cards (US)
+
 def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
     if not api_ok:
         return
-    t = tvdb_api.Tvdb()
+    t = tvdb_api.Tvdb(custom_ui=SmartUI)
     now = datetime.now()
     # one day resolution maximum
     now = now.replace(hour=0, minute=0, second=0, microsecond=0)
