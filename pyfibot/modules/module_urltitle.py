@@ -64,8 +64,7 @@ def __get_bs(url):
     content = r.content
     if content:
         return BeautifulSoup(content)
-    else:
-        return None
+    return None
 
 
 def __get_length_str(secs):
@@ -1138,6 +1137,57 @@ def _handle_nettikone(url):
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
 
 
+def _handle_hitbox(url):
+    """http*://*hitbox.tv/*"""
+
+    '''
+    Fetch hitbox.tv stream title from hitbox api.
+    Webpages are done in angularJS so you can't fetch the title with
+    generic handler.
+    '''
+
+    streamname = url.rsplit('/', 2)[2]
+    api_url = 'http://api.hitbox.tv/media/live/%s' % streamname
+
+    r = bot.get_url(api_url)
+
+    try:
+        data = r.json()
+    except:
+        log.debug('can\'t parse, probably wrong stream name')
+        return 'Stream not found.'
+
+    hitboxname = data['livestream'][0]['media_display_name']
+    streamtitle = data['livestream'][0]['media_status']
+    streamgame = data['livestream'][0]['category_name_short']
+    streamlive = data['livestream'][0]['media_is_live']
+
+    if streamgame is None:
+        streamgame = ''
+    else:
+        streamgame = '[%s] ' % (streamgame)
+
+    if streamlive == '1':
+        return '%s%s - %s - LIVE' % (streamgame, hitboxname, streamtitle)
+    else:
+        return '%s%s - %s - OFFLINE' % (streamgame, hitboxname, streamtitle)
+
+    return False
+
+
+def _handle_poliisi(url):
+    """http*://*poliisi.fi/poliisi/*"""
+    bs = __get_bs(url)
+    # If there's no BS, the default handler can't get it either...
+    if not bs:
+        return False
+
+    try:
+        return bs.find('div', {'id': 'contentbody'}).find('h1').text.strip()
+    except AttributeError:
+        return False
+
+
 # IGNORED TITLES
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
@@ -1161,4 +1211,9 @@ def _handle_gitio(url):
 
 def _handle_travis(url):
     """http*://travis-ci.org/*"""
+    return False
+
+
+def _handle_ubuntupaste(url):
+    """http*://paste.ubuntu.com/*"""
     return False
