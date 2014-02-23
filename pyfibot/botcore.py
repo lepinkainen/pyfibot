@@ -9,7 +9,6 @@ Bot core
 
 """
 from __future__ import print_function, division
-import time
 
 # twisted imports
 from twisted.words.protocols import irc
@@ -237,6 +236,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             else:
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
                 log.info("Auth sent.")
+# more generic authentication
         else:
             authname = self.factory.config['networks'][self.network.alias].get('authname', None)
             authpass = self.factory.config['networks'][self.network.alias].get('authpass', None)
@@ -258,7 +258,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             else:
                 self.join(chan)
         log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
-
+        self._runEvents("signedon")
+    
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
 
