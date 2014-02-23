@@ -6,6 +6,7 @@ python:
 install:
   - pip install --upgrade pip setuptools
   - pip install paver
+  - pip install --allow-external argparse>=1.2.1
   - pip install .
 # command to run tests, e.g. python setup.py test
 script: nosetests
