@@ -388,7 +388,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     ### Overrides for twisted.words.irc core commands ###
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
-
+        # Encode channel
+        # (for cases where channel is specified in code instead of "answering")
+        channel = self.factory.to_utf8(channel)
         # Encode all outgoing messages to UTF-8
         message = self.factory.to_utf8(message)
 
