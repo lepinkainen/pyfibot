@@ -246,7 +246,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 log.info("authname or authpass not found, authentication aborted")
             else:
                 self.say("NickServ", "IDENTIFY %s %s" % (authname, authpass))
-		log.info("Auth sent.")
+ 		log.info("Auth sent.")
 
 	# allowing the connection to establish and authentication to happen before joining
 	reactor.callLater(5, self.joinChannels)
@@ -261,7 +261,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 self.join(chan)
         log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
         self._runEvents("signedon")
-    
+
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
 
