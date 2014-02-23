@@ -8,11 +8,12 @@ Bot core
 @license New-Style BSD
 
 """
-
 from __future__ import print_function, division
+import time
+
 # twisted imports
 from twisted.words.protocols import irc
-from twisted.internet import reactor, threads
+from twisted.internet import reactor, threads, task
 from twisted.python import rebuild
 
 from types import FunctionType
@@ -225,28 +226,38 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def signedOn(self):
         """Called when bot has succesfully signed on to server."""
-        log.info("Signed on to network")
-        # QuakeNet specific auth and IP-address masking
-        # TODO: Alias could be case-sensitive
+        # QNet specific auth & ip hiding
         if self.network.alias == "quakenet":
             log.info("I'm on quakenet, authenticating...")
-            self.mode(self.nickname, '+', 'x')  # Hide ident
+            self.mode(self.nickname, '+', 'x') # Hide ident
             authname = self.factory.config['networks']['quakenet'].get('authname', None)
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
-                log.info("Quakenet authname or authpass not found. Authentication aborted")
+                log.info("authname or authpass not found, authentication aborted")
             else:
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
                 log.info("Auth sent.")
+        else:
+            authname = self.factory.config['networks'][self.network.alias].get('authname', None)
+            authpass = self.factory.config['networks'][self.network.alias].get('authpass', None)
+            if not authname or not authpass:
+                log.info("authname or authpass not found, authentication aborted")
+            else:
+                self.say("NickServ", "IDENTIFY %s %s" % (authname, authpass))
+		log.info("Auth sent.")
+
+# allowing the connection to establish and authentication to happen before joining
+	reactor.callLater(5, self.joinChannels)
+
+# separate function to allow timing the joins
+    def joinChannels(self):
         for chan in self.network.channels:
             # Defined as a tuple, channel has a key
             if type(chan) == list:
                 self.join(chan[0], key=chan[1])
             else:
                 self.join(chan)
-
         log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
-        self._runEvents("signedon")
 
     def pong(self, user, secs):
         self.pingAve = ((self.pingAve * 5) + secs) / 6.0
@@ -377,9 +388,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
 
-        # Encode channel
-        # (for cases where channel is specified in code instead of "answering")
-        channel = self.factory.to_utf8(channel)
         # Encode all outgoing messages to UTF-8
         message = self.factory.to_utf8(message)
 
