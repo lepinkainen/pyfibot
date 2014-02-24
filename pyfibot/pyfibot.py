@@ -457,6 +457,7 @@ def main():
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
+        force_ipv6 = bool(settings.get('force_ipv6', False))
 
         # normalize channel names to prevent internal confusion
         chanlist = []
@@ -465,7 +466,14 @@ def main():
                 channel = '#' + channel
             chanlist.append(channel)
 
-        server_name = settings['server']
+        if force_ipv6:
+            try:
+                server_name = socket.getaddrinfo(settings['server'], port, socket.AF_INET6)[0][4][0]
+            except IndexError:
+                log.error('No IPv6 address found for %s (force_ipv6 = true)' % (network))
+                continue
+        else:
+            server_name = settings['server']
 
         factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
         if is_ssl:
