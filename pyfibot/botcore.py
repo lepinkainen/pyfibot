@@ -235,24 +235,24 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
                 log.info("authname or authpass not found, authentication aborted")
-				self.joinChannels
+                self.joinChannels
             else:
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
                 log.info("Auth sent.")
-				self.joinChannels
-	# more generic authentication
+                self.joinChannels
+    # more generic authentication
         else:
             authname = self.factory.config['networks'][self.network.alias].get('authname', None)
             authpass = self.factory.config['networks'][self.network.alias].get('authpass', None)
             if not authname or not authpass:
                 log.info("authname or authpass not found, authentication aborted")
-				self.joinChannels
+                self.joinChannels
             else:
-				log.info("Authenticating...")
+                log.info("Authenticating...")
                 self.say("NickServ", "IDENTIFY %s %s" % (authname, authpass))
-				log.info("Auth sent.")
-				# allowing the connection to establish and authentication to happen before joining
-				reactor.callLater(7, self.joinChannels)
+                log.info("Auth sent.")
+                # allowing the connection to establish and authentication to happen before joining
+                reactor.callLater(7, self.joinChannels)
 
     # separate function to allow timing the joins
     def joinChannels(self):
