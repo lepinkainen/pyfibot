@@ -39,3 +39,7 @@ Support can be found at #pyfibot on irc.nerv.fi and please contact yllapito@nerv
 [![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
 
 This product includes GeoLite data created by MaxMind, available from <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lepinkainen/pyfibot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
