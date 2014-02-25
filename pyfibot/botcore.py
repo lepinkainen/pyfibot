@@ -224,7 +224,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         log.info("connection lost: %s", reason)
 
     def signedOn(self):
-        """Called when bot has succesfully signed on to server."""
+        """Called when bot has succesfully connected to a server."""
         log.info("Connected to network")
         authdelay = self.factory.config['networks'][self.network.alias].get('authdelay', None)
         if not authdelay:
