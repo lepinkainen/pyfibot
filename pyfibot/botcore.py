@@ -242,7 +242,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             else:
 		log.info("Authenticating...")
 		self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
-		log.info("joining channels after %s second delay" % (authdelay))
+		log.info("Joining channels after %s second delay" % (authdelay))
 		reactor.callLater(authdelay, self.joinChannels)
 				
     # more generic authentication
@@ -256,7 +256,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 log.info("Authenticating...")
                 self.say("NickServ", "IDENTIFY %s %s" % (authname, authpass))
                 # allowing the connection to establish and authentication to happen before joining
-                log.info("joining channels after %s second delay" % (authdelay))
+                log.info("Joining channels after %s second delay" % (authdelay))
                 reactor.callLater(authdelay, self.joinChannels)
 
     # separate function to allow timing the joins
