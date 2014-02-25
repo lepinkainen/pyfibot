@@ -237,13 +237,13 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             authname = self.factory.config['networks']['quakenet'].get('authname', None)
             authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
             if not authname or not authpass:
-				log.info("authname or authpass not found, authentication not attempted")
-				self.joinChannels
+		log.info("authname or authpass not found, authentication not attempted")
+		self.joinChannels
             else:
-				log.info("Authenticating...")
-				self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
-				log.info("joining channels after %s second delay" % (authdelay))
-				reactor.callLater(authdelay, self.joinChannels)
+		log.info("Authenticating...")
+		self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
+		log.info("joining channels after %s second delay" % (authdelay))
+		reactor.callLater(authdelay, self.joinChannels)
 				
     # more generic authentication
         else:
@@ -267,7 +267,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 self.join(chan[0], key=chan[1])
             else:
                 self.join(chan)
-                
+
         log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
         self._runEvents("signedon")
 
@@ -399,7 +399,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     ### Overrides for twisted.words.irc core commands ###
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
-        
+
         # Encode channel
         # (for cases where channel is specified in code instead of "answering")
         channel = self.factory.to_utf8(channel)
