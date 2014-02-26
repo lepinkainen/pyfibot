@@ -140,28 +140,6 @@ class PyFiBotFactory(ThrottledClientFactory):
                 p.factory = self
                 return p
 
-        # TODO: Remove this handling altogether
-        log.debug("Fall back to old process...")
-        fqdn = socket.getfqdn(address.host)
-        log.debug("Address: %s - %s", address, fqdn)
-
-        # Fallback to the old, stupid, way of connecting
-        for network, server in self.data['networks'].items():
-            log.debug("Looking for matching network: %s - %s", server, fqdn)
-            found = False
-            if server.address[0] == fqdn:
-                log.debug("fqdn matches server address")
-                found = True
-            if server.address[0] == address.host:
-                log.debug("host matches server address")
-                found = True
-            if found:
-                log.debug("Connecting to %s / %s", server, address)
-                p = self.protocol(server)
-                self.allBots[server.alias] = p
-                p.factory = self
-                return p
-
         # No address found
         log.error("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
