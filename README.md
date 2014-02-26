@@ -38,6 +38,7 @@ Features
     <li>SSL-support</li>
     <li>IPv6-support</li>
     <li>virtualenv-support</li>
+    <li>Works with torify</li>
 </ul>
 
 <p id="help">Support can be found at #pyfibot on irc.nerv.fi and please contact yllapito@nerv.fi if you want to connect outside of Finland (will be changed) or need help with IRC-network.</p>
@@ -48,4 +49,3 @@ This product includes GeoLite data created by MaxMind, available from <a href="h
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lepinkainen/pyfibot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
