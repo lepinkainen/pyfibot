@@ -5,9 +5,8 @@ python:
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
   - pip install --upgrade pip setuptools
-  - pip install paver
-  - pip install --allow-external argparse>=1.2.1
-  - pip install .
+  - pip install --allow-all-external "argparse>=1.2.1"
+  - pip install -r requirements.txt
 # command to run tests, e.g. python setup.py test
 script: nosetests
 notifications:
