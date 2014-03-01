@@ -5,6 +5,10 @@ import logging
 log = logging.getLogger("cryptocoin")
 
 
+def command_btc(bot, user, channel, args):
+    return command_bsbtc(bot, user, channel, args)
+
+
 def command_ltc(bot, user, channel, args):
     """Display current LRC exchange rates from BTC-E"""
     r = bot.get_url("https://btc-e.com/api/2/ltc_usd/ticker")
@@ -25,7 +29,7 @@ def command_bsbtc(bot, user, channel, args):
     return bot.say(channel, "BitStamp: bid:$%s last:$%s low:$%s high:$%s vol:%s" % (j['bid'], j['last'], j['low'], j['high'], j['volume']))
 
 
-def command_btc(bot, user, channel, args):
+def command_mtbtc(bot, user, channel, args):
     """Display current BTC exchange rates from mtgox. Usage: btc [whitespace separated list of currency codes]"""
     currencies = ["USD"]
 
