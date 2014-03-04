@@ -177,11 +177,16 @@ def handle_url(bot, user, channel, url, msg):
             title = ref(url)
             if title is False:
                 log.debug("Title disabled by handler.")
-                return
-            if title:
+            elif title is None:
+                # Handler found, but suggests using the default title instead
+                break
+            elif title:
                 cache.put(url, title)
                 # handler found, abort
                 return _title(bot, channel, title, True)
+            else:
+                # No specific handler, use generic
+                pass
 
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
