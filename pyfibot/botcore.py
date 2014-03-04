@@ -198,6 +198,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self.network = network
         self.nickname = self.network.nickname
         self.linerate = self.network.linerate
+        self.password = self.network.password
         # Text wrapper to clip overly long answers
         self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
         log.info("bot initialized")
@@ -319,7 +320,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
             for hname, func in handlers:
                 # defer each handler to a separate thread, assign callbacks to see when they end
-                # TODO: Profiling: add time.time() to callback params, calculate difference
                 d = threads.deferToThread(func, self, *args, **kwargs)
                 d.addCallback(self.printResult, "handler %s completed" % hname)
                 d.addErrback(self.printError, "handler %s error" % hname)
@@ -335,7 +335,6 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
             for ename, func in events:
                 # defer each handler to a separate thread, assign callbacks to see when they end
-                # TODO: Profiling: add time.time() to callback params, calculate difference
                 d = threads.deferToThread(func, self, *args, **kwargs)
                 d.addCallback(self.printResult, "%s %s event completed" % (module, ename))
                 d.addErrback(self.printError, "%s %s event error" % (module, ename))

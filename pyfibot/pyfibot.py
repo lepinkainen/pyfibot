@@ -140,28 +140,6 @@ class PyFiBotFactory(ThrottledClientFactory):
                 p.factory = self
                 return p
 
-        # TODO: Remove this handling altogether
-        log.debug("Fall back to old process...")
-        fqdn = socket.getfqdn(address.host)
-        log.debug("Address: %s - %s", address, fqdn)
-
-        # Fallback to the old, stupid, way of connecting
-        for network, server in self.data['networks'].items():
-            log.debug("Looking for matching network: %s - %s", server, fqdn)
-            found = False
-            if server.address[0] == fqdn:
-                log.debug("fqdn matches server address")
-                found = True
-            if server.address[0] == address.host:
-                log.debug("host matches server address")
-                found = True
-            if found:
-                log.debug("Connecting to %s / %s", server, address)
-                p = self.protocol(server)
-                self.allBots[server.alias] = p
-                p.factory = self
-                return p
-
         # No address found
         log.error("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
@@ -255,9 +233,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def getUrl(self, url, nocache=False, params=None, headers=None, cookies=None):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
 
-        # TODO: Make this configurable in the config
         browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
-
         # Common session for all requests
         s = requests.session()
         s.verify = False
