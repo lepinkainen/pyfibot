@@ -225,20 +225,54 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         log.info("connection lost: %s", reason)
 
     def signedOn(self):
-        """Called when bot has succesfully signed on to server."""
-        log.info("Signed on to network")
-        # QuakeNet specific auth and IP-address masking
-        # TODO: Alias could be case-sensitive
-        if self.network.alias == "quakenet":
-            log.info("I'm on quakenet, authenticating...")
-            self.mode(self.nickname, '+', 'x')  # Hide ident
-            authname = self.factory.config['networks']['quakenet'].get('authname', None)
-            authpass = self.factory.config['networks']['quakenet'].get('authpass', None)
-            if not authname or not authpass:
-                log.info("Quakenet authname or authpass not found. Authentication aborted")
-            else:
+        """Called when bot has succesfully connected to a server."""
+        log.info("Connected to network")
+
+        network_conf = self.factory.config['networks'][self.network.alias]
+
+        # Name used for authentication
+        authname = network_conf.get('authname', None)
+        # Pass used for authentication
+        authpass = network_conf.get('authpass', None)
+
+        # If authentication is used
+        if authname and authpass:
+            # QuakeNet specific auth and IP-address masking
+            if self.network.alias.lower() == "quakenet":
+                log.info("I'm on Quakenet, authenticating...")
+                self.mode(self.nickname, '+', 'x')  # Hide ident
+                log.info("Authenticating...")
                 self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
-                log.info("Auth sent.")
+            # more generic authentication
+            else:
+                # Get authentication service
+                # Default: None
+                # None as default, so the user must be sure who he's authenticating to
+                authservice = network_conf.get('authservice', None)
+                if authservice:
+                    # Command used for authentication
+                    # Default: "IDENTIFY authname authpass"
+                    authcommand = network_conf.get('authcommand', 'IDENTIFY %(authname)s %(authpass)s')
+                    authcommand = authcommand % {'authname': authname, 'authpass': authpass}
+
+                    log.info('Authenticating to "%s"' % authservice)
+                    log.debug('Authentication command used: "%s"' % authcommand)
+                    self.say(authservice, authcommand)
+                else:
+                    log.info('authservice not set, authentication not attempted')
+        else:
+            log.debug('authname or authpass not found, authentication not attempted')
+
+        authdelay = network_conf.get('authdelay', None)
+        if authdelay:
+            # allowing the connection to establish and authentication to happen before joining
+            log.info("Joining channels after %s second delay" % (authdelay))
+            reactor.callLater(authdelay, self.joinChannels)
+        else:
+            self.joinChannels()
+
+    # separate function to allow timing the joins
+    def joinChannels(self):
         for chan in self.network.channels:
             # Defined as a tuple, channel has a key
             if type(chan) == list:
