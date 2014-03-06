@@ -189,6 +189,7 @@ def handle_url(bot, user, channel, url, msg):
             title = ref(url)
             if title is False:
                 log.debug("Title disabled by handler.")
+                return
             elif title is None:
                 # Handler found, but suggests using the default title instead
                 break
@@ -1232,7 +1233,6 @@ def _handle_apina(url):
 
 def _handle_travis(url):
     """http*://travis-ci.org/*"""
-    print('TRAVIIIIIIS')
     return False
 
 
