@@ -1155,7 +1155,7 @@ def _handle_hitbox(url):
 
     # For actual stream pages, let's fetch information via the hitbox API
     else:
-        streamname = url.rsplit('/',2)[2]
+        streamname = url.rsplit('/', 2)[2]
         api_url = 'http://api.hitbox.tv/media/live/%s' % streamname
 
         r = bot.get_url(api_url)
@@ -1171,15 +1171,15 @@ def _handle_hitbox(url):
         streamgame = data['livestream'][0]['category_name_short']
         streamlive = data['livestream'][0]['media_is_live']
 
-        if streamgame == None:
-            streamgame = "";
+        if streamgame is None:
+            streamgame = ""
         else:
             streamgame = '[%s] ' % (streamgame)
 
         if streamlive == '1':
-            return '%s%s - %s - LIVE' % (streamgame,hitboxname,streamtitle)
+            return '%s%s - %s - LIVE' % (streamgame, hitboxname, streamtitle)
         else:
-            return '%s%s - %s - OFFLINE' % (streamgame,hitboxname,streamtitle)
+            return '%s%s - %s - OFFLINE' % (streamgame, hitboxname, streamtitle)
 
         return False
 
