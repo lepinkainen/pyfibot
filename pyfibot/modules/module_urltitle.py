@@ -67,6 +67,18 @@ def __get_bs(url):
     return None
 
 
+def __get_title_tag(url):
+    bs = __get_bs(url)
+    if not bs:
+        return False
+
+    title = bs.find('title')
+    if not title:
+        return
+
+    return title.text
+
+
 def __get_length_str(secs):
     lengthstr = []
     hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
@@ -1197,6 +1209,16 @@ def _handle_poliisi(url):
         return False
 
 
+def _handle_github(url):
+    """http*://*github.com*"""
+    return __get_title_tag(url)
+
+
+def _handle_gitio(url):
+    """http*://git.io*"""
+    return __get_title_tag(url)
+
+
 # IGNORED TITLES
 def _handle_salakuunneltua(url):
     """*salakuunneltua.fi*"""
@@ -1208,18 +1230,9 @@ def _handle_apina(url):
     return False
 
 
-def _handle_github(url):
-    """http*://*github.com*"""
-    return False
-
-
-def _handle_gitio(url):
-    """http*://git.io/*"""
-    return False
-
-
 def _handle_travis(url):
     """http*://travis-ci.org/*"""
+    print('TRAVIIIIIIS')
     return False
 
 
