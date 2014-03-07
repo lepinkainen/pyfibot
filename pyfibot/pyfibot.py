@@ -437,10 +437,14 @@ def main():
 
         # normalize channel names to prevent internal confusion
         chanlist = []
-        for channel in settings['channels']:
-            if channel[0] not in '&#!+':
-                channel = '#' + channel
-            chanlist.append(channel)
+        # allow bot to connect even if no channels are declared
+        if 'channels' in settings:
+            for channel in settings['channels']:
+                if channel[0] not in '&#!+':
+                    channel = '#' + channel
+                chanlist.append(channel)
+        else:
+            log.warning('No channels defined for "%s"' % network)
 
         if force_ipv6:
             try:
