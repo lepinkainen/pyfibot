@@ -429,7 +429,7 @@ def main():
     for network, settings in config['networks'].items():
         # settings = per network, config = global
         nick = settings.get('nick', None) or config['nick']
-        linerate = settings.get('linerate', None) or config.get('linerate', None)
+        linerate = settings.get('linerate', 0.5) or config.get('linerate', 0.5)
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
         port = int(settings.get('port', 6667))
