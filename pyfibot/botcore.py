@@ -185,8 +185,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     realname = "https://github.com/lepinkainen/pyfibot"
     password = None
 
-    # send 1 msg per second max
-    linerate = None
+    # send 2 msgs per second max
+    lineRate = 0.5
     hasQuit = False
 
     CMDCHAR = "."
@@ -197,7 +197,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def __init__(self, network):
         self.network = network
         self.nickname = self.network.nickname
-        self.linerate = self.network.linerate
+        self.lineRate = self.network.linerate
         self.password = self.network.password
         # Text wrapper to clip overly long answers
         self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
