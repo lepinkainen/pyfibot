@@ -64,7 +64,7 @@ def test_nine():
 def test_ten():
     msg = 'http://en.wikipedia.org/wiki/802.11ac'
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: IEEE 802.11ac is a wireless computer networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5\xa0GHz ..."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: IEEE 802.11ac is a wireless networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5\xa0GHz band."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_eleven():
