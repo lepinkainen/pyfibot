@@ -1,1 +1,11 @@
 baseurl: /pyfibot
+timezone: Europe/Helsinki
+encoding: UTF-8
+
+styles: stylesheets
+images: images
+javascript: javascripts
+
+gems:
+  - jekyll-mentions
+  

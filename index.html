@@ -1,59 +1,60 @@
 ---
 ---
-<!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/stylesheets/print.css" media="print" />
-
-    <title>Pyfibot by lepinkainen</title>
+    <meta charset="utf-8">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.github.project_title }}</title>
+    <link href="{{ site.styles }}/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ site.styles }}/style.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+    <style type="text/css"></style>
   </head>
-
   <body>
-
-    <header>
-      <div class="container">
-        <h1>{{ site.github.project_title }}</h1>
-        <h2>{{ site.github.project_tagline }}</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/lepinkainen/pyfibot/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/lepinkainen/pyfibot/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/lepinkainen/pyfibot" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
     <div class="container">
-      <section id="main_content">
-        <h1>pyfibot</h1>
 
-<p>A Python IRC-bot made using the <a href="http://twistedmatrix.com/trac/">Twisted Matrix</a> IRC-library.</p>
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="https://github.com/lepinkainen/pyfibot" target="_blank">Github</a></li>
+          <li><a href="https://github.com/lepinkainen/pyfibot/wiki" target="_blank">Wiki</a></li>
+        </ul>
+        <h3><a href="/#" class="text-muted title"><span>{{ site.github.project_title }}</span></a></h3>
+      </div>
 
-<p>Supports online module reloading - only major core changes require a restart. Extensive module &amp; handler -support for easy extension and customization.</p>
+      <div class="jumbotron">
+        <h1>A Python IRC-bot made using the <a href="http://twistedmatrix.com/trac/">Twisted Matrix</a> IRC-library.</h1>
+        <p class="lead">
+          Supports online module reloading - only major core changes require a restart. Extensive module & handler -support for easy extension and customization.
+          Check the <a href="https://github.com/lepinkainen/pyfibot/wiki/Installation">Installation instructions</a> and the module <a href="https://github.com/lepinkainen/pyfibot/wiki/Module-HOWTO">HOWTO.
+        </p>
+        <p><a class="btn btn-lg btn-success" href="https://github.com/lepinkainen/pyfibot" role="button">Jump right in!</a></p>
+      </div>
 
-<h2>Module hilights</h2>
+      <div class="row marketing">
+        <div class="col-lg-4">
+          <h3 class="step">Clone</h3>
+          <img class="step" src="{{ site.images }}/clone.png" alt="first">
+          <p>To start, grab the Pyfibot repository url from Github. Refer to <a href="https://github.com/lepinkainen/pyfibot/wiki/Installation">Installation instructions</a> and preconditions for more detailed info.</p>
+        </div>
+        <div class="col-lg-4">
+          <h3 class="step">Setup</h3>
+          <img class="step" src="{{ site.images }}/steps.png" alt="second">
+          <p>Get your environment configured for easy deployment. There are a few different ways to do this, choose what suits you the best!</p>
+        </div>
+        <div class="col-lg-4">
+          <h3 class="step">Connect</h3>
+          <img class="step" src="{{ site.images }}/launch.png" alt="third">
+          <p>Finish the deal by editing the example configuration and launching the bot!</p>
+        </div>
+      </div>
 
-<ul>
-<li>URL title fetching with custom handlers for IMDb, Youtube and many others</li>
-<li>Wolfram Alpha searches</li>
-</ul><h2>Features</h2>
-
-<ul>
-<li>Modular</li>
-<li>Live refresh of modules</li>
-<li>Coder friendly (a basic module requires just 2 lines of boilerplate code)</li>
-<li>SSL-support</li>
-<li>IPv6-support</li>
-<li>Optional virtualenv-support</li>
-</ul><p>Support can be found at #pyfibot on irc.nerv.fi and please contact <a href="mailto:yllapito@nerv.fi">yllapito@nerv.fi</a> if you want to connect outside of Finland (will be changed) or need help with IRC-network.</p>
-      </section>
-      Updated: {{ site.time | date_to_rfc822 }}
+      <br>
+      <div class="footer">
+        <p>Page via @RNbrg 2014</p>
+      </div>
     </div>
-
   </body>
 </html>
