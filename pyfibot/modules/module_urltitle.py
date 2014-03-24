@@ -776,10 +776,15 @@ def _handle_imgur(url):
     def create_title(data):
         section = data['data']['section']
         title = data['data']['title']
+
+        if not title:
+            # If title wasn't found, use title and section of first image
+            title = data['data']['images'][0]['title']
+            section = data['data']['images'][0]['section']
+
         if section:
             return "%s (/r/%s)" % (title, section)
-        else:
-            return title
+        return title
 
     client_id = "a7a5d6bc929d48f"
     api = "https://api.imgur.com/3"
