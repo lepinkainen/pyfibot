@@ -15,7 +15,10 @@ payload = {'grant_type': 'client_credentials'}
 headers = {'Authorization': 'Basic '+encoded_token}
 auth_url = "https://api.twitter.com/oauth2/token"
 r = requests.post(auth_url, payload, headers=headers)
-bearer_token = r.json()['access_token']
+try:
+    bearer_token = r.json()['access_token']
+except TypeError:
+    bearer_token = r.json['access_token']
 
 print "Bearer token:"
 print bearer_token
