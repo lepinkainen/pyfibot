@@ -12,7 +12,7 @@ def handle_userJoined(bot, user, channel):
     username, host = userhost.split("@")
     username = username.replace("~", "").replace("-", "")
     # known webchat hosts
-    if host in ["webchat.xs4all.nl", "wwwirc.kapsi.fi", "webchat.mibbit.com", "gateway/web/freenode", "webchat.ircnet.net", "a.clients.kiwiirc.com", "b.clients.kiwiirc.com"]:
+    if host in ["webchat.xs4all.nl", "wwwirc.kapsi.fi", "webchat.mibbit.com", "gateway/web/freenode", "webchat.ircnet.net"] or host.endswith('.kiwiirc.com'):
         origin = webchat_getorigin(username)
         if origin:
             return bot.say(channel, "%s is using webchat from %s" % (nick, origin))
