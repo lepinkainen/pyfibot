@@ -11,6 +11,8 @@ networks:
   nerv:
     # server to connect to
     server: irc.nerv.fi
+    # we use a different nick on this network
+    nick: botnick_nerv
     # list of channels to join
     channels:
       - pyfibot
