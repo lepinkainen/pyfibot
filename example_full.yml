@@ -33,6 +33,8 @@ networks:
     server: localhost
     channels:
       - pyfibot
+    # Set server password
+    password: 'kikkeliskokkelis'
     # Note:
     # If network alias is "quakenet", and authname and authpass are set,
     # the bot will try to authenticate to Q (no mather what authservice etc says)
