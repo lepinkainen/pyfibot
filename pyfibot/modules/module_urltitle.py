@@ -496,13 +496,18 @@ def _handle_alko(url):
         return
     name = bs.find('h1', {'itemprop': 'name'}).text
     price = float(bs.find('span', {'itemprop': 'price'}).text.replace(',', '.'))
-    bottle_size = float(bs.find('div', {'class': 'product-details'}).contents[0].strip().replace(',', '.'))
+    size = float(bs.find('div', {'class': 'product-details'}).contents[0].strip().replace(',', '.'))
     e_per_l = float(bs.find('div', {'class': 'product-details'}).contents[4].strip().replace(',', '.'))
     drinktype = bs.find('h3', {'itemprop': 'category'}).text
-    alcohol_content = bs.find('td', {'class': 'label'}, text='Alkoholi:') \
-        .parent.find_all('td')[-1].text.strip().replace(',', '.').replace(' ', '')
+    alcohol = float(
+        re.sub(
+            r'[^\d.]+',
+            '',
+            bs.find('td', {'class': 'label'}, text='Alkoholi:')
+            .parent.find_all('td')[-1].text.replace(',', '.')))
+    value = size * alcohol / price
 
-    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.2fe/l, %s, %s]' % (name, price, bottle_size, e_per_l, drinktype, alcohol_content))
+    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.1f%%, %.2fe/l, %.2fg/e, %s]' % (name, price, size, alcohol, e_per_l, value, drinktype))
 
 
 def _handle_vimeo(url):
