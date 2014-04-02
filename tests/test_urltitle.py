@@ -111,7 +111,7 @@ def test_dx():
 
 
 def test_alko():
-    regex = 'Title: Sandels IV A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\de/l, oluet, 5\.30\%\]'
+    regex = 'Title: Sandels IV A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\%\, \d\.\d\de/l, \d\.\d\dg/e, oluet]'
     msg = 'http://www.alko.fi/tuotteet/798684/'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
