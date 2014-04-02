@@ -505,9 +505,10 @@ def _handle_alko(url):
             '',
             bs.find('td', {'class': 'label'}, text='Alkoholi:')
             .parent.find_all('td')[-1].text.replace(',', '.')))
-    value = size * alcohol / price
+    # value = price / (size * 1000 * alcohol * 0.01 * 0.789 / 12)
+    value = price / (size * alcohol * 0.6575)
 
-    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.1f%%, %.2fe/l, %.2fg/e, %s]' % (name, price, size, alcohol, e_per_l, value, drinktype))
+    return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.1f%%, %.2fe/l, %.2fe/annos, %s]' % (name, price, size, alcohol, e_per_l, value, drinktype))
 
 
 def _handle_vimeo(url):
