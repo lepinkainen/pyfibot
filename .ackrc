@@ -1,0 +1,5 @@
+# ignore directories not related with the project
+--ignore-directory=lib
+--ignore-directory=local
+--ignore-directory=include
+
