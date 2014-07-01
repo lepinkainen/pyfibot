@@ -337,9 +337,9 @@ def _handle_verkkokauppa(url):
     bs = __get_bs(url)
     if not bs:
         return
-    product = bs.find('h1', id='productName').string
+    product = bs.find('h1', {'class': 'product-name'}).string
     try:
-        price = bs.find('h4', {'itemprop': 'price'}).text.strip()
+        price = bs.find('meta', {'itemprop': 'price'})['content']
     except:
         price = "???€"
     try:
@@ -535,23 +535,24 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
-    api_url = 'http://api.stackoverflow.com/1.1/questions/%s'
+    api_url = 'http://api.stackexchange.com/2.2/questions/%s'
     match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
         return
     question_id = match.group(1)
-    content = bot.get_url(api_url % question_id)
-    if not content:
-        log.debug("No content received")
-        return
+    content = bot.get_url(api_url % question_id, params={'site': 'stackoverflow'})
+
     try:
         data = content.json()
-        title = data['questions'][0]['title']
-        tags = "/".join(data['questions'][0]['tags'])
-        score = data['questions'][0]['score']
+        item = data['items'][0]
+
+        title = item['title']
+        tags = '/'.join(item['tags'])
+        score = item['score']
         return "%s - %dpts - %s" % (title, score, tags)
     except Exception, e:
-        return "Json parsing failed %s" % e
+        log.debug("Json parsing failed %s" % e)
+        return
 
 
 def _handle_reddit(url):

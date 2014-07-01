@@ -46,7 +46,7 @@ def test_iltasanomat():
 def test_verkkokauppacom():
     msg = "http://www.verkkokauppa.com/fi/product/34214/dkqht/Sony-NEX-3N-mikrojarjestelmakamera-16-50-mm-objektiivi-musta"
     module_urltitle.init(bot)
-    regex = 'Title: Sony NEX-3N mikrojärjestelmäkamera \+ 16-50 mm objektiivi, musta\. \| 369,90 € \(.*?\)'
+    regex = 'Title: Sony NEX-3N mikrojärjestelmäkamera \+ 16-50 mm objektiivi, musta \| \d+,\d+ € \(.*?\)'
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
@@ -65,7 +65,7 @@ def test_wiki_fi():
 def test_wiki_en():
     msg = "http://en.wikipedia.org/wiki/IPhone"
     module_urltitle.init(bot)
-    eq_(("#channel", "Title: The iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", "Title: iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_youtube():
