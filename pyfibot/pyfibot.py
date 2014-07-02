@@ -170,9 +170,11 @@ class PyFiBotFactory(ThrottledClientFactory):
                 else:
                     log.info("No active connection to known network %s" % n.address[0])
 
-    def _finalize_modules(self):
+    def _finalize_modules(self, modules=None):
         """Call all module finalizers"""
-        for module in self._findmodules():
+        if modules is None:
+            modules = self._findmodules()
+        for module in modules:
             # if rehashing (module already in namespace), finalize the old instance first
             if module in self.ns:
                 if 'finalize' in self.ns[module][0]:
@@ -198,15 +200,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Unload modules removed from modules -directory"""
         # find all modules in namespace, which aren't present in modules -directory
         removed_modules = [m for m in self.ns if not m in self._findmodules()]
-
-        for m in removed_modules:
-            # finalize module before deleting it
-            # TODO: use general _finalize_modules instead of copy-paste
-            if 'finalize' in self.ns[m][0]:
-                log.info("finalize - %s" % m)
-                self.ns[m][0]['finalize']()
-            del self.ns[m]
-            log.info('removed module - %s' % m)
+        self._finalize_modules(removed_modules)
 
     def _findmodules(self):
         """Find all modules"""
