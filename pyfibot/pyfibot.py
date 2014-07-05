@@ -357,6 +357,11 @@ class PyFiBotFactory(ThrottledClientFactory):
         else:
             logging.root.setLevel(logging.INFO)
 
+    def find_bot_for_network(self, network):
+        if network not in self.allBots:
+            return None
+        return self.allBots[network]
+
 
 def init_logging(config):
     logger = logging.getLogger()
