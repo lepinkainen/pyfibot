@@ -1,13 +1,33 @@
 import requests
-
+from pyfibot import pyfibot
 from pyfibot import botcore
+
+
+class FactoryMock(pyfibot.PyFiBotFactory):
+    def startFactory(self):
+        self.moduledir = './pyfibot/modules/'
+        self.allBots = {}
+
+    def buildProtocol(self, address):
+        # Go through all defined networks
+        for network, server in self.data['networks'].items():
+            p = self.protocol(server)
+            self.allBots[server.alias] = p
+            p.factory = self
 
 
 class BotMock(botcore.CoreCommands):
     config = {}
 
-    def __init__(self, config={}):
+    def __init__(self, config={}, need_factory=False):
         self.config = config
+        if need_factory:
+            self.factory = FactoryMock(config)
+            self.factory.createNetwork('localhost', 'nerv', ['#pyfibot'])
+            self.factory.createNetwork('localhost', 'ircnet', ['#pyfibot'])
+            self.factory.startFactory()
+            self.factory.buildProtocol(None)
+            self.network = self.factory.data['networks']['nerv']
 
     def get_url(self, url, params={}, nocache=False, cookies=None):
         print("Getting url %s" % url)
