@@ -148,9 +148,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         self.setNetwork(Network("data", alias, address, nickname, channels, linerate, password, is_ssl))
 
     def setNetwork(self, net):
-        nets = self.data['networks']
-        nets[net.alias] = net
-        self.data['networks'] = nets
+        self.data['networks'][net.alias] = net
 
     def clientConnectionLost(self, connector, reason):
         """Connection lost for some reason"""
