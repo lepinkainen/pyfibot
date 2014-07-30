@@ -70,4 +70,4 @@ def test_ten():
 def test_eleven():
     msg = 'http://en.wikipedia.org/wiki/Edison_Arantes_do_Nascimento'
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Edson Arantes do Nascimento, better known as Pelé, is a retired Brazilian footballer."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Edson Arantes do Nascimento, who is better known as Pelé, is a retired Brazilian footballer who is widely regarded to be the best football player of all time."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
