@@ -7,7 +7,7 @@ from pyfibot.modules import module_wolfram_alpha
 config = {"module_wolfram_alpha":
           {"appid": "3EYA3R-WVR6GJQWLH"}}  # unit-test only APPID, do not abuse kthxbai
 
-bot = bot_mock.BotMock(config)
+bot = bot_mock.BotMock(config=config)
 
 
 def test_simple():

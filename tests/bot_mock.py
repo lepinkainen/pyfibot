@@ -6,15 +6,13 @@ from pyfibot import botcore
 class BotMock(botcore.CoreCommands):
     config = {}
 
-    def __init__(self, config={}, need_factory=False):
+    def __init__(self, config={}, network=None):
         self.config = config
-        if need_factory:
-            self.factory = FactoryMock(config)
-            self.factory.createNetwork('localhost', 'nerv', ['#pyfibot'])
-            self.factory.createNetwork('localhost', 'ircnet', ['#pyfibot'])
-            self.factory.startFactory()
-            self.factory.buildProtocol(None)
-            self.network = self.factory.data['networks']['nerv']
+        if network:
+            self.network = network
+            self.nickname = self.network.nickname
+            self.lineRate = self.network.linerate
+            self.password = self.network.password
 
     def get_url(self, url, params={}, nocache=False, cookies=None):
         print("Getting url %s" % url)
@@ -48,6 +46,13 @@ class BotMock(botcore.CoreCommands):
 class FactoryMock(pyfibot.PyFiBotFactory):
     protocol = BotMock
 
+    def __init__(self, config={}):
+        pyfibot.PyFiBotFactory.__init__(self, config)
+        self.createNetwork(('localhost', 6667), 'nerv', 'pyfibot', ['#pyfibot'], 0.5, None, False)
+        self.createNetwork(('localhost', 6667), 'localhost', 'pyfibot', ['#pyfibot'], 0.5, None, False)
+        self.startFactory()
+        self.buildProtocol(None)
+
     def startFactory(self):
         self.moduledir = './pyfibot/modules/'
         self.allBots = {}
@@ -55,6 +60,6 @@ class FactoryMock(pyfibot.PyFiBotFactory):
     def buildProtocol(self, address):
         # Go through all defined networks
         for network, server in self.data['networks'].items():
-            p = self.protocol(server)
+            p = self.protocol(network=server)
             self.allBots[server.alias] = p
             p.factory = self
