@@ -8,18 +8,24 @@ import logging
 
 
 logger = logging.getLogger('module_rss')
-DATABASE = dataset.connect('sqlite:///databases/rss.db')
+DATABASE = None
 updater = None
 botref = None
 config = {}
 
 
-def init(bot):
+def init(bot, testing=False):
     ''' Initialize updater '''
+    global DATABASE
     global config
     global botref
     global updater
     global logger
+
+    if testing:
+        DATABASE = dataset.connect('sqlite:///:memory:')
+    else:
+        DATABASE = dataset.connect('sqlite:///databases/rss.db')
 
     logger.info('RSS module initialized')
     botref = bot
@@ -48,54 +54,45 @@ def finalize():
         updater = None
 
 
-def get_feeds(db=None, **kwargs):
+def get_feeds(**kwargs):
     ''' Get feeds from database '''
-    if not db:
-        db = DATABASE
     return [
-        Feed(f['network'], f['channel'], f['id'], db=db)
-        for f in list(db['feeds'].find(**kwargs))
+        Feed(f['network'], f['channel'], f['id'])
+        for f in list(DATABASE['feeds'].find(**kwargs))
     ]
 
 
-def find_feed(network, channel, db=None, **kwargs):
+def find_feed(network, channel, **kwargs):
     ''' Find specific feed from database '''
-    if not db:
-        db = DATABASE
-    f = db['feeds'].find_one(network=network, channel=channel, **kwargs)
+    f = DATABASE['feeds'].find_one(network=network, channel=channel, **kwargs)
     if not f:
         return
-    return Feed(f['network'], f['channel'], f['id'], db=db)
+    return Feed(f['network'], f['channel'], f['id'])
 
 
-def add_feed(network, channel, url, db=None):
+def add_feed(network, channel, url):
     ''' Add feed to database '''
-    if not db:
-        db = DATABASE
-    f = Feed(network=network, channel=channel, url=url, db=db)
+    f = Feed(network=network, channel=channel, url=url)
     return (f.initialized, f.read())
 
 
-def remove_feed(network, channel, id, db=None):
+def remove_feed(network, channel, id):
     ''' Remove feed from database '''
-    if not db:
-        db = DATABASE
-    f = find_feed(network=network, channel=channel, id=int(id), db=db)
+    f = find_feed(network=network, channel=channel, id=int(id))
     if not f:
         return
-    f = f
-    db['feeds'].delete(id=f.id)
+    DATABASE['feeds'].delete(id=f.id)
     return f
 
 
-def update_feeds(cancel=True, db=None, **kwargs):
+def update_feeds(cancel=True, **kwargs):
     # from time import sleep
     ''' Update all feeds in the DB '''
     global config
     global updater
     global logger
     logger.info('Updating RSS feeds started')
-    for f in get_feeds(db=db, **kwargs):
+    for f in get_feeds(**kwargs):
         Thread(target=f.update).start()
 
     # If we get a cancel, cancel the existing updater
@@ -109,12 +106,8 @@ def update_feeds(cancel=True, db=None, **kwargs):
         updater = callLater(5 * 60, update_feeds)
 
 
-def command_rss(bot, user, channel, args, db=None):
+def command_rss(bot, user, channel, args):
     commands = ['list', 'add', 'remove', 'latest', 'update']
-
-    # Note: db -argument is only for tests...
-    if not db:
-        db = DATABASE
 
     args = args.split()
     if not args or args[0] not in commands:
@@ -129,7 +122,7 @@ def command_rss(bot, user, channel, args, db=None):
     if command == 'latest':
         if len(args) < 2:
             return bot.say(channel, 'syntax: ".latest id (from list)"')
-        feed = find_feed(network=network, channel=channel, id=int(args[1]), db=db)
+        feed = find_feed(network=network, channel=channel, id=int(args[1]))
         if not feed:
             return bot.say(channel, 'feed not found, no action taken')
         item = feed.get_latest()
@@ -139,7 +132,7 @@ def command_rss(bot, user, channel, args, db=None):
 
     # List all feeds for current network && channel
     if command == 'list':
-        feeds = get_feeds(network=network, channel=channel, db=db)
+        feeds = get_feeds(network=network, channel=channel)
         if not feeds:
             return bot.say(channel, 'no feeds set up')
 
@@ -155,7 +148,7 @@ def command_rss(bot, user, channel, args, db=None):
     if command == 'add':
         if len(args) < 2:
             return bot.say(channel, 'syntax: ".add url"')
-        init, items = add_feed(network, channel, url=args[1], db=db)
+        init, items = add_feed(network, channel, url=args[1])
         if not init:
             return bot.say(channel, 'feed already added')
         return bot.say(channel, 'feed added with %i items' % len(items))
@@ -164,7 +157,7 @@ def command_rss(bot, user, channel, args, db=None):
     if command == 'remove':
         if len(args) < 2:
             return bot.say(channel, 'syntax: ".remove id (from list)"')
-        feed = remove_feed(network, channel, id=args[1], db=db)
+        feed = remove_feed(network, channel, id=args[1])
         if not feed:
             return bot.say(channel, 'feed not found, no action taken')
         return bot.say(channel, 'feed "%s" <%s> removed' % (feed.name, feed.url))
@@ -174,9 +167,9 @@ def command_rss(bot, user, channel, args, db=None):
     if command == 'update':
         if len(args) < 2:
             bot.say(channel, 'feeds updating')
-            update_feeds(db=db)
+            update_feeds()
             return
-        feed = find_feed(network, channel, id=int(args[1]), db=db)
+        feed = find_feed(network, channel, id=int(args[1]))
         if not feed:
             return bot.say(channel, 'feed not found, no action taken')
         feed.update()
@@ -185,18 +178,15 @@ def command_rss(bot, user, channel, args, db=None):
 
 class Feed(object):
     ''' Feed object to simplify feed handling '''
-    def __init__(self, network, channel, id=None, url=None, db=None):
+    def __init__(self, network, channel, id=None, url=None):
         # Not sure if (this complex) init is needed...
         self.id = id
         self.network = network
         self.channel = channel
         self.url = url
-        self.db = db
 
         if url:
             self.url = url
-        if not db:
-            self.db = DATABASE
         self.initialized = False
         # load feed details from database
         self._get_feed_from_db()
@@ -209,7 +199,7 @@ class Feed(object):
 
     def __init_feed(self):
         ''' Initialize databases for feed '''
-        self.db['feeds'].insert({
+        DATABASE['feeds'].insert({
             'network': self.network,
             'channel': self.channel,
             'url': self.url,
@@ -228,7 +218,7 @@ class Feed(object):
 
     def __get_items_tbl(self):
         ''' Get table for feeds items '''
-        return self.db[('items_%i' % (self.id))]
+        return DATABASE[('items_%i' % (self.id))]
 
     def __parse_feed(self):
         ''' Parse items from feed '''
@@ -263,9 +253,9 @@ class Feed(object):
         ''' Get self from database '''
         feed = None
         if self.url and not self.id:
-            feed = self.db['feeds'].find_one(network=self.network, channel=self.channel, url=self.url)
+            feed = DATABASE['feeds'].find_one(network=self.network, channel=self.channel, url=self.url)
         if self.id:
-            feed = self.db['feeds'].find_one(network=self.network, channel=self.channel, id=self.id)
+            feed = DATABASE['feeds'].find_one(network=self.network, channel=self.channel, id=self.id)
         if not feed:
             feed = self.__init_feed()
         self.id = feed['id']
@@ -291,7 +281,7 @@ class Feed(object):
         data['id'] = self.id
         if 'url' in data:
             self.url = data['url']
-        self.db['feeds'].update(data, ['id'])
+        DATABASE['feeds'].update(data, ['id'])
         # Update self to match new...
         self._get_feed_from_db()
 
