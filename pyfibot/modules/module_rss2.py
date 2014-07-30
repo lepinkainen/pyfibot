@@ -320,8 +320,12 @@ class Feed(object):
         self.read()
         # Get number of unprinted items (and don't mark as printed)
         items = self.get_new_items(False)
-        logger.info('Feed "%s" updated with %i new items' % (self.name, len(items)))
 
+        if len(items) == 0:
+            logger.info('Feed "%s" containes no new items, doing nothing.' % (self.name))
+            return
+
+        logger.info('Feed "%s" updated with %i new items' % (self.name, len(items)))
         # If bot instance isn't found, don't print anything
         bot_instance = botref.find_bot_for_network(self.network)
         if not bot_instance:
