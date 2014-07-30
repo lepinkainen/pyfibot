@@ -3,19 +3,6 @@ from pyfibot import pyfibot
 from pyfibot import botcore
 
 
-class FactoryMock(pyfibot.PyFiBotFactory):
-    def startFactory(self):
-        self.moduledir = './pyfibot/modules/'
-        self.allBots = {}
-
-    def buildProtocol(self, address):
-        # Go through all defined networks
-        for network, server in self.data['networks'].items():
-            p = self.protocol(server)
-            self.allBots[server.alias] = p
-            p.factory = self
-
-
 class BotMock(botcore.CoreCommands):
     config = {}
 
@@ -56,3 +43,18 @@ class BotMock(botcore.CoreCommands):
                 except:
                     _string = _string.decode('iso-8859-1')
         return _string
+
+
+class FactoryMock(pyfibot.PyFiBotFactory):
+    protocol = BotMock
+
+    def startFactory(self):
+        self.moduledir = './pyfibot/modules/'
+        self.allBots = {}
+
+    def buildProtocol(self, address):
+        # Go through all defined networks
+        for network, server in self.data['networks'].items():
+            p = self.protocol(server)
+            self.allBots[server.alias] = p
+            p.factory = self
