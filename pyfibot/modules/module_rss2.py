@@ -30,12 +30,7 @@ def init(bot, testing=False):
     logger.info('RSS module initialized')
     botref = bot
     config = bot.config.get('rss', {})
-    if updater:
-        try:
-            updater.cancel()
-        except twisted.internet.error.AlreadyCalled:
-            pass
-        updater = None
+    finalize()
     # As there's no signal if this is a rehash or restart
     # update feeds in 30 seconds
     updater = callLater(30, update_feeds)
@@ -51,7 +46,7 @@ def finalize():
             updater.cancel()
         except twisted.internet.error.AlreadyCalled:
             pass
-        updater = None
+    updater = None
 
 
 def get_feeds(**kwargs):
