@@ -27,12 +27,15 @@ class SmartUI(tvdb_api.BaseUI):
             status = t[series['id']].data['status']
             if status == "Continuing":
                 return series
+        if len(allSeries) > 0:
+            return allSeries[0]
 
 if __name__ == "__main__":
     api = tvdb_api.Tvdb(custom_ui=SmartUI)
-    print(api['doctor who']) # Doctor Who 2005
-    print(api['castle'])     # Castle 2009
-    print(api['house of cards']) # House of Cards (US)
+    print(api['doctor who'])        # Doctor Who 2005
+    print(api['castle'])            # Castle 2009
+    print(api['house of cards'])    # House of Cards (US)
+
 
 def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
@@ -49,7 +52,7 @@ def command_ep(bot, user, channel, args):
 
     try:
         series = t[args]
-    except tvdb_exceptions.tvdb_shownotfound:
+    except (TypeError, tvdb_exceptions.tvdb_shownotfound):
         bot.say(channel, "Series '%s' not found" % args)
         return
 
