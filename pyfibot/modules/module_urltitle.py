@@ -113,12 +113,13 @@ def __get_age_str(published):
     if years < 1 and days > 0:
         agestr.append("%dd" % days)
     # complete the age string
-    if agestr and days != 0:
+    if agestr and (years or days):
         agestr.append(" from now" if future else " ago")
     elif years == 0 and days == 0:  # uploaded TODAY, whoa.
         agestr.append("FRESH")
-    else:
-        agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
+    # If it shouldn't happen, why is it needed? ;)
+    # else:
+    #     agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
     return "".join(agestr)
 
 
