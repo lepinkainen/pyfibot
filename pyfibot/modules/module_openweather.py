@@ -90,7 +90,7 @@ def command_forecast(bot, user, channel, args):
     else:
         location = default_location
 
-    url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=4&mode=json&units=metric'
+    url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=5&mode=json&units=metric'
     r = bot.get_url(url % location)
 
     try:
@@ -117,7 +117,7 @@ def command_forecast(bot, user, channel, args):
         forecast_date = date.fromtimestamp(d['dt'])
         date_delta = (forecast_date - cur_date).days
 
-        if date_delta == 0:
+        if date_delta < 1:
             continue
 
         if date_delta == 1:
