@@ -1,13 +1,18 @@
 import requests
-
+from pyfibot import pyfibot
 from pyfibot import botcore
 
 
 class BotMock(botcore.CoreCommands):
     config = {}
 
-    def __init__(self, config={}):
+    def __init__(self, config={}, network=None):
         self.config = config
+        if network:
+            self.network = network
+            self.nickname = self.network.nickname
+            self.lineRate = self.network.linerate
+            self.password = self.network.password
 
     def get_url(self, url, params={}, nocache=False, cookies=None):
         print("Getting url %s" % url)
@@ -36,3 +41,25 @@ class BotMock(botcore.CoreCommands):
                 except:
                     _string = _string.decode('iso-8859-1')
         return _string
+
+
+class FactoryMock(pyfibot.PyFiBotFactory):
+    protocol = BotMock
+
+    def __init__(self, config={}):
+        pyfibot.PyFiBotFactory.__init__(self, config)
+        self.createNetwork(('localhost', 6667), 'nerv', 'pyfibot', ['#pyfibot'], 0.5, None, False)
+        self.createNetwork(('localhost', 6667), 'localhost', 'pyfibot', ['#pyfibot'], 0.5, None, False)
+        self.startFactory()
+        self.buildProtocol(None)
+
+    def startFactory(self):
+        self.moduledir = './pyfibot/modules/'
+        self.allBots = {}
+
+    def buildProtocol(self, address):
+        # Go through all defined networks
+        for network, server in self.data['networks'].items():
+            p = self.protocol(network=server)
+            self.allBots[server.alias] = p
+            p.factory = self
