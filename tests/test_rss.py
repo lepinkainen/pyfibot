@@ -2,7 +2,7 @@
 from __future__ import unicode_literals, print_function, division
 from nose.tools import eq_
 import bot_mock
-from pyfibot.modules.module_rss2 import init, finalize, command_rss, Feed
+from pyfibot.modules.module_rss import init, finalize, command_rss, Feed
 from utils import check_re
 
 ADMIN_USER = 'example!example@example.com'
@@ -21,7 +21,7 @@ def teardown_module():
 
 
 def test_init():
-    eq_(('#pyfibot', 'feed added with 50 items'), command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss2_init.xml'))
+    eq_(('#pyfibot', 'feed added with 50 items'), command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss_init.xml'))
     eq_(
         ('#pyfibot', '[Uutiset - Ampparit] Tuuli riepotteli Rosbergiakin (Yle) <http://www.ampparit.com/redir.php?id=237104024>'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'latest 1')
@@ -30,8 +30,8 @@ def test_init():
 
 def test_update():
     global f
-    f = Feed('nerv', '#pyfibot', url=r'./tests/static/test_rss2_init.xml')
-    f.update_feed_info({'url': r'./tests/static/test_rss2_check.xml'})
+    f = Feed('nerv', '#pyfibot', url=r'./tests/static/test_rss_init.xml')
+    f.update_feed_info({'url': r'./tests/static/test_rss_check.xml'})
     eq_(
         None,
         command_rss(bot, ADMIN_USER, '#pyfibot', 'update 1')
@@ -83,7 +83,7 @@ def test_command_remove_3():
 
 def test_command_remove_4():
     eq_(
-        ('#pyfibot', 'feed "Uutiset - Ampparit.com" <./tests/static/test_rss2_check.xml> removed'),
+        ('#pyfibot', 'feed "Uutiset - Ampparit.com" <./tests/static/test_rss_check.xml> removed'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'remove 1')
     )
 
@@ -91,12 +91,12 @@ def test_command_remove_4():
 def test_command_add():
     check_re(
         r'feed added with \d+ items',
-        command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss2_init.xml')[1]
+        command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss_init.xml')[1]
     )
 
 
 def test_command_add_2():
     eq_(
         ('#pyfibot', 'feed already added'),
-        command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss2_init.xml')
+        command_rss(bot, ADMIN_USER, '#pyfibot', 'add ./tests/static/test_rss_init.xml')
     )
