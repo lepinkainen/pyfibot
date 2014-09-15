@@ -69,7 +69,7 @@ def test_command_remove():
 
 def test_command_remove_2():
     eq_(
-        ('#pyfibot', 'syntax: ".remove id (from list)"'),
+        ('#pyfibot', 'syntax: ".rss remove <id from list>"'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'remove')
     )
 
