@@ -116,7 +116,7 @@ def command_rss(bot, user, channel, args):
     # Possibly useful for checking if feed still exists?
     if command == 'latest':
         if len(args) < 2:
-            return bot.say(channel, 'syntax: ".latest id (from list)"')
+            return bot.say(channel, 'syntax: ".rss latest <id from list>"')
         feed = find_feed(network=network, channel=channel, id=int(args[1]))
         if not feed:
             return bot.say(channel, 'feed not found, no action taken')
@@ -142,7 +142,7 @@ def command_rss(bot, user, channel, args):
     # Add new feed for channel
     if command == 'add':
         if len(args) < 2:
-            return bot.say(channel, 'syntax: ".add url"')
+            return bot.say(channel, 'syntax: ".rss add url"')
         init, items = add_feed(network, channel, url=args[1])
         if not init:
             return bot.say(channel, 'feed already added')
@@ -151,7 +151,7 @@ def command_rss(bot, user, channel, args):
     # remove feed from channel
     if command == 'remove':
         if len(args) < 2:
-            return bot.say(channel, 'syntax: ".remove id (from list)"')
+            return bot.say(channel, 'syntax: ".rss remove <id from list>"')
         feed = remove_feed(network, channel, id=args[1])
         if not feed:
             return bot.say(channel, 'feed not found, no action taken')
