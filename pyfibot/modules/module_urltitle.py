@@ -678,6 +678,7 @@ def _handle_areena(url):
         log.debug('Unhandled error in Areena.')
         return
 
+
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
     def get_redirect(content):
