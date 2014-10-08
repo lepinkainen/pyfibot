@@ -2,42 +2,58 @@
 Parse spotify URLs
 """
 
-from __future__ import unicode_literals, print_function, division
+from __future__ import unicode_literals
 import re
-from bs4 import BeautifulSoup
+import logging
 
-
-def __get_bs(bot, url):
-    content = bot.get_url(url).content
-    if content:
-        return BeautifulSoup(content)
-    else:
-        return None
+log = logging.getLogger('spotify')
 
 
 def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""
 
-    m = re.match(".*(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?.*", args)
+    m = re.match(".*(http:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*", args)
     if not m:
         return None
 
-    apiurl = "http://ws.spotify.com/lookup/1/?uri=spotify:%s:%s" % (m.group(2), m.group(4))
+    spotify_id = m.group('id')
+    item = m.group('item').replace(':', '/').split('/')
+    item[0] += 's'
+    if item[0] == 'users':
+        # All playlists seem to return 401 at the time, even the public ones
+        return None
 
-    bs = __get_bs(bot, apiurl)
-    if not bs:
+    apiurl = "https://api.spotify.com/v1/%s/%s" % ('/'.join(item), spotify_id)
+    r = bot.get_url(apiurl)
+
+    if r.status_code != 200:
+        if r.status_code not in [401, 403]:
+            log.warning('Spotify API returned %s while trying to fetch %s' % r.status_code, apiurl)
         return
 
-    data = '[Spotify] '
-    if m.group(2) == 'album':
-        artist = bs.find('artist').find('name').string
-        album = bs.find('album').find('name').string
-        year = bs.find('album').find('released').string
-        data += '%s - %s (%s)' % (artist, album, year)
-    if m.group(2) == 'artist':
-        data += bs.find('artist').find('name').string
-    if m.group(2) == 'track':
-        artist = bs.find('artist').find('name').string
-        title = bs.find('track').find('name').string
-        data += '%s - %s' % (artist, title)
-    return bot.say(channel, data)
+    data = r.json()
+
+    title = '[Spotify] '
+    if item[0] in ['albums', 'tracks']:
+        artists = []
+        for artist in data['artists']:
+            artists.append(artist['name'])
+        title += ', '.join(artists)
+
+    if item[0] == 'albums':
+        title += ' - %s (%s)' % (data['name'], data['release_date'])
+
+    if item[0] == 'artists':
+        title += data['name']
+        genres_n = len(data['genres'])
+        if genres_n > 0:
+            genitive = 's' if genres_n > 1 else ''
+            genres = data['genres'][0:4]
+            more = ' +%s more' % genres_n - 5 if genres_n > 4 else ''
+
+            title += ' (Genre%s: %s%s)' % (genitive, ', '.join(genres), more)
+
+    if item[0] == 'tracks':
+        title += ' - %s - %s' % (data['album']['name'], data['name'])
+
+    return bot.say(channel, title)
