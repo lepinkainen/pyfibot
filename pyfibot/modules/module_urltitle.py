@@ -350,6 +350,23 @@ def _handle_verkkokauppa(url):
     return "%s | %s (%s)" % (product, price, availability)
 
 
+def _parse_tweet_from_src(url):
+    bs = __get_bs(url)
+    if not bs:
+        return
+    container = bs.find('div', {'class': 'tweet'})
+    # Return if tweet container wasn't found.
+    if not container:
+        return
+
+    name = container.find('strong', {'class': 'fullname'})
+    user = container.find('span', {'class': 'username'})
+    tweet = container.find('p', {'class': 'tweet-text'})
+    # Return string only if every field was found...
+    if name and user and tweet:
+        return '%s (%s): %s' % (user.text, name.text, tweet.text)
+
+
 def _handle_tweet2(url):
     """http*://twitter.com/*/status/*"""
     return _handle_tweet(url)
@@ -365,7 +382,7 @@ def _handle_tweet(url):
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
-        return
+        return _parse_tweet_from_src(url)
     headers = {'Authorization': 'Bearer ' + bearer_token}
 
     data = bot.get_url(infourl, headers=headers)
