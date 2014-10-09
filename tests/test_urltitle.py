@@ -13,12 +13,6 @@ views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
 age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
 
 
-def test_imdb_ignore():
-    msg = "http://www.imdb.com/title/tt1772341/"
-    module_urltitle.init(bot)
-    eq_(None, module_urltitle.handle_url(bot, None, "#channel", msg, msg))
-
-
 def test_spotify_ignore():
     msg = "http://open.spotify.com/artist/4tuiQRw9bC9HZhSFJEJ9Mz"
     module_urltitle.init(bot)
@@ -66,6 +60,13 @@ def test_wiki_en():
     msg = "http://en.wikipedia.org/wiki/IPhone"
     module_urltitle.init(bot)
     eq_(("#channel", "Title: iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_imdb():
+    regex = 'Title: Wreck-It Ralph \(2012\) - [\d.]{1,}/10 \(%s votes\) - .*' % views_str_regex
+    msg = "http://www.imdb.com/title/tt1772341/"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
 def test_youtube():

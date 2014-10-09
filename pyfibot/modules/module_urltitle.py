@@ -148,8 +148,6 @@ def handle_url(bot, user, channel, url, msg):
 
     if msg.startswith("-"):
         return
-    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url):
-        return  # IMDB urls are handled elsewhere
     if re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url):
         return  # spotify handled elsewhere
 
@@ -479,6 +477,26 @@ def _handle_youtube_gdata(url):
         agestr = __get_age_str(published)
 
         return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, lengthstr, stars, views, agestr, adult)
+
+def _handle_imdb(url):
+    """http://*imdb.com/title/tt*"""
+    m = re.match("http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
+    if not m:
+        return
+
+    params = {'i': m.group(1)}
+    r = bot.get_url('http://www.omdbapi.com/', params=params)
+    data = r.json()
+
+    name = data['Title']
+    year = data['Year']
+    rating = data['imdbRating']
+    votes = __get_views(int(data['imdbVotes'].replace(',','')))
+    genre = data['Genre'].lower()
+
+    title = '%s (%s) - %s/10 (%s votes) - %s' % (name, year, rating, votes, genre)
+
+    return title
 
 
 def _handle_helmet(url):
