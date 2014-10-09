@@ -711,6 +711,8 @@ def _handle_wikipedia(url):
             'format': 'json',
             'action': 'query',
             'prop': 'extracts',
+            # request 5 sentences, because Wikipedia seems to think that
+            # period is always indicative of end of sentence
             'exsentences': 5,
             'redirects': '',
             'titles': clean_page_name(url)
