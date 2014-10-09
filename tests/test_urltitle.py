@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 import bot_mock
 from pyfibot.modules import module_urltitle
 from utils import check_re
@@ -116,6 +116,13 @@ def test_alko():
     msg = 'http://www.alko.fi/tuotteet/798684/'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_google_play_music():
+    msg = 'https://play.google.com/music/m/Tkyqfh5koeirtbi76b2tsee6e2y'
+    module_urltitle.init(bot)
+    responses = [('#channel', 'Title: Villiviini - Ultra Bra'), None]
+    ok_(module_urltitle.handle_url(bot, None, "#channel", msg, msg) in responses)
 
 
 def test_poliisi():

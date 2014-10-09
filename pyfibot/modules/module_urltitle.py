@@ -1258,6 +1258,22 @@ def _handle_poliisi(url):
         return False
 
 
+def _handle_google_play_music(url):
+    """http*://play.google.com/music/*"""
+    bs = __get_bs(url)
+    if not bs:
+        return False
+
+    title = bs.find('meta', {'property': 'og:title'})
+    description = bs.find('meta', {'property': 'og:description'})
+    if not title:
+        return False
+    elif title['content'] == description['content']:
+        return False
+    else:
+        return title['content']
+
+
 def _handle_github(url):
     """http*://*github.com*"""
     return __get_title_tag(url)
