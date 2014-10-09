@@ -148,8 +148,6 @@ def handle_url(bot, user, channel, url, msg):
 
     if msg.startswith("-"):
         return
-    if re.match("http://.*?\.imdb\.com/title/tt([0-9]+)/?", url):
-        return  # IMDB urls are handled elsewhere
     if re.match("(http:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url):
         return  # spotify handled elsewhere
 
@@ -350,6 +348,23 @@ def _handle_verkkokauppa(url):
     return "%s | %s (%s)" % (product, price, availability)
 
 
+def _parse_tweet_from_src(url):
+    bs = __get_bs(url)
+    if not bs:
+        return
+    container = bs.find('div', {'class': 'tweet'})
+    # Return if tweet container wasn't found.
+    if not container:
+        return
+
+    name = container.find('strong', {'class': 'fullname'})
+    user = container.find('span', {'class': 'username'})
+    tweet = container.find('p', {'class': 'tweet-text'})
+    # Return string only if every field was found...
+    if name and user and tweet:
+        return '%s (%s): %s' % (user.text, name.text, tweet.text)
+
+
 def _handle_tweet2(url):
     """http*://twitter.com/*/status/*"""
     return _handle_tweet(url)
@@ -365,7 +380,7 @@ def _handle_tweet(url):
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
-        return
+        return _parse_tweet_from_src(url)
     headers = {'Authorization': 'Bearer ' + bearer_token}
 
     data = bot.get_url(infourl, headers=headers)
@@ -462,6 +477,26 @@ def _handle_youtube_gdata(url):
         agestr = __get_age_str(published)
 
         return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, lengthstr, stars, views, agestr, adult)
+
+def _handle_imdb(url):
+    """http://*imdb.com/title/tt*"""
+    m = re.match("http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
+    if not m:
+        return
+
+    params = {'i': m.group(1)}
+    r = bot.get_url('http://www.omdbapi.com/', params=params)
+    data = r.json()
+
+    name = data['Title']
+    year = data['Year']
+    rating = data['imdbRating']
+    votes = __get_views(int(data['imdbVotes'].replace(',','')))
+    genre = data['Genre'].lower()
+
+    title = '%s (%s) - %s/10 (%s votes) - %s' % (name, year, rating, votes, genre)
+
+    return title
 
 
 def _handle_helmet(url):
@@ -1221,6 +1256,22 @@ def _handle_poliisi(url):
         return bs.find('div', {'id': 'contentbody'}).find('h1').text.strip()
     except AttributeError:
         return False
+
+
+def _handle_google_play_music(url):
+    """http*://play.google.com/music/*"""
+    bs = __get_bs(url)
+    if not bs:
+        return False
+
+    title = bs.find('meta', {'property': 'og:title'})
+    description = bs.find('meta', {'property': 'og:description'})
+    if not title:
+        return False
+    elif title['content'] == description['content']:
+        return False
+    else:
+        return title['content']
 
 
 def _handle_github(url):

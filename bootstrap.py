@@ -1153,7 +1153,6 @@ def after_install(options, home_dir):
     subprocess.call([join(bin_dir, 'easy_install'), 'jsonschema >= 1.0.0'])
     subprocess.call([join(bin_dir, 'easy_install'), 'beautifulsoup4'])
     subprocess.call([join(bin_dir, 'easy_install'), 'lxml'])
-    subprocess.call([join(bin_dir, 'easy_install'), 'imdbpy'])
     subprocess.call([join(bin_dir, 'easy_install'), 'pyopenssl'])
     subprocess.call([join(bin_dir, 'easy_install'), 'tvdb_api'])
     subprocess.call([join(bin_dir, 'easy_install'), 'feedparser'])

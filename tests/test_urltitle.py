@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 import bot_mock
 from pyfibot.modules import module_urltitle
 from utils import check_re
@@ -11,12 +11,6 @@ bot = bot_mock.BotMock()
 lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
 views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
 age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
-
-
-def test_imdb_ignore():
-    msg = "http://www.imdb.com/title/tt1772341/"
-    module_urltitle.init(bot)
-    eq_(None, module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_spotify_ignore():
@@ -68,6 +62,13 @@ def test_wiki_en():
     eq_(("#channel", "Title: iPhone is a line of smartphones designed and marketed by Apple Inc."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
+def test_imdb():
+    regex = 'Title: Wreck-It Ralph \(2012\) - [\d.]{1,}/10 \(%s votes\) - .*' % views_str_regex
+    msg = "http://www.imdb.com/title/tt1772341/"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 def test_youtube():
     regex = 'Title: (.*?) by (.*?) \[%s - \[\** *\] - %s views - %s( - XXX)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
     msg = "http://www.youtube.com/watch?v=awsolTK175c"
@@ -115,6 +116,13 @@ def test_alko():
     msg = 'http://www.alko.fi/tuotteet/798684/'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_google_play_music():
+    msg = 'https://play.google.com/music/m/Tkyqfh5koeirtbi76b2tsee6e2y'
+    module_urltitle.init(bot)
+    responses = [('#channel', 'Title: Villiviini - Ultra Bra'), None]
+    ok_(module_urltitle.handle_url(bot, None, "#channel", msg, msg) in responses)
 
 
 def test_poliisi():
