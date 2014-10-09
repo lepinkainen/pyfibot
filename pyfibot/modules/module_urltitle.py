@@ -700,7 +700,8 @@ def _handle_wikipedia(url):
     """*wikipedia.org*"""
     def get_redirect(content):
         if '#redirect' in content.lower() or \
-           '<li>redirect' in content.lower():
+           '<li>redirect' in content.lower() or \
+           'redirect to:' in content.lower():
             return True
         return False
 
