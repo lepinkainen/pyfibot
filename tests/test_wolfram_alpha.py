@@ -14,7 +14,7 @@ def test_simple():
     module_wolfram_alpha.init(bot)
     query = "42"
     # Wolfram Alpha seems to randomly return also Roman numerals
-    regex = u"42 = forty-two( = XLII)?"
+    regex = u"(42 = forty-two|forty-two = XLII)"
     result = module_wolfram_alpha.command_wa(bot, None, "#channel", query)[1]
     check_re(regex, result)
 
