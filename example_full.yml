@@ -17,7 +17,9 @@ networks:
     channels:
       - pyfibot
       # Channel with password
-      - pyfibot_test, password
+      - [pyfibot_test, password]
+      # channel name starting with '!'
+      - '!pyfibot_example'
     # port to connect to
     # default: 6667
     port: 6667
