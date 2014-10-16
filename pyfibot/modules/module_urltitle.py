@@ -391,9 +391,9 @@ def _handle_tweet(url):
             log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
         return
 
-    text = tweet['text']
+    text = tweet['text'].strip()
     user = tweet['user']['screen_name']
-    name = tweet['user']['name']
+    name = tweet['user']['name'].strip()
 
     #retweets  = tweet['retweet_count']
     #favorites = tweet['favorite_count']
