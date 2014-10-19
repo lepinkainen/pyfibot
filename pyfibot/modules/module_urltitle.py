@@ -478,6 +478,7 @@ def _handle_youtube_gdata(url):
 
         return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, lengthstr, stars, views, agestr, adult)
 
+
 def _handle_imdb(url):
     """http://*imdb.com/title/tt*"""
     m = re.match("http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
@@ -491,7 +492,7 @@ def _handle_imdb(url):
     name = data['Title']
     year = data['Year']
     rating = data['imdbRating']
-    votes = __get_views(int(data['imdbVotes'].replace(',','')))
+    votes = __get_views(int(data['imdbVotes'].replace(',', '')))
     genre = data['Genre'].lower()
 
     title = '%s (%s) - %s/10 (%s votes) - %s' % (name, year, rating, votes, genre)
