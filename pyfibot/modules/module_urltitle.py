@@ -193,7 +193,6 @@ def handle_url(bot, user, channel, url, msg):
                 # Handler found, but suggests using the default title instead
                 break
             elif title:
-                cache.put(url, title)
                 # handler found, abort
                 return _title(bot, channel, title, True)
             else:
@@ -233,9 +232,6 @@ def handle_url(bot, user, channel, url, msg):
         if not title:
             return
 
-        # Cache generic titles
-        cache.put(url, title)
-
         if config.get("check_redundant", True) and _check_redundant(url, title):
             log.debug("%s is redundant, not displaying" % title)
             return
@@ -244,6 +240,7 @@ def handle_url(bot, user, channel, url, msg):
         if title in ignored_titles:
             return
         else:
+            # Return title
             return _title(bot, channel, title)
 
     except AttributeError:
@@ -313,6 +310,9 @@ def _title(bot, channel, title, smart=False, prefix=None):
 
     if not title:
         return
+
+    # Cache title
+    cache.put(title)
 
     if not prefix:
         prefix = "Title:"
