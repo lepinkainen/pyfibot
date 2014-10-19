@@ -239,9 +239,9 @@ def handle_url(bot, user, channel, url, msg):
         ignored_titles = ['404 Not Found', '403 Forbidden']
         if title in ignored_titles:
             return
-        else:
-            # Return title
-            return _title(bot, channel, title)
+
+        # Return title
+        return _title(bot, channel, title)
 
     except AttributeError:
         # TODO: Nees a better way to handle this. Happens with empty <title> tags
@@ -327,8 +327,7 @@ def _title(bot, channel, title, smart=False, prefix=None):
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
-    else:
-        return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
+    return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
 
 
 def _handle_verkkokauppa(url):
