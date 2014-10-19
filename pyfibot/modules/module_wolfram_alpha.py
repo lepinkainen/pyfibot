@@ -3,14 +3,10 @@ from __future__ import unicode_literals, print_function, division
 import urllib
 import logging
 import re
+import xml.etree.ElementTree as etree
 
 log = logging.getLogger('wolfram_alpha')
 
-try:
-    from lxml import etree
-    log.debug("running with lxml.etree")
-except ImportError:
-    log.debug("module_wolfram_alpha requires lxml.etree for xpath support")
 
 appid = None
 query = "http://api.wolframalpha.com/v2/query?input=%s&appid=%s"
@@ -48,15 +44,17 @@ def command_wa(bot, user, channel, args):
         return
 
     root = etree.fromstring(r.content)
-    # find all pods
-    pods = root.findall("pod")
+    # Find all pods with plaintext answers
+    # Filter out None -answers, strip strings and filter out the empty ones
+    plain_text_pods = filter(None, [p.text.strip() for p in root.findall('.//subpod/plaintext') if p is not None and p.text is not None])
 
     # no answer pods found, check if there are didyoumeans-elements
-    if not pods:
+    if not plain_text_pods:
         didyoumeans = root.find("didyoumeans")
         # no support for future stuff yet, TODO?
         if not didyoumeans:
-            return
+            # If there's no pods, the question clearly wasn't understood
+            return bot.say(channel, "Sorry, couldn't understand the question.")
 
         options = []
         for didyoumean in didyoumeans:
@@ -65,22 +63,14 @@ def command_wa(bot, user, channel, args):
         line = "Did you mean %s?" % line
         return bot.say(channel, line.encode("UTF-8"))
 
-    # Question interpretations are in text format in subpods/plaintext
-    # find all these and filter empty values
-    pods_as_text = filter(None, [p.xpath('subpod/plaintext')[0].text for p in pods])
-
-    # If there's no pods, the question clearly wasn't understood
-    if not pods_as_text:
-        return bot.say(channel, "Sorry, couldn't understand the question.")
-
     # If there's only one pod with text, it's probably the answer
     # example: "integral x²"
-    if len(pods_as_text) == 1:
-        answer = clean_question(pods_as_text[0])
+    if len(plain_text_pods) == 1:
+        answer = clean_question(plain_text_pods[0])
         return bot.say(channel, answer)
 
     # If there's multiple pods, first is the question interpretation
-    question = clean_question(pods_as_text[0].replace(' | ', ' ').replace('\n', ' '))
+    question = clean_question(plain_text_pods[0].replace(' | ', ' ').replace('\n', ' '))
     # and second is the best answer
-    answer = clean_answer(pods_as_text[1])
+    answer = clean_answer(plain_text_pods[1])
     return bot.say(channel, '%s = %s' % (question, answer))

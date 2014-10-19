@@ -3,7 +3,6 @@ requests >= 2.0.0
 pyyaml
 jsonschema >= 1.0.0
 beautifulsoup4
-lxml
 pyopenssl
 tvdb_api
 repoze.lru
