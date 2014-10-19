@@ -890,7 +890,7 @@ def _handle_liveleak(url):
         pass
 
     try:
-        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0]).text
+        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0]).text.strip()
     except:
         pass
 
