@@ -194,7 +194,7 @@ def handle_url(bot, user, channel, url, msg):
                 break
             elif title:
                 # handler found, abort
-                return _title(bot, channel, title, True)
+                return _title(bot, channel, title, True, url=url)
             else:
                 # No specific handler, use generic
                 pass
@@ -241,7 +241,7 @@ def handle_url(bot, user, channel, url, msg):
             return
 
         # Return title
-        return _title(bot, channel, title)
+        return _title(bot, channel, title, url=url)
 
     except AttributeError:
         # TODO: Nees a better way to handle this. Happens with empty <title> tags
@@ -305,14 +305,15 @@ def _levenshtein_distance(s, t):
     return d[len(s)][len(t)]
 
 
-def _title(bot, channel, title, smart=False, prefix=None):
+def _title(bot, channel, title, smart=False, prefix=None, url=None):
     """Say title to channel"""
 
     if not title:
         return
 
-    # Cache title
-    cache.put(title)
+    if url is not None:
+        # Cache title
+        cache.put(url, title)
 
     if not prefix:
         prefix = "Title:"
