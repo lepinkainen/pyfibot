@@ -38,9 +38,9 @@ def test_iltasanomat():
 
 
 def test_verkkokauppacom():
-    msg = "http://www.verkkokauppa.com/fi/product/34214/dkqht/Sony-NEX-3N-mikrojarjestelmakamera-16-50-mm-objektiivi-musta"
+    msg = "http://www.verkkokauppa.com/fi/product/55124/dfbfn/Coca-Cola-Vanilla-USA-virvoitusjuoma-355-ml"
     module_urltitle.init(bot)
-    regex = 'Title: Sony NEX-3N mikrojärjestelmäkamera \+ 16-50 mm objektiivi, musta \| \d+,\d+ € \(.*?\)'
+    regex = 'Title: Coca-Cola Vanilla USA virvoitusjuoma 355 ml \| \d+,\d+ € \(.*?\)'
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
