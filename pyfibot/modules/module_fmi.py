@@ -11,8 +11,70 @@ api_key = 'c86a0cb3-e0bf-4604-bfe9-de3ca92e0afc'
 
 # Time format for the API
 TIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
-# t2m = temperature, ws_10min = wind speed (10 min avg), rh == relative humidity
-PARAMETERS = ['t2m', 'ws_10min', 'rh']
+# t2m = temperature
+# ws_10min = wind speed (10 min avg)
+# rh == relative humidity
+# n_man == cloudiness
+# wawa == weather description number
+PARAMETERS = ['t2m', 'ws_10min', 'rh', 'n_man', 'wawa']
+
+# http://ilmatieteenlaitos.fi/avoin-data-saahavainnot
+WAWA = {
+    10: 'utua',
+
+    20: 'sumua',
+    21: 'sadetta',
+    22: 'tihkusadetta',
+    23: 'vesisadetta',
+    24: 'lumisadetta',
+    25: 'jäätävää tihkua',
+
+    30: 'sumua',
+    31: 'sumua',
+    32: 'sumua',
+    33: 'sumua',
+    34: 'sumua',
+
+    40: 'sadetta',
+    41: 'heikkoa tai kohtalaista sadetta',
+    42: 'kovaa sadetta',
+
+    50: 'tihkusadetta',
+    51: 'heikkoa tihkusadetta',
+    52: 'kohtalaista tihkusadetta',
+    53: 'kovaa tihkusadetta',
+    54: 'jäätävää heikkoa tihkusadetta',
+    55: 'jäätävää kohtalaista tihkusadetta',
+    56: 'jäätävää kovaa tihkusadetta',
+
+    60: 'vesisadetta',
+    61: 'heikkoa vesisadetta',
+    62: 'kohtalaista vesisadetta',
+    63: 'kovaa vesisadetta',
+    64: 'jäätävää heikkoa vesisadetta',
+    65: 'jäätävää kohtalaista vesisadetta',
+    66: 'jäätävää kovaa vesisadetta',
+    67: 'räntää',
+    68: 'räntää',
+
+    70: 'lumisadetta',
+    71: 'heikkoa lumisadetta',
+    72: 'kohtalaista lumisadetta',
+    73: 'tiheää lumisadetta',
+    74: 'heikkoa jääjyväsadetta',
+    75: 'kohtalaista jääjyväsadetta',
+    76: 'kovaa jääjyväsadetta',
+    77: 'lumijyväsiä',
+    78: 'jääkiteitä',
+
+    80: 'sadekuuroja',
+    81: 'heikkoja sadekuuroja',
+    82: 'kohtalaisia sadekuuroja',
+    84: 'heikkoja lumikuuroja',
+    85: 'kohtalaisia lumikuuroja',
+    86: 'kovia lumikuuroja',
+    87: 'raekuuroja',
+}
 
 
 def init(bot):
@@ -76,6 +138,10 @@ def command_saa(bot, user, channel, args):
         text.append('tuulen nopeus: %i m/s' % round(values['ws_10min']))
     if 'rh' in values:
         text.append('ilman kosteus: %i%%' % round(values['rh']))
+    if 'n_man' in values:
+        text.append('pilvisyys: %i/8' % int(values['n_man']))
+    if 'wawa' in values and int(values['wawa']) in WAWA:
+        text.append(WAWA[int(values['wawa'])])
 
     # Return place and values to the channel
     return bot.say(channel, '%s: %s' % (place, ', '.join(text)))
