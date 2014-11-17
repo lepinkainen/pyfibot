@@ -365,6 +365,11 @@ def _parse_tweet_from_src(url):
         return '%s (%s): %s' % (user.text, name.text, tweet.text)
 
 
+def _handle_mobile_tweet(url):
+    """http*://mobile.twitter.com/*/status/*"""
+    return _handle_tweet(url)
+
+
 def _handle_tweet2(url):
     """http*://twitter.com/*/status/*"""
     return _handle_tweet(url)
