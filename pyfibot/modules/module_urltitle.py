@@ -378,7 +378,8 @@ def _handle_tweet2(url):
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
-    test = re.match("https?://.*?\.twitter\.com\/(\w+)/status(es)?/(\d+)", url)
+    test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
+    if not test: return
     # matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
