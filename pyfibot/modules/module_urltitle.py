@@ -1243,6 +1243,29 @@ def _handle_google_play_music(url):
         return title['content']
 
 
+def _handle_steamstore(url):
+    """http://store.steampowered.com/app/*"""
+
+    # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
+    api_url = "http://store.steampowered.com/api/appdetails/"
+    app = re.match("http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
+    params = { 'appids': app.group('id'), 'cc': 'fi' }
+
+    r = bot.get_url(api_url, params=params)
+    data = r.json()[app.group('id')]['data']
+
+    name = data['name']
+    if 'price_overview' in data:
+        price = "%.2fe" % (float(data['price_overview']['final'])/100)
+
+        if data['price_overview']['discount_percent'] != 0:
+            price += " (-%s%%)" % data['price_overview']['discount_percent']
+    else:
+        price = "Free to play"
+
+    return "%s | %s" % (name, price)
+
+
 def _handle_github(url):
     """http*://*github.com*"""
     return __get_title_tag(url)

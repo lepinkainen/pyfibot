@@ -125,6 +125,13 @@ def test_google_play_music():
     ok_(module_urltitle.handle_url(bot, None, "#channel", msg, msg) in responses)
 
 
+def test_steamstore():
+    msg = 'http://store.steampowered.com/app/440/'
+    title = 'Title: Team Fortress 2 | Free to play'
+    module_urltitle.init(bot)
+    eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 def test_poliisi():
     msg = 'http://www.poliisi.fi/poliisi/lappi14/home.nsf/PFBD/76D41E0F8B4A85E5C2257C760045DAC6'
     title = 'Title: Poliisi kaipaa ajoneuvoyhdistelmää kolaroinutta henkilöä'
