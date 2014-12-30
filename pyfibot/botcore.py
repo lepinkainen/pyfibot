@@ -19,7 +19,11 @@ from types import FunctionType
 
 import string
 import logging
-from util import pyfiurl
+
+try:
+    from util import pyfiurl
+except ImportError:
+    from pyfibot.util import pyfiurl
 
 # line splitting
 import textwrap
