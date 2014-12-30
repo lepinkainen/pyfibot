@@ -25,13 +25,8 @@ import yaml
 import socket
 import shutil
 
-try:
-    from lib import colorlogger
-    from util.dictdiffer import DictDiffer
-except ImportError:
-    from pyfibot.lib import colorlogger
-    from pyfibot.util.dictdiffer import DictDiffer
-
+from lib import colorlogger
+from util.dictdiffer import DictDiffer
 import botcore
 
 # default timeout for socket connections
