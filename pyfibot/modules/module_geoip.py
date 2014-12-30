@@ -1,7 +1,6 @@
 from __future__ import unicode_literals, print_function, division
 import pygeoip
 import os.path
-import sys
 import socket
 
 try:
@@ -12,7 +11,8 @@ except ImportError:
 
 
 # http://dev.maxmind.com/geoip/legacy/geolite/
-DATAFILE = os.path.join(sys.path[0], "GeoIP.dat")
+# PATH = os.path.realpath(os.path.join(os.path.dirname(__file__), '..'))
+DATAFILE = os.path.join(PATH, 'static/GeoIP.dat')
 
 # STANDARD = reload from disk
 # MEMORY_CACHE = load to memory

@@ -5,6 +5,7 @@ from twisted.internet.reactor import callLater
 from threading import Thread
 import twisted.internet.error
 import logging
+import os
 
 
 logger = logging.getLogger('module_rss')
@@ -25,7 +26,7 @@ def init(bot, testing=False):
     if testing:
         DATABASE = dataset.connect('sqlite:///:memory:')
     else:
-        DATABASE = dataset.connect('sqlite:///databases/rss.db')
+        DATABASE = dataset.connect('sqlite:///%s' % (os.path.join(DATABASE_PATH, 'rss.db')))
 
     logger.info('RSS module initialized')
     botref = bot

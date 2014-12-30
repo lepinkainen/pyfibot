@@ -11,7 +11,7 @@ A modular python bot based on the twisted matrix irc library
 
 from __future__ import print_function, division
 import sys
-import os.path
+import os
 import time
 import requests
 import fnmatch
@@ -20,35 +20,30 @@ import logging.handlers
 import json
 import jsonschema
 from copy import deepcopy
+from twisted.internet import reactor, protocol, ssl
+import yaml
+import socket
+import shutil
 
-import colorlogger
-USE_COLOR = True
+from lib import colorlogger
+from util.dictdiffer import DictDiffer
+import botcore
+
+# default timeout for socket connections
+socket.setdefaulttimeout(20)
 
 # Make requests quieter by default
 requests_log = logging.getLogger("requests")
 requests_log.setLevel(logging.WARNING)
 
-try:
-    import yaml
-except ImportError:
-    print("PyYAML not found, please install from http://pyyaml.org/wiki/PyYAML")
-    sys.exit(1)
-
-# twisted imports
-try:
-    from twisted.internet import reactor, protocol, ssl
-except ImportError:
-    print("Twisted library not found, please install Twisted from http://twistedmatrix.com/products/download")
-    sys.exit(1)
-
-# default timeout for socket connections
-import socket
-socket.setdefaulttimeout(20)
-
-import botcore
-from util.dictdiffer import DictDiffer
-
 log = logging.getLogger('core')
+
+PATH = os.path.realpath(os.path.dirname(__file__))
+CONFIG_PATH = os.path.expanduser('~/.config/pyfibot')
+DATABASE_PATH = os.path.join(CONFIG_PATH, 'databases')
+
+if not os.path.exists(DATABASE_PATH):
+    os.makedirs(DATABASE_PATH)
 
 
 class Network:
@@ -90,10 +85,10 @@ class ThrottledClientFactory(protocol.ClientFactory):
 class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
-    version = "2013-02-19"
+    version = "2014-12-30"
     protocol = botcore.PyFiBot
     allBots = None
-    moduledir = os.path.join(sys.path[0], "modules/")
+    moduledir = os.path.join(PATH, 'modules')
     startTime = None
     config = None
 
@@ -217,6 +212,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         g['isAdmin'] = self.isAdmin
         g['to_utf8'] = self.to_utf8
         g['to_unicode'] = self.to_unicode
+        g['PATH'] = PATH
+        g['DATABASE_PATH'] = DATABASE_PATH
         return g
 
     def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
@@ -369,19 +366,12 @@ def init_logging(config):
     else:
         logger.setLevel(logging.INFO)
 
-    if USE_COLOR:
-        FORMAT = "[%(asctime)-15s][%(levelname)-20s][$BOLD%(name)-15s$RESET]  %(message)s"
-        # Append file name + number if debug is enabled
-        if config.get('debug', False):
-            FORMAT = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
-        COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
-        formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
-    else:
-        FORMAT = "%(asctime)-15s %(levelname)-8s %(name)-11s %(message)s"
-        formatter = logging.Formatter(FORMAT)
-        # Append file name + number if debug is enabled
-        if config.get('debug', False):
-            FORMAT = "%s %s" % (FORMAT, " (%(filename)s:%(lineno)d)")
+    FORMAT = "[%(asctime)-15s][%(levelname)-20s][$BOLD%(name)-15s$RESET]  %(message)s"
+    # Append file name + number if debug is enabled
+    if config.get('debug', False):
+        FORMAT = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
+    COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
+    formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
 
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
@@ -389,18 +379,30 @@ def init_logging(config):
 
 
 def read_config():
-    config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
+    locations = [
+        os.path.join(PATH, 'config.yml'),
+        os.path.join(CONFIG_PATH, 'config.yml'),
+    ]
+    try:
+        locations.append(sys.argv[1])
+    except IndexError:
+        pass
 
-    if os.path.exists(config_file):
-        config = yaml.load(file(config_file))
-    else:
-        print("No config file found, please edit example.yml and rename it to config.yml")
+    config = None
+    for l in locations:
+        if os.path.exists(l):
+            config = yaml.load(file(l))
+    if config is None:
+        shutil.copy(os.path.join(PATH, 'static/example.yml'), os.path.join(CONFIG_PATH, 'config.yml'))
+        print("No config file was found.")
+        print("Example configuration has been created in '~/.config/pyfibot/config.yml'")
+        print("Please edit this to match your requirements and run bot again.")
         return
     return config
 
 
 def validate_config(config):
-    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
+    schema = json.load(file(os.path.join(PATH, 'static/config_schema.json')))
     log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
     if not v.is_valid(config):
@@ -413,8 +415,6 @@ def validate_config(config):
 
 
 def main():
-    sys.path.append(os.path.join(sys.path[0], 'lib'))
-
     config = read_config()
     # if config not found or can't validate it, exit with error
     if not config or not validate_config(config):

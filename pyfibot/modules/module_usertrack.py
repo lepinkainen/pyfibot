@@ -10,9 +10,12 @@ import os
 
 log = logging.getLogger('usertrack')
 
-if not os.path.exists('databases'):
-    os.makedirs('databases')
-db = dataset.connect('sqlite:///databases/usertrack.db')
+db = None
+
+
+def init(botref):
+    global db
+    db = dataset.connect('sqlite:///%s' % (os.path.join(DATABASE_PATH, 'usertrack.db')))
 
 
 def get_table(bot, channel):

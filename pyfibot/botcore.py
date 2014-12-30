@@ -430,7 +430,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             self.msg(channel, m, length)
             cont = True
 
-        return ('botcore.say', channel, message)
+        return ('core.say', channel, message)
 
     def act(self, channel, message, length=None):
         """Use act instead of describe for actions"""
