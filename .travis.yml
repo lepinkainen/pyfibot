@@ -11,7 +11,10 @@ install:
 # command to run tests, e.g. python setup.py test
 script: nosetests
 notifications:
+  email: false
   irc:
     channels:
       - "irc.nerv.fi#pyfibot"
     skip_join: true
+matrix:
+  fast_finish: true
