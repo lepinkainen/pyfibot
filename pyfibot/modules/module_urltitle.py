@@ -1180,7 +1180,7 @@ def _handle_hitbox(url):
         return
 
     # Hitbox titles are populated by JavaScript so they return a useless "{{meta.title}}", don't show those
-elif not re.match("http://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
+    elif not re.match("http://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
         return False
 
     # For actual stream pages, let's fetch information via the hitbox API
