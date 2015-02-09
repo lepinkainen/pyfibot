@@ -498,7 +498,10 @@ def _handle_imdb(url):
     name = data['Title']
     year = data['Year']
     rating = data['imdbRating']
-    votes = __get_views(int(data['imdbVotes'].replace(',', '')))
+    try:
+        votes = __get_views(int(data['imdbVotes'].replace(',', '')))
+    except ValueError:
+        votes = "0"
     genre = data['Genre'].lower()
 
     title = '%s (%s) - %s/10 (%s votes) - %s' % (name, year, rating, votes, genre)
