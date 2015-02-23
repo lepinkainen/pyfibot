@@ -47,3 +47,10 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+/docs/.doctrees/
+/docs/_build/
+/docs/undoc.pickle
+/paver-minilib.zip
+/pyfibot/GeoLiteCity.dat
+/pyfibot/modules/imgur_auth.dat
+/undoc.pickle
