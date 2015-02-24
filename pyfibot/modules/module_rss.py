@@ -77,6 +77,7 @@ def remove_feed(network, channel, id):
     if not f:
         return
     DATABASE['feeds'].delete(id=f.id)
+    DATABASE['items_%i' % (f.id)].drop()
     return f
 
 

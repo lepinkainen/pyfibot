@@ -65,23 +65,14 @@ def test_command_remove():
         ('#pyfibot', 'only "latest" and "list" available for non-admins'),
         command_rss(bot, 'pyfibot!pyfibot@example.example.com', '#pyfibot', 'remove')
     )
-
-
-def test_command_remove_2():
     eq_(
         ('#pyfibot', 'syntax: ".rss remove <id from list>"'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'remove')
     )
-
-
-def test_command_remove_3():
     eq_(
         ('#pyfibot', 'feed not found, no action taken'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'remove 123')
     )
-
-
-def test_command_remove_4():
     eq_(
         ('#pyfibot', 'feed "Uutiset - Ampparit.com" <./tests/static/test_rss_check.xml> removed'),
         command_rss(bot, ADMIN_USER, '#pyfibot', 'remove 1')
