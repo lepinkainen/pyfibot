@@ -684,8 +684,13 @@ def _handle_areena(url):
 
     try:
         if content_type in ['EPISODE', 'CLIP', 'PROGRAM']:
+            try:
+                name = data['pageTitle'].lstrip(': ')
+            except KeyError:
+                name = data['reportingTitle']
             # sometimes there's a ": " in front of the name for some reason...
-            name = data['reportingTitle'].lstrip(': ')
+            name = name.lstrip(': ')
+
             duration = __get_length_str(data['durationSec'])
             broadcasted = __get_age_str(datetime.strptime(data['published'], '%Y-%m-%dT%H:%M:%S'))
             if data['expires']:
