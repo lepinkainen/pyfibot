@@ -756,7 +756,7 @@ def _handle_wikipedia(url):
     content = re.sub(r'\(.*?\)', '', content)
     # Remove " , ", which might be left behind after cleaning up
     # the brackets
-    content = content.replace(' , ', ', ')
+    content = re.sub(' +,', ', ', content)
     # Remove multiple spaces
     content = re.sub(' +', ' ', content)
 
