@@ -51,6 +51,7 @@ def command_tvrage(bot, user, channel, args):
     if next_episode is not None:
         number = next_episode.find('number').text
         title = next_episode.find('title').text
+        airtime = parse_dt(next_episode.find('airtime[@format="RFC3339"]').text)
         if airtime < now:
             return bot.say(channel, '%s - %s - "%s" aired %s ago <%s>' % (name, number, title, now - airtime, link))
         return bot.say(channel, '%s - %s - "%s" airs in %s <%s>' % (name, number, title, airtime - now, link))
