@@ -1223,18 +1223,6 @@ def _handle_hitbox(url):
         return False
 
 
-def _handle_poliisi(url):
-    """http*://*poliisi.fi/poliisi/*"""
-    bs = __get_bs(url)
-    # If there's no BS, the default handler can't get it either...
-    if not bs:
-        return False
-
-    try:
-        return bs.find('div', {'id': 'contentbody'}).find('h1').text.strip()
-    except AttributeError:
-        return False
-
 
 def _handle_google_play_music(url):
     """http*://play.google.com/music/*"""
@@ -1303,4 +1291,8 @@ def _handle_travis(url):
 
 def _handle_ubuntupaste(url):
     """http*://paste.ubuntu.com/*"""
+    return False
+
+def _handle_poliisi(url):
+    """http*://*poliisi.fi/*/tiedotteet/*"""
     return False
