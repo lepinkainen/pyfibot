@@ -423,66 +423,67 @@ def _handle_youtube_gdata_new(url):
 
 def _handle_youtube_gdata(url):
     """http*://*youtube.com/watch?*v=*"""
-    # Fetches everything the api knows about the video
-    #gdata_url = "http://gdata.youtube.com/feeds/api/videos/%s"
-    # This fetches everything that is needed by the handle, using partial response.
-    gdata_url = "https://gdata.youtube.com/feeds/api/videos/%s?fields=title,author,gd:rating,media:group(yt:duration),media:group(media:rating),yt:statistics,published&alt=json&v=2"
+
+    api_key = config.get('google_apikey',
+                         'AIzaSyD5a4Johhq5K0ARWX-rQMwsNz0vTtQbKNY')
+
+    api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
     match = re.match("https?://youtu.be/(.*)", url)
     if not match:
         match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
-        infourl = gdata_url % match.group(1)
-        params = {'alt': 'json', 'v': '2'}
-        r = bot.get_url(infourl, params=params)
+        params = {'id': match.group(1),
+                  'part': 'snippet,contentDetails,statistics',
+                  'fields': 'items(id,snippet,contentDetails,statistics)',
+                  'key': api_key}
+
+        r = bot.get_url(api_url, params=params)
 
         if not r.status_code == 200:
-            log.info("Video too recent, no info through API yet.")
+            error = r.json().get('error')
+            if error:
+                error = '%s: %s' % (error['code'], error['message'])
+            else:
+                error = r.status_code
+
+            log.warning('YouTube API error: %s', error)
             return
 
-        entry = r.json()['entry']
+        items = r.json()['items']
+        if len(items) == 0: return
 
-        ## Author
-        author = entry['author'][0]['name']['$t']
+        entry = items[0]
 
-        ## Rating in stars
+        channel = entry['snippet']['channelTitle']
+
         try:
-            rating = entry.get('gd$rating', None)['average']
-        except TypeError:
-            rating = 0.0
-
-        stars = "[%-5s]" % (int(round(rating)) * "*")
-
-        ## View count
-        try:
-            views = int(entry['yt$statistics']['viewCount'])
+            views = int(entry['statistics']['viewCount'])
             views = __get_views(views)
         except KeyError:
-            # No views at all, the whole yt$statistics block is missing
             views = 'no'
 
-        ## Title
-        title = entry['title']['$t']
+        title = entry['snippet']['title']
 
-        ## Age restricted?
-        # https://developers.google.com/youtube/2.0/reference#youtube_data_api_tag_media:rating
-        rating = entry['media$group'].get('media$rating', None)
-
-        ## Content length
-        secs = int(entry['media$group']['yt$duration']['seconds'])
-        lengthstr = __get_length_str(secs)
-
+        rating = entry['contentDetails'].get('contentRating', None)
         if rating:
-            adult = " - XXX"
+            rating = rating.get('ytRating', None)
+
+        # The tag value is an ISO 8601 duration in the format PT#M#S
+        duration = entry['contentDetails']['duration'][2:].lower()
+
+        if rating and rating == 'ytAgeRestricted':
+            agerestricted = " - age restricted"
         else:
-            adult = ""
+            agerestricted = ""
 
         ## Content age
-        published = entry['published']['$t']
+        published = entry['snippet']['publishedAt']
         published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
         agestr = __get_age_str(published)
 
-        return "%s by %s [%s - %s - %s views - %s%s]" % (title, author, lengthstr, stars, views, agestr, adult)
+        return "%s by %s [%s - %s views - %s%s]" % (
+            title, channel, duration, views, agestr, agerestricted)
 
 
 def _handle_imdb(url):
@@ -1222,18 +1223,6 @@ def _handle_hitbox(url):
         return False
 
 
-def _handle_poliisi(url):
-    """http*://*poliisi.fi/poliisi/*"""
-    bs = __get_bs(url)
-    # If there's no BS, the default handler can't get it either...
-    if not bs:
-        return False
-
-    try:
-        return bs.find('div', {'id': 'contentbody'}).find('h1').text.strip()
-    except AttributeError:
-        return False
-
 
 def _handle_google_play_music(url):
     """http*://play.google.com/music/*"""
@@ -1302,4 +1291,8 @@ def _handle_travis(url):
 
 def _handle_ubuntupaste(url):
     """http*://paste.ubuntu.com/*"""
+    return False
+
+def _handle_poliisi(url):
+    """http*://*poliisi.fi/*/tiedotteet/*"""
     return False
