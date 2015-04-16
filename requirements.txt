@@ -5,6 +5,8 @@ pyyaml
 jsonschema >= 1.0.0
 beautifulsoup4
 pyopenssl
+ndg-httpsclient
+pyasn1
 tvdb_api
 repoze.lru
 pygeoip
