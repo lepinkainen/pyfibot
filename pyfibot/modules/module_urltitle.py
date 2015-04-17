@@ -10,6 +10,7 @@ import fnmatch
 import urlparse
 import logging
 import re
+import sys
 from datetime import datetime
 import math
 
@@ -18,6 +19,11 @@ from types import TupleType
 from repoze.lru import ExpiringLRUCache
 
 from bs4 import BeautifulSoup
+
+use_lxml = False
+if sys.hexversion < 0x02070000:
+    import lxml
+    use_lxml = True
 
 log = logging.getLogger("urltitle")
 config = None
@@ -63,7 +69,10 @@ def __get_bs(url):
 
     content = r.content
     if content:
-        return BeautifulSoup(content)
+        if use_lxml:
+            return BeautifulSoup(content, 'lxml')
+        else:
+            return BeautifulSoup(content)
     return None
 
 
