@@ -802,7 +802,7 @@ def _handle_wikipedia(url):
 
 
 def _handle_imgur(url):
-    """http://*imgur.com*"""
+    """http*://*imgur.com*"""
 
     def create_title(data):
         section = data['data']['section']
