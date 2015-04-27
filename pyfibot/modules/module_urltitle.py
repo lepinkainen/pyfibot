@@ -649,8 +649,8 @@ def _handle_aamulehti(url):
     return title
 
 
-def _handle_areena(url):
-    """http://areena.yle.fi/*"""
+def _handle_areena_v3(url):
+    """http://areena-v3.yle.fi/*"""
     def areena_get_exit_str(text):
         dt = datetime.strptime(text, '%Y-%m-%dT%H:%M:%S') - datetime.now()
         if dt.days > 7:
@@ -720,6 +720,34 @@ def _handle_areena(url):
         # We want to exit cleanly, so it falls back to default url handler
         log.debug('Unhandled error in Areena.')
         return
+
+
+def _handle_areena(url):
+    """http://areena.yle.fi/*"""
+    if 'suora' in url:
+        bs = __get_bs(url)
+        container = bs.find('div', {'class': 'selected'})
+        channel = container.find('h3').text
+        program = container.find('span', {'class': 'status-current'}).next_element.next_element
+        link = program.find('a').get('href', None)
+        if not program:
+            return '%s (LIVE)' % (channel)
+        if not link:
+            return '%s - %s (LIVE)' % (channel, program.text.strip())
+        return '%s - %s <http://areena.yle.fi/%s> (LIVE)' % (channel, program.text.strip(), link.lstrip('/'))
+
+    # TODO: Whole rewrite, as this relies on the old system which will be brought down...
+    try:
+        identifier = url.split('-')[1]
+    except IndexError:
+        return
+
+    tv = _handle_areena_v3('http://areena-v3.yle.fi/tv/%s' % (identifier))
+    if tv:
+        return tv
+    radio = _handle_areena_v3('http://areena-v3.yle.fi/radio/%s' % (identifier))
+    if radio:
+        return radio
 
 
 def _handle_wikipedia(url):
