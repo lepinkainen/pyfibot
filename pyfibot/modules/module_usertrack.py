@@ -4,6 +4,7 @@ import dataset
 import logging
 import re
 from datetime import datetime
+from dateutil.parser import parse as parse_dt
 from copy import deepcopy
 import os
 
@@ -291,6 +292,9 @@ def command_seen(bot, user, channel, args):
     user = table.find_one(nick=args)
     if not user:
         return bot.say(channel, "I haven't seen %s on %s" % (args, channel))
+
+    if not isinstance(user['action_time'], datetime):
+        user['action_time'] = parse_dt(user['action_time'])
 
     # Calculate last seen in seconds
     last_seen = datetime.now() - user['action_time']
