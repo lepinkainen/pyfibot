@@ -10,12 +10,12 @@ pyasn1
 tvdb_api
 repoze.lru
 pygeoip
-sqlalchemy < 0.9.0
-dataset < 0.4.0
+sqlalchemy
+dataset
 python-instagram
 simplejson >= 3.0.0
 httplib2 >= 0.8.0
 feedparser >= 5.1.3
 service_identity
 python-dateutil >= 2.2
-lxml; python_version < '2.7'
+#lxml; python_version < '2.7'
