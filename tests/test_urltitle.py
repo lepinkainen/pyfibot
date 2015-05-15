@@ -142,7 +142,7 @@ def test_discogs_release():
     msg = "http://www.discogs.com/release/249504"
     module_urltitle.init(bot)
     eq_(("#channel", "Title: %s" % title), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
-    sleep(1.5)
+    sleep(3)
 
 
 def test_discogs_user():
