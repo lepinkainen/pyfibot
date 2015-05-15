@@ -4,9 +4,11 @@ from nose.tools import eq_, ok_
 import bot_mock
 from pyfibot.modules import module_urltitle
 from utils import check_re
+from time import sleep
 
 
 bot = bot_mock.BotMock()
+
 
 lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
 views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
@@ -131,3 +133,20 @@ def test_steamstore():
     module_urltitle.init(bot)
     eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
+
+# Only a couple of tests and 1.5s sleep because rate is limited to
+# 1 request/sec/ip; if an API breaks, it often breaks completely.
+
+def test_discogs_release():
+    title = "Rick Astley - Never Gonna Give You Up - (1987) - PB 41447"
+    msg = "http://www.discogs.com/release/249504"
+    module_urltitle.init(bot)
+    eq_(("#channel", "Title: %s" % title), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    sleep(1.5)
+
+
+def test_discogs_user():
+    regex = ".+Rating avg: \d\.\d\d \(total \d+\)"
+    msg = "http://www.discogs.com/user/rodneyfool"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
