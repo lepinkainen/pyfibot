@@ -1301,6 +1301,15 @@ def _handle_steamstore(url):
     return "%s | %s" % (name, price)
 
 
+def _handle_pythonorg(url):
+    """http*://*python.org/*"""
+    title = __get_title_tag(url)
+    if title == 'Welcome to Python.org':
+        return False
+
+    return title.replace(' | Python.org', '')
+
+
 def _handle_github(url):
     """http*://*github.com*"""
     return __get_title_tag(url)
