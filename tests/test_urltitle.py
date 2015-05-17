@@ -182,6 +182,37 @@ def test_aamulehti():
     eq_('Title: Utsjoella aurinko laskee seuraavan kerran 29. heinäkuuta', module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
 
 
+def test_imgur():
+    msg = 'http://imgur.com/r/funny/WVkW3OC'
+    module_urltitle.init(bot)
+    eq_('Title: One. Soulless. Motherfucker. (/r/funny)', module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
+
+
+def test_instagram():
+    msg = 'https://instagram.com/p/1lpNXRnBwI/'
+    regex = 'Title: \(armatuuri\): Tässäkin voisi olla monta #wappubelfie kuvaa. Kisa edelleen käynnissä! #svvwappu15 #belfie \[\d+ likes, \d+ comments\]'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
+
+
+def test_pythonorg():
+    msg = 'https://www.python.org/dev/peps/pep-0448/'
+    module_urltitle.init(bot)
+    eq_('Title: PEP 0448 -- Additional Unpacking Generalizations', module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_github():
+    msg = 'https://github.com/lepinkainen/pyfibot'
+    module_urltitle.init(bot)
+    check_re('Title: lepinkainen/pyfibot( · GitHub)?', module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_gitio():
+    msg = 'http://git.io/2048'
+    module_urltitle.init(bot)
+    eq_('Title: 2048', module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 # Only a couple of tests and 1.5s sleep because rate is limited to
 # 1 request/sec/ip; if an API breaks, it often breaks completely.
 def test_discogs_release():
@@ -194,6 +225,29 @@ def test_discogs_release():
 
 def test_discogs_user():
     regex = ".+Rating avg: \d\.\d\d \(total \d+\)"
-    msg = "http://www.discogs.com/user/rodneyfool"
+    msg = "http://discogs.com/user/rodneyfool"
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_falses():
+    urls = [
+        'http://apina.biz/130453',
+        'https://travis-ci.org/lepinkainen/pyfibot',
+        'http://paste.ubuntu.com/9447424/',
+        'https://www.poliisi.fi/tietoa_poliisista/tiedotteet/1/1/lansi-uudenmaaan_poliisin_paivittaistiedote_30069',
+    ]
+
+    module_urltitle.init(bot)
+    for u in urls:
+        eq_(None, module_urltitle.handle_url(bot, None, "#channel", u, u))
+
+
+# # PRETTY MUCH USELESS TESTS
+# # Following tests are likely to fail, and only used for development.
+# # Commented out because of that.
+
+# def test_nettiauto():
+#     msg = 'http://nettiauto.com/nissan/maxima/7229203'
+#     module_urltitle.init(bot)
+#     check_re('Title: Nissan Maxima \[\d+ €, 1995, 395 000 km, 3.0 l Bensiini, Manuaali, Etuveto\]', module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
