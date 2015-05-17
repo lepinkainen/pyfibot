@@ -388,7 +388,8 @@ def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
     test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
-    if not test: return
+    if not test:
+        return
     # matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
@@ -410,11 +411,11 @@ def _handle_tweet(url):
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
 
-    #retweets  = tweet['retweet_count']
-    #favorites = tweet['favorite_count']
-    #created   = tweet['created_at']
-    #created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
-    #tweet_age = datetime.now()-created_date
+    # retweets  = tweet['retweet_count']
+    # favorites = tweet['favorite_count']
+    # created   = tweet['created_at']
+    # created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
+    # tweet_age = datetime.now()-created_date
 
     tweet = "@%s (%s): %s" % (user, name, text)
     return tweet
@@ -461,7 +462,8 @@ def _handle_youtube_gdata(url):
             return
 
         items = r.json()['items']
-        if len(items) == 0: return
+        if len(items) == 0:
+            return
 
         entry = items[0]
 
@@ -487,7 +489,7 @@ def _handle_youtube_gdata(url):
         else:
             agerestricted = ""
 
-        ## Content age
+        # Content age
         published = entry['snippet']['publishedAt']
         published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
         agestr = __get_age_str(published)
@@ -1222,7 +1224,7 @@ def _handle_nettikone(url):
 def _handle_hitbox(url):
     """http*://*hitbox.tv/*"""
 
-   # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
+    # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
     if re.match("http://(help|blog)\.hitbox\.tv/.*", url):
         return
 
@@ -1261,7 +1263,6 @@ def _handle_hitbox(url):
         return False
 
 
-
 def _handle_google_play_music(url):
     """http*://play.google.com/music/*"""
     bs = __get_bs(url)
@@ -1284,14 +1285,14 @@ def _handle_steamstore(url):
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
     api_url = "http://store.steampowered.com/api/appdetails/"
     app = re.match("http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
-    params = { 'appids': app.group('id'), 'cc': 'fi' }
+    params = {'appids': app.group('id'), 'cc': 'fi'}
 
     r = bot.get_url(api_url, params=params)
     data = r.json()[app.group('id')]['data']
 
     name = data['name']
     if 'price_overview' in data:
-        price = "%.2fe" % (float(data['price_overview']['final'])/100)
+        price = "%.2fe" % (float(data['price_overview']['final']) / 100)
 
         if data['price_overview']['discount_percent'] != 0:
             price += " (-%s%%)" % data['price_overview']['discount_percent']
@@ -1339,6 +1340,7 @@ def _handle_travis(url):
 def _handle_ubuntupaste(url):
     """http*://paste.ubuntu.com/*"""
     return False
+
 
 def _handle_poliisi(url):
     """http*://*poliisi.fi/*/tiedotteet/*"""
