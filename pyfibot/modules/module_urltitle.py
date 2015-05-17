@@ -1049,7 +1049,10 @@ def _handle_instagram(url, matches):
 
     CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
 
-    api = InstagramAPI(client_id=CLIENT_ID)
+    # HACK HACK HACK!
+    # client_secret='' fixes the following bug:
+    # https://github.com/Instagram/python-instagram/issues/152
+    api = InstagramAPI(client_id=CLIENT_ID, client_secret='')
     shortcode = matches[0]
 
     r = bot.get_url("http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
