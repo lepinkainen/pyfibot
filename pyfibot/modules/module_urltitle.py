@@ -20,10 +20,6 @@ from repoze.lru import ExpiringLRUCache
 
 from bs4 import BeautifulSoup
 
-use_lxml = False
-if sys.hexversion < 0x02070000:
-    import lxml
-    use_lxml = True
 
 log = logging.getLogger("urltitle")
 config = None
@@ -69,10 +65,7 @@ def __get_bs(url):
 
     content = r.content
     if content:
-        if use_lxml:
-            return BeautifulSoup(content, 'lxml')
-        else:
-            return BeautifulSoup(content)
+        return BeautifulSoup(content)
     return None
 
 
