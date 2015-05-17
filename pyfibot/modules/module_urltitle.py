@@ -342,7 +342,7 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
 
 
 def _handle_verkkokauppa(url, matches):
-    r"""verkkokauppa.com/.*?/product/"""
+    """verkkokauppa.com/.*?/product/"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -378,7 +378,7 @@ def _parse_tweet_from_src(url, matches):
 
 
 def _handle_tweet(url, matches):
-    r"""(mobile.)?twitter\.com\/(\w+)/status(es)?/(\d+)"""
+    """(mobile.)?twitter\.com\/(\w+)/status(es)?/(\d+)"""
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
@@ -410,7 +410,7 @@ def _handle_tweet(url, matches):
 
 
 def _handle_youtube_gdata(url, matches):
-    r"""(youtu.be/([^\?]+)(\?t=.*)?)|(.*?youtube.com/watch\?.*?v=([^&]+))"""
+    """(youtu.be/([^\?]+)(\?t=.*)?)|(.*?youtube.com/watch\?.*?v=([^&]+))"""
 
     api_key = config.get('google_apikey',
                          'AIzaSyD5a4Johhq5K0ARWX-rQMwsNz0vTtQbKNY')
@@ -473,7 +473,7 @@ def _handle_youtube_gdata(url, matches):
 
 
 def _handle_imdb(url, matches):
-    r"""imdb.com/title/(tt[0-9]+)/?"""
+    """imdb.com/title/(tt[0-9]+)/?"""
     params = {'i': matches[0]}
     r = bot.get_url('http://www.omdbapi.com/', params=params)
     data = r.json()
@@ -494,7 +494,7 @@ def _handle_imdb(url, matches):
 
 # Doesn't seem to be valid anymore?
 # def _handle_helmet(url, matches):
-#     r"""helmet.fi/record=(.*?)fin"""
+#     """helmet.fi/record=(.*?)fin"""
 #     print(matches)
 #     bs = __get_bs(url)
 #     if not bs:
@@ -504,7 +504,7 @@ def _handle_imdb(url, matches):
 
 
 def _handle_ircquotes(url, matches):
-    r"""ircquotes.fi/\?(\d+)"""
+    """ircquotes.fi/\?(\d+)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -516,7 +516,7 @@ def _handle_ircquotes(url, matches):
 
 
 def _handle_alko(url, matches):
-    r"""alko.fi/tuotteet/(\d+)"""
+    """alko.fi/tuotteet/(\d+)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -538,7 +538,7 @@ def _handle_alko(url, matches):
 
 
 def _handle_vimeo(url, matches):
-    r"""vimeo.com/(\d+)"""
+    """vimeo.com/(\d+)"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
 
     # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
@@ -559,7 +559,7 @@ def _handle_vimeo(url, matches):
 
 # Could be improved to include subdomains?
 def _handle_stackoverflow(url, matches):
-    r"""stackoverflow.com/questions/([0-9]+)"""
+    """stackoverflow.com/questions/([0-9]+)"""
     api_url = 'http://api.stackexchange.com/2.2/questions/%s'
     question_id = matches[0]
     content = bot.get_url(api_url % question_id, params={'site': 'stackoverflow'})
@@ -578,7 +578,7 @@ def _handle_stackoverflow(url, matches):
 
 
 def _handle_reddit(url, matches):
-    r"""reddit.com/r/.*?/comments/.*?/.*?"""
+    """reddit.com/r/.*?/comments/.*?/.*?"""
     if url[-1] != "/":
         ending = "/.json"
     else:
@@ -606,7 +606,7 @@ def _handle_reddit(url, matches):
 
 
 def _handle_aamulehti(url, matches):
-    r"""aamulehti.fi/(.*?)"""
+    """aamulehti.fi/(.*?)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -615,7 +615,7 @@ def _handle_aamulehti(url, matches):
 
 
 def _handle_areena_v3(url, matches):
-    r"""areena-v3.yle.fi/(.*?)"""
+    """areena-v3.yle.fi/(.*?)"""
     def areena_get_exit_str(text):
         dt = datetime.strptime(text, '%Y-%m-%dT%H:%M:%S') - datetime.now()
         if dt.days > 7:
@@ -688,7 +688,7 @@ def _handle_areena_v3(url, matches):
 
 
 def _handle_areena(url, matches):
-    r"""areena.yle.fi/(.*?)"""
+    """areena.yle.fi/(.*?)"""
     if 'suora' in url:
         print(url)
         bs = __get_bs(url)
@@ -717,7 +717,7 @@ def _handle_areena(url, matches):
 
 
 def _handle_wikipedia(url, matches):
-    r"""([a-zA-Z]+)\.wikipedia.org"""
+    """([a-zA-Z]+)\.wikipedia.org"""
 
     def clean_page_name(url):
         # select part after '/' as article and unquote it (replace stuff like %20) and decode to unicode
@@ -796,7 +796,7 @@ def _handle_wikipedia(url, matches):
 
 
 def _handle_imgur(url, matches):
-    r"""imgur.com"""
+    """imgur.com"""
 
     def create_title(data):
         section = data['data']['section']
@@ -874,7 +874,7 @@ def _handle_imgur(url, matches):
 
 
 def _handle_liveleak(url, matches):
-    r"""liveleak.com/view\?i=([a-z0-9_]+)"""
+    """liveleak.com/view\?i=([a-z0-9_]+)"""
     id = matches[0]
 
     bs = __get_bs(url)
@@ -914,7 +914,7 @@ def _handle_liveleak(url, matches):
 
 
 def _handle_dailymotion(url, matches):
-    r"""dailymotion.com/video/([a-zA-Z0-9]+)_"""
+    """dailymotion.com/video/([a-zA-Z0-9]+)_"""
     video_id = matches[0]
     print(video_id)
     params = {
@@ -948,7 +948,7 @@ def _handle_dailymotion(url, matches):
 
 
 def _handle_ebay(url, matches):
-    r"""ebay\.(.*?)/itm/(\d+)/?"""
+    """ebay\.(.*?)/itm/(\d+)/?"""
     item_id = matches[1]
 
     app_id = config.get('ebay_appid', 'RikuLind-3b6d-4c30-937c-6e7d87b5d8be')
@@ -1005,12 +1005,12 @@ def _handle_ebay(url, matches):
 
 
 def _handle_ebay_cgi(url, matches):
-    r"""cgi.ebay\.(.*?)/ws/eBayISAPI.dll\?ViewItem\&item=(\d+)"""
+    """cgi.ebay\.(.*?)/ws/eBayISAPI.dll\?ViewItem\&item=(\d+)"""
     return _handle_ebay(url, matches)
 
 
 def _handle_dealextreme(url, matches):
-    r"""dx.com/p/.*?(-\d+)"""
+    """dx.com/p/.*?(-\d+)"""
     sku = matches[0].replace('-', '')
     cookies = {'DXGlobalization': 'lang=en&locale=en-US&currency=EUR'}
     api_url = 'http://www.dx.com/bi/GetSKUInfo?sku=%s' % sku
@@ -1043,25 +1043,17 @@ def _handle_dealextreme(url, matches):
 
 
 def _handle_instagram(url, matches):
-    """http*://instagram.com/p/*"""
+    """instagram\.com/p/([^/]+)"""
+    # todo: instagr.am
     from instagram.client import InstagramAPI
 
     CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
 
     api = InstagramAPI(client_id=CLIENT_ID)
-
-    # todo: instagr.am
-    m = re.search('instagram\.com/p/([^/]+)', url)
-    if not m:
-        return
-
-    shortcode = m.group(1)
+    shortcode = matches[0]
 
     r = bot.get_url("http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
-
     media = api.media(r.json()['media_id'])
-
-    print(media)
 
     # media type video/image?
     # age/date? -> media.created_time  # (datetime object)
@@ -1073,9 +1065,9 @@ def _handle_instagram(url, matches):
         user = media.user.full_name
 
     if media.caption:
-        return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
+        return "%s: %s [%d likes, %d comments]" % (user.strip(), media.caption.text, media.like_count, media.comment_count)
     else:
-        return "%s [%d likes, %d comments]" % (user, media.like_count, media.comment_count)
+        return "%s [%d likes, %d comments]" % (user.strip(), media.like_count, media.comment_count)
 
 
 def fetch_nettiX(url, fields_to_fetch):
@@ -1108,7 +1100,7 @@ def fetch_nettiX(url, fields_to_fetch):
 
     try:
         # Try to find price for the item, if found -> add to fields
-        price = bs.find('div', {'class': 'pl10 mt10 lnht22'}).find('span').text.strip()
+        price = bs.find('div', {'class': 'pl10'}).find('span').text.strip()
         if price:
             fields.append(price)
     except AttributeError:
@@ -1117,16 +1109,18 @@ def fetch_nettiX(url, fields_to_fetch):
     # All sites have the same basic structure, find the "data" table
     ad_info = bs.find('div', {'class': 'ad_info'})
     if ad_info:
-        for f in ad_info.findAll('li'):
+        for f in ad_info.find_all('li'):
             # Get field name
-            field = f.text.split(':')[0]
+            field = f.text.split(':')[0].strip()
             # If the name was found and it's in fields_to_fetch
-            if field and field in fields_to_fetch:
+            if field in fields_to_fetch:
                 # Remove spans
-                # For example cars might have registeration date includet in a span
+                # For example cars might have registeration date included in a span
                 [s.extract() for s in f.findAll('span')]
-                # The "main data" is always in a "b" element
-                field_info = f.find('b').text.strip()
+                try:
+                    field_info = f.find('div', {'class': 'ad_details'}).text.strip()
+                except AttributeError:
+                    continue
                 # If the data was found and it's not "Ei ilmoitettu", add to fields
                 if field_info and field_info != 'Ei ilmoitettu':
                     fields.append(field_info)
@@ -1137,37 +1131,37 @@ def fetch_nettiX(url, fields_to_fetch):
 
 
 def _handle_nettiauto(url, matches):
-    """http*://*nettiauto.com/*/*/*"""
+    """(m.)?nettiauto.com"""
     return fetch_nettiX(url, ['Vuosimalli', 'Mittarilukema', 'Moottori', 'Vaihteisto', 'Vetotapa'])
 
 
 def _handle_nettivene(url, matches):
-    """http*://*nettivene.com/*/*/*"""
+    """(m.)?nettivene.com"""
     return fetch_nettiX(url, ['Vuosimalli', 'Runkomateriaali', 'Pituus', 'Leveys'])
 
 
 def _handle_nettimoto(url, matches):
-    """http*://*nettimoto.com/*/*/*"""
+    """(m.)?nettimoto.com"""
     return fetch_nettiX(url, ['Vuosimalli', 'Moottorin tilavuus', 'Mittarilukema', 'Tyyppi'])
 
 
 def _handle_nettikaravaani(url, matches):
-    """http*://*nettikaravaani.com/*/*/*"""
+    """(m.)?nettikaravaani.com"""
     return fetch_nettiX(url, ['Vm./Rek. vuosi', 'Mittarilukema', 'Moottori', 'Vetotapa'])
 
 
 def _handle_nettivaraosa(url, matches):
-    """http*://*nettivaraosa.com/*/*"""
+    """(m.)?nettivaraosa.com"""
     return fetch_nettiX(url, ['Varaosan osasto'])
 
 
 def _handle_nettikone(url, matches):
-    """http*://*nettikone.com/*/*/*"""
+    """(m.)?nettikone.com"""
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
 
 
 def _handle_hitbox(url, matches):
-    """http*://*hitbox.tv/*"""
+    """hitbox.tv"""
 
     # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
     if re.match("http://(help|blog)\.hitbox\.tv/.*", url):
@@ -1209,7 +1203,7 @@ def _handle_hitbox(url, matches):
 
 
 def _handle_google_play_music(url, matches):
-    r"""play.google.com/music/"""
+    """play.google.com/music/"""
     bs = __get_bs(url)
     if not bs:
         return False
@@ -1225,7 +1219,7 @@ def _handle_google_play_music(url, matches):
 
 
 def _handle_steamstore(url, matches):
-    r"""store.steampowered.com/app/(\d+)"""
+    """store.steampowered.com/app/(\d+)"""
 
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
     api_url = "http://store.steampowered.com/api/appdetails/"
@@ -1248,7 +1242,7 @@ def _handle_steamstore(url, matches):
 
 
 def _handle_pythonorg(url, matches):
-    """http*://*python.org/*"""
+    """python.org"""
     title = __get_title_tag(url)
     if title == 'Welcome to Python.org':
         return False
@@ -1256,8 +1250,8 @@ def _handle_pythonorg(url, matches):
     return title.replace(' | Python.org', '')
 
 
-def _handle_discogs(url):
-    """http://*discogs.com/*"""
+def _handle_discogs(url, matches):
+    """discogs.com/(.*?)"""
 
     apiurl = 'https://api.discogs.com/'
     headers = {'user-agent': 'pyfibot-urltitle'}
@@ -1319,36 +1313,37 @@ def _handle_discogs(url):
 
 
 def _handle_github(url, matches):
-    """http*://*github.com*"""
+    """github.com"""
+    print(__get_title_tag(url))
     return __get_title_tag(url)
 
 
 def _handle_gitio(url, matches):
-    """http*://git.io*"""
+    """git.io"""
     return __get_title_tag(url)
 
 
 # IGNORED TITLES
 def _handle_salakuunneltua(url, matches):
-    """*salakuunneltua.fi*"""
+    """salakuunneltua.fi"""
     return False
 
 
 def _handle_apina(url, matches):
-    """http://apina.biz/*"""
+    """apina.biz"""
     return False
 
 
 def _handle_travis(url, matches):
-    """http*://travis-ci.org/*"""
+    """travis-ci.org"""
     return False
 
 
 def _handle_ubuntupaste(url, matches):
-    """http*://paste.ubuntu.com/*"""
+    """paste.ubuntu.com"""
     return False
 
 
 def _handle_poliisi(url, matches):
-    """http*://*poliisi.fi/*/tiedotteet/*"""
+    """poliisi.fi"""
     return False
