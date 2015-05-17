@@ -508,9 +508,9 @@ def _handle_ircquotes(url, matches):
     bs = __get_bs(url)
     if not bs:
         return
-    chan = bs.find("span", {'class': 'quotetitle'}).next.next.string
-    points = bs.find("span", {'class': 'points'}).next.string
-    firstline = bs.find("div", {'class': 'quote'}).next.string
+    chan = bs.find("span", {'class': 'quotetitle'}).next.next.string.strip()
+    points = bs.find("span", {'class': 'points'}).next.string.strip()
+    firstline = bs.find("div", {'class': 'quote'}).next.string.strip()
     title = "%s (%s): %s" % (chan, points, firstline)
     return title
 
