@@ -192,21 +192,22 @@ def handle_url(bot, user, channel, url, msg):
     global handlers
     # try to find a specific handler for the URL
     for handler, ref in handlers:
-        pattern = ref.__doc__.split()[0]
-        if fnmatch.fnmatch(url, pattern):
-            title = ref(url)
-            if title is False:
-                log.debug("Title disabled by handler.")
-                return
-            elif title is None:
-                # Handler found, but suggests using the default title instead
-                break
-            elif title:
-                # handler found, abort
-                return _title(bot, channel, title, True, url=url)
-            else:
-                # No specific handler, use generic
-                pass
+        try:
+            match = re.match(r'https?://(www.)?' + ref.__doc__, url)
+        except:
+            continue
+        if not match:
+            continue
+
+        title = ref(url, match.groups()[1:])
+        if title is False:
+            log.debug("Title disabled by handler.")
+            return
+        if title is None:
+            # Handler found, but suggests using the default title instead
+            break
+        if title:
+            return _title(bot, channel, title, True, url=url)
 
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
@@ -340,8 +341,8 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
     return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
 
 
-def _handle_verkkokauppa(url):
-    """http://www.verkkokauppa.com/*/product/*"""
+def _handle_verkkokauppa(url, matches):
+    r"""verkkokauppa.com/.*?/product/"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -357,7 +358,7 @@ def _handle_verkkokauppa(url):
     return "%s | %s (%s)" % (product, price, availability)
 
 
-def _parse_tweet_from_src(url):
+def _parse_tweet_from_src(url, matches):
     bs = __get_bs(url)
     if not bs:
         return
@@ -367,38 +368,25 @@ def _parse_tweet_from_src(url):
         return
 
     name = container.find('strong', {'class': 'fullname'})
+    # Remove "Verified account" etc.
+    name.find('span').extract()
     user = container.find('span', {'class': 'username'})
     tweet = container.find('p', {'class': 'tweet-text'})
     # Return string only if every field was found...
     if name and user and tweet:
-        return '%s (%s): %s' % (user.text, name.text, tweet.text)
+        return '%s (%s): %s' % (user.text.strip(), name.text.strip(), tweet.text.strip())
 
 
-def _handle_mobile_tweet(url):
-    """http*://mobile.twitter.com/*/status/*"""
-    return _handle_tweet(url)
-
-
-def _handle_tweet2(url):
-    """http*://twitter.com/*/status/*"""
-    return _handle_tweet(url)
-
-
-def _handle_tweet(url):
-    """http*://twitter.com/*/statuses/*"""
-    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
-    test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
-    if not test:
-        return
-    # matches for unique tweet id string
-    infourl = tweet_url % test.group(3)
-
+def _handle_tweet(url, matches):
+    r"""(mobile.)?twitter\.com\/(\w+)/status(es)?/(\d+)"""
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
-        return _parse_tweet_from_src(url)
+        # Use generated fake url, so the same handler works...
+        return _parse_tweet_from_src('https://twitter.com/%s/status%s/%s' % (matches[1], matches[2] if matches[2] else '', matches[3]), matches)
     headers = {'Authorization': 'Bearer ' + bearer_token}
 
+    infourl = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false" % matches[2]
     data = bot.get_url(infourl, headers=headers)
 
     tweet = data.json()
@@ -421,90 +409,72 @@ def _handle_tweet(url):
     return tweet
 
 
-def _handle_youtube_shorturl(url):
-    """http*://youtu.be/*"""
-    return _handle_youtube_gdata(url)
-
-
-def _handle_youtube_gdata_new(url):
-    """http*://youtube.com/watch#!v=*"""
-    return _handle_youtube_gdata(url)
-
-
-def _handle_youtube_gdata(url):
-    """http*://*youtube.com/watch?*v=*"""
+def _handle_youtube_gdata(url, matches):
+    r"""(youtu.be/([^\?]+)(\?t=.*)?)|(.*?youtube.com/watch\?.*?v=([^&]+))"""
 
     api_key = config.get('google_apikey',
                          'AIzaSyD5a4Johhq5K0ARWX-rQMwsNz0vTtQbKNY')
 
     api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
-    # match both plain and direct time url
-    match = re.match("https?://youtu.be/([^\?]+)(\?t=.*)?", url)
-    if not match:
-        match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
-    if match:
-        params = {'id': match.group(1),
-                  'part': 'snippet,contentDetails,statistics',
-                  'fields': 'items(id,snippet,contentDetails,statistics)',
-                  'key': api_key}
+    id = matches[1] or matches[4]
+    params = {'id': id,
+              'part': 'snippet,contentDetails,statistics',
+              'fields': 'items(id,snippet,contentDetails,statistics)',
+              'key': api_key}
 
-        r = bot.get_url(api_url, params=params)
+    r = bot.get_url(api_url, params=params)
 
-        if not r.status_code == 200:
-            error = r.json().get('error')
-            if error:
-                error = '%s: %s' % (error['code'], error['message'])
-            else:
-                error = r.status_code
-
-            log.warning('YouTube API error: %s', error)
-            return
-
-        items = r.json()['items']
-        if len(items) == 0:
-            return
-
-        entry = items[0]
-
-        channel = entry['snippet']['channelTitle']
-
-        try:
-            views = int(entry['statistics']['viewCount'])
-            views = __get_views(views)
-        except KeyError:
-            views = 'no'
-
-        title = entry['snippet']['title']
-
-        rating = entry['contentDetails'].get('contentRating', None)
-        if rating:
-            rating = rating.get('ytRating', None)
-
-        # The tag value is an ISO 8601 duration in the format PT#M#S
-        duration = entry['contentDetails']['duration'][2:].lower()
-
-        if rating and rating == 'ytAgeRestricted':
-            agerestricted = " - age restricted"
+    if not r.status_code == 200:
+        error = r.json().get('error')
+        if error:
+            error = '%s: %s' % (error['code'], error['message'])
         else:
-            agerestricted = ""
+            error = r.status_code
 
-        # Content age
-        published = entry['snippet']['publishedAt']
-        published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
-        agestr = __get_age_str(published)
-
-        return "%s by %s [%s - %s views - %s%s]" % (
-            title, channel, duration, views, agestr, agerestricted)
-
-
-def _handle_imdb(url):
-    """http://*imdb.com/title/tt*"""
-    m = re.match("http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
-    if not m:
+        log.warning('YouTube API error: %s', error)
         return
 
-    params = {'i': m.group(1)}
+    items = r.json()['items']
+    if len(items) == 0:
+        return
+
+    entry = items[0]
+
+    channel = entry['snippet']['channelTitle']
+
+    try:
+        views = int(entry['statistics']['viewCount'])
+        views = __get_views(views)
+    except KeyError:
+        views = 'no'
+
+    title = entry['snippet']['title']
+
+    rating = entry['contentDetails'].get('contentRating', None)
+    if rating:
+        rating = rating.get('ytRating', None)
+
+    # The tag value is an ISO 8601 duration in the format PT#M#S
+    duration = entry['contentDetails']['duration'][2:].lower()
+
+    if rating and rating == 'ytAgeRestricted':
+        agerestricted = " - age restricted"
+    else:
+        agerestricted = ""
+
+    # Content age
+    published = entry['snippet']['publishedAt']
+    published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
+    agestr = __get_age_str(published)
+
+    return "%s by %s [%s - %s views - %s%s]" % (
+        title, channel, duration, views, agestr, agerestricted)
+
+
+def _handle_imdb(url, matches):
+    r"""imdb.com/title/(tt[0-9]+)/?"""
+    params = {'i': matches[0]}
     r = bot.get_url('http://www.omdbapi.com/', params=params)
     data = r.json()
 
@@ -522,17 +492,19 @@ def _handle_imdb(url):
     return title
 
 
-def _handle_helmet(url):
-    """http://www.helmet.fi/record=*fin"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    title = bs.find(attr={'class': 'bibInfoLabel'}, text='Teoksen nimi').next.next.next.next.string
-    return title
+# Doesn't seem to be valid anymore?
+# def _handle_helmet(url, matches):
+#     r"""helmet.fi/record=(.*?)fin"""
+#     print(matches)
+#     bs = __get_bs(url)
+#     if not bs:
+#         return
+#     title = bs.find(attr={'class': 'bibInfoLabel'}, text='Teoksen nimi').next.next.next.next.string
+#     return title
 
 
-def _handle_ircquotes(url):
-    """http://*ircquotes.fi/[?]*"""
+def _handle_ircquotes(url, matches):
+    r"""ircquotes.fi/\?(\d+)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -543,13 +515,8 @@ def _handle_ircquotes(url):
     return title
 
 
-def _handle_alko2(url):
-    """http*://alko.fi/tuotteet/*"""
-    return _handle_alko(url)
-
-
-def _handle_alko(url):
-    """http*://www.alko.fi/tuotteet/*"""
+def _handle_alko(url, matches):
+    r"""alko.fi/tuotteet/(\d+)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -570,15 +537,13 @@ def _handle_alko(url):
     return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.1f%%, %.2fe/l, %.2fe/annos, %s]' % (name, price, size, alcohol, e_per_l, value, drinktype))
 
 
-def _handle_vimeo(url):
-    """*vimeo.com/*"""
+def _handle_vimeo(url, matches):
+    r"""vimeo.com/(\d+)"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
-    match = re.match("http(s?)://.*?vimeo.com/(\d+)", url)
-    if not match:
-        return None
 
     # Title: CGoY Sharae Spears  Milk shower by miletoo [3m1s - [*****] - 158k views - 313d ago - XXX]
-    infourl = data_url % match.group(2)
+    infourl = data_url % matches[0]
+    print(infourl)
     r = bot.get_url(infourl)
     info = r.json()[0]
     title = info['title']
@@ -592,13 +557,11 @@ def _handle_vimeo(url):
     return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
-def _handle_stackoverflow(url):
-    """*stackoverflow.com/questions/*"""
+# Could be improved to include subdomains?
+def _handle_stackoverflow(url, matches):
+    r"""stackoverflow.com/questions/([0-9]+)"""
     api_url = 'http://api.stackexchange.com/2.2/questions/%s'
-    match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
-    if match is None:
-        return
-    question_id = match.group(1)
+    question_id = matches[0]
     content = bot.get_url(api_url % question_id, params={'site': 'stackoverflow'})
 
     try:
@@ -614,8 +577,8 @@ def _handle_stackoverflow(url):
         return
 
 
-def _handle_reddit(url):
-    """*reddit.com/r/*/comments/*/*"""
+def _handle_reddit(url, matches):
+    r"""reddit.com/r/.*?/comments/.*?/.*?"""
     if url[-1] != "/":
         ending = "/.json"
     else:
@@ -642,8 +605,8 @@ def _handle_reddit(url):
         return
 
 
-def _handle_aamulehti(url):
-    """http://www.aamulehti.fi/*"""
+def _handle_aamulehti(url, matches):
+    r"""aamulehti.fi/(.*?)"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -651,8 +614,8 @@ def _handle_aamulehti(url):
     return title
 
 
-def _handle_areena_v3(url):
-    """http://areena-v3.yle.fi/*"""
+def _handle_areena_v3(url, matches):
+    r"""areena-v3.yle.fi/(.*?)"""
     def areena_get_exit_str(text):
         dt = datetime.strptime(text, '%Y-%m-%dT%H:%M:%S') - datetime.now()
         if dt.days > 7:
@@ -724,14 +687,15 @@ def _handle_areena_v3(url):
         return
 
 
-def _handle_areena(url):
-    """http://areena.yle.fi/*"""
+def _handle_areena(url, matches):
+    r"""areena.yle.fi/(.*?)"""
     if 'suora' in url:
+        print(url)
         bs = __get_bs(url)
         container = bs.find('div', {'class': 'selected'})
         channel = container.find('h3').text
-        program = container.find('span', {'class': 'status-current'}).next_element.next_element
-        link = program.find('a').get('href', None)
+        program = container.find('li', {'class': 'current-broadcast'}).find('div', {'class': 'program-title'}).find('a')
+        link = program.get('href', None)
         if not program:
             return '%s (LIVE)' % (channel)
         if not link:
@@ -744,16 +708,16 @@ def _handle_areena(url):
     except IndexError:
         return
 
-    tv = _handle_areena_v3('http://areena-v3.yle.fi/tv/%s' % (identifier))
+    tv = _handle_areena_v3('http://areena-v3.yle.fi/tv/%s' % (identifier), matches)
     if tv:
         return tv
-    radio = _handle_areena_v3('http://areena-v3.yle.fi/radio/%s' % (identifier))
+    radio = _handle_areena_v3('http://areena-v3.yle.fi/radio/%s' % (identifier), matches)
     if radio:
         return radio
 
 
-def _handle_wikipedia(url):
-    """*wikipedia.org*"""
+def _handle_wikipedia(url, matches):
+    r"""([a-zA-Z]+)\.wikipedia.org"""
 
     def clean_page_name(url):
         # select part after '/' as article and unquote it (replace stuff like %20) and decode to unicode
@@ -831,8 +795,8 @@ def _handle_wikipedia(url):
             return first_sentence[:i + 1] + '...'
 
 
-def _handle_imgur(url):
-    """http*://*imgur.com*"""
+def _handle_imgur(url, matches):
+    r"""imgur.com"""
 
     def create_title(data):
         section = data['data']['section']
@@ -909,17 +873,14 @@ def _handle_imgur(url):
     return title
 
 
-def _handle_liveleak(url):
-    """http://*liveleak.com/view?i=*"""
-    try:
-        id = url.split('view?i=')[1]
-    except IndexError:
-        log.debug('ID not found')
-        return
+def _handle_liveleak(url, matches):
+    r"""liveleak.com/view\?i=([a-z0-9_]+)"""
+    id = matches[0]
 
     bs = __get_bs(url)
     if not bs:
         return
+
     title = bs.find('span', 'section_title').text.strip()
     info = str(bs.find('span', id='item_info_%s' % id))
 
@@ -952,9 +913,10 @@ def _handle_liveleak(url):
     return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
 
 
-def _handle_dailymotion(url):
-    """http://*dailymotion.com/video/*"""
-    video_id = url.split('/')[-1].split('_')[0]
+def _handle_dailymotion(url, matches):
+    r"""dailymotion.com/video/([a-zA-Z0-9]+)_"""
+    video_id = matches[0]
+    print(video_id)
     params = {
         'fields': ','.join([
             'owner.screenname',
@@ -973,7 +935,6 @@ def _handle_dailymotion(url):
         r = bot.get_url(api % video_id, params=params).json()
 
         lengthstr = __get_length_str(r['duration'])
-        stars = "[%-5s]" % (int(round(r['rating'])) * "*")
         views = __get_views(r['views_total'])
         agestr = __get_age_str(datetime.fromtimestamp(r['modified_time']))
         if r['explicit']:
@@ -981,18 +942,14 @@ def _handle_dailymotion(url):
         else:
             adult = ''
 
-        return "%s by %s [%s - %s - %s views - %s%s]" % (r['title'], r['owner.screenname'], lengthstr, stars, views, agestr, adult)
+        return "%s by %s [%s - %s views - %s%s]" % (r['title'], r['owner.screenname'], lengthstr, views, agestr, adult)
     except:
         return
 
 
-def _handle_ebay(url):
-    """http*://*.ebay.*/itm/*"""
-    try:
-        item_id = url.split('/')[-1].split('?')[0]
-    except IndexError:
-        log.debug("Couldn't find item ID.")
-        return
+def _handle_ebay(url, matches):
+    r"""ebay\.(.*?)/itm/(\d+)/?"""
+    item_id = matches[1]
 
     app_id = config.get('ebay_appid', 'RikuLind-3b6d-4c30-937c-6e7d87b5d8be')
     # 77 == Germany, prices in EUR
@@ -1047,21 +1004,14 @@ def _handle_ebay(url):
         return '%s [%s - ships from %s%s]' % (name, price, location, ended)
 
 
-def _handle_ebay_no_prefix(url):
-    """http*://ebay.*/itm/*"""
-    return _handle_ebay(url)
+def _handle_ebay_cgi(url, matches):
+    r"""cgi.ebay\.(.*?)/ws/eBayISAPI.dll\?ViewItem\&item=(\d+)"""
+    return _handle_ebay(url, matches)
 
 
-def _handle_ebay_cgi(url):
-    """http*://cgi.ebay.*/ws/eBayISAPI.dll?ViewItem&item=*"""
-    item_id = url.split('item=')[1].split('&')[0]
-    fake_url = 'http://ebay.com/itm/%s' % item_id
-    return _handle_ebay(fake_url)
-
-
-def _handle_dealextreme(url):
-    """http*://dx.com/p/*"""
-    sku = url.split('?')[0].split('-')[-1]
+def _handle_dealextreme(url, matches):
+    r"""dx.com/p/.*?(-\d+)"""
+    sku = matches[0].replace('-', '')
     cookies = {'DXGlobalization': 'lang=en&locale=en-US&currency=EUR'}
     api_url = 'http://www.dx.com/bi/GetSKUInfo?sku=%s' % sku
 
@@ -1092,12 +1042,7 @@ def _handle_dealextreme(url):
     return '%s [%.2fe]' % (name, price)
 
 
-def _handle_dealextreme_www(url):
-    """http*://www.dx.com/p/*"""
-    return _handle_dealextreme(url)
-
-
-def _handle_instagram(url):
+def _handle_instagram(url, matches):
     """http*://instagram.com/p/*"""
     from instagram.client import InstagramAPI
 
@@ -1191,37 +1136,37 @@ def fetch_nettiX(url, fields_to_fetch):
     return '%s' % (main)
 
 
-def _handle_nettiauto(url):
+def _handle_nettiauto(url, matches):
     """http*://*nettiauto.com/*/*/*"""
     return fetch_nettiX(url, ['Vuosimalli', 'Mittarilukema', 'Moottori', 'Vaihteisto', 'Vetotapa'])
 
 
-def _handle_nettivene(url):
+def _handle_nettivene(url, matches):
     """http*://*nettivene.com/*/*/*"""
     return fetch_nettiX(url, ['Vuosimalli', 'Runkomateriaali', 'Pituus', 'Leveys'])
 
 
-def _handle_nettimoto(url):
+def _handle_nettimoto(url, matches):
     """http*://*nettimoto.com/*/*/*"""
     return fetch_nettiX(url, ['Vuosimalli', 'Moottorin tilavuus', 'Mittarilukema', 'Tyyppi'])
 
 
-def _handle_nettikaravaani(url):
+def _handle_nettikaravaani(url, matches):
     """http*://*nettikaravaani.com/*/*/*"""
     return fetch_nettiX(url, ['Vm./Rek. vuosi', 'Mittarilukema', 'Moottori', 'Vetotapa'])
 
 
-def _handle_nettivaraosa(url):
+def _handle_nettivaraosa(url, matches):
     """http*://*nettivaraosa.com/*/*"""
     return fetch_nettiX(url, ['Varaosan osasto'])
 
 
-def _handle_nettikone(url):
+def _handle_nettikone(url, matches):
     """http*://*nettikone.com/*/*/*"""
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
 
 
-def _handle_hitbox(url):
+def _handle_hitbox(url, matches):
     """http*://*hitbox.tv/*"""
 
     # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
@@ -1263,8 +1208,8 @@ def _handle_hitbox(url):
         return False
 
 
-def _handle_google_play_music(url):
-    """http*://play.google.com/music/*"""
+def _handle_google_play_music(url, matches):
+    r"""play.google.com/music/"""
     bs = __get_bs(url)
     if not bs:
         return False
@@ -1279,8 +1224,8 @@ def _handle_google_play_music(url):
         return title['content']
 
 
-def _handle_steamstore(url):
-    """http://store.steampowered.com/app/*"""
+def _handle_steamstore(url, matches):
+    r"""store.steampowered.com/app/(\d+)"""
 
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
     api_url = "http://store.steampowered.com/api/appdetails/"
@@ -1302,7 +1247,7 @@ def _handle_steamstore(url):
     return "%s | %s" % (name, price)
 
 
-def _handle_pythonorg(url):
+def _handle_pythonorg(url, matches):
     """http*://*python.org/*"""
     title = __get_title_tag(url)
     if title == 'Welcome to Python.org':
@@ -1311,37 +1256,37 @@ def _handle_pythonorg(url):
     return title.replace(' | Python.org', '')
 
 
-def _handle_github(url):
+def _handle_github(url, matches):
     """http*://*github.com*"""
     return __get_title_tag(url)
 
 
-def _handle_gitio(url):
+def _handle_gitio(url, matches):
     """http*://git.io*"""
     return __get_title_tag(url)
 
 
 # IGNORED TITLES
-def _handle_salakuunneltua(url):
+def _handle_salakuunneltua(url, matches):
     """*salakuunneltua.fi*"""
     return False
 
 
-def _handle_apina(url):
+def _handle_apina(url, matches):
     """http://apina.biz/*"""
     return False
 
 
-def _handle_travis(url):
+def _handle_travis(url, matches):
     """http*://travis-ci.org/*"""
     return False
 
 
-def _handle_ubuntupaste(url):
+def _handle_ubuntupaste(url, matches):
     """http*://paste.ubuntu.com/*"""
     return False
 
 
-def _handle_poliisi(url):
+def _handle_poliisi(url, matches):
     """http*://*poliisi.fi/*/tiedotteet/*"""
     return False
