@@ -76,6 +76,13 @@ def test_youtube():
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
+def test_youtube2():
+    regex = 'Title: (.*?) by (.*?) \[%s - %s views - %s( - age restricted)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    msg = "http://www.youtu.be/awsolTK175c"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 def test_vimeo():
     regex = 'Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]' % (lengh_str_regex, views_str_regex, views_str_regex, age_str_regex)
     msg = 'http://vimeo.com/29996808'
@@ -131,3 +138,43 @@ def test_steamstore():
     module_urltitle.init(bot)
     eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
+
+def test_dailymotion():
+    msg = 'http://www.dailymotion.com/video/x16pjqk_life-of-old-karachi_creation'
+    regex = 'Title: Life of old Karachi by (.*?) [%s - %s views - %s( - XXX)?]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
+
+
+def test_twitter():
+    msg = 'https://twitter.com/JeremyClarkson/status/598770311765569537'
+    module_urltitle.init(bot)
+    eq_(('#channel', 'Title: @JeremyClarkson (Jeremy Clarkson): Yup. Everything present and correct. Ready for Belfast. Clarkson Hammond and May Live. #BackOnTheRoad pic.twitter.com/5r2nyu8jMl'),
+        module_urltitle.handle_url(bot, None, '#channel', msg, msg))
+
+
+def test_twitter_mobile():
+    msg = 'https://mobile.twitter.com/JeremyClarkson/status/598770311765569537'
+    module_urltitle.init(bot)
+    eq_(('#channel', 'Title: @JeremyClarkson (Jeremy Clarkson): Yup. Everything present and correct. Ready for Belfast. Clarkson Hammond and May Live. #BackOnTheRoad pic.twitter.com/5r2nyu8jMl'),
+        module_urltitle.handle_url(bot, None, '#channel', msg, msg))
+
+
+def test_ircquotes():
+    msg = 'http://ircquotes.fi/?141253'
+    regex = r'Title: #kiekkoliiga-classic \(-?\d+\): <@sotis> Näin Oskari Katajisto juhli häitään - katso kuvat!'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
+
+
+def test_reddit():
+    msg = 'https://www.reddit.com/r/aww/comments/36958u/garry_playing_with_blue_butterflies/'
+    regex = r'Title: Garry playing with blue butterflies - \d+pts \(\d+ ups, \d+ downs\) - \d+ comments'
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
+
+
+def test_aamulehti():
+    msg = 'http://www.aamulehti.fi/Kotimaa/1194980762336/artikkeli/utsjoella+aurinko+laskee+seuraavan+kerran+29+heinakuuta.html'
+    module_urltitle.init(bot)
+    eq_('Title: Utsjoella aurinko laskee seuraavan kerran 29. heinäkuuta', module_urltitle.handle_url(bot, None, '#channel', msg, msg)[1])
