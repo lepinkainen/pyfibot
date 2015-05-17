@@ -11,7 +11,7 @@ import urlparse
 import logging
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import math
 
 from types import TupleType
@@ -366,12 +366,49 @@ def _parse_tweet_from_src(url):
     if not container:
         return
 
-    name = container.find('strong', {'class': 'fullname'})
-    user = container.find('span', {'class': 'username'})
-    tweet = container.find('p', {'class': 'tweet-text'})
-    # Return string only if every field was found...
-    if name and user and tweet:
-        return '%s (%s): %s' % (user.text, name.text, tweet.text)
+    time = container.find('span', {'class': 'js-short-timestamp'})['data-time']
+    dt = datetime.utcfromtimestamp(float(time))
+
+    tweet_text = container.find('p', {'class': 'tweet-text'})
+    for link in tweet_text.find_all('a'):
+        link.string.replace_with(link['href'])
+
+    tweet = {
+        'user': {
+            'name': container['data-name'],
+            'screen_name': container['data-screen-name']
+        },
+        'datetime': dt,
+        'text': tweet_text.text
+    }
+
+    if tweet['user']['screen_name'] and tweet['text']:
+        return tweet
+
+
+def _get_tweet_from_api(url, bearer_token):
+    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
+    test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
+    if not test: return
+    # matches for unique tweet id string
+    infourl = tweet_url % test.group(3)
+
+    headers = {'Authorization': 'Bearer ' + bearer_token}
+
+    data = bot.get_url(infourl, headers=headers)
+
+    tweet = data.json()
+    if 'errors' in tweet:
+        for error in tweet['errors']:
+            log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
+            log.warning(bearer_token)
+            log.warning(tweet)
+        return
+
+    created = tweet['created_at']
+    tweet['datetime'] = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
+
+    return tweet
 
 
 def _handle_mobile_tweet(url):
@@ -386,37 +423,44 @@ def _handle_tweet2(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
-    test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
-    if not test: return
-    # matches for unique tweet id string
-    infourl = tweet_url % test.group(3)
-
     bearer_token = config.get("twitter_bearer")
-    if not bearer_token:
+    if bearer_token:
+        tweet = _get_tweet_from_api(url, bearer_token)
+    else:
         log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
-        return _parse_tweet_from_src(url)
-    headers = {'Authorization': 'Bearer ' + bearer_token}
+        tweet = _parse_tweet_from_src(url)
 
-    data = bot.get_url(infourl, headers=headers)
-
-    tweet = data.json()
-    if 'errors' in tweet:
-        for error in tweet['errors']:
-            log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
-        return
+    if not tweet: return
 
     text = tweet['text'].strip()
+    # Twitter sanitizes '<' and '>', probably to prevent possible XSS attacs
+    text = text.replace('&lt;', '<').replace('&gt;', '>')
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
 
+    if user == name or name == '':
+        name = '@%s' % user
+    else:
+        name = '%s (@%s)' % (name, user)
+
     #retweets  = tweet['retweet_count']
     #favorites = tweet['favorite_count']
-    #created   = tweet['created_at']
-    #created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
-    #tweet_age = datetime.now()-created_date
+    created_date = tweet['datetime']
+    tweet_age = datetime.now()-created_date
 
-    tweet = "@%s (%s): %s" % (user, name, text)
+    if tweet_age < timedelta(seconds=60):
+        tweet_age_str = '%gs' % tweet_age.total_seconds()
+    elif tweet_age < timedelta(minutes=60):
+        tweet_age_str = '%gm' % math.ceil(tweet_age.total_seconds() / 60)
+    elif tweet_age < timedelta(hours=24):
+        tweet_age_str = '%gh' % math.ceil(tweet_age.total_seconds() / 3600)
+    else:
+        if datetime.now().year == created_date.year:
+            tweet_age_str = created_date.strftime('%b %d')
+        else:
+            tweet_age_str = created_date.strftime('%d %b %Y')
+
+    tweet = "%s %s: %s" % (name, tweet_age_str, text)
     return tweet
 
 
@@ -830,7 +874,7 @@ def _handle_wikipedia(url):
 
 
 def _handle_imgur(url):
-    """http*://*imgur.com*"""
+    """http://*imgur.com*"""
 
     def create_title(data):
         section = data['data']['section']

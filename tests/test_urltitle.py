@@ -131,3 +131,10 @@ def test_steamstore():
     module_urltitle.init(bot)
     eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
+
+def test_twitter():
+    msg = 'https://twitter.com/github/status/531914601248882689'
+    title = 'Title: GitHub (@github) 10 Nov 2014: Soon. http://t.co/dBypb04KhG'
+    module_urltitle.init(bot)
+    eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
