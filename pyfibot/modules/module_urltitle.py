@@ -1310,6 +1310,68 @@ def _handle_pythonorg(url):
     return title.replace(' | Python.org', '')
 
 
+def _handle_discogs(url):
+    """http://*discogs.com/*"""
+
+    apiurl = 'https://api.discogs.com/'
+    headers = {'user-agent': 'pyfibot-urltitle'}
+
+    title_formats = {
+        'release': '{0[artists][0][name]} - {0[title]} - ({0[year]}) - {0[labels][0][catno]}',
+        'artist': '{0[name]}',
+        'label': '{0[name]}',
+        'master': '{0[artists][0][name]} - {0[title]} - ({0[year]})',
+    }
+
+    m = re.match('http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
+
+    if m:
+        m = m.groups()
+        if m[1] in title_formats:
+            endpoint = '%ss/%s' % (m[1], m[2])
+            data = bot.get_url('%s%s' % (apiurl, endpoint),
+                               headers=headers).json()
+
+            title = title_formats[m[1]].format(data)
+
+        elif m[1] in ['seller', 'user']:
+            endpoint = 'users/%s' % m[2]
+            data = bot.get_url('%s%s' % (apiurl, endpoint),
+                               headers=headers).json()
+
+            title = ['{0[name]}']
+
+            if data['num_for_sale'] > 0:
+                plural = 's' if data['num_for_sale'] > 1 else ''
+                title.append('{0[num_for_sale]} item%s for sale' % plural)
+
+            if data['releases_rated'] > 10:
+                title.append('Rating avg: {0[rating_avg]} (total {0[releases_rated]})')
+
+            title = ' - '.join(title).format(data)
+
+        elif m[0:2] == ['sell', 'item']:
+            endpoint = 'marketplace/listings/%s' % m[2]
+            data = bot.get_url('%s%s' % (apiurl, endpoint)).json()
+
+            for field in ('condition', 'sleeve_condition'):
+                if field in ['Generic', 'Not Graded', 'No Cover']:
+                    data[field] = field
+                else:
+                    m = re.match('(?:\w+ )+\(([A-Z]{1,2}[+-]?)( or M-)?\)',
+                                 data[field])
+                    data[field] = m.group(1)
+
+            fmt = ('{0[release][description]} [{0[price][value]}'
+                   '{0[price][currency]} - ships from {0[ships_from]} - '
+                   'Condition: {0[condition]}/{0[sleeve_condition]}]')
+
+            title = fmt.format(data)
+
+    if title:
+        return title
+
+
 def _handle_github(url):
     """http*://*github.com*"""
     return __get_title_tag(url)

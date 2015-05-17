@@ -14,11 +14,38 @@ class BotMock(botcore.CoreCommands):
             self.lineRate = self.network.linerate
             self.password = self.network.password
 
-    def get_url(self, url, params={}, nocache=False, cookies=None):
+    def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
         print("Getting url %s" % url)
+
+        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+        # Common session for all requests
+        s = requests.session()
+        s.verify = False
+        s.stream = True  # Don't fetch content unless asked
+        s.headers.update({'User-Agent': browser})
+        # Custom headers from requester
+        if headers:
+            s.headers.update(headers)
+        # Custom cookies from requester
         if cookies:
-            return requests.get(url, params=params, cookies=cookies)
-        return requests.get(url, params=params)
+            s.cookies.update(cookies)
+
+        try:
+            r = s.get(url, params=params)
+        except requests.exceptions.InvalidSchema:
+            print("[ERROR] Invalid schema in URI: %s" % url)
+            return None
+        except requests.exceptions.ConnectionError:
+            print("[ERROR] Connection error when connecting to %s" % url)
+            return None
+
+        size = int(r.headers.get('Content-Length', 0)) // 1024
+        #log.debug("Content-Length: %dkB" % size)
+        if size > 2048:
+            print("[WARNING] Content too large, will not fetch: %skB %s" % (size, url))
+            return None
+
+        return r
 
     def say(self, channel, message, length=None):
         #return("%s|%s" % (channel, message))
