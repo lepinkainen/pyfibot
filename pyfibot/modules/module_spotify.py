@@ -12,7 +12,7 @@ log = logging.getLogger('spotify')
 def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""
 
-    m = re.match(".*(http:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*", args)
+    m = re.match(".*(https?:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*", args)
     if not m:
         return None
 
