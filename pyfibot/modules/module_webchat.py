@@ -5,6 +5,12 @@ Display webchat users' actual hostnames on join and when requested
 from __future__ import unicode_literals, print_function, division
 import socket
 
+try:
+    from modules.module_geoip import gi4
+    geoip_available = True
+except ImportError:
+    geoip_available = False
+
 
 def handle_userJoined(bot, user, channel):
     nick = getNick(user)
@@ -19,7 +25,7 @@ def handle_userJoined(bot, user, channel):
 
 
 def command_webchat(bot, user, channel, args):
-    """Parse a webhcat hex ip to a domain"""
+    """Parse a webchat hex ip to a domain"""
     origin = webchat_getorigin(args)
     if origin:
         return bot.say(channel, "webchat from %s" % origin)
@@ -29,8 +35,8 @@ def command_webchat(bot, user, channel, args):
 
 def webchat_getorigin(hexip):
     """Parse webchat hex-format ip to decimal ip and hostname if it exists"""
-    if len(hexip) != 8:
-        return
+    if len(hexip) != 8: return
+
     ip = []
     for i in range(2, len(hexip) + 2, 2):
         try:
@@ -38,9 +44,19 @@ def webchat_getorigin(hexip):
         except ValueError:
             return
         ip.append(str(dec))
+
     if ip:
-        origin = '.'.join(ip)
-        hostname = socket.getfqdn(origin)
+        addr = '.'.join(ip)
+        hostname = socket.getfqdn(addr)
         if hostname != origin:
-            origin = "%s -> %s" % (origin, hostname)
+            origin = "%s -> %s" % (addr, hostname)
+        else:
+            origin = addr
+
+        try:
+            country = gi4.country_name_by_addr(addr)
+            origin += ' (%s)' % country
+        except socket.gaierror:
+            pass
+
     return origin
