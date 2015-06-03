@@ -46,6 +46,7 @@ yllapito@nerv.fi if you want to connect outside of Finland (will be
 changed) or need help with IRC-network.
 
 [![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
+[![Coverage Status](https://coveralls.io/repos/lepinkainen/pyfibot/badge.svg?branch=master)](https://coveralls.io/r/lepinkainen/pyfibot?branch=master)
 
 This product includes GeoLite data created by MaxMind, available from [http://www.maxmind.com](http://maxmind.com/).
 
