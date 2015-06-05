@@ -788,38 +788,31 @@ def _handle_wikipedia(url):
     content = re.sub(r'\(.*?\)', '', content)
     # Remove " , ", which might be left behind after cleaning up
     # the brackets
-    content = re.sub(' +,', ', ', content)
+    content = re.sub(' +([,.])', '\\1 ', content)
     # Remove multiple spaces
     content = re.sub(' +', ' ', content)
 
     # Define sentence break as something ending in a period and starting with a capital letter,
     # with a whitespace or newline in between
-    sentences = re.split('\.\s[A-ZÅÄÖ]', content)
+    sentences = re.split('\.\s(?=[A-ZÅÄÖ])', content)
     # Remove empty values from list.
     sentences = filter(None, sentences)
 
     if not sentences:
         return
 
-    first_sentence = sentences[0]
+    content = sentences[0]
+    # For example titles (Dr., etc.) confuse the splitter
+    if len(content) <= 20:
+        content = '. '.join(sentences[0:2])
     # After regex splitting, the dot shold be removed, add it.
-    if first_sentence[-1] != '.':
-        first_sentence += '.'
+    if not content.endswith('.'):
+        content += '.'
 
-    length_threshold = 450
-    if len(first_sentence) <= length_threshold:
-        return first_sentence
-
-    # go through the first sentence from threshold to end
-    # and find either a space or dot to cut to.
-    for i in range(length_threshold, len(first_sentence)):
-        char = first_sentence[i]
-        if char == ' ' or char == '.':
-            # if dot was found, the sentence probably ended, so no need to print "..."
-            if char == '.':
-                return first_sentence[:i + 1]
-            # if we ended up on a space, print "..."
-            return first_sentence[:i + 1] + '...'
+    if not content:
+        return
+    else:
+        return content
 
 
 def _handle_imgur(url):
