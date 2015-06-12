@@ -134,6 +134,13 @@ def test_steamstore():
     eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
 
+def test_meta_fragment():
+    msg = 'http://www.urtekram.fi/tuotteet/tuoteuutuudet'
+    title = 'Title: Tuoteuutuudet'
+    module_urltitle.init(bot)
+    eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
 # Only a couple of tests and 1.5s sleep because rate is limited to
 # 1 request/sec/ip; if an API breaks, it often breaks completely.
 
