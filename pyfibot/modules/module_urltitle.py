@@ -8,6 +8,7 @@ but still decide show idiotic bulk data in the HTML title element
 from __future__ import print_function, division
 import fnmatch
 import urlparse
+import urllib
 import logging
 import re
 import sys
@@ -133,6 +134,21 @@ def __get_views(views):
     return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
 
 
+# https://developers.google.com/webmasters/ajax-crawling/docs/specification
+def __escaped_fragment(url, meta=False):
+    url = urlparse.urlsplit(url)
+    if not url.fragment or not url.fragment.startswith('!'):
+        if not meta:
+            return url.geturl()
+
+    query = url.query
+    if query: query += '&'
+    query += '_escaped_fragment_='
+    if url.fragment: query += url.fragment[1:]
+
+    return urlparse.urlunsplit((url.scheme, url.netloc, url.path, query, ''))
+
+
 def command_cache(bot, user, channel, args):
     global CACHE_ENABLED
     if isAdmin(user):
@@ -170,10 +186,9 @@ def handle_url(bot, user, channel, url, msg):
             log.info("Ignored url from user: %s, %s %s", user, url, ignore)
             return
 
-    # a crude way to handle the new-fangled shebang urls as per
-    # http://code.google.com/web/ajaxcrawling/docs/getting-started.html
-    # this can manage twitter + gawker sites for now
-    url = url.replace("#!", "?_escaped_fragment_=")
+    # Parse shebang fragments according to Google's specification
+    if url.rfind('#!') != -1:
+        url = __escaped_fragment(url)
 
     # Check if the url already has a title cached
     if CACHE_ENABLED:
@@ -204,6 +219,14 @@ def handle_url(bot, user, channel, url, msg):
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
+
+    # According to Google's Making AJAX Applications Crawlable specification
+    fragment = bs.find('meta', {'name': 'fragment'})
+    if fragment and fragment.get('content') == '!':
+            log.debug("Fragment meta tag on page, getting non-ajax version")
+            url = __escaped_fragment(url, meta=True)
+            bs = __get_bs(url)
+
     if not bs:
         log.debug("No BS available, returning")
         return
