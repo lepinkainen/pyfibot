@@ -8,17 +8,32 @@ log = logging.getLogger('openweather')
 default_location = 'Helsinki'
 threshold = 120
 
+appid = None
 
 def init(bot):
+    global appid
     global default_location
     global threshold
+
     config = bot.config.get('module_openweather', {})
     default_location = config.get('default_location', 'Helsinki')
-    threshold = int(config.get('threshold', 120))  # threshold to show measuring time in minutes
     log.info('Using %s as default location' % default_location)
+
+    appid = config.get('appid')
+    if appid:
+        log.info("Using OpenWeatherMap appid %s" % appid)
+    else:
+        log.warning("Appid not found!")
+
+    threshold = int(config.get('threshold', 120))  # threshold to show measuring time in minutes
 
 
 def command_weather(bot, user, channel, args):
+    """Weather from openweathermap"""
+    if not appid:
+        log.warn("No OpenWeatherMap appid set in configuration")
+        return False
+
     global default_location
     global threshold
     if args:
@@ -26,14 +41,20 @@ def command_weather(bot, user, channel, args):
     else:
         location = default_location
 
-    url = 'http://openweathermap.org/data/2.5/weather?q=%s&units=metric'
-    r = bot.get_url(url % location)
+    url = 'http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=%s'
+    r = bot.get_url(url % (location, appid))
 
-    try:
-        data = r.json()
-    except:
-        log.debug("Couldn't parse JSON.")
-        return bot.say(channel, 'Error: API error.')
+    print(r)
+
+    data = r.json();
+
+    print(data)
+
+    # try:
+    #     data = r.json()
+    # except:
+    #     log.debug("Couldn't parse JSON.")
+    #     return bot.say(channel, 'Error: API error, unable to parse JSON response.')
 
     if 'cod' not in data or int(data['cod']) != 200:
         log.debug('status != 200')
@@ -85,19 +106,23 @@ def command_weather(bot, user, channel, args):
 
 def command_forecast(bot, user, channel, args):
     global default_location
+    if not appid:
+        log.warn("No OpenWeatherMap appid set in configuration")
+        return False
+
     if args:
         location = args
     else:
         location = default_location
 
-    url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=5&mode=json&units=metric'
-    r = bot.get_url(url % location)
+    url = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&cnt=5&mode=json&units=metric&appid=%s'
+    r = bot.get_url(url % (location, appid))
 
     try:
         data = r.json()
     except:
         log.debug("Couldn't parse JSON.")
-        return bot.say(channel, 'Error: API error.')
+        return bot.say(channel, 'Error: API error, unable to parse JSON response.')
 
     if 'cod' not in data or int(data['cod']) != 200:
         log.debug('status != 200')
