@@ -99,6 +99,9 @@ module_urltitle:
   twitter_bearer: ''
 
 module_openweather:
+  # Application ID for OpenWeatherMap, required for use
+  # http://openweathermap.org/api
+  appid: ''
   # Location to show when no arguments are provided
   # default: Helsinki
   default_location: Helsinki
