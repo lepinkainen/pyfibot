@@ -1396,6 +1396,30 @@ def _handle_gitio(url):
     """http*://git.io*"""
     return __get_title_tag(url)
 
+def _handle_gfycat(url):
+    """http*://gfycat.com/*"""
+
+    api_url = "https://gfycat.com/cajax/get/%s"
+
+    m = re.match("https?://gfycat.com/([\w]+)", url)
+    if not m: return
+
+    r = bot.get_url(api_url % m.group(1))
+    j = r.json()['gfyItem']
+
+
+    title = []
+    if j['redditId']:
+        # http://reddit.com/r/all/comments/3us0ts/girls_day_low_angle_shot
+        baseurl = "https://reddit.com/r/%s/%s/%s"
+        url = baseurl % (j['subreddit'], j['redditId'], j['redditIdText'])
+        title.append(url)
+
+    title.append("%sx%s@%sfps" % (j['width'], j['height'], j['frameRate']))
+    title.append("%s views" % j['views'])
+
+    return " ".join(title)
+
 
 # IGNORED TITLES
 def _handle_salakuunneltua(url):
