@@ -71,3 +71,9 @@ def test_eleven():
     msg = 'http://en.wikipedia.org/wiki/Edison_Arantes_do_Nascimento'
     module_urltitle.init(bot)
     eq_(("#channel", u"Title: Edson Arantes do Nascimento, known as Pelé, is a retired Brazilian professional footballer who is widely regarded to be the greatest player of all time."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+
+
+def test_twelve():
+    msg = 'http://en.wikipedia.org/wiki/Mr._Bean'
+    module_urltitle.init(bot)
+    eq_(("#channel", u"Title: Mr. Bean is a British television programme series of fifteen 25-minute episodes written by Robin Driscoll and starring Rowan Atkinson as the title character."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
