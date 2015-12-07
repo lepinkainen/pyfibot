@@ -1165,7 +1165,7 @@ def fetch_nettiX(url, fields_to_fetch):
 
     # Find "main name" for the item
     try:
-        main = bs.find('div', {'class': 'fl'}).find('b').text.strip()
+        main = bs.find('div', {'class': 'head_left'}).find('b').text.strip()
     except AttributeError:
         # If not found, probably doesn't work -> fallback to default
         return
@@ -1176,25 +1176,27 @@ def fetch_nettiX(url, fields_to_fetch):
 
     try:
         # Try to find price for the item, if found -> add to fields
-        price = bs.find('div', {'class': 'pl10 mt10 lnht22'}).find('span').text.strip()
+        price = bs.find('div', {'class': 'pl10 mt15 lnht22'}).find('span').text.strip()
         if price:
             fields.append(price)
     except AttributeError:
         pass
 
     # All sites have the same basic structure, find the "data" table
-    ad_info = bs.find('div', {'class': 'ad_info'})
+    ad_info = bs.find('div', {'id': 'ad_info_list'})
     if ad_info:
         for f in ad_info.findAll('li'):
             # Get field name
-            field = f.text.split(':')[0]
+            field = f.find('div', {'class': 'ad_caption'})
+            # Field name ends in colon
+            field = field.text.strip()[:-1] if field else None
             # If the name was found and it's in fields_to_fetch
             if field and field in fields_to_fetch:
                 # Remove spans
                 # For example cars might have registeration date includet in a span
                 [s.extract() for s in f.findAll('span')]
-                # The "main data" is always in a "b" element
-                field_info = f.find('b').text.strip()
+                # Get field data
+                field_info = f.find('div', {'class': 'ad_details'}).text.strip()
                 # If the data was found and it's not "Ei ilmoitettu", add to fields
                 if field_info and field_info != 'Ei ilmoitettu':
                     fields.append(field_info)
