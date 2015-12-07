@@ -21,6 +21,6 @@ def test_simple():
 
 def test_complex():
     query = "answer to the life universe and everything"
-    target = ("#channel", u"Answer to the Ultimate Question of Life, the Universe, and Everything = 42 | (according to Douglas Adams' humorous science-fiction novel The Hitchhiker's Guide to the Galaxy)")
+    target = ("#channel", u"Answer to the Ultimate Question of Life, the Universe, and Everything = 42 | (according to the book The Hitchhiker's Guide to the Galaxy, by Douglas Adams)")
     result = module_wolfram_alpha.command_wa(bot, None, "#channel", query)
     eq_(target, result)

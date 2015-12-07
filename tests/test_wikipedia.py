@@ -46,7 +46,7 @@ def test_six():
 def test_seven():
     msg = "http://en.wikipedia.org/wiki/Ramon_Llull"
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Ramon Llull, T.O.S.F. was a Majorcan writer and philosopher, logician and a Franciscan tertiary."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Ramon Llull, T.O.S.F. was a philosopher, logician, Franciscan tertiary and Majorcan writer."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_eight():
@@ -70,10 +70,10 @@ def test_ten():
 def test_eleven():
     msg = 'http://en.wikipedia.org/wiki/Edison_Arantes_do_Nascimento'
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Edson Arantes do Nascimento, known as Pelé, is a retired Brazilian professional footballer who is widely regarded to be the greatest player of all time."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Edson Arantes do Nascimento, known as Pelé, is a retired Brazilian professional footballer who played as a forward."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
 
 
 def test_twelve():
     msg = 'http://en.wikipedia.org/wiki/Mr._Bean'
     module_urltitle.init(bot)
-    eq_(("#channel", u"Title: Mr. Bean is a British television programme series of fifteen 25-minute episodes written by Robin Driscoll and starring Rowan Atkinson as the title character."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, and starring Atkinson in the title role."), module_urltitle.handle_url(bot, None, "#channel", msg, msg))

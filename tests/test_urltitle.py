@@ -114,7 +114,7 @@ def test_dx():
 
 
 def test_alko():
-    regex = 'Title: Sandels IV A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\%\, \d\.\d\de/l, \d\.\d\de/annos, oluet]'
+    regex = 'Title: Sandels A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\%\, \d\.\d\de/l, \d\.\d\de/annos, oluet]'
     msg = 'http://www.alko.fi/tuotteet/798684/'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
@@ -135,8 +135,8 @@ def test_steamstore():
 
 
 def test_meta_fragment():
-    msg = 'http://www.urtekram.fi/tuotteet/tuoteuutuudet'
-    title = 'Title: Tuoteuutuudet'
+    msg = 'https://www.redbullsoundselect.com/events'
+    title = 'Title: Events | Red Bull Sound Select'
     module_urltitle.init(bot)
     eq_(title, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
 
