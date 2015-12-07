@@ -1397,23 +1397,33 @@ def _handle_gitio(url):
     return __get_title_tag(url)
 
 def _handle_gfycat(url):
-    """http*://gfycat.com/*"""
+    """http*://*gfycat.com/*"""
 
     api_url = "https://gfycat.com/cajax/get/%s"
 
-    m = re.match("https?://gfycat.com/([\w]+)", url)
+    m = re.match("https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
     if not m: return
 
     r = bot.get_url(api_url % m.group(1))
     j = r.json()['gfyItem']
 
-
     title = []
-    if j['redditId']:
-        # http://reddit.com/r/all/comments/3us0ts/girls_day_low_angle_shot
-        baseurl = "https://reddit.com/r/%s/%s/%s"
-        url = baseurl % (j['subreddit'], j['redditId'], j['redditIdText'])
-        title.append(url)
+    if j['title']:
+        title.append(j['title'])
+    elif j['redditId']:
+        try:
+            baseurl = "https://www.reddit.com/r/%s/comments/%s/%s/.json"
+            url = baseurl % (j['subreddit'], j['redditId'], j['redditIdText'])
+
+            r = bot.get_url(url)
+            data = r.json()[0]['data']['children'][0]['data']
+
+            title.append(data['title'])
+        except:
+            pass
+
+    if j['subreddit']:
+        title.append("(/r/%s)" % j['subreddit'])
 
     title.append("%sx%s@%sfps" % (j['width'], j['height'], j['frameRate']))
     title.append("%s views" % j['views'])

@@ -157,3 +157,22 @@ def test_discogs_user():
     msg = "http://www.discogs.com/user/rodneyfool"
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_gfycat_reddit_title():
+    regex = "Title: California Sunset \(/r/NatureGifs\) 1280x720@29fps \d+ views"
+    msg = "http://www.gfycat.com/ZanyFragrantHoneyeater"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_gfycat_own_title():
+    regex = "Title: Star Trail's in the Desert 632x480@30fps \d+ views"
+    msg = "https://www.gfycat.com/EcstaticWelllitHarpseal"
+    module_urltitle.init(bot)
+    check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
+
+def test_gfycat_direct_url():
+    regex = "Title: \(/r/NatureGifs\) 270x480@30fps \d+ views"
+    msg = "https://zippy.gfycat.com/QualifiedSpanishAmericankestrel.webm"
