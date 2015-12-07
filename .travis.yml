@@ -6,7 +6,7 @@ python:
 install:
   - pip install --user --upgrade pip setuptools
   - pip install --user -r requirements.txt
-  - pip install --user nosetests
+  - pip install --user nose
 # command to run tests, e.g. python setup.py test
 script: nosetests
 notifications:
