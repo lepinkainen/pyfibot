@@ -1,66 +1,44 @@
-# -*- encoding: utf-8 -*-
 """
-Get package tracking information from the Finnish postal service
+Get shipment tracking info from Posti
 """
 
 from __future__ import unicode_literals, print_function, division
-from bs4 import BeautifulSoup
-import requests
 from datetime import datetime, timedelta
+from urllib import quote_plus
 
-lang = 'en'
+
+def init(bot):
+    global lang
+    config = bot.config.get('module_posti', {})
+    lang = config.get('language', 'en')
+
+
+def parse_timestamp(timestamp):
+    return datetime.strptime(timestamp[0:19], '%Y-%m-%dT%H:%M:%S')
 
 
 def command_posti(bot, user, channel, args):
-    """Parse the package status page"""
-    args = args.strip()
+    """Get latest tracking event for a shipment from Posti. Usage: .posti JJFI00000000000000"""
+
     if not args:
-        return bot.say(channel, 'Need a tracking ID as argument.')
+        return bot.say(channel, 'Tracking ID is required.')
 
-    url = 'http://www.itella.fi/itemtracking/itella/search_by_shipment_id'
-
-    params = {
-        'ShipmentId': args,
-        'lang': lang,
-        'LOTUS_hae': 'Hae',
-        'LOTUS_side': '1'
-    }
-
-    r = requests.post(url, params=params)
-    bs = BeautifulSoup(r.content)
+    url = 'http://www.posti.fi/henkiloasiakkaat/seuranta/api/shipments/%s' % quote_plus(args)
 
     try:
-        status_table = bs.find('table', {'id': 'shipment-event-table'}).find_all('tr')[1]
-    except:
-        if lang == 'en':
-            return bot.say(channel, 'Item not found.')
-        return bot.say(channel, 'Lähetystä ei löytynyt.')
+        r = bot.get_url(url)
+        r.raise_for_status()
+        data = r.json()
+        shipment = data['shipments'][0]
+    except Exception as e:
+        bot.say(channel, 'Error while getting tracking data. Check the tracking ID or try again later.')
+        raise e
 
-    try:
-        event = status_table.find('div', {'class': 'shipment-event-table-header'}).text.strip()
-    except:
-        event = '???'
+    phase = shipment['phase']
+    eta_timestamp = shipment.get('estimatedDeliveryTime')
+    latest_event = shipment['events'][0]
 
-    location = '???'
-    dt = timedelta(0, 0, 0)
-    now = datetime.now()
-    for x in status_table.find_all('div', {'class': 'shipment-event-table-row'}):
-        try:
-            row_label = x.find('span', {'class': 'shipment-event-table-label'}).text.strip()
-            row_data = x.find('span', {'class': 'shipment-event-table-data'}).text.strip()
-        except:
-            continue
-
-        if lang == 'en':
-            if row_label == 'Registration:':
-                dt = now - datetime.strptime(row_data, '%d.%m.%Y %H:%M:%S')
-            if row_label == 'Location:':
-                location = row_data
-        else:
-            if row_label == 'Rekisteröinti:':
-                dt = now - datetime.strptime(row_data, '%d.%m.%Y klo %H:%M:%S')
-            if row_label == 'Paikka:':
-                location = row_data
+    dt = datetime.utcnow() - parse_timestamp(latest_event['timestamp'])
 
     agestr = []
     if dt.days > 0:
@@ -72,6 +50,15 @@ def command_posti(bot, user, channel, args):
     if minutes > 0:
         agestr.append('%dm' % minutes)
 
-    if lang == 'en':
-        return bot.say(channel, '%s - %s - %s' % (' '.join(agestr) + ' ago', event, location))
-    return bot.say(channel, '%s - %s - %s' % (' '.join(agestr) + ' sitten', event, location))
+    ago = '%s %s' % (' '.join(agestr), {'fi': 'sitten', 'sv': 'sedan', 'en': 'ago'}[lang])
+    description = latest_event['description'][lang]
+    location = '%s %s' % (latest_event['locationCode'], latest_event['locationName'])
+
+    msg = ' - '.join([ago, description, location])
+
+    if phase != 'DELIVERED' and eta_timestamp:
+        eta_dt = parse_timestamp(eta_timestamp)
+        eta_txt = eta_dt.strftime('%d.%m.%Y %H:%M')
+        msg = 'ETA %s - %s' % (eta_txt, msg)
+
+    bot.say(channel, msg)
