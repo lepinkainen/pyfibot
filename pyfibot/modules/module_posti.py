@@ -3,6 +3,8 @@ Get shipment tracking info from Posti
 """
 
 from __future__ import unicode_literals, print_function, division
+from dateutil.parser import parse
+from dateutil.tz import tzutc
 from datetime import datetime, timedelta
 from urllib import quote_plus
 
@@ -11,10 +13,6 @@ def init(bot):
     global lang
     config = bot.config.get('module_posti', {})
     lang = config.get('language', 'en')
-
-
-def parse_timestamp(timestamp):
-    return datetime.strptime(timestamp[0:19], '%Y-%m-%dT%H:%M:%S')
 
 
 def command_posti(bot, user, channel, args):
@@ -38,7 +36,7 @@ def command_posti(bot, user, channel, args):
     eta_timestamp = shipment.get('estimatedDeliveryTime')
     latest_event = shipment['events'][0]
 
-    dt = datetime.utcnow() - parse_timestamp(latest_event['timestamp'])
+    dt = datetime.now(tzutc()) - parse(latest_event['timestamp'])
 
     agestr = []
     if dt.days > 0:
@@ -57,7 +55,7 @@ def command_posti(bot, user, channel, args):
     msg = ' - '.join([ago, description, location])
 
     if phase != 'DELIVERED' and eta_timestamp:
-        eta_dt = parse_timestamp(eta_timestamp)
+        eta_dt = parse(eta_timestamp)
         eta_txt = eta_dt.strftime('%d.%m.%Y %H:%M')
         msg = 'ETA %s - %s' % (eta_txt, msg)
 
