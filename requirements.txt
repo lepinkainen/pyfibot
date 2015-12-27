@@ -1,6 +1,6 @@
 argparse >= 1.2.1
 twisted >= 12.0.0
-requests >= 2.0.0
+requests >= 2.1.0
 pyyaml
 jsonschema >= 1.0.0
 beautifulsoup4
