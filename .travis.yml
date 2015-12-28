@@ -8,6 +8,7 @@ install:
   - pip install --user -r requirements.txt
   - pip install --user pytest pytest-pep8 nose # we still need nose for the _eq functions for now
 # command to run tests, e.g. python setup.py test
+before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
 script: py.test --pep8
 notifications:
   irc:
