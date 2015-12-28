@@ -80,8 +80,8 @@ class FactoryMock(pyfibot.PyFiBotFactory):
 
     def __init__(self, config={}):
         # run with main bot config if one exists
-        main_config = os.path.join(sys.path[0], "..", "config.yml")
-        test_config = os.path.join(sys.path[0], "test_config.yml")
+        main_config = os.path.join(sys.path[0], "config.yml")
+        test_config = os.path.join(sys.path[0], "tests", "test_config.yml")
 
         if not config or config == {}:
             if os.path.exists(main_config):
