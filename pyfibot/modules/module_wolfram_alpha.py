@@ -25,7 +25,7 @@ def init(bot):
 def clean_question(_string):
     if _string:
         res = re.sub("[ ]{2,}", " ",
-                      _string.replace(' | ', ' ').replace('\n', ' ').replace('~~', ' ≈ ')).strip()
+                     _string.replace(' | ', ' ').replace('\n', ' ').replace('~~', ' ≈ ')).strip()
         res = res.replace("\:0e3f", u'฿')
         return res
 
@@ -33,7 +33,7 @@ def clean_question(_string):
 def clean_answer(_string):
     if _string:
         res = re.sub("[ ]{2,}", " ",
-                      _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
+                     _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
         res = res.replace("\:0e3f", u'฿')
         return res
 

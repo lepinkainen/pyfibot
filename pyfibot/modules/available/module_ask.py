@@ -69,7 +69,7 @@ def getSTARTReply(q):
             log.debug("fails: %s" % fail_tags)
             return "Failed to parse data. :/"
         else:  # Let's return the fail tag then.
-            s = "".join([tag for tag in fail_tags[0](text=True) if type(tag) != Comment and re.search("Accept|Abort", tag) == None])
+            s = "".join([tag for tag in fail_tags[0](text=True) if type(tag) != Comment and re.search("Accept|Abort", tag) is None])
             s = re.sub("<.*?>", "", s)                          # Remove possibly remaining HTML tags (like BASE) that aren't parsed by bs
             s = re.sub("\n|\r|\t|&nbsp;", " ", s).strip(' \t')  # One-line it.
             s = re.sub("[ ]{2,}", " ", s)                       # Compress multiple spaces into one
@@ -85,13 +85,13 @@ def getSTARTReply(q):
         for answer in data_tags:
 
             # Cleanups on html depth
-            [sup.replaceWith(("^%s" % sup.string) if sup.string != None else " ") for sup in answer.findAll('sup')]   # Handle <SUP> tags
+            [sup.replaceWith(("^%s" % sup.string) if sup.string is not None else " ") for sup in answer.findAll('sup')]   # Handle <SUP> tags
             [br.replaceWith(" ") for br in answer.findAll('br')]                                                      # Handle <BR> tags
             [td.extract() for td in answer.findAll('td') if len("".join(td.findAll(text=True))) < 10]                 # Handle <TABLE> data
             [cm.extract() for cm in answer.findAll(text=lambda text:isinstance(text, Comment))]                       # Handle <!-- Comments -->
 
             # Find media by looking for tags like img and script and words like doctype, map, click (It sometimes embeds a whole HTML-document to the results. :S)
-            if len(answer.findAll({"img": True, "script": True})) > 0 or medias.search("".join(answer(text=True))) != None:
+            if len(answer.findAll({"img": True, "script": True})) > 0 or medias.search("".join(answer(text=True))) is not None:
                 media = True
             # Cleanups on string depth
             s = "".join(answer(text=True))
@@ -106,7 +106,7 @@ def getSTARTReply(q):
         try:
             answer = min((ans for ans in answers if len(ans) > 10 and not medias.search(ans)), key=len)
         except:
-            if media == False:
+            if media is False:
                 return "Sorry, I don't know"
             else:
                 return "Take a look at %s :P" % shorturl(url).encode("utf-8")
@@ -125,7 +125,7 @@ def getSTARTReply(q):
             answer = "%s &ndash; See %s for more." % (answer, shorturl(url))
 
         # It's not too long, but additional media is available, so let's give a link. :)
-        elif media == True:
+        elif media is True:
             answer = "%s &ndash; See %s for media." % (answer, shorturl(url))
         return unicode(unescape(answer)).encode('utf-8')
 

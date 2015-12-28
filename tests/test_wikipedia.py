@@ -20,24 +20,24 @@ def botmock():
 def test_one(botmock):
     msg = "https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
     assert \
-    ("#channel", u"Title: The Hatfield–McCoy feud involved two families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
-    module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+     ("#channel", u"Title: The Hatfield–McCoy feud involved two families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
+     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()
 def test_two(botmock):
     msg = "http://fi.wikipedia.org/wiki/DTMF"
     assert \
-    ("#channel", u"Title: DTMF on puhelinlaitteissa käytetty numeroiden äänitaajuusvalintatapa.") == \
-    module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+     ("#channel", u"Title: DTMF on puhelinlaitteissa käytetty numeroiden äänitaajuusvalintatapa.") == \
+     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()
 def test_three(botmock):
     msg = "http://en.wikipedia.org/wiki/Gender_performativity"
     assert \
-    ("#channel", u"Title: Gender performativity is a term created by post-structuralist feminist philosopher Judith Butler in her 1990 book Gender Trouble, which has subsequently been used in a variety of academic fields.") == \
-    module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+     ("#channel", u"Title: Gender performativity is a term created by post-structuralist feminist philosopher Judith Butler in her 1990 book Gender Trouble, which has subsequently been used in a variety of academic fields.") == \
+     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()

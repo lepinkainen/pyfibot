@@ -72,7 +72,7 @@ def upload_gallery(url):
 
     urls = set()
 
-    for link in br.links(url_regex = ".jpg$"):
+    for link in br.links(url_regex=".jpg$"):
         urls.add(link.url)
 
     upload_images(urls)

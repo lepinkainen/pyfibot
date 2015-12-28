@@ -14,38 +14,38 @@ import re
 import string
 import sys
 
-_countrycodes=['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
-               'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb',
-               'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bm', 'bn', 'bo',
-               'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cc', 'cd',
-               'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr',
-               'cs', 'cu', 'cv', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm',
-               'do', 'dz', 'ec', 'ee', 'eg', 'eh', 'er', 'es', 'et', 'fi',
-               'fj', 'fk', 'fm', 'fo', 'fr', 'ga', 'gb', 'gd', 'ge', 'gf',
-               'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp', 'gq', 'gr', 'gs',
-               'gt', 'gu', 'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu',
-               'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it',
-               'je', 'jm', 'jo', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn',
-               'kp', 'kr', 'kw', 'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk',
-               'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md', 'mg',
-               'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms',
-               'mt', 'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne',
-               'nf', 'ng', 'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om',
-               'pa', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr',
-               'ps', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'ru', 'rw', 'sa',
-               'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl',
-               'sm', 'sn', 'so', 'sr', 'st', 'sv', 'sy', 'sz', 'tc', 'td',
-               'tf', 'tg', 'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tp',
-               'tr', 'tt', 'tv', 'tw', 'tz', 'ua', 'ug', 'uk', 'um', 'us',
-               'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf',
-               'ws', 'ye', 'yt', 'yu', 'za', 'zm', 'zw', 'aero', 'biz', 'com',
-               'coop', 'edu', 'gov', 'info', 'int', 'mil', 'museum', 'name',
-               'net', 'org', 'pro', 'me', 'mobi', 'xxx']
+_countrycodes = ['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
+                 'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb',
+                 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bm', 'bn', 'bo',
+                 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz', 'ca', 'cc', 'cd',
+                 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr',
+                 'cs', 'cu', 'cv', 'cx', 'cy', 'cz', 'de', 'dj', 'dk', 'dm',
+                 'do', 'dz', 'ec', 'ee', 'eg', 'eh', 'er', 'es', 'et', 'fi',
+                 'fj', 'fk', 'fm', 'fo', 'fr', 'ga', 'gb', 'gd', 'ge', 'gf',
+                 'gg', 'gh', 'gi', 'gl', 'gm', 'gn', 'gp', 'gq', 'gr', 'gs',
+                 'gt', 'gu', 'gw', 'gy', 'hk', 'hm', 'hn', 'hr', 'ht', 'hu',
+                 'id', 'ie', 'il', 'im', 'in', 'io', 'iq', 'ir', 'is', 'it',
+                 'je', 'jm', 'jo', 'jp', 'ke', 'kg', 'kh', 'ki', 'km', 'kn',
+                 'kp', 'kr', 'kw', 'ky', 'kz', 'la', 'lb', 'lc', 'li', 'lk',
+                 'lr', 'ls', 'lt', 'lu', 'lv', 'ly', 'ma', 'mc', 'md', 'mg',
+                 'mh', 'mk', 'ml', 'mm', 'mn', 'mo', 'mp', 'mq', 'mr', 'ms',
+                 'mt', 'mu', 'mv', 'mw', 'mx', 'my', 'mz', 'na', 'nc', 'ne',
+                 'nf', 'ng', 'ni', 'nl', 'no', 'np', 'nr', 'nu', 'nz', 'om',
+                 'pa', 'pe', 'pf', 'pg', 'ph', 'pk', 'pl', 'pm', 'pn', 'pr',
+                 'ps', 'pt', 'pw', 'py', 'qa', 're', 'ro', 'ru', 'rw', 'sa',
+                 'sb', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sj', 'sk', 'sl',
+                 'sm', 'sn', 'so', 'sr', 'st', 'sv', 'sy', 'sz', 'tc', 'td',
+                 'tf', 'tg', 'th', 'tj', 'tk', 'tl', 'tm', 'tn', 'to', 'tp',
+                 'tr', 'tt', 'tv', 'tw', 'tz', 'ua', 'ug', 'uk', 'um', 'us',
+                 'uy', 'uz', 'va', 'vc', 've', 'vg', 'vi', 'vn', 'vu', 'wf',
+                 'ws', 'ye', 'yt', 'yu', 'za', 'zm', 'zw', 'aero', 'biz', 'com',
+                 'coop', 'edu', 'gov', 'info', 'int', 'mil', 'museum', 'name',
+                 'net', 'org', 'pro', 'me', 'mobi', 'xxx']
 
 _schemes = ['http://', 'https://', 'ftp://', 'svn://']
 
 ## domainlabel   = alphanum | alphanum *( alphanum | "-" ) alphanum
-_domainlabel=r'''
+_domainlabel = r'''
 (?:
   [a-z0-9]
   |
@@ -58,7 +58,7 @@ _domainlabel=r'''
 '''
 
 ## toplabel      = alpha | alpha *( alphanum | "-" ) alphanum
-_toplabel=r'''
+_toplabel = r'''
 (?P<toplabel>
   (?:
     [a-z]
@@ -72,14 +72,14 @@ _toplabel=r'''
 
 
 ## hostname      = *( domainlabel "." ) toplabel [ "." ]
-_hostname=r'''
+_hostname = r'''
 (?P<hostname>
   (?: %(_domainlabel)s [.])+
   %(_toplabel)s
 )
 ''' % globals()
 
-_ipv4=r"""
+_ipv4 = r"""
 (?P<ipv4>
   (?:(?<=[^0-9]) | \A)                  ## Doesn't start with number
   (?:[0-9]{1,3}\.){3}[0-9]{1,3}         ## '123.123.123.123'
@@ -87,8 +87,8 @@ _ipv4=r"""
 )
 """
 
-_singleNum=r"""[0-9a-f]{0,4}"""
-_ipv6=r"""
+_singleNum = r"""[0-9a-f]{0,4}"""
+_ipv6 = r"""
 (?:
   [[]                                    ## Start [
   (?P<ipv6>
@@ -100,10 +100,10 @@ _ipv6=r"""
 """ % globals()
 
 ## host          = hostname | IPv4address | IPv6address [ ":" port ]
-_host=r'''
+_host = r'''
 (?P<host>
   (?:                                   ## Must be one of these
-    %(_hostname)s |                     
+    %(_hostname)s |
     %(_ipv4)s |
     %(_ipv6)s
   )
@@ -120,107 +120,112 @@ _host=r'''
 ##   pass
 ## "
 
-validPathChars=[string.ascii_letters,
-                string.digits,
-                '/;?:@&=+$,%#'
-                '-_.!~*()',
-                'åäö[]<>{}^\|\'`–', ## not so valid but used
-                ]
+validPathChars = [string.ascii_letters,
+                  string.digits,
+                  '/;?:@&=+$,%#'
+                  '-_.!~*()',
+                  'åäö[]<>{}^\|\'`–',  # not so valid but used
+                  ]
 
-validUserinfoChars=[string.ascii_letters,
-                    string.digits,
-                    ';:&=+$,',
-                    '-_.!~*()',
-                    '%@'
-                    ]
+validUserinfoChars = [string.ascii_letters,
+                      string.digits,
+                      ';:&=+$,',
+                      '-_.!~*()',
+                      '%@'
+                      ]
 
-validPathChars=''.join(validPathChars)
-validUserinfoChars=''.join(validUserinfoChars)
+validPathChars = ''.join(validPathChars)
+validUserinfoChars = ''.join(validUserinfoChars)
 
-hostRe=re.compile(_host, re.VERBOSE | re.MULTILINE | re.I)
+hostRe = re.compile(_host, re.VERBOSE | re.MULTILINE | re.I)
+
 
 def grab(txt, needScheme=True):
-    seekpos=0
+    seekpos = 0
 
-    possibleUrls=[]
+    possibleUrls = []
 
-    ## Try to find all possible URI's 
+    ## Try to find all possible URI's
     while 1:
-        srch=hostRe.search(txt, seekpos)
-        if not srch: break
+        srch = hostRe.search(txt, seekpos)
+        if not srch:
+            break
 
-        valid=False
+        valid = False
 
         ## Find possible URI with valid hostname, ipv4 or ipv6
         if srch.group('host'):
             if srch.group('ipv4'):
                 ## Check if it is valid ipv4
-                ip=[x for x in srch.group('ipv4').split('.') if int(x) > 255]
+                ip = [x for x in srch.group('ipv4').split('.') if int(x) > 255]
                 if ip == []:
-                    valid=True
-                    
+                    valid = True
+
             elif srch.group('hostname'):
                 ## Check if valid country code
                 if srch.group('toplabel') in _countrycodes:
-                    valid=True
+                    valid = True
 
             elif srch.group('ipv6'):
-                ## ipv6 is always valid :P (yeah right...) 
-                valid=True
+                ## ipv6 is always valid :P (yeah right...)
+                valid = True
 
         if not valid:
-            seekpos=srch.end('host')
+            seekpos = srch.end('host')
             continue
-        
-        s=srch.start('host')
-        e=srch.end('host')
+
+        s = srch.start('host')
+        e = srch.end('host')
 
         ## Check if there is userinfo in URI
-        if s > 1 and txt[s-1]=='@':
-            s-=1
+        if s > 1 and txt[s - 1] == '@':
+            s -= 1
 
-            while s >= 0 and txt[s] in validUserinfoChars: s-=1
+            while s >= 0 and txt[s] in validUserinfoChars:
+                s -= 1
 
-            s+=1
+            s += 1
 
         ## Check if there is scheme
-        schemeFound=False
+        schemeFound = False
         for scheme in _schemes:
-            if txt[s-len(scheme):s] == scheme:
-                s-=len(scheme)
-                schemeFound=True
+            if txt[s - len(scheme):s] == scheme:
+                s -= len(scheme)
+                schemeFound = True
                 break
 
         ## If scheme neede and no scheme found, skip it
         if needScheme and not schemeFound:
-            seekpos=srch.end('host')
+            seekpos = srch.end('host')
             continue
 
         ## Try to figure out rest of URI
-        while e < len(txt) and txt[e] in validPathChars: e+=1
-
+        while e < len(txt) and txt[e] in validPathChars:
+            e += 1
 
         ## Some silly hack
-        ns=s
+        ns = s
 
-        for v in [('<', '>'),('(', ')'), ('{', '}'), ('[', ']'), '"', "'"]:
-            if type(v)==tuple:
-                sc,ec=v
+        for v in [('<', '>'), ('(', ')'), ('{', '}'), ('[', ']'), '"', "'"]:
+            if type(v) == tuple:
+                sc, ec = v
             else:
-                sc=ec=v
+                sc = ec = v
 
-            if txt[ns-len(sc):].startswith(sc):
-                if txt[e-len(ec):].startswith(ec):
-                    e-=len(ec)
+            if txt[ns - len(sc):].startswith(sc):
+                if txt[e - len(ec):].startswith(ec):
+                    e -= len(ec)
 
         possibleUrls.append(txt[s:e])
 
-        seekpos=e
+        seekpos = e
 
     return possibleUrls
 
+
 def unitTest():
     import unittest
+
     class TestPRUL(unittest.TestCase):
         def setUp(self):
             self.needScheme = True
@@ -241,7 +246,7 @@ def unitTest():
 
         def testQuestionMarkURI(self):
             """An URI with a question mark"""
-            self.assertEqual(["http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16"],  grab('http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16', self.needScheme))
+            self.assertEqual(["http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16"], grab('http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16', self.needScheme))
 
         def testLeadingText(self):
             """Leading text"""
@@ -262,21 +267,23 @@ def unitTest():
         def test2URIs(self):
             """2 URIs on same text"""
             self.assertEqual(["http://foobar.fi/1234{}[]{}", "http://127.0.0.1/"], grab('http://foobar.fi/1234{}[]{} sadfljs dlfkjsd lf;asdf http://127.0.0.1/', self.needScheme))
-            
+
         def testIPv6(self):
             """IPv6 URL with scheme"""
             self.assertEqual(["http://[2001:a68:104:1337:250:daff:fe72:871c]/toimia"], grab('foo http://[2001:a68:104:1337:250:daff:fe72:871c]/toimia', self.needScheme))
 
         def testIPv6noscheme(self):
             """IPv6 URL without a scheme"""
-            if self.needScheme: return
-            
+            if self.needScheme:
+                return
+
             self.assertEqual(["[2001:a68:104:1337:250:daff:fe72:871c]/toimia"], grab('foo [2001:a68:104:1337:250:daff:fe72:871c]/toimia', self.needScheme))
 
         def testNoScheme(self):
             """URI without a scheme"""
-            if self.needScheme: return
-            
+            if self.needScheme:
+                return
+
             self.assertEqual(["123.123.123.123"], grab('123.123.123.123', self.needScheme))
 
         def testRedirect(self):
@@ -305,13 +312,14 @@ def unitTest():
     suite.addTest(unittest.makeSuite(TestPRUL))
     unittest.TextTestRunner(verbosity=2).run(suite)
 
+
 def _main():
     if '--test' in sys.argv:
         unitTest()
         return
 
-    needScheme='--noscheme' not in sys.argv
-    
+    needScheme = '--noscheme' not in sys.argv
+
     for line in sys.stdin:
         for url in grab(line, needScheme):
             print url

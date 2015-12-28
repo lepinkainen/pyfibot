@@ -140,9 +140,11 @@ def __escaped_fragment(url, meta=False):
             return url.geturl()
 
     query = url.query
-    if query: query += '&'
+    if query:
+        query += '&'
     query += '_escaped_fragment_='
-    if url.fragment: query += url.fragment[1:]
+    if url.fragment:
+        query += url.fragment[1:]
 
     return urlparse.urlunsplit((url.scheme, url.netloc, url.path, query, ''))
 
@@ -157,6 +159,7 @@ def command_cache(bot, user, channel, args):
             bot.say(channel, 'Cache cleared')
         msg = 'Cache status: %s' % ('ENABLED' if CACHE_ENABLED else 'DISABLED')
         bot.say(channel, msg)
+
 
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
@@ -401,7 +404,8 @@ def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
     test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
-    if not test: return
+    if not test:
+        return
     # matches for unique tweet id string
     infourl = tweet_url % test.group(3)
 
@@ -474,7 +478,8 @@ def _handle_youtube_gdata(url):
             return
 
         items = r.json()['items']
-        if len(items) == 0: return
+        if len(items) == 0:
+            return
 
         entry = items[0]
 
@@ -1269,7 +1274,6 @@ def _handle_hitbox(url):
         return False
 
 
-
 def _handle_google_play_music(url):
     """http*://play.google.com/music/*"""
     bs = __get_bs(url)
@@ -1292,14 +1296,14 @@ def _handle_steamstore(url):
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
     api_url = "http://store.steampowered.com/api/appdetails/"
     app = re.match("http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
-    params = { 'appids': app.group('id'), 'cc': 'fi' }
+    params = {'appids': app.group('id'), 'cc': 'fi'}
 
     r = bot.get_url(api_url, params=params)
     data = r.json()[app.group('id')]['data']
 
     name = data['name']
     if 'price_overview' in data:
-        price = "%.2fe" % (float(data['price_overview']['final'])/100)
+        price = "%.2fe" % (float(data['price_overview']['final']) / 100)
 
         if data['price_overview']['discount_percent'] != 0:
             price += " (-%s%%)" % data['price_overview']['discount_percent']
@@ -1389,13 +1393,15 @@ def _handle_gitio(url):
     """http*://git.io*"""
     return __get_title_tag(url)
 
+
 def _handle_gfycat(url):
     """http*://*gfycat.com/*"""
 
     api_url = "https://gfycat.com/cajax/get/%s"
 
     m = re.match("https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
-    if not m: return
+    if not m:
+        return
 
     r = bot.get_url(api_url % m.group(1))
     j = r.json()['gfyItem']
@@ -1443,6 +1449,7 @@ def _handle_travis(url):
 def _handle_ubuntupaste(url):
     """http*://paste.ubuntu.com/*"""
     return False
+
 
 def _handle_poliisi(url):
     """http*://*poliisi.fi/*/tiedotteet/*"""

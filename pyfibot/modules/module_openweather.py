@@ -10,6 +10,7 @@ threshold = 120
 
 appid = None
 
+
 def init(bot):
     global appid
     global default_location
@@ -44,17 +45,11 @@ def command_weather(bot, user, channel, args):
     url = 'http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=%s'
     r = bot.get_url(url % (location, appid))
 
-    print(r)
-
-    data = r.json();
-
-    print(data)
-
-    # try:
-    #     data = r.json()
-    # except:
-    #     log.debug("Couldn't parse JSON.")
-    #     return bot.say(channel, 'Error: API error, unable to parse JSON response.')
+    try:
+        data = r.json()
+    except:
+        log.debug("Couldn't parse JSON.")
+        return bot.say(channel, 'Error: API error, unable to parse JSON response.')
 
     if 'cod' not in data or int(data['cod']) != 200:
         log.debug('status != 200')

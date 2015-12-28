@@ -35,7 +35,8 @@ def command_webchat(bot, user, channel, args):
 
 def webchat_getorigin(hexip):
     """Parse webchat hex-format ip to decimal ip and hostname if it exists"""
-    if len(hexip) != 8: return
+    if len(hexip) != 8:
+        return
 
     ip = []
     for i in range(2, len(hexip) + 2, 2):

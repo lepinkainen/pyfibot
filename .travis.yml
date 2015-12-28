@@ -1,4 +1,4 @@
-OBlanguage: python
+language: python
 sudo: false
 python:
   - "2.7"
@@ -6,10 +6,10 @@ python:
 install:
   - pip install --user --upgrade pip setuptools
   - pip install --user -r requirements.txt
-  - pip install --user pytest pytest-pep8 nose # we still need nose for the _eq functions for now
+  - pip install --user pytest pytest-pep8 pytest-flakes nose # we still need nose for the _eq functions for now
 # command to run tests, e.g. python setup.py test
 before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
-script: py.test --pep8
+script: py.test --pep8 --flakes
 notifications:
   irc:
     channels:
