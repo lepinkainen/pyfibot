@@ -6,7 +6,7 @@ python:
 install:
   - pip install --user --upgrade pip setuptools
   - pip install --user -r requirements.txt
-  - pip install --user pytest nose # we still need nose for the _eq functions for now
+  - pip install --user pytest pytest-pep8 nose # we still need nose for the _eq functions for now
 # command to run tests, e.g. python setup.py test
 script: py.test --pep8
 notifications:
