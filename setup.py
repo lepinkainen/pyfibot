@@ -45,4 +45,7 @@ setup(
             'pyfibot=pyfibot.pyfibot:main',
             ],
         },
+
+    setup_requires = ['pytest-runner'],
+    tests_require = ['pytest'],
     )
