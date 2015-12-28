@@ -31,6 +31,8 @@ develop-eggs
 lib
 lib64
 local
+.cache/
+.eggs/
 
 # Installer logs
 pip-log.txt
