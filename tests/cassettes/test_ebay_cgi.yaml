@@ -1,0 +1,30 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=121136837564&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2015-12-28T13:16:19.529Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"121136837564","EndTime":"2014-01-13T05:27:56.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/FiiO-E10-Portable-USB-DAC-Headphone-Amplifier-/121136837564","ListingType":"FixedPriceItem","Location":"hongkong","GalleryURL":"http://thumbs1.ebaystatic.com/pict/1211368375648080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/DqEAAOxyFiRR0opV/$(KGrHqZHJDoFHHiLcWjoBR0opU0l!g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/5LIAAOxyn~pR0opU/$(KGrHqZHJ!4FHJO)!fo)BR0opT731g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzcwWDEwMDA=/z/DpsAAOxyFiRR0opT/$(KGrHqVHJCEFHBBPr!EEBR0opTN2QQ~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/xhAAAMXQhpdR0opX/$T2eC16dHJIgFHR-nTWLKBR0op(Fgt!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODMzWDEwMDA=/z/jfYAAMXQQtNR0opV/$(KGrHqJHJC!FG9ERBuu7BR0opUkNh!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzQ3WDEwMDA=/z/6GUAAMXQb29R0opY/$(KGrHqVHJEwFG44+styQBR0op(uM!!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NjY3WDEwMDA=/z/9M8AAOxyOeBR0opU/$T2eC16NHJGQFFhy!oEN!BR0opUCn(w~~60_1.JPG?set_id=880000500F"],"PrimaryCategoryID":"163896","PrimaryCategoryName":"Musical
+        Instruments & Gear:Pro Audio Equipment:Amplifiers","BidCount":0,"ConvertedCurrentPrice":{"Value":69.34,"CurrencyID":"EUR"},"ListingStatus":"Completed","TimeLeft":"PT0S","Title":"FiiO
+        E10 Portable USB DAC Headphone Amplifier","ShippingCostSummary":{"ShippingServiceCost":{"Value":0.0,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":0.0,"CurrencyID":"USD"}},"Country":"HK","AutoPay":false,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Mon, 28 Dec 2015 13:16:18 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [151e8bb7-a680-a7ea-4567-a937c979e427]
+      last-modified: ['Mon, 28 Dec 2015 13:16:19 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___dWtgMGQ3MWYrZGFnPigyNSg2MTMoNTI8KDQ2Pz43OzU=]
+      x-ebay-request-id: ['151e8bb7-a680-a7ea-4567-a937c979e427!shopping!10.126.164.86!esbshopping[]']
+    status: {code: 200, message: OK}
+version: 1

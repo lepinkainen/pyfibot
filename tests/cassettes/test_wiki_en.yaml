@@ -1,0 +1,69 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=IPhone&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Mon, 28 Dec 2015 13:16:15 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=IPhone&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
+          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3040 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['57408658']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=IPhone&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA21Sz0vDMBT+Vx65VGEuU4bWUQsedthJQS/CLmmbtg/bl9ikaBn+776snWzQHEry
+        ve9H+ZKDyJTP69y0ttFei40QC/HV624Qm4OwqtIubOJ4ffuwfjxhWIjNBC0EMWO1EB59E/S719qQ
+        Zhf94zuVe4YSmyZZisdBIrMUrhJnFaXjV54d4OjytBdy36/u8liC7bBV3QDOd9o5KE3TmG+3F+lI
+        SOScWIXhvZLQGKogwgiQIPJY6IiV03RWGpUjt0QqArecDzDBIv4PMKMoN2PANJ0PoJFLJjDpxJFT
+        FRdHuJRuqWrQ1VyJoZ5yVB4NAddiddMgVeyXYGj6vN3tx/bSNFzATWlqjsYTdg3oQAGbaDAlOG7c
+        23BbDgrtsCJdgKICGP/kV1JANsCz5RcDO8qX8F7rAbqeRixygC9v0JoMmWCs7vhHuSU3OK/bZSJt
+        Kn55/QG+UByRewIAAA==
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['355']
+      content-type: [application/json; charset=utf-8]
+      date: ['Mon, 28 Dec 2015 13:16:16 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
+      x-cache: ['cp1066 miss+chfp(0), cp3006 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3567091896, 3219670611, 1278375136']
+    status: {code: 200, message: OK}
+version: 1

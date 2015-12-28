@@ -1,0 +1,6 @@
+networks:
+  nerv:
+    channels:
+    - pyfibot
+    server: irc.nerv.fi
+nick: pyfibot_unittest

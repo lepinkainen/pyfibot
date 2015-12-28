@@ -1,7 +1,13 @@
+import os.path
+import sys
+import yaml
+import logging
+
 import requests
 from pyfibot import pyfibot
 from pyfibot import botcore
 
+log = logging.getLogger("bot_mock")
 
 class BotMock(botcore.CoreCommands):
     config = {}
@@ -17,7 +23,7 @@ class BotMock(botcore.CoreCommands):
     def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
         print("Getting url %s" % url)
 
-        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0"
         # Common session for all requests
         s = requests.session()
         s.stream = True  # Don't fetch content unless asked
@@ -73,6 +79,18 @@ class FactoryMock(pyfibot.PyFiBotFactory):
     protocol = BotMock
 
     def __init__(self, config={}):
+        # run with main bot config if one exists
+        main_config = os.path.join(sys.path[0], "..", "config.yml")
+        test_config = os.path.join(sys.path[0], "test_config.yml")
+
+        if not config or config == {}:
+            if os.path.exists(main_config):
+                log.debug("USING MAIN CONFIG")
+                config = yaml.load(file(main_config))
+            else:
+                log.debug("USING TEST CONFIG")
+                config = yaml.load(file(test_config))
+
         pyfibot.PyFiBotFactory.__init__(self, config)
         self.createNetwork(('localhost', 6667), 'nerv', 'pyfibot', ['#pyfibot'], 0.5, None, False)
         self.createNetwork(('localhost', 6667), 'localhost', 'pyfibot', ['#pyfibot'], 0.5, None, False)
