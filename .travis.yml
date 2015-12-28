@@ -6,9 +6,9 @@ python:
 install:
   - pip install --user --upgrade pip setuptools
   - pip install --user -r requirements.txt
-  - pip install --user nose
+  - pip install --user pytest nose # we still need nose for the _eq functions for now
 # command to run tests, e.g. python setup.py test
-script: nosetests
+script: py.test tests/
 notifications:
   irc:
     channels:
