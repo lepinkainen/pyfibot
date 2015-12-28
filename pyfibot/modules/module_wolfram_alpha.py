@@ -24,12 +24,18 @@ def init(bot):
 
 def clean_question(_string):
     if _string:
-        return re.sub("[ ]{2,}", " ", _string.replace(' | ', ' ').replace('\n', ' ').replace('~~', ' ≈ ')).strip()
+        res = re.sub("[ ]{2,}", " ",
+                      _string.replace(' | ', ' ').replace('\n', ' ').replace('~~', ' ≈ ')).strip()
+        res = res.replace("\:0e3f", u'฿')
+        return res
 
 
 def clean_answer(_string):
     if _string:
-        return re.sub("[ ]{2,}", " ", _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
+        res = re.sub("[ ]{2,}", " ",
+                      _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
+        res = res.replace("\:0e3f", u'฿')
+        return res
 
 
 def command_wa(bot, user, channel, args):
@@ -70,7 +76,7 @@ def command_wa(bot, user, channel, args):
         return bot.say(channel, answer)
 
     # If there's multiple pods, first is the question interpretation
-    question = clean_question(plain_text_pods[0].replace(' | ', ' ').replace('\n', ' '))
+    question = clean_question(plain_text_pods[0])
     # and second is the best answer
     answer = clean_answer(plain_text_pods[1])
     return bot.say(channel, '%s = %s' % (question, answer))
