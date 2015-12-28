@@ -1,0 +1,31 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.openweathermap.org/data/2.5/forecast/daily?cnt=5&mode=json&q=lappeenranta&units=metric
+  response:
+    body: {string: !!python/unicode '{"city":{"id":648901,"name":"Lappeenranta","coord":{"lon":28.16667,"lat":61.049999},"country":"FI","population":0},"cod":"200","message":0.0069,"cnt":5,"list":[{"dt":1451296800,"temp":{"day":-1.98,"min":-4.48,"max":-1.98,"night":-4.48,"eve":-2.2,"morn":-1.98},"pressure":1036.16,"humidity":74,"weather":[{"id":600,"main":"Snow","description":"light
+        snow","icon":"13d"}],"speed":3.97,"deg":324,"clouds":20,"snow":0.09},{"dt":1451383200,"temp":{"day":-9.51,"min":-11.67,"max":-8.77,"night":-11.67,"eve":-10.7,"morn":-8.77},"pressure":1051.08,"humidity":80,"weather":[{"id":800,"main":"Clear","description":"sky
+        is clear","icon":"01d"}],"speed":1.52,"deg":316,"clouds":0},{"dt":1451469600,"temp":{"day":-9.3,"min":-10.26,"max":-4.76,"night":-4.76,"eve":-7.25,"morn":-10.06},"pressure":1049.19,"humidity":75,"weather":[{"id":600,"main":"Snow","description":"light
+        snow","icon":"13d"}],"speed":2.11,"deg":233,"clouds":8,"snow":0.1},{"dt":1451556000,"temp":{"day":-3.98,"min":-5.77,"max":-3.98,"night":-5.77,"eve":-4.15,"morn":-4.05},"pressure":1040.49,"humidity":84,"weather":[{"id":600,"main":"Snow","description":"light
+        snow","icon":"13d"}],"speed":0.96,"deg":203,"clouds":80,"snow":0.67},{"dt":1451642400,"temp":{"day":-10.89,"min":-11.98,"max":-8.5,"night":-9.96,"eve":-11.98,"morn":-8.5},"pressure":1043.97,"humidity":82,"weather":[{"id":600,"main":"Snow","description":"light
+        snow","icon":"13d"}],"speed":3.91,"deg":126,"clouds":8,"snow":0.11}]}
+
+'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json; charset=utf-8]
+      date: ['Mon, 28 Dec 2015 13:02:24 GMT']
+      server: [openresty]
+      x-cache-key: [cnt=5&mode=json&q=lappeenranta&units=metric]
+      x-source: [redis]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,68 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Lazarus_of_Bethany%23In_culture&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Mon, 28 Dec 2015 12:59:27 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Lazarus_of_Bethany%23In_culture&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
+          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3040 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['53590604']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Lazarus_of_Bethany%23In_culture&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA22QTUvEMBCG/8owXour+MlSehBRXLx5FFmm7dRE06QmU9busv/dyVoQ0RxCePO8
+        T4bssCZpTBP6wbEwLhEL/Bg5TrjcoQ+xJ2e33OLyeYddDL0Sj7SlOKZ16NY3LIb8dPTg183oZIys
+        dQk/EIQOZgj3LwUO9Mopq88urq/OTy/zMWdWX5ijAr0SJ+qx4vh/VYH8KZEa0etyqMq6+guVi7oq
+        gFwK8O7DxgMlUPCJrBeY8cxAiPBbIIbhLowRbmlK3xqbDmka6zduJEMEg36H9ay23uosjoFEoq1H
+        4RYkwIqT+qw/NO9DGtjl4ioYX+R4Y2xjZipykqAbGNvnrrMdQ5dnaHUGoE446l2ClknMcbkYKtzr
+        +gLK2a2GwAEAAA==
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['295']
+      content-type: [application/json; charset=utf-8]
+      date: ['Mon, 28 Dec 2015 12:59:27 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
+      x-cache: ['cp1068 miss+chfp(0), cp3008 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3481079425, 2714690958, 1277119013']
+    status: {code: 200, message: OK}
+version: 1

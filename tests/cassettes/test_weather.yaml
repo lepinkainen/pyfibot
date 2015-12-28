@@ -1,0 +1,26 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.openweathermap.org/data/2.5/weather?q=lappeenranta&units=metric
+  response:
+    body: {string: !!python/unicode '{"coord":{"lon":28.17,"lat":61.05},"weather":[{"id":804,"main":"Clouds","description":"overcast
+        clouds","icon":"04d"}],"base":"cmc stations","main":{"temp":-2.64,"pressure":1032,"humidity":86,"temp_min":-3.33,"temp_max":-1.67},"wind":{"speed":4.1,"deg":340},"clouds":{"all":90},"dt":1451307361,"sys":{"type":1,"id":5033,"message":0.0031,"country":"FI","sunrise":1451287279,"sunset":1451307403},"id":648901,"name":"Lappeenranta","cod":200}
+
+'}
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      connection: [keep-alive]
+      content-type: [application/json; charset=utf-8]
+      date: ['Mon, 28 Dec 2015 13:02:24 GMT']
+      server: [openresty]
+      x-source: [back]
+    status: {code: 200, message: OK}
+version: 1

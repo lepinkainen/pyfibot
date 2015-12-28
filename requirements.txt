@@ -19,3 +19,5 @@ feedparser >= 5.1.3
 service_identity
 python-dateutil >= 2.2
 lxml; python_version < '2.7'
+vcrpy
+nose

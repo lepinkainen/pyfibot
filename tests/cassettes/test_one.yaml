@@ -1,0 +1,69 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Mon, 28 Dec 2015 12:59:24 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
+          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3014 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['542599973']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA32Sb0vDMBDGv8qRNzoYc3U4dYyBfxFEBB36womk7bU9TJOappt1+N29pDgV1LxK
+        7p773XNJ1iKWLikSU1YKHYqJEH3x0qBtxWQttLGlVPSGqZg8rEVmTcmKC+kyQpUumt1hNLpKTkz7
+        lGGTcqUzv+ch5N8f+6KSOdaePRrvHkb7fudDxB26SF9ozg+ZRU7hf7i+wFdnZeJYNK1m8wJhGs/+
+        kk934hlsRwfjUZeJDg6jHpBeGrXEFNzKQCZLUoQ1mAwc0+6xdnBHNidNsqu6RO2a5LkFaVGCVEbn
+        QTpvcjg39vmz9JhyuJU6beGGlmgH4N19WgsNfsBhhRZBsY+4hXtSimQJRzpFWxsNC3GKS1IcqHEh
+        NhhYFaQwtAtjBuzGYCA2HhEUCqWnFVR51Q1bM6oqGH3NCD5uKSYHjPdqavy6GtKB4C+xo6ZYJ8jk
+        FPyPgLOqsJLKL1/bsbEakgFE++O9HnCvzUzde3wT7A17g+lONRPvvD4AAuFWYo4CAAA=
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['392']
+      content-type: [application/json; charset=utf-8]
+      date: ['Mon, 28 Dec 2015 12:59:25 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
+      x-cache: ['cp1067 miss+chfp(0), cp3008 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['1396477094, 2714689540, 1277116080']
+    status: {code: 200, message: OK}
+version: 1
