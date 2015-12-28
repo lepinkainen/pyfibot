@@ -46,7 +46,7 @@ class BotMock(botcore.CoreCommands):
             return None
 
         size = int(r.headers.get('Content-Length', 0)) // 1024
-        #log.debug("Content-Length: %dkB" % size)
+        # log.debug("Content-Length: %dkB" % size)
         if size > 2048:
             print("[WARNING] Content too large, will not fetch: %skB %s" % (size, url))
             return None
@@ -54,7 +54,6 @@ class BotMock(botcore.CoreCommands):
         return r
 
     def say(self, channel, message, length=None):
-        #return("%s|%s" % (channel, message))
         return (channel, message)
 
     def to_utf8(self, _string):
@@ -81,8 +80,8 @@ class FactoryMock(pyfibot.PyFiBotFactory):
 
     def __init__(self, config={}):
         # run with main bot config if one exists
-        main_config = os.path.join(sys.path[0], "config.yml")
-        test_config = os.path.join(sys.path[0], "tests", "test_config.yml")
+        main_config = os.path.join(os.path.dirname(__file__), "..", "config.yml")
+        test_config = os.path.join(os.path.dirname(__file__), "test_config.yml")
 
         if not config or config == {}:
             if os.path.exists(main_config):
