@@ -66,7 +66,7 @@ def __get_bs(url):
 
     content = r.content
     if content:
-        return BeautifulSoup(content, 'lxml')
+        return BeautifulSoup(content, 'html.parser')
     return None
 
 
@@ -794,7 +794,7 @@ def _handle_wikipedia(url):
 
         try:
             content = r.json()['query']['pages'].values()[0]['extract']
-            content = BeautifulSoup(content, 'lxml').get_text()
+            content = BeautifulSoup(content, 'html.parser').get_text()
         except KeyError:
             return
         return content
@@ -936,7 +936,7 @@ def _handle_liveleak(url):
 
     # need to do this kind of crap, as the data isn't contained by a span
     try:
-        added_by = BeautifulSoup(info.split('<strong>By:</strong>')[1].split('<br')[0], 'lxml').find('a').text
+        added_by = BeautifulSoup(info.split('<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
     except:
         pass
 
@@ -951,7 +951,7 @@ def _handle_liveleak(url):
         pass
 
     try:
-        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0], 'lxml').text.strip()
+        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0], 'html.parser').text.strip()
     except:
         pass
 
