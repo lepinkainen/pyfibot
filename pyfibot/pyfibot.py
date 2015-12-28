@@ -103,8 +103,6 @@ class PyFiBotFactory(ThrottledClientFactory):
         self.data = {}
         self.data['networks'] = {}
         self.ns = {}
-        # Cache url contents for 5 minutes, check for old entries every minute
-        #self._urlcache = timeoutdict.TimeoutDict(timeout=300, pollinterval=60)
 
     def startFactory(self):
         self.allBots = {}
