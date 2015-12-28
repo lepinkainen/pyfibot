@@ -31,7 +31,6 @@ def test_areena_radio(botmock):
 @my_vcr.use_cassette
 def test_areena_tv(botmock):
     regex = u'Title: (.*?) \[%s - %s plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
-    #msg = "http://areena.yle.fi/1-1999860"
     msg = "http://areena.yle.fi/1-3210197"
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
