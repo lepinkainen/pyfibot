@@ -16,8 +16,6 @@ import os
 import logging
 import yaml
 
-from BeautifulSoup import BeautifulStoneSoup, Comment
-
 # Initialize logger
 log = logging.getLogger('ask')
 
@@ -50,7 +48,6 @@ def getSTARTReply(q):
     url = "http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % urllib.quote_plus(q)
     # For parsing
     answers = []
-    data = False  # Do we have information or not
     media = False  # Do we have media such as js, img in the results
     fails = re.compile("(KNOW-DONT-KNOW|DONT-KNOW|UNKNOWN-WORD|MISSPELLED-WORD|CANT-PARSE|FORBIDDEN-ASSERTION|LEXICON)")
     medias = re.compile("doctype|click|map|below", re.IGNORECASE)

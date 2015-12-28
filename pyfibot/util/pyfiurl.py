@@ -11,7 +11,6 @@
 __version__ = "3.0.3"
 
 import re
-from UserString import UserString
 import string
 import sys
 

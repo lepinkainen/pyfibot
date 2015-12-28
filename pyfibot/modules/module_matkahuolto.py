@@ -4,7 +4,7 @@ Get consignment tracking info from Matkahuolto
 """
 
 from __future__ import unicode_literals
-from datetime import datetime, timedelta
+from datetime import datetime
 from bs4 import BeautifulSoup
 
 
@@ -16,7 +16,6 @@ def init(bot):
 
 def command_mh(bot, user, channel, args):
     """Get latest consignment status from Matkahuolto Track & Trace service"""
-
     params = {'package_code': args}
 
     url = 'https://www.matkahuolto.fi/%s/seuranta/tilanne/' % lang

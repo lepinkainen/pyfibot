@@ -4,7 +4,7 @@ Get status of a shipment from DHL Track & Trace service. Experimental.
 """
 
 from __future__ import unicode_literals
-from datetime import datetime, timedelta
+from datetime import datetime
 from bs4 import BeautifulSoup
 
 

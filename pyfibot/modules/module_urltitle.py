@@ -8,10 +8,8 @@ but still decide show idiotic bulk data in the HTML title element
 from __future__ import print_function, division
 import fnmatch
 import urlparse
-import urllib
 import logging
 import re
-import sys
 from datetime import datetime
 import math
 

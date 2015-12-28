@@ -1,4 +1,3 @@
-import time
 import datetime
 try:
     from pyPgSQL import PgSQL

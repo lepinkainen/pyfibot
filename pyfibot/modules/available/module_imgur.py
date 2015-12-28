@@ -8,7 +8,7 @@ import sys
 log = logging.getLogger("imgur")
 
 # Bot application ID
-CLIENT_ID     = "a7a5d6bc929d48f"
+CLIENT_ID = "a7a5d6bc929d48f"
 CLIENT_SECRET = "57b1f90a12d4d72762b4b1bf644af5157f73fed5"
 
 DATAFILE = os.path.join(sys.path[0], "modules", "imgur_auth.dat")
@@ -72,7 +72,7 @@ def upload_gallery(url):
 
     urls = set()
 
-    for link in br.links(url_regex=".jpg$"):
+    for link in br.links(url_regex = ".jpg$"):
         urls.add(link.url)
 
     upload_images(urls)
@@ -120,10 +120,10 @@ def upload_images(urls, user=None, channel=None):
 
 def _refresh_token(client_id, client_secret, refresh_token):
     r = requests.post("https://api.imgur.com/oauth2/token",
-                      data={'client_id':client_id,
-                            'client_secret':client_secret,
-                            'grant_type':'refresh_token',
-                            'refresh_token':refresh_token})
+                      data={'client_id': client_id,
+                            'client_secret': client_secret,
+                            'grant_type': 'refresh_token',
+                            'refresh_token': refresh_token})
 
     if r.status_code == 200:
         new_access_token = r.json()['access_token']
@@ -131,8 +131,8 @@ def _refresh_token(client_id, client_secret, refresh_token):
         log.info("Updated imgur access token for account %s" % r.json()['account_username'])
 
         f = open(DATAFILE, 'w')
-        f.write(new_access_token+"\n")
-        f.write(new_refresh_token+"\n")
+        f.write(new_access_token + "\n")
+        f.write(new_refresh_token + "\n")
         f.close()
 
         return new_access_token, new_refresh_token
