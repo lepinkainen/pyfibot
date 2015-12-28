@@ -44,6 +44,7 @@ nosetests.xml
 *.mo
 
 # Mr Developer
+.pypirc
 .mr.developer.cfg
 .project
 .pydevproject
