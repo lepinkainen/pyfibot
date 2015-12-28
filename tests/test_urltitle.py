@@ -17,6 +17,7 @@ lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
 views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
 age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
 
+
 @my_vcr.use_cassette
 def test_spotify_ignore():
     msg = "http://open.spotify.com/artist/4tuiQRw9bC9HZhSFJEJ9Mz"
@@ -103,6 +104,7 @@ def test_liveleak():
     msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
     module_urltitle.init(bot)
     check_re(regex, module_urltitle.handle_url(bot, None, "#channel", msg, msg)[1])
+
 
 @my_vcr.use_cassette
 def test_ebay():

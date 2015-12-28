@@ -11,17 +11,20 @@ my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
 
 bot = bot_mock.BotMock()
 
+
 @my_vcr.use_cassette
 def test_spotify_track():
     msg = 'spotify:track:46c5HqyYtOkpjdp193KCln'
     title = '[Spotify] Ultra Bra - Sinä päivänä kun synnyin - Heikko valo'
     eq_(('#channel', title), handle_privmsg(bot, None, '#channel', msg))
 
+
 @my_vcr.use_cassette
 def test_http_artist():
     msg = 'http://open.spotify.com/artist/3MXhtYDNuzQQmLfOKFgPiI'
     regex = '\[Spotify\] Einojuhani Rautavaara( \(Genre: \S.+\))?'
     check_re(regex, handle_privmsg(bot, None, '#channel', msg)[1])
+
 
 @my_vcr.use_cassette
 def test_http_album():

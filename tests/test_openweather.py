@@ -6,7 +6,7 @@ from vcr import VCR
 from vcr import VCR
 my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
              cassette_library_dir="tests/cassettes/",
-             filter_query_parameters=['appid']) # censor appid from query
+             filter_query_parameters=['appid'])  # censor appid from query
 
 bot = bot_mock.BotMock()
 module_openweather.init(bot)

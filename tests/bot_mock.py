@@ -9,6 +9,7 @@ from pyfibot import botcore
 
 log = logging.getLogger("bot_mock")
 
+
 class BotMock(botcore.CoreCommands):
     config = {}
 

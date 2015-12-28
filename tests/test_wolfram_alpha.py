@@ -12,6 +12,7 @@ config = {"module_wolfram_alpha":
 
 bot = bot_mock.BotMock(config=config)
 
+
 @my_vcr.use_cassette
 def test_simple():
     module_wolfram_alpha.init(bot)
@@ -20,6 +21,7 @@ def test_simple():
     regex = u"(42 = forty-two|forty-two = XLII)"
     result = module_wolfram_alpha.command_wa(bot, None, "#channel", query)[1]
     check_re(regex, result)
+
 
 @my_vcr.use_cassette
 def test_complex():
