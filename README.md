@@ -1,3 +1,7 @@
+[![PyPi version](https://img.shields.io/pypi/v/pyfibot.sv)](https://pypi.python.org/pypi/pyfibot/)
+[![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
+[![Coverage Status](https://coveralls.io/repos/lepinkainen/pyfibot/badge.svg?branch=master)](https://coveralls.io/r/lepinkainen/pyfibot?branch=master)
+
 pyfibot
 =======
 
@@ -45,10 +49,5 @@ Support can be found at #pyfibot on irc.nerv.fi and please contact
 yllapito@nerv.fi if you want to connect outside of Finland (will be 
 changed) or need help with IRC-network.
 
-[![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
-[![Coverage Status](https://coveralls.io/repos/lepinkainen/pyfibot/badge.svg?branch=master)](https://coveralls.io/r/lepinkainen/pyfibot?branch=master)
 
 This product includes GeoLite data created by MaxMind, available from [http://www.maxmind.com](http://maxmind.com/).
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/lepinkainen/pyfibot/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
