@@ -12,7 +12,6 @@ __version__ = "3.0.3"
 
 import re
 import string
-import sys
 
 _countrycodes = ['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
                  'aq', 'ar', 'as', 'at', 'au', 'aw', 'ax', 'az', 'ba', 'bb',
@@ -124,7 +123,7 @@ validPathChars = [string.ascii_letters,
                   string.digits,
                   '/;?:@&=+$,%#'
                   '-_.!~*()',
-                  'åäö[]<>{}^\|\'`–',  # not so valid but used
+                  'ÅÄÖåäö[]<>{}^\|\'`–',  # not so valid but used
                   ]
 
 validUserinfoChars = [string.ascii_letters,
@@ -221,108 +220,3 @@ def grab(txt, needScheme=True):
         seekpos = e
 
     return possibleUrls
-
-
-def unitTest():
-    import unittest
-
-    class TestPRUL(unittest.TestCase):
-        def setUp(self):
-            self.needScheme = True
-
-        def testLeadingSpaces(self):
-            """Leading spaces before URL"""
-            self.assertEqual(["http://tomtom.foobar.org/"], grab('     http://tomtom.foobar.org/', self.needScheme))
-            self.assertEqual(["http://www.foobi.org/saatoimia"], grab('  http://www.foobi.org/saatoimia', self.needScheme))
-
-        def testTrailingSpaces(self):
-            """Trailing spaces after URL"""
-            self.assertEqual(["http://tomtom.foobar.org/"], grab('http://tomtom.foobar.org/     ', self.needScheme))
-            self.assertEqual(["http://www.foobi.org/saatoimia"], grab('http://www.foobi.org/saatoimia    ', self.needScheme))
-
-        def testLongURL(self):
-            """A long URL-like string"""
-            self.assertEqual([], grab('www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www.www', self.needScheme))
-
-        def testQuestionMarkURI(self):
-            """An URI with a question mark"""
-            self.assertEqual(["http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16"], grab('http://www.bdog.fi/cgi-bin/netstore/tuotehaku.pl?tuoteryhma=16', self.needScheme))
-
-        def testLeadingText(self):
-            """Leading text"""
-            self.assertEqual(["http://www.technikfoo.de/mai"], grab('here it is: http://www.technikfoo.de/mai', self.needScheme))
-
-        def testLeadingAndTrailingText(self):
-            """Leading and trailing text"""
-            self.assertEqual(["http://123.123.123.123"], grab('fooasdf asdf a http://123.123.123.123 asdfasdf', self.needScheme))
-
-        def testIP(self):
-            """http URI with an ip number"""
-            self.assertEqual(["http://234.234.234.234"], grab('http://234.234.234.234', self.needScheme))
-
-        def testFoobarIP(self):
-            """ip number-like text"""
-            self.assertEqual([], grab('http://11123.123.123.123/eisaa http://123.123.123.12345/eisaa', self.needScheme))
-
-        def test2URIs(self):
-            """2 URIs on same text"""
-            self.assertEqual(["http://foobar.fi/1234{}[]{}", "http://127.0.0.1/"], grab('http://foobar.fi/1234{}[]{} sadfljs dlfkjsd lf;asdf http://127.0.0.1/', self.needScheme))
-
-        def testIPv6(self):
-            """IPv6 URL with scheme"""
-            self.assertEqual(["http://[2001:a68:104:1337:250:daff:fe72:871c]/toimia"], grab('foo http://[2001:a68:104:1337:250:daff:fe72:871c]/toimia', self.needScheme))
-
-        def testIPv6noscheme(self):
-            """IPv6 URL without a scheme"""
-            if self.needScheme:
-                return
-
-            self.assertEqual(["[2001:a68:104:1337:250:daff:fe72:871c]/toimia"], grab('foo [2001:a68:104:1337:250:daff:fe72:871c]/toimia', self.needScheme))
-
-        def testNoScheme(self):
-            """URI without a scheme"""
-            if self.needScheme:
-                return
-
-            self.assertEqual(["123.123.123.123"], grab('123.123.123.123', self.needScheme))
-
-        def testRedirect(self):
-            """Redirect URL"""
-            self.assertEqual(['http://rediretinmyurl.com/http://dest.url.org/1/2/3/4?434', 'http://secondurl.com', 'ftp://1.2.3.4/adsfasdf'], grab('http://rediretinmyurl.com/http://dest.url.org/1/2/3/4?434 http://secondurl.com ftp://1.2.3.4/adsfasdf', self.needScheme))
-
-        def testAnchor(self):
-            """Link with an anchor tag"""
-            self.assertEqual(['http://foo.com/page.html#anchor'], grab('http://foo.com/page.html#anchor', self.needScheme))
-
-        def testScandinavian(self):
-            """Test åäö"""
-            self.assertEqual(['http://www.hs.fi/kotimaa/artikkeli/Äidin+avovaimosta+lapsen+toinen+huoltaja+KKOn+päätöksellä/1135253379084'], grab('http://www.hs.fi/kotimaa/artikkeli/Äidin+avovaimosta+lapsen+toinen+huoltaja+KKOn+päätöksellä/1135253379084', self.needScheme))
-
-        def testBlocks(self):
-            """Test blocks"""
-            self.assertEqual(['http://link1.com',
-                              'http://link2.com',
-                              'http://link3.com',
-                              'http://link4.com',
-                              'http://link5.com',
-                              ], grab('(http://link1.com) <http://link2.com> "http://link3.com" \'http://link4.com\' [http://link5.com]', self.needScheme))
-
-    # run unittest
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestPRUL))
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-
-def _main():
-    if '--test' in sys.argv:
-        unitTest()
-        return
-
-    needScheme = '--noscheme' not in sys.argv
-
-    for line in sys.stdin:
-        for url in grab(line, needScheme):
-            print url
-
-if __name__ == '__main__':
-    _main()
