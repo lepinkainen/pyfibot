@@ -61,4 +61,67 @@ interactions:
       server: [lighttpd]
       x-discogs-media-type: [discogs.v2]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/releases/249504
+  response:
+    body:
+      string: !!binary |
+        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
+        1d7M157Jljrd3hn+G2Dcf8UNHwAA
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [Keep-Alive]
+      content-encoding: [gzip]
+      content-length: ['2187']
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 08:15:48 GMT']
+      reproxy-status: ['yes']
+      server: [lighttpd]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
 version: 1

@@ -6,7 +6,8 @@ from pyfibot.modules import module_urltitle
 import pytest
 from vcr import VCR
 my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
-             cassette_library_dir="tests/cassettes/")
+             cassette_library_dir="tests/cassettes/",
+             record_mode="once")
 
 
 @pytest.fixture

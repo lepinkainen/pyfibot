@@ -66,4 +66,101 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['3567091896, 3219670611, 1278375136']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=IPhone&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 29 Dec 2015 08:15:35 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=IPhone&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3014 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['595480073']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=IPhone&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VY/W/bOBL9VwYGDmkB2bETO3bbXIBgNxu0aNHiXNziAP9CSbTFC01qScqud3H/
+        +70hKX8U2QItbImcjzfvzYz716AUoWoqu221DHLwfjAoBn900h0G7/8atGIjPX9YLKaT+fRd/0zV
+        g/f5UTEwODEuBkEFzfc/fmuskbAifwQnqoBH9+3Dffmg4ov76/KB3tz7VpiH9O/12ReKVv65Glyv
+        uvFNtbim1qmtcAfywUnvaW21tnu/GjykA/fXr10W/PJOXJO2ZkNX6oqUoauganmFm/ntq1ev1uns
+        Wpmaz65fd2DZxOLowKZLlU0O8tvXHZh01lg+afoz1xmKi690efXJbLTyDSCxpjOVEkFZQ4CllVor
+        s4G9e8VIn6P79J+nS6NcgOHaNnCt+mdvSXkSBCOS7Jo8EA8tV8tTLb3aGFmTMDXh+QtYUlN5oMcW
+        jKGPphrR90YeyHUmPbvypL4uaWtLhQO2lQ6BAiV/8EFu42laK+cDbaSJL5FFIgfthUdCWgoPJ3j8
+        qcPDm3cF3YzH8w8UcHVrcdPJSprQ39oCd40EnIwn8tM7H2M+ffumO1/QvlFVQ3uJw53ZScSI3AKy
+        B4zAVJPcsWk4X8oWAZfSUQxgMhvdX7cPKwM6cw6dxxtlgnRrUUlGsOyUhiVnO/jlSGq5UxUDsu10
+        UMNgO7j2lZPSFLha6a5mZATtlAsdfL/IQ2mFqxNKOfQGoPyuhr+pmE8FRlTWGFkFCpYq1L7TwpGR
+        YW/dix/R4xFOPusbawMc1NLSm9DYbtMgNkTLWBsbMw8wDK+0liJ0EZig9DmWt8/LtwUF8SIJvAgW
+        OLZaHJCXV1VBXppEEK6L2kmSW6F0QaWDVlNR9rLM5wIaA+4/f1uSETu1iQQo+KpFCIhI4m1tQTbc
+        wz+qAjD4WyFNPoq35652yjNyOwuk2euIvuKeozUkEo+vOtRumgDYiC1bd3KN+htULUKGwGwsfcYQ
+        NSlIhmqUrjKKJXIyotSJ+7XdG21FKh44jxAji6HMjRNbT2/izQXeJffv3n4gwA1tfa2CZUrh4W0R
+        kYFoaBmsY+lxWJCZjUyG28huBXXDOBs7CU9Eiikg1kKsSmayQz7CvDClfYLdOl2DgGAIWnnoVent
+        OuxZL7VCY1VlF8PP6XOYKngCDjW9gUfTRRXgcdU54Bb0gcQOWDMg5wD4txcSgX32YbitnLQeYbhQ
+        LsAWEIaoeAwJoxLINjUjziJa2Ir/Wtd3h2Tk6zIJxTq1UQYFnPgwfL2rCHpefqHY1CJSAAPRo53C
+        WepxqB4oVSM9JgQrNV4DNoFLqyHyLXcGFCZETaKzecAnuRCOdWU7qEnrU4zsSGTBk1d/chLoGPiL
+        S2tkE5ODHvClQzMJPUQX+r99JlHXuIEPP8sdwmgFSqqOFHgcsrK0TRX5ydAyWxK0FojcMWMrzFWE
+        kmJt1AZ1G2KoWJ1IUUEyTqSsK9vpuldqUhSeThfj9sLPtG8kr1t8dzfGgBzX87vpmFaDf0mMB0G/
+        Ks8tZTWAvOnfz4+0xpgLQ/RWVlmOgjFLftEQdJQfwrZR8KyPIqcxG27lRrTqh+RqCPeTmb0KDc1v
+        xu3RWMvhXiaxpK6FmkEO7rMQ4+LM6LmhyXhxtJSwiQ1EUI3GNKxYzI+zE9J9jIYhAme1MJsOS1Vq
+        Ydzbg7M6j8uYJ3BcKqdGfWizHt+k8TM3d+duMGBc4iGfivTLesqQ1wlyTm/KpxvujYrd1x2M0Ofv
+        TxBC21oXcsuNKkj2bsfDVh1HEeoSsQBMCHhYQ48BuX1G8YOJyPfnLkCe/XKZigesnEXVqLZvYf1R
+        4Ba3reQHAthTKaoXD9yHaJHdFimxGH9DiN/VVvY1ymjjeCU8h7JFTRmJ1upDJVxp+d5lWMu/Q/hu
+        OixVoMf5ZT1BlTo6P+eFSF2XmSldnKscSrT1+elXWmvhmyI3cknf43LwEc8Ro3TYe9FrPGYPulms
+        igQZ2QU+2nijsUgytadkZq2C4SWZ924eYsSsT63hIr27i8Uo7kUYly6qqCdNfd62CtriWeei4CD4
+        0TzTJRqajWZH9sRtFHN3J/VhhO2Q+41KAz7wlii0t8c1I1XlcZHLDVNfFhgJqe3YI8DYaGK7P43M
+        s37WiAQfU4MHXBvJmzbjDl4nxWQxoVoc/If84yFNlzMz0yLfyk0ZV+bTeOVy4eMWhs0u7rJCpxF0
+        MlMwMvw1gHsF4sJuUjKAgBEQwHYkBYw06CGwEfl+3LSBYN1hFh9SKRup28TVF5kn/tk87Kd63IV3
+        QndxELcdBlqF2Ry4a4GLeZrGrQHgTQCkjld4SPHodeZi148xs8h5nMv6HKM8IuEf8wx7mGSksJz1
+        TI+rbWbMcSc+wQcixEu8ThX06Rt9sW4D2aBi+HnHvlaD7Ala4d2eG+J5tnvI/BIuDHCkUYKrcRpH
+        rPPuPZn9A7zl/a73erMa4ETShMOnRvUruuW+Aak9mtpZVQ/LRP4TLInGIO2eV1LmbfoZxNMQvZLx
+        7beFTxjG5oKiTdwh4uqiQqwtyR8VflgwQaHj7BW1zIFUMhHgkckgtEIviYtUPpg2vFbVvIK1oC0W
+        J84KSyDsx1C/CIdoEtKv8BRLeSSY4H6O20h2Nh4ft8z0kyUlHXWFPYH+6IBG2gCT3RBjij+i5lPI
+        v7+dXAAQq2uegGkcFomKvA8g5dlkdHKn/tbLLVqW2tIv1r7AzE6K/EMtr8zg++/8Pxc8WPpl3vbJ
+        599rRdpa0mlOmMOKZOXZBDfzs8T70BEht/ITd9OHwf/w5/9lJGtcLhEAAA==
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['2095']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 08:15:35 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
+      x-cache: ['cp1068 miss+chfp(0), cp3006 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3568116160, 3255209084, 1338625993']
+    status: {code: 200, message: OK}
 version: 1

@@ -68,4 +68,148 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['3262233587, 2138016394, 1277118450']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 29 Dec 2015 08:14:55 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3030 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['3692223047']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA11T22rcMBD9lUFPCRjvjdw2riEU0qakZEkCLWRDkeXxelpZciU5Wyfk3zuyd2ka
+        P9jSGc2ZM3PkF1HIoGplm1ZjQLEUIhG/O3S9WL4IY10jNT1jKZYPL6JytuETt7Kx5se17rTmw8Hu
+        IRih18dEtHKDPjIcnx2fnMRFRIhpBiARhqNTTqag8V1+IvBPcFIFxrM2z4r8TTSbFHkC9+lNepde
+        pnCQeRao848ySC3Nct1Np3KaTUY08600MNT4sBa32Dr0aIIMxHTEkRrhygR0ZoCkhlVtDQZScKHb
+        WhYY4OBqdXG4FvmDY+750Vl8q9OoZ1zF9yl24+eRK3PJ/BxUCrP5Ys6H5tPZYtguZkfncGE2mhR5
+        LCEjbqxnphKuubM+mxC39g6N4HnUes0SzRilpjNl52MIrNtnDNiQ818oAjQih7CVHiS0NWnrbVuj
+        S0DbDeuRJoFLJw0rU3Fk6AJJ14NkGV/lT+siunXEgRQ+I5AH5bDkfQlbCvUQI7MZRlqR8wGamAZb
+        636BrWBnEOhIIUPnMIVbVOyG7sF3rpKKqRppOq8ctcGDr+0WamogWKjlE7IWNoZaGWsWnIRPzKQh
+        cnSO0EPL15MMb3dVDaBGFZ31UZd1/V671N6CYpxK5DbiTPgUootS47/Q7S7JmJYA+hZ5SuwSbOgJ
+        DQvz7EqlOzQKY6lPNoSKZbBtSIWh5zSbtPna8A3+xgPa3bY3M75xXBvqQQ/fOjvoiPY00oV+HHP0
+        q0CWUkVi5pidHp3E5le2RVixr3D1nU8yRYWSh17KfjTZe9oYzuHhLabwpTM4eBl946EUbj/FKOq+
+        Jlfu9HD/dyHd6/zXw7gQr/z8BX7oLxMzBAAA
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['654']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 08:14:56 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
+      x-cache: ['cp1065 miss+chfp(0), cp3008 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['2752663150, 2750737560, 1338589640']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 29 Dec 2015 08:15:55 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3005 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['1143511156']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA11T22rcMBD9lUFPCRjvjdw2riEU0qakZEkCLWRDkeXxelpZciU5Wyfk3zuyd2ka
+        P9jSGc2ZM3PkF1HIoGplm1ZjQLEUIhG/O3S9WL4IY10jNT1jKZYPL6JytuETt7Kx5se17rTmw8Hu
+        IRih18dEtHKDPjIcnx2fnMRFRIhpBiARhqNTTqag8V1+IvBPcFIFxrM2z4r8TTSbFHkC9+lNepde
+        pnCQeRao848ySC3Nct1Np3KaTUY08600MNT4sBa32Dr0aIIMxHTEkRrhygR0ZoCkhlVtDQZScKHb
+        WhYY4OBqdXG4FvmDY+750Vl8q9OoZ1zF9yl24+eRK3PJ/BxUCrP5Ys6H5tPZYtguZkfncGE2mhR5
+        LCEjbqxnphKuubM+mxC39g6N4HnUes0SzRilpjNl52MIrNtnDNiQ818oAjQih7CVHiS0NWnrbVuj
+        S0DbDeuRJoFLJw0rU3Fk6AJJ14NkGV/lT+siunXEgRQ+I5AH5bDkfQlbCvUQI7MZRlqR8wGamAZb
+        636BrWBnEOhIIUPnMIVbVOyG7sF3rpKKqRppOq8ctcGDr+0WamogWKjlE7IWNoZaGWsWnIRPzKQh
+        cnSO0EPL15MMb3dVDaBGFZ31UZd1/V671N6CYpxK5DbiTPgUootS47/Q7S7JmJYA+hZ5SuwSbOgJ
+        DQvz7EqlOzQKY6lPNoSKZbBtSIWh5zSbtPna8A3+xgPa3bY3M75xXBvqQQ/fOjvoiPY00oV+HHP0
+        q0CWUkVi5pidHp3E5le2RVixr3D1nU8yRYWSh17KfjTZe9oYzuHhLabwpTM4eBl946EUbj/FKOq+
+        Jlfu9HD/dyHd6/zXw7gQr/z8BX7oLxMzBAAA
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['654']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 08:15:56 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
+      x-cache: ['cp1065 pass+chfp(0), cp3007 miss+chfp(0), cp3004 frontend pass+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['2752739541, 2931017271, 1338646423']
+    status: {code: 200, message: OK}
 version: 1
