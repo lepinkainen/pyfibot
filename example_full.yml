@@ -123,3 +123,7 @@ module_wolfram_alpha:
   # See http://products.wolframalpha.com/api/documentation.html#1
   # default: None
   appid: ''
+
+module_posti:
+  # Language selection for posti
+  language: en
