@@ -1,6 +1,7 @@
 [![PyPi version](https://img.shields.io/pypi/v/pyfibot.svg)](https://pypi.python.org/pypi/pyfibot/)
 [![Build Status](https://travis-ci.org/lepinkainen/pyfibot.png?branch=master)](https://travis-ci.org/lepinkainen/pyfibot)
-[![Coverage Status](https://coveralls.io/repos/lepinkainen/pyfibot/badge.svg?branch=master)](https://coveralls.io/r/lepinkainen/pyfibot?branch=master)
+[![Coverage Status](https://coveralls.io/repos/lepinkainen/pyfibot/badge.svg?branch=master&service=github)](https://coveralls.io/github/lepinkainen/pyfibot?branch=master)
+
 
 pyfibot
 =======
