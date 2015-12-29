@@ -134,7 +134,7 @@ def test_alko(botmock):
 def test_google_play_music(botmock):
     msg = 'https://play.google.com/music/m/Tkyqfh5koeirtbi76b2tsee6e2y'
     responses = [('#channel', 'Title: Villiviini - Ultra Bra'), None]
-    ok_(module_urltitle.handle_url(botmock, None, "#channel", msg, msg) in responses)
+    assert module_urltitle.handle_url(botmock, None, "#channel", msg, msg) in responses
 
 
 @my_vcr.use_cassette
