@@ -467,6 +467,10 @@ def _handle_youtube_gdata(url):
 
         r = bot.get_url(api_url, params=params)
 
+        # get_url returns None on exception
+        if r is None:
+            return False
+
         if not r.status_code == 200:
             error = r.json().get('error')
             if error:

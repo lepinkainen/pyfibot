@@ -12,6 +12,14 @@ my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
              cassette_library_dir="tests/cassettes/",
              record_mode=pytest.config.getoption("--vcrmode"))
 
+import vcr
+import requests
+import logging
+
+logging.basicConfig() # you need to initialize logging, otherwise you will not see anything from vcrpy
+vcr_log = logging.getLogger("vcr")
+vcr_log.setLevel(logging.DEBUG)
+
 
 @pytest.fixture
 def botmock():
@@ -81,11 +89,12 @@ def test_imdb(botmock):
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
-# def test_youtube(botmock):
-#     regex = 'Title: (.*?) by (.*?) \[%s - %s views - %s( - age restricted)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
-#     msg = "http://www.youtube.com/watch?v=awsolTK175c"
-#     module_urltitle.init(botmock)
-#     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
+@my_vcr.use_cassette
+def test_youtube(botmock):
+    regex = 'Title: (.*?) by (.*?) \[%s - %s views - %s( - age restricted)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    msg = "http://www.youtube.com/watch?v=awsolTK175c"
+    module_urltitle.init(botmock)
+    check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
 @my_vcr.use_cassette
@@ -129,10 +138,9 @@ def test_alko(botmock):
     msg = 'http://www.alko.fi/tuotteet/798684/'
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
-
 @my_vcr.use_cassette
 def test_google_play_music(botmock):
-    msg = 'https://play.google.com/music/m/Tkyqfh5koeirtbi76b2tsee6e2y'
+    msg = 'https://play.google.com/music/preview/Tkyqfh5koeirtbi76b2tsee6e2y'
     responses = [('#channel', 'Title: Villiviini - Ultra Bra'), None]
     assert module_urltitle.handle_url(botmock, None, "#channel", msg, msg) in responses
 

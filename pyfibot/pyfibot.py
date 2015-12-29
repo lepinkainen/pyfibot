@@ -240,6 +240,9 @@ class PyFiBotFactory(ThrottledClientFactory):
         except requests.exceptions.InvalidSchema:
             log.error("Invalid schema in URI: %s" % url)
             return None
+        except requests.exceptions.SSLError:
+            log.error("SSL Error when connecting to %s" % url)
+            return None
         except requests.exceptions.ConnectionError:
             log.error("Connection error when connecting to %s" % url)
             return None

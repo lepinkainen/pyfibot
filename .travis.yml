@@ -4,8 +4,8 @@ cache: pip
 python:
   - "2.7"
 env:
-  - VCR_RECORD_MODE=none
-  - VCR_RECORD_MODE=all
+  - VCR_RECORD_MODE=none  # only use recorded tests, errors on nonexisting tests
+  - VCR_RECORD_MODE=all   # don't use recorded tests, do it LIVE
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
