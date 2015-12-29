@@ -124,4 +124,128 @@ interactions:
       server: [lighttpd]
       x-discogs-media-type: [discogs.v2]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/releases/249504
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [Keep-Alive]
+      content-encoding: [gzip]
+      content-length: ['2164']
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:20:48 GMT']
+      reproxy-status: ['yes']
+      server: [lighttpd]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/releases/249504
+  response:
+    body:
+      string: !!binary |
+        H4sIAMdQglYC/91ZW2/bOhL+K4QeFi0Qx7Lka4DFwk5628bbnKQ53YOmMGiJsdhIog5FxfEW57/v
+        zEiyZVtu7CTdhwX84JHI4TfDueuHlZpFKFLrhH213mRaNc5k6inr2xGz7qUvFL35YfmZ5kaqGNa1
+        nS68FNFU+EAZnQkgjTShANK6lN4dG6ZALViD/UvcC83eqTjm7J28F+wPlbHrhL16k3o8EcwoWDKH
+        p/qOjeXDawtY+SL1tEyK016AYaYlIguMSU6azfl8frxQmcmm4thTUXPOjRf84/7v+g8RPCT/kQnv
+        W38dsTWR3X7vJyI/JuRbrSIU06iYhAS9VLRUI/LzGe4n8tX38EOmxm8v5vMtkZ2W+xORK/h333KN
+        ZHvv208A/7d5ez74Mvu399uvEIC9+hCnYOCRiA0PX7P3Z2yY+VI9VbCf8dtP4JnmH7W6/Nh/P7P+
+        Qh9NhZa59yIV8qkIC4+NeZQ75OkQ8YII0iwmZpHQ0xY+87iJFbrGxYi1W+12Dx9qkapMe2KS6bB0
+        mxT8hify2MfYMEvJb/Kzmv1BB3dJjAXwf/2kSQniHIHliMHnoiwGLLDhB0QfbjJEbA09TyQGYgpi
+        gFgTz2iBp7LYwL8OeiCHaMJnKIB73HbAS605p7f9Fvz3VGy0nGZG6UIHGainhBCJSOnFIRLi7rRZ
+        7KOQUOV3z/VMxjncPVWWMyw3bnHkoQR1SH13OMjV1i2ugZodzg83bXHSc829u4BHh/Nbbd3i+p3H
+        k4hryePD2Vb2bvGd9O3J4Rxp1xYvL5BhuJiqRbd9OMvq5i3OidAhB4M9nO1y5xZP/7vH9VTGEBfQ
+        lw4yzspeii8BuBy4W7vbBlZpNo2kMUKTZ1ad4fnOZfnc8MmfGVgyhQbrVGktPINmaC0ExzNbA8rD
+        MoIYUHp4nttR0EDIWYChomvbQM6lb4IltakF3FDGwkQDxzw0QBRudWzYZRXm/wLsUwGByf+/POAb
+        aPFW6YgbvDnKMHhN8JTygdMedGw0nJmI4QLgFdSYIVyqVrH08AouVEKlpgmyaEpqh4fiwWjOtYFo
+        WNzydyWx8rRwSxnPx4KdqijhMcV0Ht/jAnpId4uhCnfTHq3y4vRMpHJ2UJwpYDQ77Z7bcZAzSZaT
+        5Hm12DjWs967TGqBewp0u4G9iSGXCHAsWLxpqli31iXgElqv7/RWOZio3cDknWBn2e1tVWm/Btag
+        M2hTlUEKI+onsKAFYVeBmoswrChsfLUb25inEImEz0YHJfVSa27fbdt9ZE/4cnInwAthBHvPowg8
+        uYpPPkQEg20uAAuusT9ocZ4OuG13qUDL8SK1E+6VUd7dERtKcydi9jf2hYOqojzDFrZIS1izXNNc
+        W1OP/kIrP/OEPmJfNKaBuPE01Tv2oL1yJaIo1yx7yB39Dym+Liwc4ZsyLlRajMpN4d96qfDNwS7n
+        9HsrCXpIkQSQw8TEC3g8o97YcuxWp9FyGo772R6cdPonTr9h909sGw/NLWeSu0e30xmUELEMhMj1
+        da0FtdwTl45MVCrL3pgqe0xjE4x0JB8JWjbjuxRJhlNp6ZE5YaoyHxGrg5lvNDlFm1Jf5otQ8FT4
+        kzyHYPEPYvwzCynT4/EiNZCb4cVkvsruK9090qLkGk6bA9QustPFgXgMFhMNG34kON0c9/3y3ux2
+        A36u/Rmuq2Wf2B1YWtwbdSRQLgCP64/INVaGkhuQ7DI/gQU8ZZxNQ4gCjDolNpcmYCaAmQfkN3Zj
+        jXmc3XLPZBjDPsQMUkDIY//GYlCPxCAyg3GBNMc38U18FQoYpJzA38xptXqkHgb/bcdho/E7ONVT
+        2k/Zq+uPr9m58Y/hpW3zweMLb2KY9+RdE5woY0IIckwXa4yLs1i5GNmLAYPggjMjGOQkXOOG5lBL
+        FfIS2+9CA28xXS7kzMett572gsp6EvIUWlQYFuV95YasFF7LKEYS3sSftISkyUN2BS2iX+gA2kYW
+        cV+gABdfzoFxvX64houAyxAPXpilOJkKpSfiVEAeAmukd3OlQ5+gnRXTr5T5isF1M54kUJLiDSGT
+        wqxgKZoDTM2gErqV0DyCjYAXl3XmiGtP+VQQ3PMwoz68Y7ccFxIlNN+9Xl5zlsupZ4YaZ2PH+Smz
+        3VZ3fe2Yg54fIJxfZjHMthDGxhhtyFIAxjS9ZwJmXqCq9IhBNwqtl2GUqpewyoEAGzrs+vOniw9D
+        Nr5iX0XsSe2Fwv926PGjJx3fGB2/0PmPiU+htUb89kr845eWeceZo8qZ6Ejdboddnh18eiFxHnwg
+        hoJ9oFnUyEjO3XqidI/zH9Xx/wR+o2vMtAwwmOEYegs7W0M9PF3HuT+ft2t8Lk9bLfuprPKwv9Tk
+        cLicbEE7UozjfiwLktoAhGA2R3IuPlzO5JDYty7JY2az7/TdVSdA1Poxy3ncRaBiBcPEJJAehJhk
+        AbE0MOxV8jrXSVlM7Y2d5iL/G+wVuN4G3O008Uv07NqtgVupxYl8pqaHYchGapGyMaQjj1JcDXZn
+        fW77BBtxepBuVkaSk7uwZ1OoRYO8ZaGascYualBSrfUcY3C6br+CEakdEJfxYgfIvB75FRhdt1sZ
+        CBD1BIyXp8OyeqsBSf3psxQJpW8XGVOX4SC1A+QYRhbQ5FI7vXbV10YlkrMrg18+aKK4EbecF7ju
+        rtNa9eKQ8YDcibNo+4c0Gjw8zJJdPUen+0fZ87yk9NlntR5WoTKtue1nx1DXth1iko8IkNqhxbxh
+        WA7QqHmtfIHCcRN+J/Ur33uwr27kH3Yb1Fc26LNuAz/rNuCzbuM6aRaFcDMf/KGIeWdXFMJ/5pNd
+        imGV8pTeWr0bGtW1odi5GOPWKyhQYWz3Df6WYed3GS+Kz0j7psYCUlrBtHPS/F/UhNG8DR8AAA==
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [Keep-Alive]
+      content-encoding: [gzip]
+      content-length: ['2164']
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:22:15 GMT']
+      reproxy-status: ['yes']
+      server: [lighttpd]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
 version: 1

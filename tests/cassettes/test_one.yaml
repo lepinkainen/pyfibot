@@ -226,4 +226,84 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['3344347119, 1818795673, 1338644214']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 29 Dec 2015 09:17:39 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3007 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['1497406725']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Hatfield%E2%80%93McCoy_feud&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA5VW72/bNhD9Vw760gRQnLhB0zY1DGRph3Vr1qHpmg/LMNDS2WJNkRpF2VGD/u97
+        R9qys6UFli+yxLt3v9495j6bqVBUhasbw4Gz8yzLs7879n12fp9Z52tl9Bcus/M/7rO5dzUsflJh
+        rtmUt93Tk/HpVXHp+r/m3JXwDO7xc4rnX//Ms0YtuBXs07OnL8fP5Zd80oiQvuSZxfkJsHQw/D24
+        POO74FURYDRpph8rpsls+i3zyfFsSgfjF2en6WT84uX4kLRdObPiksLa0VzV2mhuyc0pAO2G20Cf
+        tF9oq1Xy+oVt6IplT8qzImWcXUTTj92CfnR+uXX9QS/oWtmypw96xX5Ekt02tRjgATit2TMZ5DHr
+        6UYbo1VNF7Zk3zpLt9lrXmmDDy3fZgMMrSttOIaLZUbYIcGI2AlEtDCsBK3SjVh9QGrONBWg3wMC
+        r08MkCOM5Opa3rVG24ggTUyoJbcFA7kkYQS9aSqvdL3L62DmvKViROPnZ88OCbGGmtI89gyenRym
+        5kT4SrWEAhCkjDEvava6UJbmziyNiz260wV6AkNFNQdn+xqnHlF6mukAX5MGrjEar1fKUKN8wFhH
+        dCUIoQKeokIa5XsyCi75rkJJYcZYCKa2twLvupbWOlTRpkFCJnY6sqWnymFLcvrctUEXnMdqPa/Y
+        Lng0OW6mtxbcfFB+Ctao4LXyRbWlTJphTmtJQPqDvr/1bARQeYdRxnbFALVUC79Kow22AJWcb5G6
+        NtuhXBcuiOumuTHXfMuwhceJMGvgwSYxo2XgtWsDKnNp7gOjWl2yBB24fqAINcy6oHz/DeJjuO/n
+        9MYujG5Rqdege6p/WIb8//I+JzlEvC3xpCO/og0g1ifpxuGe6WMVPVw9KSt1qVafkWEYatntK1CE
+        TpjIFZ6OLjEO2B3AykZ6ics7twCz0tFh/q8oc9ctqhCZKtCXzs4ZZSokvdmvgeuXWoq+Uf5VzHsg
+        xi6J3/SSN4HyYT6gnmnddwK92rGY7wpugk5tvGgVSvU13jY0WFf/wfndwnpDJu2RFfTP0Eo7w+j4
+        Q40AgeWlZBWqxwLI8uLcMxbQbgkrHmuFTao7X0YBACUUqOq6KFl8dzTUEjAbLOiiUx7DKZQxG72Y
+        6GmaArhUFiq0k2M9HdGORnviGRWk7dqGi0AqpLJyAp3jWdQFgtTgey3wDvu1YmgDRt7qYik+lcgE
+        nhI76Jq3zEk1jOhtwlqDYqDfjHG7xMumEl/sbmcLA834GSSOzM2jqNUzRN7eQZtCcqRS16Jv5X6E
+        pDBRYx7eMFGoa9E7NZ+bDhxJwrd3W8jaRLM1G3OESi06AfjGGQ0tQ1f7R1v3pJVakaOw0TUyD2HS
+        pqGu80XswxoEwfyFQFLqVoKkv8JA/MPhet5IGXT2aE8QJDORUDgKETaXeNLb1J6WLgweYcvYd6jU
+        fnH02q23nwTkms1SQ6nSxTbIcfqRfcXfP3EXVYIBCQAA
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['1116']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:17:40 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
+      x-cache: ['cp1055 miss+chfp(0), cp3014 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3348581631, 3207817255, 1342297664']
+    status: {code: 200, message: OK}
 version: 1

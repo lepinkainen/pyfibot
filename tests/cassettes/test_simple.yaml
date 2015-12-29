@@ -103,4 +103,316 @@ interactions:
       set-cookie: [WR_SID=217.30.184.161.1451308670264622; path=/; max-age=315360000;
           domain=.wolframalpha.com]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.wolframalpha.com/v2/query?input=42&appid=3EYA3R-WVR6GJQWLH
+  response:
+    body: {string: "<?xml version='1.0' encoding='UTF-8'?>\n<queryresult success='true'\n
+        \   error='false'\n    numpods='10'\n    datatypes='Number'\n    timedout='Numeric'\n
+        \   timedoutpods=''\n    timing='1.703'\n    parsetiming='0.067'\n    parsetimedout='false'\n
+        \   recalculate='http://www4c.wolframalpha.com/api/v2/recalc.jsp?id=MSPa150122519aii1ab64c2c000016ddhih3ee0gfbf9&amp;s=13'\n
+        \   id='MSPa150222519aii1ab64c2c000040c38f864fa6cba3'\n    host='http://www4c.wolframalpha.com'\n
+        \   server='13'\n    related='http://www4c.wolframalpha.com/api/v2/relatedQueries.jsp?id=MSPa150322519aii1ab64c2c000047bh4h3b75488fc6&amp;s=13'\n
+        \   version='2.6'>\n <pod title='Input'\n     scanner='Identity'\n     id='Input'\n
+        \    position='100'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150422519aii1ab64c2c0000472e3568c0a356da?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42'\n       title='42'\n       width='16'\n       height='18'
+        />\n   <plaintext>42</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        name'\n     scanner='Integer'\n     id='NumberName'\n     position='200'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150522519aii1ab64c2c0000380i0ecedbc8eg64?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='forty-two'\n       title='forty-two'\n       width='62'\n       height='18'
+        />\n   <plaintext>forty-two</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        line'\n     scanner='NumberLine'\n     id='NumberLine'\n     position='300'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150622519aii1ab64c2c0000591h81i8heg2e627?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt=''\n       title=''\n       width='300'\n       height='56' />\n
+        \  <plaintext></plaintext>\n  </subpod>\n </pod>\n <pod title='Roman numerals'\n
+        \    scanner='Integer'\n     id='RomanNumerals'\n     position='400'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150722519aii1ab64c2c00004c96d6ec671bdab4?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='XLII'\n       title='XLII'\n       width='27'\n       height='18'
+        />\n   <plaintext>XLII</plaintext>\n  </subpod>\n  <states count='1'>\n   <state
+        name='Other historical numerals'\n       input='RomanNumerals__Other historical
+        numerals' />\n  </states>\n </pod>\n <pod title='Binary form'\n     scanner='Integer'\n
+        \    id='BaseConversions'\n     position='500'\n     error='false'\n     numsubpods='1'>\n
+        \ <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150822519aii1ab64c2c00004gd5d6ii7bgf9740?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='101010_2'\n       title='101010_2'\n       width='55'\n       height='18'
+        />\n   <plaintext>101010_2</plaintext>\n  </subpod>\n </pod>\n <pod title='Prime
+        factorization'\n     scanner='Integer'\n     id='PrimeFactorization'\n     position='600'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP150922519aii1ab64c2c000062bh4h76icdb651e?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='2\xD73\xD77'\n       title='2\xD73\xD77'\n       width='52'\n
+        \      height='18' />\n   <plaintext>2\xD73\xD77</plaintext>\n  </subpod>\n
+        </pod>\n <pod title='Residues modulo small integers'\n     scanner='Integer'\n
+        \    id='ResiduesModuloSmallIntegers'\n     position='700'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151022519aii1ab64c2c0000466g727e91gaba5i?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2 |
+        0 | 0 | 2 | 6'\n       title='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m
+        | 0 | 0 | 2 | 2 | 0 | 0 | 2 | 6'\n       width='322'\n       height='68' />\n
+        \  <plaintext>m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2
+        | 0 | 0 | 2 | 6</plaintext>\n  </subpod>\n </pod>\n <pod title='Properties'\n
+        \    scanner='Integer'\n     id='Property'\n     position='800'\n     error='false'\n
+        \    numsubpods='6'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151122519aii1ab64c2c00003fe570a4edbf21f8?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42 is an even number.'\n       title='42 is an even number.'\n
+        \      width='145'\n       height='18' />\n   <plaintext>42 is an even number.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151222519aii1ab64c2c0000365b43ef1e26g5fg?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42 has the unique representation 42 = 1^2+4^2+5^2 as a sum of
+        3 squares.'\n       title='42 has the unique representation 42 = 1^2+4^2+5^2
+        as a sum of 3 squares.'\n       width='484'\n       height='18' />\n   <plaintext>42
+        has the unique representation 42 = 1^2+4^2+5^2 as a sum of 3 squares.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151322519aii1ab64c2c00001ai43hf11d115877?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42 is the 5th Catalan number (Catalan(5)).'\n       title='42
+        is the 5th Catalan number (Catalan(5)).'\n       width='234'\n       height='18'
+        />\n   <plaintext>42 is the 5th Catalan number (Catalan(5)).</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151422519aii1ab64c2c00004a1dc3id997522i5?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42 is the number of integer partitions of 10 (p(10)).'\n       title='42
+        is the number of integer partitions of 10 (p(10)).'\n       width='337'\n
+        \      height='18' />\n   <plaintext>42 is the number of integer partitions
+        of 10 (p(10)).</plaintext>\n  </subpod>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151522519aii1ab64c2c00005cd8bac3i3ai2567?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='42 = 222_4 repeats a single digit in base 4.'\n       title='42
+        = 222_4 repeats a single digit in base 4.'\n       width='273'\n       height='20'
+        />\n   <plaintext>42 = 222_4 repeats a single digit in base 4.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151622519aii1ab64c2c00001236fea43b8hbd55?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='e^(pi sqrt(42))~~695295413.0301 is a near-integer, and the ring
+        of integers of the associated field Q(sqrt(-168)) has class number 4.'\n       title='e^(pi
+        sqrt(42))~~695295413.0301 is a near-integer, and the ring of integers of the
+        associated field Q(sqrt(-168)) has class number 4.'\n       width='550'\n
+        \      height='74' />\n   <plaintext>e^(pi sqrt(42))~~695295413.0301 is a
+        near-integer, and the ring of integers of the associated field Q(sqrt(-168))
+        has class number 4.</plaintext>\n  </subpod>\n </pod>\n <pod title='Quadratic
+        residues modulo 42'\n     scanner='Integer'\n     id='QuadraticResiduesModuloInteger'\n
+        \    position='900'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151722519aii1ab64c2c00001c348dibg31fccca?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt='0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       title='0,
+        1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       width='550'\n
+        \      height='18' />\n   <plaintext>0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25,
+        28, 30, 36, 37, 39</plaintext>\n  </subpod>\n </pod>\n <pod title='Character
+        code 42'\n     scanner='Character'\n     id='CharacterCode'\n     position='1000'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP151822519aii1ab64c2c000058e4ag655019chd9?MSPStoreType=image/gif&amp;s=13'\n
+        \      alt=' | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)'\n       title=' | asterisk\nASCII: 42
+        \  (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode: U+002A  (decimal:
+        42)\n(basic Latin)'\n       width='425'\n       height='101' />\n   <plaintext>
+        | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)</plaintext>\n  </subpod>\n </pod>\n</queryresult>"}
+    headers:
+      connection: [close]
+      content-length: ['8124']
+      content-type: [text/xml;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:15:43 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [WR_SID=217.30.184.161.1451380543791787; path=/; max-age=315360000;
+          domain=.wolframalpha.com]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.wolframalpha.com/v2/query?input=42&appid=3EYA3R-WVR6GJQWLH
+  response:
+    body: {string: "<?xml version='1.0' encoding='UTF-8'?>\n<queryresult success='true'\n
+        \   error='false'\n    numpods='10'\n    datatypes='Number'\n    timedout='Numeric'\n
+        \   timedoutpods=''\n    timing='1.71'\n    parsetiming='0.064'\n    parsetimedout='false'\n
+        \   recalculate='http://www4b.wolframalpha.com/api/v2/recalc.jsp?id=MSPa26101eah49098cd19h9c000056ig1e9772d74dh7&amp;s=48'\n
+        \   id='MSPa26111eah49098cd19h9c000046iba0hd4c819gg7'\n    host='http://www4b.wolframalpha.com'\n
+        \   server='48'\n    related='http://www4b.wolframalpha.com/api/v2/relatedQueries.jsp?id=MSPa26121eah49098cd19h9c00001d9f9b31gd83f3b2&amp;s=48'\n
+        \   version='2.6'>\n <pod title='Input'\n     scanner='Identity'\n     id='Input'\n
+        \    position='100'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26131eah49098cd19h9c000017d8534ch918i060?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42'\n       title='42'\n       width='16'\n       height='18'
+        />\n   <plaintext>42</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        name'\n     scanner='Integer'\n     id='NumberName'\n     position='200'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26141eah49098cd19h9c00001efbe6a0a6edbb42?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='forty-two'\n       title='forty-two'\n       width='62'\n       height='18'
+        />\n   <plaintext>forty-two</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        line'\n     scanner='NumberLine'\n     id='NumberLine'\n     position='300'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26151eah49098cd19h9c00003i6c77eccidf6bg2?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt=''\n       title=''\n       width='300'\n       height='56' />\n
+        \  <plaintext></plaintext>\n  </subpod>\n </pod>\n <pod title='Roman numerals'\n
+        \    scanner='Integer'\n     id='RomanNumerals'\n     position='400'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26161eah49098cd19h9c000038g4dcb6007d8a68?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='XLII'\n       title='XLII'\n       width='27'\n       height='18'
+        />\n   <plaintext>XLII</plaintext>\n  </subpod>\n  <states count='1'>\n   <state
+        name='Other historical numerals'\n       input='RomanNumerals__Other historical
+        numerals' />\n  </states>\n </pod>\n <pod title='Binary form'\n     scanner='Integer'\n
+        \    id='BaseConversions'\n     position='500'\n     error='false'\n     numsubpods='1'>\n
+        \ <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26171eah49098cd19h9c000050i1i5ah69b3ec06?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='101010_2'\n       title='101010_2'\n       width='55'\n       height='18'
+        />\n   <plaintext>101010_2</plaintext>\n  </subpod>\n </pod>\n <pod title='Prime
+        factorization'\n     scanner='Integer'\n     id='PrimeFactorization'\n     position='600'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26181eah49098cd19h9c00005940ddeec999gbc5?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='2\xD73\xD77'\n       title='2\xD73\xD77'\n       width='52'\n
+        \      height='18' />\n   <plaintext>2\xD73\xD77</plaintext>\n  </subpod>\n
+        </pod>\n <pod title='Residues modulo small integers'\n     scanner='Integer'\n
+        \    id='ResiduesModuloSmallIntegers'\n     position='700'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26191eah49098cd19h9c000025eb26he2h2g9g11?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2 |
+        0 | 0 | 2 | 6'\n       title='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m
+        | 0 | 0 | 2 | 2 | 0 | 0 | 2 | 6'\n       width='322'\n       height='68' />\n
+        \  <plaintext>m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2
+        | 0 | 0 | 2 | 6</plaintext>\n  </subpod>\n </pod>\n <pod title='Properties'\n
+        \    scanner='Integer'\n     id='Property'\n     position='800'\n     error='false'\n
+        \    numsubpods='6'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26201eah49098cd19h9c0000391cb30ad50h4fig?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42 is an even number.'\n       title='42 is an even number.'\n
+        \      width='145'\n       height='18' />\n   <plaintext>42 is an even number.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26211eah49098cd19h9c0000473eee2ii2g56bgb?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42 has the unique representation 42 = 1^2+4^2+5^2 as a sum of
+        3 squares.'\n       title='42 has the unique representation 42 = 1^2+4^2+5^2
+        as a sum of 3 squares.'\n       width='484'\n       height='18' />\n   <plaintext>42
+        has the unique representation 42 = 1^2+4^2+5^2 as a sum of 3 squares.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26221eah49098cd19h9c00005bfh9i6dha22hab9?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42 is the 5th Catalan number (Catalan(5)).'\n       title='42
+        is the 5th Catalan number (Catalan(5)).'\n       width='234'\n       height='18'
+        />\n   <plaintext>42 is the 5th Catalan number (Catalan(5)).</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26231eah49098cd19h9c00001bgdf651fg6ee0d0?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42 is the number of integer partitions of 10 (p(10)).'\n       title='42
+        is the number of integer partitions of 10 (p(10)).'\n       width='337'\n
+        \      height='18' />\n   <plaintext>42 is the number of integer partitions
+        of 10 (p(10)).</plaintext>\n  </subpod>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26241eah49098cd19h9c000054dfg50di961e46g?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='42 = 222_4 repeats a single digit in base 4.'\n       title='42
+        = 222_4 repeats a single digit in base 4.'\n       width='273'\n       height='20'
+        />\n   <plaintext>42 = 222_4 repeats a single digit in base 4.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26251eah49098cd19h9c00000h3i6hbb0f9hg77d?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='e^(pi sqrt(42))~~695295413.0301 is a near-integer, and the ring
+        of integers of the associated field Q(sqrt(-168)) has class number 4.'\n       title='e^(pi
+        sqrt(42))~~695295413.0301 is a near-integer, and the ring of integers of the
+        associated field Q(sqrt(-168)) has class number 4.'\n       width='550'\n
+        \      height='74' />\n   <plaintext>e^(pi sqrt(42))~~695295413.0301 is a
+        near-integer, and the ring of integers of the associated field Q(sqrt(-168))
+        has class number 4.</plaintext>\n  </subpod>\n </pod>\n <pod title='Quadratic
+        residues modulo 42'\n     scanner='Integer'\n     id='QuadraticResiduesModuloInteger'\n
+        \    position='900'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26261eah49098cd19h9c00003ai718fgid0cccic?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt='0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       title='0,
+        1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       width='550'\n
+        \      height='18' />\n   <plaintext>0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25,
+        28, 30, 36, 37, 39</plaintext>\n  </subpod>\n </pod>\n <pod title='Character
+        code 42'\n     scanner='Character'\n     id='CharacterCode'\n     position='1000'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4b.wolframalpha.com/Calculate/MSP/MSP26271eah49098cd19h9c00005gb217ia01ea5358?MSPStoreType=image/gif&amp;s=48'\n
+        \      alt=' | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)'\n       title=' | asterisk\nASCII: 42
+        \  (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode: U+002A  (decimal:
+        42)\n(basic Latin)'\n       width='425'\n       height='101' />\n   <plaintext>
+        | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)</plaintext>\n  </subpod>\n </pod>\n</queryresult>"}
+    headers:
+      connection: [close]
+      content-length: ['8123']
+      content-type: [text/xml;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:15:54 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [WR_SID=217.30.184.161.1451380554614355; path=/; max-age=315360000;
+          domain=.wolframalpha.com]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.wolframalpha.com/v2/query?input=42&appid=3EYA3R-WVR6GJQWLH
+  response:
+    body: {string: "<?xml version='1.0' encoding='UTF-8'?>\n<queryresult success='true'\n
+        \   error='false'\n    numpods='10'\n    datatypes='Number'\n    timedout='Numeric'\n
+        \   timedoutpods=''\n    timing='1.802'\n    parsetiming='0.087'\n    parsetimedout='false'\n
+        \   recalculate='http://www3.wolframalpha.com/api/v2/recalc.jsp?id=MSPa921i69dc7fc9a1c71i00000egegaa5g4e2g94f&amp;s=18'\n
+        \   id='MSPa931i69dc7fc9a1c71i000020c57h79119bi994'\n    host='http://www3.wolframalpha.com'\n
+        \   server='18'\n    related='http://www3.wolframalpha.com/api/v2/relatedQueries.jsp?id=MSPa941i69dc7fc9a1c71i00005a60278f702h12b6&amp;s=18'\n
+        \   version='2.6'>\n <pod title='Input'\n     scanner='Identity'\n     id='Input'\n
+        \    position='100'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP951i69dc7fc9a1c71i00001513i0cb574hgc72?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42'\n       title='42'\n       width='16'\n       height='18'
+        />\n   <plaintext>42</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        name'\n     scanner='Integer'\n     id='NumberName'\n     position='200'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP961i69dc7fc9a1c71i00003ee8ggb54h94e00a?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='forty-two'\n       title='forty-two'\n       width='62'\n       height='18'
+        />\n   <plaintext>forty-two</plaintext>\n  </subpod>\n </pod>\n <pod title='Number
+        line'\n     scanner='NumberLine'\n     id='NumberLine'\n     position='300'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP971i69dc7fc9a1c71i00003059ei1dc0ad5g1a?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt=''\n       title=''\n       width='300'\n       height='56' />\n
+        \  <plaintext></plaintext>\n  </subpod>\n </pod>\n <pod title='Roman numerals'\n
+        \    scanner='Integer'\n     id='RomanNumerals'\n     position='400'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP981i69dc7fc9a1c71i0000378c90gi6586012b?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='XLII'\n       title='XLII'\n       width='27'\n       height='18'
+        />\n   <plaintext>XLII</plaintext>\n  </subpod>\n  <states count='1'>\n   <state
+        name='Other historical numerals'\n       input='RomanNumerals__Other historical
+        numerals' />\n  </states>\n </pod>\n <pod title='Binary form'\n     scanner='Integer'\n
+        \    id='BaseConversions'\n     position='500'\n     error='false'\n     numsubpods='1'>\n
+        \ <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP991i69dc7fc9a1c71i000017di9015ae724c8i?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='101010_2'\n       title='101010_2'\n       width='55'\n       height='18'
+        />\n   <plaintext>101010_2</plaintext>\n  </subpod>\n </pod>\n <pod title='Prime
+        factorization'\n     scanner='Integer'\n     id='PrimeFactorization'\n     position='600'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1001i69dc7fc9a1c71i00002b7199fi9b2d7g1h?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='2\xD73\xD77'\n       title='2\xD73\xD77'\n       width='52'\n
+        \      height='18' />\n   <plaintext>2\xD73\xD77</plaintext>\n  </subpod>\n
+        </pod>\n <pod title='Residues modulo small integers'\n     scanner='Integer'\n
+        \    id='ResiduesModuloSmallIntegers'\n     position='700'\n     error='false'\n
+        \    numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1011i69dc7fc9a1c71i000031h7afe9c35e09be?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2 |
+        0 | 0 | 2 | 6'\n       title='m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m
+        | 0 | 0 | 2 | 2 | 0 | 0 | 2 | 6'\n       width='322'\n       height='68' />\n
+        \  <plaintext>m | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9\n42 mod m | 0 | 0 | 2 | 2
+        | 0 | 0 | 2 | 6</plaintext>\n  </subpod>\n </pod>\n <pod title='Properties'\n
+        \    scanner='Integer'\n     id='Property'\n     position='800'\n     error='false'\n
+        \    numsubpods='6'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1021i69dc7fc9a1c71i00006119a722754c0681?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42 is an even number.'\n       title='42 is an even number.'\n
+        \      width='145'\n       height='18' />\n   <plaintext>42 is an even number.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1031i69dc7fc9a1c71i00003751b95cdc15i555?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42 has the unique representation 42 = 1^2+4^2+5^2 as a sum of
+        3 squares.'\n       title='42 has the unique representation 42 = 1^2+4^2+5^2
+        as a sum of 3 squares.'\n       width='484'\n       height='18' />\n   <plaintext>42
+        has the unique representation 42 = 1^2+4^2+5^2 as a sum of 3 squares.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1041i69dc7fc9a1c71i00003gf8e1i011hh8cg7?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42 is the 5th Catalan number (Catalan(5)).'\n       title='42
+        is the 5th Catalan number (Catalan(5)).'\n       width='234'\n       height='18'
+        />\n   <plaintext>42 is the 5th Catalan number (Catalan(5)).</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1051i69dc7fc9a1c71i00002e29agbbde818621?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42 is the number of integer partitions of 10 (p(10)).'\n       title='42
+        is the number of integer partitions of 10 (p(10)).'\n       width='337'\n
+        \      height='18' />\n   <plaintext>42 is the number of integer partitions
+        of 10 (p(10)).</plaintext>\n  </subpod>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1061i69dc7fc9a1c71i00004bh9c387b3df5gif?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='42 = 222_4 repeats a single digit in base 4.'\n       title='42
+        = 222_4 repeats a single digit in base 4.'\n       width='273'\n       height='20'
+        />\n   <plaintext>42 = 222_4 repeats a single digit in base 4.</plaintext>\n
+        \ </subpod>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1071i69dc7fc9a1c71i000057e5d912ebef4eb1?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='e^(pi sqrt(42))~~695295413.0301 is a near-integer, and the ring
+        of integers of the associated field Q(sqrt(-168)) has class number 4.'\n       title='e^(pi
+        sqrt(42))~~695295413.0301 is a near-integer, and the ring of integers of the
+        associated field Q(sqrt(-168)) has class number 4.'\n       width='550'\n
+        \      height='74' />\n   <plaintext>e^(pi sqrt(42))~~695295413.0301 is a
+        near-integer, and the ring of integers of the associated field Q(sqrt(-168))
+        has class number 4.</plaintext>\n  </subpod>\n </pod>\n <pod title='Quadratic
+        residues modulo 42'\n     scanner='Integer'\n     id='QuadraticResiduesModuloInteger'\n
+        \    position='900'\n     error='false'\n     numsubpods='1'>\n  <subpod title=''>\n
+        \  <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1081i69dc7fc9a1c71i000064a184ic10761c8c?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt='0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       title='0,
+        1, 4, 7, 9, 15, 16, 18, 21, 22, 25, 28, 30, 36, 37, 39'\n       width='550'\n
+        \      height='18' />\n   <plaintext>0, 1, 4, 7, 9, 15, 16, 18, 21, 22, 25,
+        28, 30, 36, 37, 39</plaintext>\n  </subpod>\n </pod>\n <pod title='Character
+        code 42'\n     scanner='Character'\n     id='CharacterCode'\n     position='1000'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www3.wolframalpha.com/Calculate/MSP/MSP1091i69dc7fc9a1c71i00001424h70haa9af38a?MSPStoreType=image/gif&amp;s=18'\n
+        \      alt=' | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)'\n       title=' | asterisk\nASCII: 42
+        \  (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode: U+002A  (decimal:
+        42)\n(basic Latin)'\n       width='425'\n       height='101' />\n   <plaintext>
+        | asterisk\nASCII: 42   (hex: 2a  |  octal: 052  |  binary: 00101010)\nUnicode:
+        U+002A  (decimal: 42)\n(basic Latin)</plaintext>\n  </subpod>\n </pod>\n</queryresult>"}
+    headers:
+      connection: [close]
+      content-length: ['8080']
+      content-type: [text/xml;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:17:45 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [WR_SID=217.30.184.161.1451380665105600; path=/; max-age=315360000;
+          domain=.wolframalpha.com]
+    status: {code: 200, message: OK}
 version: 1

@@ -57,4 +57,62 @@ interactions:
       x-ebay-api-server-name: [___dWtgMWQ3MmYrZDowNSgyNSg+Nys3NjMrMDM5PTY/Mw==]
       x-ebay-request-id: ['151ecce8-b8c0-a7ea-4411-a661a3de069d!shopping!10.126.164.65!esbshopping[]']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=390629338875&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2015-12-29T09:20:38.081Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"390629338875","EndTime":"2016-01-06T00:14:04.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/New-Nano-V3-Sensor-Shield-I-O-Extension-Board-Expansion-Module-Uno-IO-f-Arduino-/390629338875","ListingType":"FixedPriceItem","Location":"Hong
+        Kong","GalleryURL":"http://thumbs4.ebaystatic.com/pict/3906293388758080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/NDUyWDUwMA==/z/Yz8AAOxyzHxRRSzB/$T2eC16FHJHIE9nysd9oSBRRSzBK7Mg~~60_1.JPG?set_id=8800005007"],"PrimaryCategoryID":"162","PrimaryCategoryName":"Computers/Tablets
+        & Networking:Other Computing & Networking","BidCount":0,"ConvertedCurrentPrice":{"Value":1.34,"CurrencyID":"EUR"},"ListingStatus":"Active","TimeLeft":"P7DT14H53M26S","Title":"New
+        Nano V3 Sensor Shield I/O Extension Board Expansion Module Uno IO f Arduino","ShippingCostSummary":{"ShippingServiceCost":{"Value":4.07,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":3.0,"CurrencyID":"GBP"}},"Country":"HK","AutoPay":true,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:20:37 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [151ed0a0-e730-a566-a430-0230f3adf2c1]
+      last-modified: ['Tue, 29 Dec 2015 09:20:38 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___dm97PWQ3MGYrNWdgMCgyNSgzMSs3NzsrPjA5PTY/Mw==]
+      x-ebay-request-id: ['151ed0a0-e730-a566-a430-0230f3adf2c1!shopping!10.86.106.67!esbshopping[]']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=390629338875&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2015-12-29T09:22:06.395Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"390629338875","EndTime":"2016-01-06T00:14:04.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/New-Nano-V3-Sensor-Shield-I-O-Extension-Board-Expansion-Module-Uno-IO-f-Arduino-/390629338875","ListingType":"FixedPriceItem","Location":"Hong
+        Kong","GalleryURL":"http://thumbs4.ebaystatic.com/pict/3906293388758080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/NDUyWDUwMA==/z/Yz8AAOxyzHxRRSzB/$T2eC16FHJHIE9nysd9oSBRRSzBK7Mg~~60_1.JPG?set_id=8800005007"],"PrimaryCategoryID":"162","PrimaryCategoryName":"Computers/Tablets
+        & Networking:Other Computing & Networking","BidCount":0,"ConvertedCurrentPrice":{"Value":1.34,"CurrencyID":"EUR"},"ListingStatus":"Active","TimeLeft":"P7DT14H51M58S","Title":"New
+        Nano V3 Sensor Shield I/O Extension Board Expansion Module Uno IO f Arduino","ShippingCostSummary":{"ShippingServiceCost":{"Value":4.07,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":3.0,"CurrencyID":"GBP"}},"Country":"HK","AutoPay":true,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:22:05 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [151ed0b6-7890-a2aa-b654-7ef4d1becf8b]
+      last-modified: ['Tue, 29 Dec 2015 09:22:06 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___dWtgMWQ3MWYrYTs8ZygyNSg2MzMoPjArMTE5PTY/Mw==]
+      x-ebay-request-id: ['151ed0b6-7890-a2aa-b654-7ef4d1becf8b!shopping!10.42.171.101!esbshopping[]']
+    status: {code: 200, message: OK}
 version: 1

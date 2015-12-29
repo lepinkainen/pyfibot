@@ -55,4 +55,60 @@ interactions:
       x-ebay-api-server-name: [___dWtgMWQ3MmYrY2YwPigyNSg+Nys0NjMrNDQ3Pz43OzU=]
       x-ebay-request-id: ['151ecce8-da70-a7ea-4345-2c659856e12f!shopping!10.126.164.52!esbshopping[]']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=121136837564&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2015-12-29T09:20:38.537Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"121136837564","EndTime":"2014-01-13T05:27:56.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/FiiO-E10-Portable-USB-DAC-Headphone-Amplifier-/121136837564","ListingType":"FixedPriceItem","Location":"hongkong","GalleryURL":"http://thumbs1.ebaystatic.com/pict/1211368375648080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/DqEAAOxyFiRR0opV/$(KGrHqZHJDoFHHiLcWjoBR0opU0l!g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/5LIAAOxyn~pR0opU/$(KGrHqZHJ!4FHJO)!fo)BR0opT731g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzcwWDEwMDA=/z/DpsAAOxyFiRR0opT/$(KGrHqVHJCEFHBBPr!EEBR0opTN2QQ~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/xhAAAMXQhpdR0opX/$T2eC16dHJIgFHR-nTWLKBR0op(Fgt!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODMzWDEwMDA=/z/jfYAAMXQQtNR0opV/$(KGrHqJHJC!FG9ERBuu7BR0opUkNh!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzQ3WDEwMDA=/z/6GUAAMXQb29R0opY/$(KGrHqVHJEwFG44+styQBR0op(uM!!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NjY3WDEwMDA=/z/9M8AAOxyOeBR0opU/$T2eC16NHJGQFFhy!oEN!BR0opUCn(w~~60_1.JPG?set_id=880000500F"],"PrimaryCategoryID":"163896","PrimaryCategoryName":"Musical
+        Instruments & Gear:Pro Audio Equipment:Amplifiers","BidCount":0,"ConvertedCurrentPrice":{"Value":69.26,"CurrencyID":"EUR"},"ListingStatus":"Completed","TimeLeft":"PT0S","Title":"FiiO
+        E10 Portable USB DAC Headphone Amplifier","ShippingCostSummary":{"ShippingServiceCost":{"Value":0.0,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":0.0,"CurrencyID":"USD"}},"Country":"HK","AutoPay":false,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:20:37 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [151ed0a1-0680-a357-84a3-5513d49c7203]
+      last-modified: ['Tue, 29 Dec 2015 09:20:38 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___dWtgMWQ3MGYrZjNhYigyNSgyMCs3NDsrNzE7Pz43OzU=]
+      x-ebay-request-id: ['151ed0a1-0680-a357-84a3-5513d49c7203!shopping!10.53.120.74!esbshopping[]']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=121136837564&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2015-12-29T09:22:06.929Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"121136837564","EndTime":"2014-01-13T05:27:56.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/FiiO-E10-Portable-USB-DAC-Headphone-Amplifier-/121136837564","ListingType":"FixedPriceItem","Location":"hongkong","GalleryURL":"http://thumbs1.ebaystatic.com/pict/1211368375648080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/DqEAAOxyFiRR0opV/$(KGrHqZHJDoFHHiLcWjoBR0opU0l!g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/5LIAAOxyn~pR0opU/$(KGrHqZHJ!4FHJO)!fo)BR0opT731g~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzcwWDEwMDA=/z/DpsAAOxyFiRR0opT/$(KGrHqVHJCEFHBBPr!EEBR0opTN2QQ~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODAwWDgwMA==/z/xhAAAMXQhpdR0opX/$T2eC16dHJIgFHR-nTWLKBR0op(Fgt!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/ODMzWDEwMDA=/z/jfYAAMXQQtNR0opV/$(KGrHqJHJC!FG9ERBuu7BR0opUkNh!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NzQ3WDEwMDA=/z/6GUAAMXQb29R0opY/$(KGrHqVHJEwFG44+styQBR0op(uM!!~~60_1.JPG?set_id=880000500F","http://i.ebayimg.com/00/s/NjY3WDEwMDA=/z/9M8AAOxyOeBR0opU/$T2eC16NHJGQFFhy!oEN!BR0opUCn(w~~60_1.JPG?set_id=880000500F"],"PrimaryCategoryID":"163896","PrimaryCategoryName":"Musical
+        Instruments & Gear:Pro Audio Equipment:Amplifiers","BidCount":0,"ConvertedCurrentPrice":{"Value":69.26,"CurrencyID":"EUR"},"ListingStatus":"Completed","TimeLeft":"PT0S","Title":"FiiO
+        E10 Portable USB DAC Headphone Amplifier","ShippingCostSummary":{"ShippingServiceCost":{"Value":0.0,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":0.0,"CurrencyID":"USD"}},"Country":"HK","AutoPay":false,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:22:06 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [151ed0b6-9900-a56a-a251-1be1aa929a6f]
+      last-modified: ['Tue, 29 Dec 2015 09:22:06 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___dm97PWQ3MGYrPjI3NSgyNSgzMSs0NDErNzY6Pz43OzU=]
+      x-ebay-request-id: ['151ed0b6-9900-a56a-a251-1be1aa929a6f!shopping!10.86.170.37!esbshopping[]']
+    status: {code: 200, message: OK}
 version: 1

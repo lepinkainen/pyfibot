@@ -63,4 +63,68 @@ interactions:
       date: ['Tue, 29 Dec 2015 08:15:34 GMT']
       x-content-type-options: [nosniff]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcFC+Bg+pFGP7aGV9tBbVSFPMJAuEJqYYelo/nsDA+reekpi
+        v2e/5/jOJGFvWPHjzgia9cLGhVo1MJdpbPDdnkJVYI8OiVCbNQCjJOjkH2Q/XabmATUr7hY/TgQk
+        LblIc5dNBnUpK1ZkMY/icA/QMiIr1uLS2HpY2YIgBI5UaiCbWpGjVrXssJQ9NCu6JRpN4fvzPL80
+        Gm5AoF+E6v3n1efXDDMRcn5OovR6DuNrmlV1nCeJiDDJsk/mwsPsVF1khQNJoYaTvrx+PtUXbttX
+        0owdLOUA/dYMxBu10vyCZbUth7ddgRVgyCbVDXXdqXlTsJoy/tOi/5H6cJk0JQxm3lwWpCd02U3i
+        XAo1DcSKhPPDO1Y7chvYOQ/OSRzZ5DO2423ACKWtxsDqAkMlCJI3SUtZbaPjEQ/DJIiC1H6Sxu0v
+        PqaiPE9jl/2e0GypvVeSBNn/jR4s4+8U/7kpnkHQovVa6juvUmLq7Yi9Wmlv3xPv3+aQpG4d8evG
+        dJ5M58v3b1+dg+lYprMznYP5sHvWgin7zX0NncHVhiIoe3i3kwmC462xBznIoWFFmPLHX9I/DHDi
+        AgAA
+    headers:
+      access-control-allow-credentials: ['false']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      cache-control: [private]
+      content-encoding: [gzip]
+      content-length: ['459']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:20:34 GMT']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPXxIox7bQyvtobeqQp5gIF1IaGKGpaP57w0MqHvrKYn9
+        nv2e4zsThINh5Y87I2jXCxsX6pRkLtPY4rs9uarBHj0SoTZrAEZB0Is/yH66TM0SNSvvFj9OBCQs
+        ucwKl00GdSVqVuZJGCfRHqBlRFauxYWx9bC2BYFzHKnSQDa1IketGtFjJQZoV3RHNJrS9+d5fmk1
+        3IBAv3A1+M+rH15zzHkUhuc0zq7nKLlmed0kRZryGNM8/2QuYZSf6ouoUZLgSp705fXzqbmEtn0t
+        zNjDUkkYtmbA36gT5hcsq20h33YFVoAhm1Q31E2v5k3Basr4T4v+R+rDZcJUIM28uSxJT+iym8C5
+        4mqSxMo0DA/vWO/IbWDnIjinSWyTz9iOtwHDlbYaA6sLDFXASdwELVW9jS6MwyhKgzjI7Cdp3P7i
+        Yyouiixx2e8JzZbae6VpkP/f6MEy/k7xn5viGQTNO6+jofdqxafBjthrlPb2PfH+bQ4J6tcRv25M
+        58l0vnz/9tU5mI5lOjvTOZgPu2cdmGrY3DfQG1xtKIJqgHc7mSA43hoHEFLIlpVRFjz+ApMOF2ni
+        AgAA
+    headers:
+      access-control-allow-credentials: ['false']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      cache-control: [private]
+      content-encoding: [gzip]
+      content-length: ['459']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:22:03 GMT']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
 version: 1

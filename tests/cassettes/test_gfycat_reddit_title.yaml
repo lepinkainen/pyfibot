@@ -75,4 +75,80 @@ interactions:
       x-powered-by: [PHP/5.5.30]
       x-varnish: ['1505779908']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/ZanyFragrantHoneyeater
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4xSy27bMBD8FWHPhB09LfHYtEkKFEHRpJfUhbGWlhJhkRRIqo4c5N8LSobbBj3k
+        Ri5nZ2eW8wKtmD57UsBf5mMDHE6oJ2Gxtah9ZzRNhJ4ssAC4R0XA4Qn1dHOG3L2FjGpPFjgkSVIV
+        cRlXwGB0ZM+9J6wPUwsMjrLxHXCIk/IKGHQk284Dh00SrsKiom/oQ0sSKPSobkLNAYcsToCBGrLv
+        tgcOnfeD49v1dt1K1H7ViqlGv6qN2q7/L3WlhixIoL16S3GSwzC9hyI0B8tSvKV4t4pWioXhQZ5m
+        o0mcx2USpKkhOxfTpMqqqjjLPReLOC6KFBjUNlB9XBYVZ0mZ5kVRhvX8knR0wPNqw8BL3wfANfZS
+        GKslRg+jduSBAT17i19IKXTA9dj3DFSTA4cyv0ooztNmc1WXmDabfCMyFHldiSpN0/BLHlsH/Ae0
+        ZrAmfBL60VIrhQuPUlGPgyP4yUA7cQQOoclhiEccYhEWt4x0ZrT17AEYNJNGZS5P495S08gQjvt5
+        wO0yYKnOoU1j09Tyr9ojPQf8nnD0Uoz9rr5Y37nZ+u6PPga9PIRkLQMb6f65D+O+l66j5gIgV1s5
+        eGk0cHjEA+noKH0X3Zqv1kR3ZE2URh96rA/Rp0bOOAa1GSYbQn7do1QotV/4Xl9/AwAA//8DAFXv
+        QsqIAwAA
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['0']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [25c46e77a92a377a-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:20:52 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d51aaa3e00c278e362d32158b8f6f94c81451380852; expires=Wed,
+          28-Dec-16 09:20:52 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B86F5C623795D8FF53189ED1BE5A8F9DDFD02E47E8998BDF0A747C8B07012A76889CC7D740E8AA11996AFB54889FC400FC;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: ['1506098889']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/ZanyFragrantHoneyeater
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4xSy27bMBD8FWHPhB09LfHYtEkKFEHRpJfUhbGWlhJhkRRIqo4c5N8LSobbBj3k
+        Ri5nZ2eW8wKtmD57UsBf5mMDHE6oJ2Gxtah9ZzRNhJ4ssAC4R0XA4Qn1dHOG3L2FjGpPFjgkSVIV
+        cRlXwGB0ZM+9J6wPUwsMjrLxHXCIk/IKGHQk284Dh00SrsKiom/oQ0sSKPSobkLNAYcsToCBGrLv
+        tgcOnfeD49v1dt1K1H7ViqlGv6qN2q7/L3WlhixIoL16S3GSwzC9hyI0B8tSvKV4t4pWioXhQZ5m
+        o0mcx2USpKkhOxfTpMqqqjjLPReLOC6KFBjUNlB9XBYVZ0mZ5kVRhvX8knR0wPNqw8BL3wfANfZS
+        GKslRg+jduSBAT17i19IKXTA9dj3DFSTA4cyv0ooztNmc1WXmDabfCMyFHldiSpN0/BLHlsH/Ae0
+        ZrAmfBL60VIrhQuPUlGPgyP4yUA7cQQOoclhiEccYhEWt4x0ZrT17AEYNJNGZS5P495S08gQjvt5
+        wO0yYKnOoU1j09Tyr9ojPQf8nnD0Uoz9rr5Y37nZ+u6PPga9PIRkLQMb6f65D+O+l66j5gIgV1s5
+        eGk0cHjEA+noKH0X3Zqv1kR3ZE2URh96rA/Rp0bOOAa1GSYbQn7do1QotV/4Xl9/AwAA//8DAFXv
+        QsqIAwAA
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['0']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [25c470974b3705bb-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:22:19 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dbb072d7a6048d9dedf17e438e0e40b421451380939; expires=Wed,
+          28-Dec-16 09:22:19 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B86F5C623795D8FF53189ED1BE5A8F9DDFCC48A241AAAFCAAE2B7D4A1713A706513C7A3F0F7641DEEC5E41FA6B256616B1;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: ['1292687294']
+    status: {code: 200, message: OK}
 version: 1

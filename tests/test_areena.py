@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+
 import bot_mock
 from pyfibot.modules import module_urltitle
-from utils import check_re
 
+from utils import check_re
 import pytest
+
 from vcr import VCR
 my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
              cassette_library_dir="tests/cassettes/",
-             record_mode="once")
+             record_mode=pytest.config.getoption("--vcrmode"))
 
 
 @pytest.fixture

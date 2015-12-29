@@ -69,4 +69,74 @@ interactions:
       server: [lighttpd]
       x-discogs-media-type: [discogs.v2]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/users/rodneyfool
+  response:
+    body:
+      string: !!binary |
+        H4sIAHRQglYC/6WU22obMRCGX0XsVQLekw+1vZCLEhPiXIU2vWgds8ja8VqxVhKS1k5a+u7VyMeY
+        Qgm9WPCOdr6Z+f+Rf0XaqCUXEBUkmhLaEEoq2IBQGgxZKkMm3DJV24RMyVaZNWmUdeKNKEncCg6n
+        ZEIdXVALnRCdtUbcrJzTtkjT7XabVHsIU016xNv5nk0+P05nqc+ZdwiV1d8RNXerdpEEwo6W7qkl
+        ExykO6eR2xDaQZNn8yzxmfGmPrbFE//WmgB8un8AN1gmL7qeRx0Sbal0gltX+p5QmMMoVPN3o7QW
+        jE2NqiS8LZUSKSZaJBgq1z6z3x8nmX+VbVNqkBWXtY/mg56P8Sr8HI7ybLT/xOtdWhrMwKyVaqDU
+        tA7mIFUoRh1XEnuaAGjyVVMGeMKUEMDwrFwqUfm2Ptz7CZHuEQjGESVtQgunQS9LchDV/1UMBMQa
+        EOAXyZZMSWf4onUQhEJBDNTeFTAhEnWzvBtnozgfPHXzIu8VvU9xNiyyLGC8ULIu6QYF7yVBcXTh
+        NCWqn3XPKxq6rzU+eIZLYBHgPzuo8CXYjTWQd1gVpI3HPsjlxi+jMm8fNuCYiezWcI88bt7lJUJb
+        zhYPM+jG30FzWZVV8t3KTtnPLqfd17v198f4QS/u44ZlP+7W21t1kw6y7NU/qf9D8CrbwnoDdMkZ
+        u7ou/G421F29aKivDzcv3tW06TdvQljkOO/3xqP+IB8PEy1rvFHBDbCqNQwuu/vXhYp+/wG2299i
+        oQQAAA==
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [Keep-Alive]
+      content-encoding: [gzip]
+      content-length: ['574']
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:20:52 GMT']
+      reproxy-status: ['yes']
+      server: [lighttpd]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/users/rodneyfool
+  response:
+    body:
+      string: !!binary |
+        H4sIAMtQglYC/6WU22obMRCGX0XsVQLekw+1vZCLEhPiXIU2vWgds8ja8VqxVhKS1k5a+u7VyMeY
+        Qgm9WPCOdr6Z+f+Rf0XaqCUXEBUkmhLaEEoq2IBQGgxZKkMm3DJV24RMyVaZNWmUdeKNKEncCg6n
+        ZEIdXVALnRCdtUbcrJzTtkjT7XabVHsIU016xNv5nk0+P05nqc+ZdwiV1d8RNXerdpEEwo6W7qkl
+        ExykO6eR2xDaQZNn8yzxmfGmPrbFE//WmgB8un8AN1gmL7qeRx0Sbal0gltX+p5QmMMoVPN3o7QW
+        jE2NqiS8LZUSKSZaJBgq1z6z3x8nmX+VbVNqkBWXtY/mg56P8Sr8HI7ybLT/xOtdWhrMwKyVaqDU
+        tA7mIFUoRh1XEnuaAGjyVVMGeMKUEMDwrFwqUfm2Ptz7CZHuEQjGESVtQgunQS9LchDV/1UMBMQa
+        EOAXyZZMSWf4onUQhEJBDNTeFTAhEnWzvBtnozgfPHXzIu8VvU9xNiyyLGC8ULIu6QYF7yVBcXTh
+        NCWqn3XPKxq6rzU+eIZLYBHgPzuo8CXYjTWQd1gVpI3HPsjlxi+jMm8fNuCYiezWcI88bt7lJUJb
+        zhYPM+jG30FzWZVV8t3KTtnPLqfd17v198f4QS/u44ZlP+7W21t1kw6y7NU/qf9D8CrbwnoDdMkZ
+        u7ou/G421F29aKivDzcv3tW06TdvQljkOO/3xqP+IB8PEy1rvFHBDbCqNQwuu/vXhYp+/wG2299i
+        oQQAAA==
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [Keep-Alive]
+      content-encoding: [gzip]
+      content-length: ['574']
+      content-type: [application/json]
+      date: ['Tue, 29 Dec 2015 09:22:19 GMT']
+      reproxy-status: ['yes']
+      server: [lighttpd]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
 version: 1

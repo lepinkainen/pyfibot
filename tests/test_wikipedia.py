@@ -7,7 +7,7 @@ import pytest
 from vcr import VCR
 my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
              cassette_library_dir="tests/cassettes/",
-             record_mode="once")
+             record_mode=pytest.config.getoption("--vcrmode"))
 
 
 @pytest.fixture

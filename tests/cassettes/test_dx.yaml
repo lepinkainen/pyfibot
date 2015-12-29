@@ -83,4 +83,88 @@ interactions:
       x-aspnetmvc-version: ['4.0']
       x-powered-by: [ASP.NET]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: [DXGlobalization=lang=en&locale=en-US&currency=EUR]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.dx.com/bi/GetSKUInfo?sku=151659
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAO2STW7bMBCFryIM0K4s0bLsAFFWboOgAVq0CFJkkQTGmBrLbChR4I+VIMgm5+mp
+        epIOLTteBei68IogOe/jm8d5BhekJOeg9DbQCDprqiA972+fwT0EKPNZfjI7HcGasPqqWoISbpQl
+        zaLkkw7kjfHrZB4qZZJvwSmZXJEktSGbzCvsPK8pF6J8gBG4tbH+C5P0v5GyLGOVpd4qTz+tZsna
+        +64Uou/7rHrMpGlEJ/odJl3uMSlGTNpETGp3hlIcDHEZ20mHzpivGqx3dCFUUzNYVu3AHvLYVjjB
+        gSwG1SJfuAa1zn51NRO0cv6HVTL29Of19+QkmxQQ03w7ymdZEd/CTX2FXrU1lNPY2UZR/9mE1kM5
+        KdiKOycdvT5dI5esUDv+FYmeamOfGHUI6iM23Vlyac/ncKh4LyMpDtEoW2FajKewf3/futRhuRcM
+        N054evTikFTbkt06A4/1otl0fFgpJ2MHl+3K8MVdGI8LudwuNM0/DHuxO0i+X1xEv5rQYivpWnWs
+        gZfRcdyO43Yct+O4/Zfjdv/yF1q7voRqBwAA
+    headers:
+      cache-control: [private]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['426']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:20:39 GMT']
+      server: [tomcat7.0.52]
+      set-cookie: ['ASP.NET_SessionId=ae5xdpmqhaxlpr5akl1nuamq; domain=.dx.com; expires=Wed,
+          13-Jan-2016 09:20:39 GMT; path=/; HttpOnly', 'ASP.NET_SessionId=ae5xdpmqhaxlpr5akl1nuamq;
+          domain=.dx.com; expires=Wed, 13-Jan-2016 09:20:39 GMT; path=/; HttpOnly',
+        'DXGlobalization_lang=en; domain=.dx.com; expires=Wed, 13-Jan-2016 09:20:39
+          GMT; path=/', 'DXGlobalization_locale=en-US; domain=.dx.com; expires=Wed,
+          13-Jan-2016 09:20:39 GMT; path=/', 'DXGlobalization_currency=EUR; domain=.dx.com;
+          expires=Wed, 13-Jan-2016 09:20:39 GMT; path=/', sessionCookie=93cd2b7e-4053-49b2-82aa-cef2ff66c896;
+          domain=.dx.com; path=/]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-aspnetmvc-version: ['4.0']
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: [DXGlobalization=lang=en&locale=en-US&currency=EUR]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.dx.com/bi/GetSKUInfo?sku=151659
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAO2STW7bMBCFryIM0K4s0bLsAFFWboOgAVq0CFJkkQTGmBrLbChR4I+VIMgm5+mp
+        epIOLTteBei68IogOe/jm8d5BhekJOeg9DbQCDprqiA972+fwT0EKPNZfjI7HcGasPqqWoISbpQl
+        zaLkkw7kjfHrZB4qZZJvwSmZXJEktSGbzCvsPK8pF6J8gBG4tbH+C5P0v5GyLGOVpd4qTz+tZsna
+        +64Uou/7rHrMpGlEJ/odJl3uMSlGTNpETGp3hlIcDHEZ20mHzpivGqx3dCFUUzNYVu3AHvLYVjjB
+        gSwG1SJfuAa1zn51NRO0cv6HVTL29Of19+QkmxQQ03w7ymdZEd/CTX2FXrU1lNPY2UZR/9mE1kM5
+        KdiKOycdvT5dI5esUDv+FYmeamOfGHUI6iM23Vlyac/ncKh4LyMpDtEoW2FajKewf3/futRhuRcM
+        N054evTikFTbkt06A4/1otl0fFgpJ2MHl+3K8MVdGI8LudwuNM0/DHuxO0i+X1xEv5rQYivpWnWs
+        gZfRcdyO43Yct+O4/Zfjdv/yF1q7voRqBwAA
+    headers:
+      cache-control: [private]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['426']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:22:07 GMT']
+      server: [tomcat7.0.52]
+      set-cookie: ['ASP.NET_SessionId=ol0hbftx4iqo0u5ku4hmbeam; domain=.dx.com; expires=Wed,
+          13-Jan-2016 09:22:07 GMT; path=/; HttpOnly', 'ASP.NET_SessionId=ol0hbftx4iqo0u5ku4hmbeam;
+          domain=.dx.com; expires=Wed, 13-Jan-2016 09:22:07 GMT; path=/; HttpOnly',
+        'DXGlobalization_lang=en; domain=.dx.com; expires=Wed, 13-Jan-2016 09:22:07
+          GMT; path=/', 'DXGlobalization_locale=en-US; domain=.dx.com; expires=Wed,
+          13-Jan-2016 09:22:07 GMT; path=/', 'DXGlobalization_currency=EUR; domain=.dx.com;
+          expires=Wed, 13-Jan-2016 09:22:07 GMT; path=/', sessionCookie=7911ab9f-6b5d-4b49-96d4-ce41768672dc;
+          domain=.dx.com; path=/]
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-aspnetmvc-version: ['4.0']
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
 version: 1

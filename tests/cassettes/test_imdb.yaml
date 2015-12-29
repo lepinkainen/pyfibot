@@ -81,4 +81,86 @@ interactions:
       x-aspnet-version: [4.0.30319]
       x-powered-by: [ASP.NET]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.omdbapi.com/?i=tt1772341
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA31TTU8bQQz9K5YPFUhLviBKlRMJXwKxIUpSoL0gZ9fJupn1pDOzG5aq/72aQNXS
+        A8f35vnZHts/cSHBMA7xwXG2OboOMCOzLTDBr0wOh9jrdHuY4IwC5zjE6VUEbJj8Hnd6MLE1/FFV
+        GqSMdt1OF0pRTPCK1UVmpFJSEKsJjPKaNVSOEzizJecNJngujrNgY8qZZAWk1jrGBB+cBH7PwoEP
+        1jWHCUwLMXBjC/XB6l/6RkqYMbn8X/J/beaYdWtoH8CqsmIHtxzd3z3ZQuGsBTMWYxo4oDyX2AUZ
+        2DtDSYGdkDlMYE4l3HItyh/rbshxDvPATj8SYoKj+CUeh/i+jJjKUQFzMTW7kjR6ZhtIs7Gjhl2E
+        ynDbaBZHOTU2xAlALTlbWFPJUIsxJAo70uAhWFgyEBTsLJDm4Dl4sFWIL6vKrMQYKMRD7pjKBJZV
+        2MMfFfsASye69lBQbbMYEAqGXWENA7mM8gjYMRQMRmr2LUzwlnRd0TouxoWujfhY55mtNLgGh/hl
+        Pord78jlsfuJLUXjBsLKOujCnc/ItWCkNhTs4LgHO1EPn+CkA/qqFav7RFPrX/enCGE7bLeFWiXn
+        QkdS5stWZsu2lLRm307b6X1/PHlJnyeLi+e7xaZJL/vj1PTHpGN93FyGb4tsl75cNJPzrHM3Oj1t
+        Pd13n+aPx51O6/t2jQmmHMhncW+HOIj3EHPMKIiuI9P6/Ebd28Cxrd7JIOl3+2/s9TkOMYTuYNA7
+        PuligotmG51KW0u8hBn7rVUfqYWrGH/9BgxYPmq9AwAA
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, max-age=14400']
+      cf-cache-status: [HIT]
+      cf-ray: [25c46e104540378c-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:20:35 GMT']
+      expires: ['Tue, 29 Dec 2015 13:20:35 GMT']
+      last-modified: ['Mon, 28 Dec 2015 11:56:50 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d8862db721a113f1c7c8c8d3bb173f86b1451380835; expires=Wed,
+          28-Dec-16 09:20:35 GMT; path=/; domain=.omdbapi.com; HttpOnly']
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.omdbapi.com/?i=tt1772341
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA31TTU8bQQz9K5YPFUhLviBKlRMJXwKxIUpSoL0gZ9fJupn1pDOzG5aq/72aQNXS
+        A8f35vnZHts/cSHBMA7xwXG2OboOMCOzLTDBr0wOh9jrdHuY4IwC5zjE6VUEbJj8Hnd6MLE1/FFV
+        GqSMdt1OF0pRTPCK1UVmpFJSEKsJjPKaNVSOEzizJecNJngujrNgY8qZZAWk1jrGBB+cBH7PwoEP
+        1jWHCUwLMXBjC/XB6l/6RkqYMbn8X/J/beaYdWtoH8CqsmIHtxzd3z3ZQuGsBTMWYxo4oDyX2AUZ
+        2DtDSYGdkDlMYE4l3HItyh/rbshxDvPATj8SYoKj+CUeh/i+jJjKUQFzMTW7kjR6ZhtIs7Gjhl2E
+        ynDbaBZHOTU2xAlALTlbWFPJUIsxJAo70uAhWFgyEBTsLJDm4Dl4sFWIL6vKrMQYKMRD7pjKBJZV
+        2MMfFfsASye69lBQbbMYEAqGXWENA7mM8gjYMRQMRmr2LUzwlnRd0TouxoWujfhY55mtNLgGh/hl
+        Pord78jlsfuJLUXjBsLKOujCnc/ItWCkNhTs4LgHO1EPn+CkA/qqFav7RFPrX/enCGE7bLeFWiXn
+        QkdS5stWZsu2lLRm307b6X1/PHlJnyeLi+e7xaZJL/vj1PTHpGN93FyGb4tsl75cNJPzrHM3Oj1t
+        Pd13n+aPx51O6/t2jQmmHMhncW+HOIj3EHPMKIiuI9P6/Ebd28Cxrd7JIOl3+2/s9TkOMYTuYNA7
+        PuligotmG51KW0u8hBn7rVUfqYWrGH/9BgxYPmq9AwAA
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, max-age=14400']
+      cf-cache-status: [HIT]
+      cf-ray: [25c4703cf8413750-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:22:04 GMT']
+      expires: ['Tue, 29 Dec 2015 13:22:04 GMT']
+      last-modified: ['Mon, 28 Dec 2015 11:56:50 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dd7b7587017dce286ec607056390182ef1451380924; expires=Wed,
+          28-Dec-16 09:22:04 GMT; path=/; domain=.omdbapi.com; HttpOnly']
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
 version: 1

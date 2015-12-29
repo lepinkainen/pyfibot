@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from pyfibot.util.pyfiurl import grab
-from nose.tools import eq_
 
 needScheme = True
 

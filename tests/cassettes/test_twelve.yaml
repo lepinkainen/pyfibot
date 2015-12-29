@@ -222,4 +222,82 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['1472467227, 2750770738, 1338648166']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Mr._Bean&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 29 Dec 2015 09:17:44 GMT']
+      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Mr._Bean&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3030 frontend (0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['3702784215']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Mr._Bean&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA11UXW/jNhD8Kwu93IuS2MnlPgLDQN0Uba+9Bkh9fWmKgpJoaxGKqy7JOGpw/71D
+        yR/N5SGwSO7s7szsvhSViXVbS9c7G21xUxRl8U+yOhQ3L4UX7Yzjf21T3Pz5UmxUOrz4rOd/r6zx
+        eBll+qbx++tfZdGbrQ05dv7+6sO7q/wrHzEQppOy8LifIZajs/8PLwv7HNXUEYeLfrng5aJaHm4X
+        F9VyccFL4kCGVsqRQ0uBI0qnWq2JtqFqoHvZGU/fxUf2QTwZ39A9163Rhr5PiqByPAvRqLLfnl6y
+        p9haGqsiFWfPT3e1nO1UoiXjHG14E631ZHsO0thAO44tWfyzesxxLxUAb5VDLc6VJEqVxLacHq8Q
+        /oOLB2T0gkpy9p6dxHNat6xjDtmMx6dUVi1VKqapTYgEgJ/Xf5SUhTnF5+M5fTI+GR1o/vHjrKTk
+        Izt6KH4UaTxv20gHYh+K/P5qTnd1lAotIOAavVPtuKfQyq5E3BrgK4uUK44hl3UKR08mvC5qfk23
+        trbdAW7iXPyxkwz5k2HNih2QMuqv4hs5Ynr0csKdWriczd7lFL9x/WgdoMSfLy765YOHZVYm2JwH
+        DsmSw0ooQJS37KHcQI19Qkw/OeWo7q5lSI4Gc84QUzNkOTaQrIXZOuS2+iYgeKsWFoh094zLhr54
+        frIKCw7lSH6wytBoA8FlFybhnnsn3zBWAinUytU3ZSD5Q5ELZ9dkNxraquw8CvDIXkkzZF5wEcQ9
+        5QqfjLKkQL1K5WyXf9hg/X4Q0KoOjRkomvAYJgFgXFjOpJDDGw6a+sgn7wOotiHs5VCjFpyF3prH
+        /dTkR87oNp/37RC4No7a1EnSg1X3JHDmS8FPM5kzM8koLWuCjPuhkXFmeitYPmOC/Cz5FBJw0Waa
+        3kbJg57M+JWn45gmK8Z+45L19dT2sazeKlTqIBCFVLeZ3k+mxmoLtAbSmA67g2tCSYJXY50BVvAR
+        M+66cPLVbRp3RRZyg57OBmuUNPlXum8Ne9Qw8kNffiGTGs5lIWSboEzWrnY4BNL8w/n7tw9pNjOz
+        jp3LGmS/ZTTMy/wwJvvBW6skKDxxdhq8V0y06E8xcyPlhnwahw+ijKz7kTuwYnbYhK9KyTnvJVhq
+        3tzpHhJDPwJWeQdBh9GPl2+vCVDYVjJxL+qaHTd75UYlQs+a8+fFy924k2ujUdAfrvyZbDbgbCe0
+        wcIGKRPRk7lyUA+zqcmkYcxyZdNCwNTPL+n31EFOunND13ONmeqtzx3UWIqd+OGk1/Sj+Iq//wAD
+        T+vH4QYAAA==
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['976']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 29 Dec 2015 09:17:44 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
+      x-cache: ['cp1052 miss+chfp(0), cp3008 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['2741283849, 2752664873, 1342302956']
+    status: {code: 200, message: OK}
 version: 1
