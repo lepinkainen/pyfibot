@@ -3,9 +3,8 @@ sudo: false
 cache: pip
 python:
   - "2.7"
-  - "pypy"
 env:
-  - VCR_RECORD_MODE=once
+  - VCR_RECORD_MODE=none
   - VCR_RECORD_MODE=all
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
