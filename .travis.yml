@@ -8,6 +8,8 @@ env:
   - VCR_RECORD_MODE=all   # don't use recorded tests, do it LIVE
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+before_install:
+  - pip install codecov
 install:
   - pip install --upgrade pip setuptools
   - pip install -r requirements.txt
@@ -15,6 +17,9 @@ install:
 # command to run tests, e.g. python setup.py test
 before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
 script: py.test
+
+after_success:
+  - codecov
 notifications:
   irc:
     channels:
