@@ -1,0 +1,5 @@
+vcrpy
+pytest
+pytest-pep8
+pytest-flakes
+nose

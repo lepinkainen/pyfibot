@@ -9,17 +9,19 @@ env:
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 before_install:
-  - pip install codecov
+  - pip install coverage coveralls
 install:
   - pip install --upgrade pip setuptools
   - pip install -r requirements.txt
-  - pip install pytest pytest-pep8 pytest-flakes nose # we still need nose for the _eq functions for now
-# command to run tests, e.g. python setup.py test
-before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
-script: py.test
+  - pip install -r requirements_test.txt
 
+before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
+# run tests with test coverage
+script: coverage run --source pyfibot -m py.test
+
+# upload coverage results to coveralls.io
 after_success:
-  - codecov
+  - coveralls
 notifications:
   irc:
     channels:
