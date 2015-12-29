@@ -783,9 +783,9 @@ def _handle_wikipedia(url):
             'format': 'json',
             'action': 'query',
             'prop': 'extracts',
-            # request 5 sentences, because Wikipedia seems to think that
-            # period is always indicative of end of sentence
-            'exsentences': 5,
+            # request everything before the first section, because requesting
+            # only a limited number of sentences breaks randomly
+            'exintro': '',
             'redirects': '',
             'titles': clean_page_name(url)
         }
@@ -813,9 +813,11 @@ def _handle_wikipedia(url):
     content = re.sub(r'\(.*?\)', '', content)
     # Remove " , ", which might be left behind after cleaning up
     # the brackets
-    content = re.sub(' +([,.])', '\\1 ', content)
+    content = re.sub('\s+([,.])', '\\1 ', content)
     # Remove multiple spaces
-    content = re.sub(' +', ' ', content)
+    content = re.sub('\s+', ' ', content)
+    # Strip possible trailing whitespace
+    content = content.rstrip()
 
     # Define sentence break as something ending in a period and starting with a capital letter,
     # with a whitespace or newline in between
