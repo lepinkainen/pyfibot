@@ -2,7 +2,7 @@
 Parse spotify URLs
 """
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function, division
 import re
 import logging
 

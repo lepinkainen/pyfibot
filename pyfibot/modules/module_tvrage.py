@@ -1,3 +1,4 @@
+from __future__ import unicode_literals, print_function, division
 from xml.etree import ElementTree as ET
 import requests
 from datetime import datetime

@@ -3,7 +3,7 @@
 Get consignment tracking info from Matkahuolto
 """
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function, division
 from datetime import datetime
 from bs4 import BeautifulSoup
 
