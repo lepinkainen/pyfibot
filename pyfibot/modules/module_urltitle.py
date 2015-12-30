@@ -5,7 +5,8 @@ Smart title functionality for sites which could have clear titles,
 but still decide show idiotic bulk data in the HTML title element
 """
 
-from __future__ import print_function, division
+from __future__ import unicode_literals, print_function, division
+#from __future__ import print_function, division
 import fnmatch
 import urlparse
 import logging
@@ -936,33 +937,29 @@ def _handle_liveleak(url):
     if not bs:
         return
     title = bs.find('span', 'section_title').text.strip()
-    info = str(bs.find('span', id='item_info_%s' % id))
-
-    added_by = '???'
-    tags = 'none'
-    date_added = '???'
-    views = '???'
+    info = bs.find('span', id='item_info_%s' % id)
+    info = info.renderContents().decode("iso8859-1")  # we need to render as unicode because if unicode_literals
 
     # need to do this kind of crap, as the data isn't contained by a span
     try:
-        added_by = BeautifulSoup(info.split('<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
+        added_by = BeautifulSoup(info.split(u'<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
     except:
-        pass
+        added_by = '???'
 
     try:
         date_added = info.split('</span>')[1].split('<span>')[0].strip()
     except:
-        pass
+        date_added = '???'
 
     try:
         views = __get_views(int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
     except:
-        pass
+        views = '???'
 
     try:
         tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0], 'html.parser').text.strip()
     except:
-        pass
+        tags = 'none'
 
     return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
 
