@@ -2,4 +2,4 @@
 --ignore-directory=lib
 --ignore-directory=local
 --ignore-directory=include
-
+--ignore-directory=build
