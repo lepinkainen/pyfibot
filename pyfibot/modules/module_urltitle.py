@@ -45,6 +45,8 @@ def init(botref):
 
 
 def __get_bs(url):
+    """Attempt to get a beautifulsoup object for the given url"""
+    
     # Fetch the content and measure how long it took
     start = datetime.now()
     r = bot.get_url(url)
@@ -63,13 +65,15 @@ def __get_bs(url):
         log.debug("Content-type %s not parseable" % content_type)
         return None
 
-    content = r.content
-    if content:
-        return BeautifulSoup(content, 'html.parser')
-    return None
+    if r.content:
+        return BeautifulSoup(r.content, 'html.parser')
+    else:
+        return None
 
 
 def __get_title_tag(url):
+    """Get the plain title tag for the site"""
+
     bs = __get_bs(url)
     if not bs:
         return False
@@ -221,16 +225,17 @@ def handle_url(bot, user, channel, url, msg):
     # Fall back to generic handler
     bs = __get_bs(url)
 
-    # According to Google's Making AJAX Applications Crawlable specification
-    fragment = bs.find('meta', {'name': 'fragment'})
-    if fragment and fragment.get('content') == '!':
-            log.debug("Fragment meta tag on page, getting non-ajax version")
-            url = __escaped_fragment(url, meta=True)
-            bs = __get_bs(url)
-
+    # Handle case of failed connection
     if not bs:
         log.debug("No BS available, returning")
         return
+
+    # According to Google's Making AJAX Applications Crawlable specification
+    fragment = bs.find('meta', {'name': 'fragment'})
+    if fragment and fragment.get('content') == '!':
+        log.debug("Fragment meta tag on page, getting non-ajax version")
+        url = __escaped_fragment(url, meta=True)
+        bs = __get_bs(url)
 
     # Try and get title meant for social media first, it's usually fairly accurate
     title = bs.find('meta', {'property': 'og:title'})
@@ -354,7 +359,8 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
-    return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
+    else:
+        return bot.say(channel, "%s %s [%s]" % (prefix, title, info))
 
 
 def _handle_verkkokauppa(url):
@@ -689,6 +695,8 @@ def _handle_areena_v3(url):
     # needs a bit more special handling as no api is available
     if len(splitted) > 4 and splitted[4] == 'suora':
         bs = __get_bs(url)
+        if not bs:
+            return
         try:
             container = bs.find('section', {'class': 'simulcast'})
         except:
@@ -749,6 +757,8 @@ def _handle_areena(url):
     """http://areena.yle.fi/*"""
     if 'suora' in url:
         bs = __get_bs(url)
+        if not bs:
+            return
         container = bs.find('div', {'class': 'selected'})
         channel = container.find('h3').text
         program = container.find('span', {'class': 'status-current'}).next_element.next_element
