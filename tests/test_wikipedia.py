@@ -19,7 +19,7 @@ def botmock():
 
 @my_vcr.use_cassette()
 def test_one(botmock):
-    msg = "https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
+    msg = u"https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
     assert \
      ("#channel", u"Title: The Hatfield–McCoy feud involved two families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
      module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
@@ -74,7 +74,7 @@ def test_eight(botmock):
 
 @my_vcr.use_cassette()
 def test_nine(botmock):
-    msg = "http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
+    msg = u"http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
     eq_(("#channel", u"Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1:n maailmanmestari."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
 
 
