@@ -1,0 +1,138 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://paste.ubuntu.com/
+  response:
+    body: {string: !!python/unicode "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0
+        Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html
+        xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n\n<head>\n
+        \   <meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\"
+        />\n    <link rel=\"stylesheet\" type=\"text/css\" charset=\"utf-8\" media=\"screen\"
+        href=\"/static/pastebin.css\">\n    <title>Ubuntu Pastebin</title>\n</head>\n\n
+        \   <body>\n\t<div id=\"outerColumnContainer\" style=\"color: #000\">\n\t
+        \     <div id=\"contentColumn\">\n\t\t      <div class=\"inside\">\n\t    <h1
+        id=\"title\">Ubuntu Pastebin</h1>\n\t    \n \n\n<form action=\"/\" method=\"POST\"
+        id=\"pasteform\" name=\"pasteform\">\n  <table>\n    <tr><th><label for=\"id_poster\">Poster:</label></th><td><input
+        id=\"id_poster\" type=\"text\" name=\"poster\" maxlength=\"30\" /><br /><span
+        class=\"helptext\">Your name (30 characters max)</span></td></tr>\n<tr><th><label
+        for=\"id_syntax\">Syntax:</label></th><td><select name=\"syntax\" id=\"id_syntax\">\n<option
+        value=\"text\">Plain Text</option>\n<option value=\"Cucumber\">Gherkin</option>\n<option
+        value=\"abap\">ABAP</option>\n<option value=\"ada\">Ada</option>\n<option
+        value=\"ahk\">autohotkey</option>\n<option value=\"antlr\">ANTLR</option>\n<option
+        value=\"antlr-as\">ANTLR With ActionScript Target</option>\n<option value=\"antlr-cpp\">ANTLR
+        With CPP Target</option>\n<option value=\"antlr-csharp\">ANTLR With C# Target</option>\n<option
+        value=\"antlr-java\">ANTLR With Java Target</option>\n<option value=\"antlr-objc\">ANTLR
+        With ObjectiveC Target</option>\n<option value=\"antlr-perl\">ANTLR With Perl
+        Target</option>\n<option value=\"antlr-python\">ANTLR With Python Target</option>\n<option
+        value=\"antlr-ruby\">ANTLR With Ruby Target</option>\n<option value=\"apacheconf\">ApacheConf</option>\n<option
+        value=\"applescript\">AppleScript</option>\n<option value=\"as\">ActionScript</option>\n<option
+        value=\"as3\">ActionScript 3</option>\n<option value=\"aspx-cs\">aspx-cs</option>\n<option
+        value=\"aspx-vb\">aspx-vb</option>\n<option value=\"asy\">Asymptote</option>\n<option
+        value=\"basemake\">Makefile</option>\n<option value=\"bash\">Bash</option>\n<option
+        value=\"bat\">Batchfile</option>\n<option value=\"bbcode\">BBCode</option>\n<option
+        value=\"befunge\">Befunge</option>\n<option value=\"blitzmax\">BlitzMax</option>\n<option
+        value=\"boo\">Boo</option>\n<option value=\"c\">C</option>\n<option value=\"c-objdump\">c-objdump</option>\n<option
+        value=\"cfm\">Coldfusion HTML</option>\n<option value=\"cfs\">cfstatement</option>\n<option
+        value=\"cheetah\">Cheetah</option>\n<option value=\"clojure\">Clojure</option>\n<option
+        value=\"cmake\">CMake</option>\n<option value=\"coffee-script\">CoffeeScript</option>\n<option
+        value=\"common-lisp\">Common Lisp</option>\n<option value=\"console\">Bash
+        Session</option>\n<option value=\"control\">Debian Control file</option>\n<option
+        value=\"cpp\">C++</option>\n<option value=\"cpp-objdump\">cpp-objdump</option>\n<option
+        value=\"csharp\">C#</option>\n<option value=\"css\">CSS</option>\n<option
+        value=\"css+django\">CSS+Django/Jinja</option>\n<option value=\"css+erb\">CSS+Ruby</option>\n<option
+        value=\"css+genshitext\">CSS+Genshi Text</option>\n<option value=\"css+mako\">CSS+Mako</option>\n<option
+        value=\"css+myghty\">CSS+Myghty</option>\n<option value=\"css+php\">CSS+PHP</option>\n<option
+        value=\"css+smarty\">CSS+Smarty</option>\n<option value=\"cython\">Cython</option>\n<option
+        value=\"d\">D</option>\n<option value=\"d-objdump\">d-objdump</option>\n<option
+        value=\"delphi\">Delphi</option>\n<option value=\"diff\">Diff</option>\n<option
+        value=\"django\">Django/Jinja</option>\n<option value=\"dpatch\">Darcs Patch</option>\n<option
+        value=\"duel\">Duel</option>\n<option value=\"dylan\">Dylan</option>\n<option
+        value=\"erb\">ERB</option>\n<option value=\"erl\">Erlang erl session</option>\n<option
+        value=\"erlang\">Erlang</option>\n<option value=\"evoque\">Evoque</option>\n<option
+        value=\"factor\">Factor</option>\n<option value=\"felix\">Felix</option>\n<option
+        value=\"fortran\">Fortran</option>\n<option value=\"gas\">GAS</option>\n<option
+        value=\"genshi\">Genshi</option>\n<option value=\"genshitext\">Genshi Text</option>\n<option
+        value=\"glsl\">GLSL</option>\n<option value=\"gnuplot\">Gnuplot</option>\n<option
+        value=\"go\">Go</option>\n<option value=\"gooddata-cl\">GoodData-CL</option>\n<option
+        value=\"groff\">Groff</option>\n<option value=\"haml\">Haml</option>\n<option
+        value=\"haskell\">Haskell</option>\n<option value=\"html\">HTML</option>\n<option
+        value=\"html+cheetah\">HTML+Cheetah</option>\n<option value=\"html+django\">HTML+Django/Jinja</option>\n<option
+        value=\"html+evoque\">HTML+Evoque</option>\n<option value=\"html+genshi\">HTML+Genshi</option>\n<option
+        value=\"html+mako\">HTML+Mako</option>\n<option value=\"html+myghty\">HTML+Myghty</option>\n<option
+        value=\"html+php\">HTML+PHP</option>\n<option value=\"html+smarty\">HTML+Smarty</option>\n<option
+        value=\"html+velocity\">HTML+Velocity</option>\n<option value=\"hx\">haXe</option>\n<option
+        value=\"hybris\">Hybris</option>\n<option value=\"ini\">INI</option>\n<option
+        value=\"io\">Io</option>\n<option value=\"ioke\">Ioke</option>\n<option value=\"irc\">IRC
+        logs</option>\n<option value=\"jade\">Jade</option>\n<option value=\"java\">Java</option>\n<option
+        value=\"js\">JavaScript</option>\n<option value=\"js+cheetah\">JavaScript+Cheetah</option>\n<option
+        value=\"js+django\">JavaScript+Django/Jinja</option>\n<option value=\"js+erb\">JavaScript+Ruby</option>\n<option
+        value=\"js+genshitext\">JavaScript+Genshi Text</option>\n<option value=\"js+mako\">JavaScript+Mako</option>\n<option
+        value=\"js+myghty\">JavaScript+Myghty</option>\n<option value=\"js+php\">JavaScript+PHP</option>\n<option
+        value=\"js+smarty\">JavaScript+Smarty</option>\n<option value=\"jsp\">Java
+        Server Page</option>\n<option value=\"lhs\">Literate Haskell</option>\n<option
+        value=\"lighty\">Lighttpd configuration file</option>\n<option value=\"llvm\">LLVM</option>\n<option
+        value=\"logtalk\">Logtalk</option>\n<option value=\"lua\">Lua</option>\n<option
+        value=\"make\">Makefile</option>\n<option value=\"mako\">Mako</option>\n<option
+        value=\"maql\">MAQL</option>\n<option value=\"mason\">Mason</option>\n<option
+        value=\"matlab\">Matlab</option>\n<option value=\"matlabsession\">Matlab session</option>\n<option
+        value=\"minid\">MiniD</option>\n<option value=\"modelica\">Modelica</option>\n<option
+        value=\"modula2\">Modula-2</option>\n<option value=\"moocode\">MOOCode</option>\n<option
+        value=\"mupad\">MuPAD</option>\n<option value=\"mxml\">MXML</option>\n<option
+        value=\"myghty\">Myghty</option>\n<option value=\"mysql\">MySQL</option>\n<option
+        value=\"nasm\">NASM</option>\n<option value=\"newspeak\">Newspeak</option>\n<option
+        value=\"nginx\">Nginx configuration file</option>\n<option value=\"numpy\">NumPy</option>\n<option
+        value=\"objdump\">objdump</option>\n<option value=\"objective-c\">Objective-C</option>\n<option
+        value=\"objective-j\">Objective-J</option>\n<option value=\"ocaml\">OCaml</option>\n<option
+        value=\"ooc\">Ooc</option>\n<option value=\"perl\">Perl</option>\n<option
+        value=\"php\">PHP</option>\n<option value=\"postscript\">PostScript</option>\n<option
+        value=\"pot\">Gettext Catalog</option>\n<option value=\"pov\">POVRay</option>\n<option
+        value=\"prolog\">Prolog</option>\n<option value=\"properties\">Properties</option>\n<option
+        value=\"protobuf\">Protocol Buffer</option>\n<option value=\"py3tb\">Python
+        3.0 Traceback</option>\n<option value=\"pycon\">Python console session</option>\n<option
+        value=\"pytb\">Python Traceback</option>\n<option value=\"python\">Python</option>\n<option
+        value=\"python3\">Python 3</option>\n<option value=\"ragel\">Ragel</option>\n<option
+        value=\"ragel-c\">Ragel in C Host</option>\n<option value=\"ragel-cpp\">Ragel
+        in CPP Host</option>\n<option value=\"ragel-d\">Ragel in D Host</option>\n<option
+        value=\"ragel-em\">Embedded Ragel</option>\n<option value=\"ragel-java\">Ragel
+        in Java Host</option>\n<option value=\"ragel-objc\">Ragel in Objective C Host</option>\n<option
+        value=\"ragel-ruby\">Ragel in Ruby Host</option>\n<option value=\"raw\">Raw
+        token data</option>\n<option value=\"rb\">Ruby</option>\n<option value=\"rbcon\">Ruby
+        irb session</option>\n<option value=\"rconsole\">RConsole</option>\n<option
+        value=\"rebol\">REBOL</option>\n<option value=\"redcode\">Redcode</option>\n<option
+        value=\"rhtml\">RHTML</option>\n<option value=\"rst\">reStructuredText</option>\n<option
+        value=\"sass\">Sass</option>\n<option value=\"scala\">Scala</option>\n<option
+        value=\"scaml\">Scaml</option>\n<option value=\"scheme\">Scheme</option>\n<option
+        value=\"scss\">SCSS</option>\n<option value=\"smalltalk\">Smalltalk</option>\n<option
+        value=\"smarty\">Smarty</option>\n<option value=\"sourceslist\">Debian Sourcelist</option>\n<option
+        value=\"splus\">S</option>\n<option value=\"sql\">SQL</option>\n<option value=\"sqlite3\">sqlite3con</option>\n<option
+        value=\"squidconf\">SquidConf</option>\n<option value=\"ssp\">Scalate Server
+        Page</option>\n<option value=\"tcl\">Tcl</option>\n<option value=\"tcsh\">Tcsh</option>\n<option
+        value=\"tex\">TeX</option>\n<option value=\"text\">Text only</option>\n<option
+        value=\"trac-wiki\">MoinMoin/Trac Wiki markup</option>\n<option value=\"v\">verilog</option>\n<option
+        value=\"vala\">Vala</option>\n<option value=\"vb.net\">VB.net</option>\n<option
+        value=\"velocity\">Velocity</option>\n<option value=\"vim\">VimL</option>\n<option
+        value=\"xml\">XML</option>\n<option value=\"xml+cheetah\">XML+Cheetah</option>\n<option
+        value=\"xml+django\">XML+Django/Jinja</option>\n<option value=\"xml+erb\">XML+Ruby</option>\n<option
+        value=\"xml+evoque\">XML+Evoque</option>\n<option value=\"xml+mako\">XML+Mako</option>\n<option
+        value=\"xml+myghty\">XML+Myghty</option>\n<option value=\"xml+php\">XML+PHP</option>\n<option
+        value=\"xml+smarty\">XML+Smarty</option>\n<option value=\"xml+velocity\">XML+Velocity</option>\n<option
+        value=\"xquery\">XQuery</option>\n<option value=\"xslt\">XSLT</option>\n<option
+        value=\"yaml\">YAML</option>\n</select></td></tr>\n<tr><th><label for=\"id_content\">Content:</label></th><td><textarea
+        id=\"id_content\" rows=\"20\" cols=\"80\" name=\"content\"></textarea></td></tr>\n
+        \   <tr> \n      <th>&nbsp;</th> \n      <td> <input type=\"submit\" value=\"Paste!\"
+        /> </td>\n    </tr>\n  </table>\n</form>\n\n\n\n\t\t    </div>\n\t    </div>\n\t</div>\n</body>\n\n</html>\n"}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [text/html; charset=utf-8]
+      date: ['Wed, 30 Dec 2015 11:21:40 GMT']
+      keep-alive: ['timeout=5, max=100']
+      server: [Apache]
+      vary: [Cookie]
+    status: {code: 200, message: OK}
+version: 1

@@ -1,0 +1,80 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://travis-ci.org/
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [keep-alive]
+      content-length: ['0']
+      content-type: [text/html]
+      date: ['Wed, 30 Dec 2015 11:21:39 GMT']
+      location: ['https://travis-ci.org/']
+      server: [Cowboy]
+      via: [1.1 vegur]
+    status: {code: 301, message: Moved Permanently}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://travis-ci.org/
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      cache-control: ['public, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-location: [/]
+      content-type: [text/html]
+      date: ['Wed, 30 Dec 2015 11:21:40 GMT']
+      etag: [e290bdd6e88870b8a8e386ffc9bc4b3b]
+      expires: ['0']
+      last-modified: ['Wed, 30 Dec 2015 09:50:34 GMT']
+      server: [Cowboy]
+      strict-transport-security: [max-age=31536000]
+      vary: ['Accept,Accept-Encoding']
+      via: [1.1 vegur]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1
