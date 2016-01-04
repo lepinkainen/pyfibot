@@ -25,6 +25,10 @@ def command_maze(bot, user, channel, args):
 
     # go through the episodes in reverse order
     for episode in reversed(show.episodes):
+        # episode has id and name, but no airstamp yet (not announced)
+        if not episode.airstamp:
+            continue
+        
         delta = relativedelta(parse(episode.airstamp), now)
 
         # episode is in the past, stop searching
