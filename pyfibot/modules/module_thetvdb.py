@@ -37,10 +37,12 @@ if __name__ == "__main__":
     print(api['house of cards'])    # House of Cards (US)
 
 
-def command_ep(bot, user, channel, args):
-    """Usage: ep <series name>"""
+def command_tvdb(bot, user, channel, args):
+    """Usage: tvdb <series name>"""
+
     if not api_ok:
         return
+
     t = tvdb_api.Tvdb(custom_ui=SmartUI)
     now = datetime.now()
     # one day resolution maximum

@@ -6,11 +6,17 @@ from dateutil.relativedelta import *
 import pytz
 from datetime import datetime
 
+def command_ep(bot, user, channel, args):
+    """Usage: ep <series name>"""
+    return command_maze(bot, user, channel, args)
+
 def command_maze(bot, user, channel, args):
+
     try:
         show = pytvmaze.get_show(show_name=args, embed='episodes')
     except pytvmaze.exceptions.ShowNotFound:
-        print("Show '%s' not found" % args)
+        bot.say(channel, "Show '%s' not found" % args)
+        return
 
     next_episode = None
     next_delta = None
@@ -25,7 +31,7 @@ def command_maze(bot, user, channel, args):
         if delta.months <= 0 and \
            delta.days <= 0 and \
            delta.minutes <= 0:
-               break
+            break
         else:
             # episode is (still) in the future
             next_episode = episode
@@ -46,7 +52,7 @@ def command_maze(bot, user, channel, args):
     show_id = "%s %s '%s'" % (show.name, "%dx%02d" % (next_episode.season_number, next_episode.episode_number), next_episode.title)
 
     if show.status == "Ended":
-        msg = "Latest episode of %s aired on %s (%s ago) on %s" % (show_id, next_episode.airdate, _ago(latest_delta), show.network['name'])
+        msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (show_id, next_episode.airdate, _ago(latest_delta), show.network['name'])
     else:
         msg = "Next episode of %s airs %s (%s) on %s" % (show_id, next_episode.airdate, _ago(next_delta), show.network['name'])
 
