@@ -341,7 +341,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         urls = pyfiurl.grab(msg)
         if urls:
             for url in urls:
-                self._runhandler("url", user, reply, url, msg)
+                self._runhandler("url", user, reply, url, self.factory.to_unicode(msg))
 
     def _runhandler(self, handler, *args, **kwargs):
         """Run a handler for an event"""
