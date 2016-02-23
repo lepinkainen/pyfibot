@@ -163,4 +163,84 @@ interactions:
       x-aspnet-version: [4.0.30319]
       x-powered-by: [ASP.NET]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.omdbapi.com/?i=tt1772341
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA12S227TQBCGX2U0FwikrXNqKOSqSU9qVSdREtrCTTWxJ/aS9WzYXTt1Ee+ONi2C
+        cvl/cz78xJUOhnGE946z7dF1gAWZXYkKvzI5HGG/2+ujwgUFznGE86so2DD5g+72YWob+ONVS9BV
+        TNfr9qDSggqvWFwkY9EVBW1FwThvWELtWMGZrThvUeG5dpwFG0sudFZCaq1jVHjvdOC3FN77YF37
+        QcG81AZubCk+WPmLb3QFCyaX/wv/980cs+wMHQJYRG/YwS3zGxMqHMeuPI4wxsJZAgvWxrQKluSo
+        hKU2DbuKRMENZVtIs4mjll2UwnDbSha3OTc2xCVAo3O2UFDF0GhjSAvsSYKHYGHNQFCys0CSg+fg
+        wdYhWja12WhjoNQecsdUKVjX4SB/1OwDrJ2WwkNJjc1iQCgZ9qU1DOQyyqNgx1AyGN2wT1DhLUlR
+        UxFvcyGF0T72eWZrCa7FEX5ZjuP0e3J5nH5qKy3xCWBjHfRg5jNyCYzFhpIdDPqw1+LhHRx3QV58
+        tZVDobn1LycsQ9iNOh1NScW5piNd5esks1VHV1Sw76Sd9G44mT6nT9PVxdNstW3Ty+EkNcMJyUQe
+        tpfh2yrbp88X7fQ8687Gp6fJ413vcfkw6HaT77sCFaYcyGf28HEn8SVjjQUFLUUkyadXdGcDx7H6
+        w4H6+Pn4lV6f4whD6J2c9AfHPVS4ancxU2UbzYfH9zsrPqKVqxl//Qbz/GV1QAMAAA==
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, max-age=14400']
+      cf-cache-status: [HIT]
+      cf-ray: [2794f263a48a3720-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:20:48 GMT']
+      expires: ['Tue, 23 Feb 2016 22:20:48 GMT']
+      last-modified: ['Tue, 23 Feb 2016 08:10:05 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d9677d8a08b9747cffe2bfd2254e17d5a1456251648; expires=Wed,
+          22-Feb-17 18:20:48 GMT; path=/; domain=.omdbapi.com; HttpOnly']
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.omdbapi.com/?i=tt1772341
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA12S227TQBCGX2U0FwikrXNqKOSqSU9qVSdREtrCTTWxJ/aS9WzYXTt1Ee+ONi2C
+        cvl/cz78xJUOhnGE946z7dF1gAWZXYkKvzI5HGG/2+ujwgUFznGE86so2DD5g+72YWob+ONVS9BV
+        TNfr9qDSggqvWFwkY9EVBW1FwThvWELtWMGZrThvUeG5dpwFG0sudFZCaq1jVHjvdOC3FN77YF37
+        QcG81AZubCk+WPmLb3QFCyaX/wv/980cs+wMHQJYRG/YwS3zGxMqHMeuPI4wxsJZAgvWxrQKluSo
+        hKU2DbuKRMENZVtIs4mjll2UwnDbSha3OTc2xCVAo3O2UFDF0GhjSAvsSYKHYGHNQFCys0CSg+fg
+        wdYhWja12WhjoNQecsdUKVjX4SB/1OwDrJ2WwkNJjc1iQCgZ9qU1DOQyyqNgx1AyGN2wT1DhLUlR
+        UxFvcyGF0T72eWZrCa7FEX5ZjuP0e3J5nH5qKy3xCWBjHfRg5jNyCYzFhpIdDPqw1+LhHRx3QV58
+        tZVDobn1LycsQ9iNOh1NScW5piNd5esks1VHV1Sw76Sd9G44mT6nT9PVxdNstW3Ty+EkNcMJyUQe
+        tpfh2yrbp88X7fQ8687Gp6fJ413vcfkw6HaT77sCFaYcyGf28HEn8SVjjQUFLUUkyadXdGcDx7H6
+        w4H6+Pn4lV6f4whD6J2c9AfHPVS4ancxU2UbzYfH9zsrPqKVqxl//Qbz/GV1QAMAAA==
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, max-age=14400']
+      cf-cache-status: [HIT]
+      cf-ray: [2794f4c1a39c0a54-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:22:25 GMT']
+      expires: ['Tue, 23 Feb 2016 22:22:25 GMT']
+      last-modified: ['Tue, 23 Feb 2016 08:10:05 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d175df5ebdcb143ede0a21fbd2dbd68341456251745; expires=Wed,
+          22-Feb-17 18:22:25 GMT; path=/; domain=.omdbapi.com; HttpOnly']
+      vary: [Accept-Encoding]
+      x-aspnet-version: [4.0.30319]
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
 version: 1

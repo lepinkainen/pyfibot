@@ -267,4 +267,140 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['3659258760, 3433748322, 1342299858']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 23 Feb 2016 18:21:09 GMT']
+      location: ['https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
+          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3012 frontend int(0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['1702584516']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['WMF-Last-Access=23-Feb-2016; GeoIP=:::::v6']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2WQT2/bMAzFvwqh0woYqZMO8xoEuXS7DbsMww5rUTAxE9PWH8+kgnlBv/votEk7
+        TBdJj48/Su/oNqjbZptC70nJLZ0r3K9Mw+iWRxfTENDzH6rd8ufR7YYUzPEJD1w/fq5rjnsxu6az
+        CGfx6aFwPe5JJsqirKpyOkwKG+okFC5a1TZl9fQfoXD0WwfcqlVW/Xq1WT/X73AYkvdn3+p6s4Z3
+        1Qwa4nify5Ledzkrwvz2Zg7f+tRhpAJ+oDRm1xThPi/K+Q0sZtCRvO1YlOXthBcz3bGOBXylA9Z4
+        BckzjE09ygG9okeOFKHjoUX23GIBrY05CYlVGbIQG1ByErvnFmGHUVEYT54WZ/DdLKFn4zTPbzgj
+        U0tRXmEYWMhKSdB7Fs0MYZw6dh/kbesBOaSp0YL6Qrxv/g3I0qguP/84peUDX75dXRUQsg2bMBFy
+        Fg4212hKqZPT6TJLO7NYRIGGzh44mqfj9iVI4Rmsrvu1e7L1F6FzEFhcAgAA
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      backend-timing: [D=42085 t=1456251670220332]
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['387']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:21:10 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
+      x-cache: ['cp1066 miss+chfp(0), cp3004 miss+chfp(0), cp3004 frontend miss+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3785788207, 734231005, 721413220']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Tue, 23 Feb 2016 18:22:47 GMT']
+      location: ['https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
+          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3041 frontend int(0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['4045939473']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['WMF-Last-Access=23-Feb-2016; GeoIP=:::::v6']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA2WQT2/bMAzFvwqh0woYqZMO8xoEuXS7DbsMww5rUTAxE9PWH8+kgnlBv/votEk7
+        TBdJj48/Su/oNqjbZptC70nJLZ0r3K9Mw+iWRxfTENDzH6rd8ufR7YYUzPEJD1w/fq5rjnsxu6az
+        CGfx6aFwPe5JJsqirKpyOkwKG+okFC5a1TZl9fQfoXD0WwfcqlVW/Xq1WT/X73AYkvdn3+p6s4Z3
+        1Qwa4nify5Ledzkrwvz2Zg7f+tRhpAJ+oDRm1xThPi/K+Q0sZtCRvO1YlOXthBcz3bGOBXylA9Z4
+        BckzjE09ygG9okeOFKHjoUX23GIBrY05CYlVGbIQG1ByErvnFmGHUVEYT54WZ/DdLKFn4zTPbzgj
+        U0tRXmEYWMhKSdB7Fs0MYZw6dh/kbesBOaSp0YL6Qrxv/g3I0qguP/84peUDX75dXRUQsg2bMBFy
+        Fg4212hKqZPT6TJLO7NYRIGGzh44mqfj9iVI4Rmsrvu1e7L1F6FzEFhcAgAA
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      backend-timing: [D=40948 t=1456251767805072]
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['387']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:22:47 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
+      x-cache: ['cp1066 pass+chfp(0), cp3005 miss+chfp(0), cp3004 frontend pass+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['3786098605, 3881541601, 721729071']
+    status: {code: 200, message: OK}
 version: 1

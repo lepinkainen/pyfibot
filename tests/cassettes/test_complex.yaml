@@ -137,4 +137,96 @@ interactions:
       set-cookie: [WR_SID=217.30.184.161.1451380667278368; path=/; max-age=315360000;
           domain=.wolframalpha.com]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.wolframalpha.com/v2/query?input=answer%20to%20the%20life%20universe%20and%20everything&appid=3EYA3R-WVR6GJQWLH
+  response:
+    body: {string: !!python/unicode "<?xml version='1.0' encoding='UTF-8'?>\n<queryresult
+        success='true'\n    error='false'\n    numpods='2'\n    datatypes=''\n    timedout=''\n
+        \   timedoutpods=''\n    timing='0.806'\n    parsetiming='0.427'\n    parsetimedout='false'\n
+        \   recalculate=''\n    id='MSPa10022i8i7gge58c03ab000021eab2gddef5173h'\n
+        \   host='http://www5a.wolframalpha.com'\n    server='16'\n    related='http://www5a.wolframalpha.com/api/v2/relatedQueries.jsp?id=MSPa10122i8i7gge58c03ab00004ch4118c922a0439&amp;s=16'\n
+        \   version='2.6'\n    profile='EnterDoQuery:0.,StartWrap:0.806218'>\n <pod
+        title='Input interpretation'\n     scanner='Identity'\n     id='Input'\n     position='100'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www5a.wolframalpha.com/Calculate/MSP/MSP10222i8i7gge58c03ab0000625730cbbafggh07?MSPStoreType=image/gif&amp;s=16'\n
+        \      alt='Answer to the Ultimate Question of Life, the Universe, and Everything'\n
+        \      title='Answer to the Ultimate Question of Life, the Universe, and Everything'\n
+        \      width='455'\n       height='18' />\n   <plaintext>Answer to the Ultimate
+        Question of Life, the Universe, and Everything</plaintext>\n  </subpod>\n
+        </pod>\n <pod title='Result'\n     scanner='Data'\n     id='Result'\n     position='200'\n
+        \    error='false'\n     numsubpods='1'\n     primary='true'>\n  <subpod title=''>\n
+        \  <img src='http://www5a.wolframalpha.com/Calculate/MSP/MSP10322i8i7gge58c03ab0000294656fg7fgb7c9g?MSPStoreType=image/gif&amp;s=16'\n
+        \      alt='42\n(according to the book The Hitchhiker&apos;s Guide to the
+        Galaxy, by Douglas Adams)'\n       title='42\n(according to the book The Hitchhiker&apos;s
+        Guide to the Galaxy, by Douglas Adams)'\n       width='442'\n       height='36'
+        />\n   <plaintext>42\n(according to the book The Hitchhiker&apos;s Guide to
+        the Galaxy, by Douglas Adams)</plaintext>\n  </subpod>\n </pod>\n <assumptions
+        count='1'>\n  <assumption type='SubCategory'\n      word='answer to the life
+        universe and everything'\n      template='Assuming ${desc1}. Use ${desc2}
+        instead'\n      count='2'>\n   <value name='AnswerToLifeUniverseEverything'\n
+        \      desc='The Ultimate Answer'\n       input='*DPClash.MiscellaneousE.answer+to+the+life+universe+and+everything-_*AnswerToLifeUniverseEverything-'
+        />\n   <value name='MontyPythonsMeaningOfLife'\n       desc='Monty Python&apos;s
+        Meaning of Life'\n       input='*DPClash.MiscellaneousE.answer+to+the+life+universe+and+everything-_*MontyPythonsMeaningOfLife-'
+        />\n  </assumption>\n </assumptions>\n</queryresult>"}
+    headers:
+      connection: [close]
+      content-length: ['2468']
+      content-type: [text/xml;charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:21:16 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [WR_SID=217.30.184.161.1456251676708056; path=/; max-age=315360000;
+          domain=.wolframalpha.com]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.wolframalpha.com/v2/query?input=answer%20to%20the%20life%20universe%20and%20everything&appid=3EYA3R-WVR6GJQWLH
+  response:
+    body: {string: !!python/unicode "<?xml version='1.0' encoding='UTF-8'?>\n<queryresult
+        success='true'\n    error='false'\n    numpods='2'\n    datatypes=''\n    timedout=''\n
+        \   timedoutpods=''\n    timing='0.839'\n    parsetiming='0.436'\n    parsetimedout='false'\n
+        \   recalculate=''\n    id='MSPa25411hg9516fa6abf22d00002d4ba34d9ei2g34h'\n
+        \   host='http://www4c.wolframalpha.com'\n    server='53'\n    related='http://www4c.wolframalpha.com/api/v2/relatedQueries.jsp?id=MSPa25421hg9516fa6abf22d00003dbdc8db4agec53b&amp;s=53'\n
+        \   version='2.6'\n    profile='EnterDoQuery:0.,StartWrap:0.839316'>\n <pod
+        title='Input interpretation'\n     scanner='Identity'\n     id='Input'\n     position='100'\n
+        \    error='false'\n     numsubpods='1'>\n  <subpod title=''>\n   <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP25431hg9516fa6abf22d000040ag5b58g06fc939?MSPStoreType=image/gif&amp;s=53'\n
+        \      alt='Answer to the Ultimate Question of Life, the Universe, and Everything'\n
+        \      title='Answer to the Ultimate Question of Life, the Universe, and Everything'\n
+        \      width='455'\n       height='18' />\n   <plaintext>Answer to the Ultimate
+        Question of Life, the Universe, and Everything</plaintext>\n  </subpod>\n
+        </pod>\n <pod title='Result'\n     scanner='Data'\n     id='Result'\n     position='200'\n
+        \    error='false'\n     numsubpods='1'\n     primary='true'>\n  <subpod title=''>\n
+        \  <img src='http://www4c.wolframalpha.com/Calculate/MSP/MSP25441hg9516fa6abf22d00004ai0gfhf5ced7cia?MSPStoreType=image/gif&amp;s=53'\n
+        \      alt='42\n(according to the book The Hitchhiker&apos;s Guide to the
+        Galaxy, by Douglas Adams)'\n       title='42\n(according to the book The Hitchhiker&apos;s
+        Guide to the Galaxy, by Douglas Adams)'\n       width='442'\n       height='36'
+        />\n   <plaintext>42\n(according to the book The Hitchhiker&apos;s Guide to
+        the Galaxy, by Douglas Adams)</plaintext>\n  </subpod>\n </pod>\n <assumptions
+        count='1'>\n  <assumption type='SubCategory'\n      word='answer to the life
+        universe and everything'\n      template='Assuming ${desc1}. Use ${desc2}
+        instead'\n      count='2'>\n   <value name='AnswerToLifeUniverseEverything'\n
+        \      desc='The Ultimate Answer'\n       input='*DPClash.MiscellaneousE.answer+to+the+life+universe+and+everything-_*AnswerToLifeUniverseEverything-'
+        />\n   <value name='MontyPythonsMeaningOfLife'\n       desc='Monty Python&apos;s
+        Meaning of Life'\n       input='*DPClash.MiscellaneousE.answer+to+the+life+universe+and+everything-_*MontyPythonsMeaningOfLife-'
+        />\n  </assumption>\n </assumptions>\n</queryresult>"}
+    headers:
+      connection: [close]
+      content-length: ['2472']
+      content-type: [text/xml;charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:22:53 GMT']
+      server: [Apache-Coyote/1.1]
+      set-cookie: [WR_SID=217.30.184.161.1456251773593519; path=/; max-age=315360000;
+          domain=.wolframalpha.com]
+    status: {code: 200, message: OK}
 version: 1
