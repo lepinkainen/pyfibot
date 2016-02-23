@@ -78,7 +78,7 @@ def test_stackoverflow(botmock):
 @my_vcr.use_cassette
 def test_wiki_fi(botmock):
     msg = "http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
-    assert "Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1:n maailmanmestari." == __handle_url(botmock, msg)
+    assert "Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1 -sarjan maailmanmestari." == __handle_url(botmock, msg)
 
 
 @my_vcr.use_cassette
@@ -204,7 +204,7 @@ def test_pythonorg(botmock):
 @my_vcr.use_cassette
 def test_github(botmock):
     msg = "https://github.com/lepinkainen/pyfibot"
-    assert "Title: lepinkainen/pyfibot \xb7 GitHub" == __handle_url(botmock, msg)
+    assert "Title: GitHub - lepinkainen/pyfibot: Pyfibot the Python IRC bot" == __handle_url(botmock, msg)
 
 
 @my_vcr.use_cassette
@@ -216,7 +216,7 @@ def test_gfycat_direct_url(botmock):
 @my_vcr.use_cassette
 def test_nettiauto(botmock):
     msg = "http://www.nettiauto.com/audi/s4/7695854"
-    assert "Title: Audi S4 [Ei hinnoiteltu, 2004, 129 958 km, 4.2 l Bensiini, Manuaali, Neliveto]" == __handle_url(botmock, msg)
+    assert "Title: Audi S4 [2004, 129 958 km, 4.2 l Bensiini, Manuaali, Neliveto]" == __handle_url(botmock, msg)
 
 
 # Test ignored titles

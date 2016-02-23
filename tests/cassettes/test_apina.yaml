@@ -28,4 +28,62 @@ interactions:
       server: [nginx]
       strict-transport-security: [max-age=15768000]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://apina.biz/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAz2PQU/rMBCE7/0VixEUDiRpE2hDmyIkHogLQoILJ7Sxl2ZV145sB8i/f3ZBXCzv
+        7Gjm2zXvt+CdbETes/Q59mxwnvVmK8CHUVMjWusUuWsoVtCi3G2dHYy6kFbbKB4XRdR7VIrN9hpm
+        Rf+9EoA6NOL2+fHpVkC+Wbfu7528duzBcyCQ1gRk42GPgRyjhtBhiNMIxgbwAwcY7ZDBP9+TjHs9
+        An8kaeoIIgM5mC1hJHQerFbZT8/kziYPfLHvINhDDZuB0j90dOi++bWuETpHH40QEDikYx8s4Fck
+        iE6TCbBGapa7RqAmF86mbzFYokl8mvCTjqbnK7F5suscN5DDX15+w++OEnJjiNQ7h1Pc9ys3OG5O
+        5veHoftsystFXSyLRVvNsVXqihZlJYuyrq4WdVXVqpwV9bIkEps38qnjl/s5e8kgsaTweKHdMXkg
+        g60mlU3+A2St0kXVAQAA
+    headers:
+      cache-control: ['no-cache, must-revalidate']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [text/html; charset=UTF-8]
+      date: ['Tue, 23 Feb 2016 18:21:07 GMT']
+      expires: ['Sat, 23 Oct 1999 00:55:20 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15768000]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://apina.biz/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAz2PS0/DMBCE7/0VixEUDuRVoC1tWiHxEBeEBBdO1cbZNKu6dmQ7hfx77IK4WN7Z
+        0cy3S95vwVlZirRj6VLsWGORdHorwPlBUSkqY2uyd5AtoEK521rT6/pKGmWCeJplQe+wrllv7yDP
+        uu+FAFS+FPdvL6/3AtLVsrL/7+ijZQeOPYE02iNrB3v0ZBkV+BZ9mAbQxoPr2cNg+gQeXUcy7NUA
+        3ERpbAkCA1nIZzAQWgdG1clvz+jBRA98sWvBm2MN657i37d07F7/WZcIraWmFAI8+3jsswH8CgTB
+        qRMBRkvFclcKVGT9xfgzBEvUkU8RHuhkfLkQq1ezTHEFKfznpWveWIrIpSaqN+zPcd8tbG+5PCue
+        jkN7KItmKpvsOqeJxCniTVHNJ/Mmw/zmFquaZDGRs7y4bsTqk1zs+ON+S94TiCwxPFxodkwOSGOl
+        qE5GP5NNZmLVAQAA
+    headers:
+      cache-control: ['no-cache, must-revalidate']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [text/html; charset=UTF-8]
+      date: ['Tue, 23 Feb 2016 18:22:44 GMT']
+      expires: ['Sat, 23 Oct 1999 00:55:20 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15768000]
+    status: {code: 200, message: OK}
 version: 1

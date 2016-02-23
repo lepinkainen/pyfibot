@@ -1217,7 +1217,10 @@ def fetch_nettiX(url, fields_to_fetch):
 
 def _handle_nettiauto(url):
     """http*://*nettiauto.com/*/*/*"""
-    return fetch_nettiX(url, ['Vuosimalli', 'Mittarilukema', 'Moottori', 'Vaihteisto', 'Vetotapa'])
+    return fetch_nettiX(url, ['Vuosimallit', 'Mittarilukema', 'Moottori', 'Vaihteisto', 'Vetotapa'])
+
+
+# TODO: Update other nettiX handlers
 
 
 def _handle_nettivene(url):

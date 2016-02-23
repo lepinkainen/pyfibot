@@ -147,4 +147,82 @@ interactions:
       x-powered-by: [PHP/5.5.30]
       x-varnish: ['1292687323']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/EcstaticWelllitHarpseal
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6yU226cMBCGXwXNNd3lYGDj26bpuWqbRL3oVpWBAZza4NpDkk2Ud6+8QNREqhRl
+        e4VnNPN5fmP/t9A2u7eEGvjtflkDB6wcCZLVFSqlJHXCGodCQegrPgmNwOHVXPNtqnnzsGbUJVrg
+        kGV5nhabDEIYHdq5VxisiphBCFeypg445GkCIXQo246AA9tEEEJjhcavgnxL6hP9qE98zgGHpPAZ
+        bdi5VcChIzKOb9fbdStFT6u22VWCVtWgt+t/jLrSZj8ClvoxoxFPI/jeCWEeI6gbdemeSjFey1BK
+        hc/nvJgAs6wp+Dw4Qns488K0EII5lDYBZtq+L82jA3hpHs1yF9jBghfQ30PG0X/ixtHC1eI60+Vr
+        2TyX5+QN/rToyMqKsF61spmwyWFYLZRaYBemPeBa60lpK5vnP9FpkFY2p/LG20Bc5CzLknx6+nMy
+        jfMjlkTzW14qWbZhR95VKouC8HjykZixTZwnbOMRlxKvHPCkKIoQSJLyFackbHBmhVTbMYqSwgWy
+        D6jD4BgdWoIQ8Jqs+IBaCwe8H5UKQdeZdzuWsTqPi4bleXVURVVRlGnMBEZZHifF/p6K1gH/Digs
+        dWawfSsb561N0GhxH/wIoXfNFXDwkpzwPhp7A310irthpHFV4nb9uz4rv1y+69+n575jGG2Fc1O9
+        64UeljHdWFqsa0lLYoq86T+Mz/D6vkbJX3gvtJbuQWzGUknXYb3sh66y0pAceuDwcRecSOsoEESo
+        jf8GInD+hMmfcDD932owO+ut/6USUgvZz3vf3f0BAAD//wMA+4CkDZ8GAAA=
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['1851']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [2794f2c3abfa36de-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Tue, 23 Feb 2016 18:21:04 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d252e1fcbdc31028ef16987a302564e541456251663; expires=Wed,
+          22-Feb-17 18:21:03 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B8960B10499E0D136B44904A9FF7E1200AF9BC33EB2308C475B459AC4129063CBAD2999AB57C2C57EAEB3E16E3E75D09C1;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: [2010804372 2010603730]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/EcstaticWelllitHarpseal
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6yU226cMBCGXwXNNd3lYGDj26bpuWqbRL3oVpWBAZza4NpDkk2Ud6+8QNREqhRl
+        e4VnNPN5fmP/t9A2u7eEGvjtflkDB6wcCZLVFSqlJHXCGodCQegrPgmNwOHVXPNtqnnzsGbUJVrg
+        kGV5nhabDEIYHdq5VxisiphBCFeypg445GkCIXQo246AA9tEEEJjhcavgnxL6hP9qE98zgGHpPAZ
+        bdi5VcChIzKOb9fbdStFT6u22VWCVtWgt+t/jLrSZj8ClvoxoxFPI/jeCWEeI6gbdemeSjFey1BK
+        hc/nvJgAs6wp+Dw4Qns488K0EII5lDYBZtq+L82jA3hpHs1yF9jBghfQ30PG0X/ixtHC1eI60+Vr
+        2TyX5+QN/rToyMqKsF61spmwyWFYLZRaYBemPeBa60lpK5vnP9FpkFY2p/LG20Bc5CzLknx6+nMy
+        jfMjlkTzW14qWbZhR95VKouC8HjykZixTZwnbOMRlxKvHPCkKIoQSJLyFackbHBmhVTbMYqSwgWy
+        D6jD4BgdWoIQ8Jqs+IBaCwe8H5UKQdeZdzuWsTqPi4bleXVURVVRlGnMBEZZHifF/p6K1gH/Digs
+        dWawfSsb561N0GhxH/wIoXfNFXDwkpzwPhp7A310irthpHFV4nb9uz4rv1y+69+n575jGG2Fc1O9
+        64UeljHdWFqsa0lLYoq86T+Mz/D6vkbJX3gvtJbuQWzGUknXYb3sh66y0pAceuDwcRecSOsoEESo
+        jf8GInD+hMmfcDD932owO+ut/6USUgvZz3vf3f0BAAD//wMA+4CkDZ8GAAA=
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['0']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [2794f51aeb3905bb-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Tue, 23 Feb 2016 18:22:40 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d031cf3e68ca5051b495fa32c21400b411456251759; expires=Wed,
+          22-Feb-17 18:22:39 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B86F5C623795D8FF53189ED1BE5A8F9DDFCC48A241AAAFCAAE2B7D4A1713A706513C7A3F0F7641DEEC5E41FA6B256616B1;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: ['1778138247']
+    status: {code: 200, message: OK}
 version: 1

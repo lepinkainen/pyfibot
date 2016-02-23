@@ -248,4 +248,240 @@ interactions:
       server: [lighttpd]
       x-discogs-media-type: [discogs.v2]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [!!python/unicode pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/releases/249504
+  response:
+    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
+        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
+        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
+        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
+        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
+        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
+        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
+        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
+        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
+        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
+        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
+        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
+        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
+        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
+        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
+        3.44}, "want": 98, "contributors": [{"username": "memory", "resource_url":
+        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
+        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
+        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
+        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
+        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
+        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
+        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
+        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
+        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
+        "https://api.discogs.com/users/djcarbines"}], "have": 507, "submitter": {"username":
+        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
+        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
+        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
+        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
+        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
+        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
+        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
+        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
+        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
+        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
+        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
+        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
+        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
+        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
+        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
+        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
+        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
+        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
+        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
+        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
+        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
+        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
+        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
+        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
+        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
+        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
+        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
+        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
+        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
+        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
+        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
+        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
+        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
+        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
+        are the exclusive licensees for the world.\n\nDurations do not appear on the
+        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
+        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
+        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
+        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
+        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
+        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
+        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
+        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
+        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
+        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
+        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
+        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
+        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
+        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
+        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
+        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
+        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
+        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
+        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
+        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
+        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
+        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
+        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
+        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
+        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
+        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
+        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
+        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
+        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
+        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
+        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
+        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
+        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
+        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
+        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
+        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
+        "Correct"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['7949']
+      content-type: [application/json]
+      date: ['Tue, 23 Feb 2016 18:21:02 GMT']
+      server: [nginx/1.8.1]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [!!python/unicode pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/releases/249504
+  response:
+    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
+        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
+        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
+        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
+        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
+        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
+        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
+        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
+        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
+        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
+        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
+        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
+        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
+        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
+        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
+        3.44}, "want": 98, "contributors": [{"username": "memory", "resource_url":
+        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
+        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
+        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
+        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
+        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
+        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
+        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
+        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
+        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
+        "https://api.discogs.com/users/djcarbines"}], "have": 507, "submitter": {"username":
+        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
+        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
+        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
+        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
+        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
+        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
+        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
+        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
+        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
+        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
+        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
+        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
+        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
+        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
+        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
+        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
+        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
+        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
+        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
+        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
+        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
+        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
+        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
+        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
+        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
+        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
+        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
+        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
+        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
+        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
+        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
+        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
+        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
+        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
+        are the exclusive licensees for the world.\n\nDurations do not appear on the
+        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
+        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
+        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
+        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
+        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
+        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
+        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
+        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
+        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
+        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
+        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
+        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
+        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
+        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
+        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
+        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
+        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
+        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
+        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
+        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
+        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
+        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
+        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
+        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
+        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
+        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
+        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
+        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
+        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
+        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
+        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
+        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
+        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
+        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
+        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
+        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
+        "Correct"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['7949']
+      content-type: [application/json]
+      date: ['Tue, 23 Feb 2016 18:22:37 GMT']
+      server: [nginx/1.8.1]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
 version: 1

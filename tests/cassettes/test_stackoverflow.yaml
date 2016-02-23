@@ -127,4 +127,68 @@ interactions:
       date: ['Tue, 29 Dec 2015 09:22:03 GMT']
       x-content-type-options: [nosniff]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
+        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
+        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
+        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
+        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
+        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
+        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
+        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWU58+/+Acdw+IC
+        AAA=
+    headers:
+      access-control-allow-credentials: ['false']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      cache-control: [private]
+      content-encoding: [gzip]
+      content-length: ['458']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:20:46 GMT']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
+        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
+        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
+        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
+        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
+        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
+        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
+        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWUZ8+/uTYG2uIC
+        AAA=
+    headers:
+      access-control-allow-credentials: ['false']
+      access-control-allow-methods: ['GET, POST']
+      access-control-allow-origin: ['*']
+      cache-control: [private]
+      content-encoding: [gzip]
+      content-length: ['458']
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 23 Feb 2016 18:22:23 GMT']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
 version: 1
