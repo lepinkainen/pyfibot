@@ -42,7 +42,7 @@ def add_op(channel, hostmask, modes='o'):
 def remove_op(channel, hostmask):
     if get_op_status(channel, hostmask):
         conn, c = open_DB()
-        c.execute('DELETE FROM autoops WHERE channel = ? AND hostmask = ?;', (channel, hostmask))
+        c.execute('DELETE FROM autoops WHERE channel = ? AND ? GLOB hostmask;', (channel, hostmask))
         conn.commit()
         conn.close()
         return True
@@ -50,7 +50,7 @@ def remove_op(channel, hostmask):
 
 def get_op_status(channel, hostmask):
     conn, c = open_DB()
-    c.execute('SELECT * FROM autoops WHERE channel = ? AND hostmask = ? LIMIT 1;', (channel, hostmask))
+    c.execute('SELECT * FROM autoops WHERE channel = ? AND ? GLOB hostmask LIMIT 1;', (channel, hostmask))
     if c.fetchone():
         retval = True
     else:
@@ -61,7 +61,7 @@ def get_op_status(channel, hostmask):
 
 def get_user_channels(hostmask):
     conn, c = open_DB()
-    c.execute('SELECT channel FROM autoops WHERE hostmask = ?;', (hostmask,))
+    c.execute('SELECT channel FROM autoops WHERE ? GLOB hostmask;', (hostmask,))
     rows = c.fetchall()
     conn.close()
     return rows
