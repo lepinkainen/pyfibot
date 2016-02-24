@@ -437,11 +437,30 @@ def _handle_tweet(url):
 
     retweets = tweet['retweet_count']
     favorites = tweet['favorite_count']
-    #created = tweet['created_at']
-    #created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
-    #tweet_age = datetime.now() - created_date
+    created = tweet['created_at']
+    created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
 
-    tweet = "@%s (%s): %s [♺ %d ♥ %d]" % (user, name, text, retweets, favorites)
+    def twit_timestr(dt):
+        """A coarse timestr function"""
+
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        td = datetime.now() - dt
+        if td.days > 30 * 6:
+            return "%i %s %i" % (dt.day, months[dt.month - 1], dt.year)
+        elif td.days > 30:
+            return "%i %s" % (dt.day, months[dt.month - 1])
+        elif td.days:
+            return "%id" % td.days
+        elif td.seconds > 3600:
+            return "%ih" % (td.seconds / 3600)
+        elif td.seconds > 60:
+            return "%im" % (td.seconds / 60)
+        else:
+            return "now"
+
+
+    tweet = "{0} (@{1}) {2}: {3} [♺ {4} ♥ {5}]".format(name, user, twit_timestr(created_date), text, retweets, favorites)
     return tweet
 
 
