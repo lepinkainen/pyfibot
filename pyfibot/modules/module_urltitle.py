@@ -431,10 +431,13 @@ def _handle_tweet(url):
             log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
         return
 
+    print(tweet)
+
     text = tweet['text'].strip()
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
-
+    verified = tweet['user']['verified']
+    
     retweets = tweet['retweet_count']
     favorites = tweet['favorite_count']
     created = tweet['created_at']
@@ -459,8 +462,11 @@ def _handle_tweet(url):
         else:
             return "now"
 
+    user = "@{0}".format(user)
+    if verified:
+        user = "✔{0}".format(user)
 
-    tweet = "{0} (@{1}) {2}: {3} [♺ {4} ♥ {5}]".format(name, user, twit_timestr(created_date), text, retweets, favorites)
+    tweet = "{0} ({1}) {2}: {3} [♻ {4} ♥ {5}]".format(name, user, twit_timestr(created_date), text, retweets, favorites)
     return tweet
 
 
