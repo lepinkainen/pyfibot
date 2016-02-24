@@ -52,13 +52,17 @@ def command_maze(bot, user, channel, args):
             bot.say(channel, "No new episodes found for %s" % show.name)
             return
 
+    print(show.network)
 
     show_id = "%s %s '%s'" % (show.name, "%dx%02d" % (next_episode.season_number, next_episode.episode_number), next_episode.title)
 
     if show.status == "Ended":
         msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (show_id, next_episode.airdate, _ago(latest_delta), show.network['name'])
     else:
-        msg = "Next episode of %s airs %s (%s) on %s" % (show_id, next_episode.airdate, _ago(next_delta), show.network['name'])
+        msg = "Next episode of {0} airs {1} ({2})".format(show_id, next_episode.airdate, _ago(next_delta))
+        # Not all shows have network info for some reason
+        if show.network:
+            msg = "{0} on {1}".format(msg, show.network['name'])
 
     bot.say(channel, msg.encode("UTF-8"))
 
