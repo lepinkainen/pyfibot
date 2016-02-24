@@ -674,26 +674,30 @@ def _handle_reddit(url):
     else:
         ending = ".json"
     json_url = url + ending
+
     content = bot.get_url(json_url)
+
     if not content:
         log.debug("No content received")
         return
     try:
         data = content.json()[0]['data']['children'][0]['data']
+        # truncate title so that the point and comment data fits
         title = data['title']
-        ups = data['ups']
-        downs = data['downs']
-        score = ups - downs
+        if len(title) > 170:
+            title = "{0:.170}…".format(title)
+
+        score = data['score']
         num_comments = data['num_comments']
         over_18 = data['over_18']
-        result = "%s - %dpts (%d ups, %d downs) - %d comments" % (title, score, ups, downs, num_comments)
-        if over_18 is True:
-            result = result + " (NSFW)"
+
+        result = "{0} [{1} pts, {2} comments]".format(title, score, num_comments)
+        if over_18:
+            result = "{0} (NSFW)".format(result)
         return result
     except:
         # parsing error, use default title
         return
-
 
 def _handle_aamulehti(url):
     """http://www.aamulehti.fi/*"""
