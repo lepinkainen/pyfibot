@@ -46,7 +46,7 @@ def init(botref):
 
 def __get_bs(url):
     """Attempt to get a beautifulsoup object for the given url"""
-    
+
     # Fetch the content and measure how long it took
     start = datetime.now()
     r = bot.get_url(url)
@@ -155,6 +155,7 @@ def __escaped_fragment(url, meta=False):
 
 
 def command_cache(bot, user, channel, args):
+    """Enable or disable url title caching"""
     global CACHE_ENABLED
     if isAdmin(user):
         CACHE_ENABLED = not CACHE_ENABLED
@@ -171,7 +172,7 @@ def handle_url(bot, user, channel, url, msg):
 
     if msg.startswith("-"):
         return
-    if re.match("(https?:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url):
+    if re.match(r"(https?:\/\/open.spotify.com\/|spotify:)(album|artist|track)([:\/])([a-zA-Z0-9]+)\/?", url):
         return  # spotify handled elsewhere
 
     if channel.lstrip("#") in config.get('disable', ''):
@@ -410,7 +411,7 @@ def _handle_tweet2(url):
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
-    test = re.match("https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
+    test = re.match(r"https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
     if not test:
         return
     # matches for unique tweet id string
@@ -434,13 +435,13 @@ def _handle_tweet(url):
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
 
-    #retweets  = tweet['retweet_count']
-    #favorites = tweet['favorite_count']
-    #created   = tweet['created_at']
+    retweets = tweet['retweet_count']
+    favorites = tweet['favorite_count']
+    #created = tweet['created_at']
     #created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
-    #tweet_age = datetime.now()-created_date
+    #tweet_age = datetime.now() - created_date
 
-    tweet = "@%s (%s): %s" % (user, name, text)
+    tweet = "@%s (%s): %s [♺ %d ♥ %d]" % (user, name, text, retweets, favorites)
     return tweet
 
 
@@ -463,9 +464,9 @@ def _handle_youtube_gdata(url):
     api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
     # match both plain and direct time url
-    match = re.match("https?://youtu.be/([^\?]+)(\?t=.*)?", url)
+    match = re.match(r"https?://youtu.be/([^\?]+)(\?t=.*)?", url)
     if not match:
-        match = re.match("https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
+        match = re.match(r"https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
     if match:
         params = {'id': match.group(1),
                   'part': 'snippet,contentDetails,statistics',
@@ -527,7 +528,7 @@ def _handle_youtube_gdata(url):
 
 def _handle_imdb(url):
     """http://*imdb.com/title/tt*"""
-    m = re.match("http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
+    m = re.match(r"http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
     if not m:
         return
 
@@ -600,7 +601,7 @@ def _handle_alko(url):
 def _handle_vimeo(url):
     """*vimeo.com/*"""
     data_url = "http://vimeo.com/api/v2/video/%s.json"
-    match = re.match("http(s?)://.*?vimeo.com/(\d+)", url)
+    match = re.match(r"http(s?)://.*?vimeo.com/(\d+)", url)
     if not match:
         return None
 
@@ -622,7 +623,7 @@ def _handle_vimeo(url):
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
     api_url = 'http://api.stackexchange.com/2.2/questions/%s'
-    match = re.match('.*stackoverflow.com/questions/([0-9]+)', url)
+    match = re.match(r'.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
         return
     question_id = match.group(1)
@@ -1252,11 +1253,11 @@ def _handle_hitbox(url):
     """http*://*hitbox.tv/*"""
 
    # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
-    if re.match("http://(help|blog)\.hitbox\.tv/.*", url):
+    if re.match(r"http://(help|blog)\.hitbox\.tv/.*", url):
         return
 
     # Hitbox titles are populated by JavaScript so they return a useless "{{meta.title}}", don't show those
-    elif not re.match("http://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
+    elif not re.match(r"http://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
         return False
 
     # For actual stream pages, let's fetch information via the hitbox API
@@ -1311,7 +1312,7 @@ def _handle_steamstore(url):
 
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
     api_url = "http://store.steampowered.com/api/appdetails/"
-    app = re.match("http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
+    app = re.match(r"http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
     params = {'appids': app.group('id'), 'cc': 'fi'}
 
     r = bot.get_url(api_url, params=params)
@@ -1351,7 +1352,7 @@ def _handle_discogs(url):
         'master': '{0[artists][0][name]} - {0[title]} - ({0[year]})',
     }
 
-    m = re.match('http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
+    m = re.match(r'http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
 
     if m:
         m = m.groups()
@@ -1386,7 +1387,7 @@ def _handle_discogs(url):
                 if field in ['Generic', 'Not Graded', 'No Cover']:
                     data[field] = field
                 else:
-                    m = re.match('(?:\w+ )+\(([A-Z]{1,2}[+-]?)( or M-)?\)',
+                    m = re.match(r'(?:\w+ )+\(([A-Z]{1,2}[+-]?)( or M-)?\)',
                                  data[field])
                     data[field] = m.group(1)
 
@@ -1415,7 +1416,7 @@ def _handle_gfycat(url):
 
     api_url = "https://gfycat.com/cajax/get/%s"
 
-    m = re.match("https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
+    m = re.match(r"https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
     if not m:
         return
 
