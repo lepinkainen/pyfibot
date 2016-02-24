@@ -20,5 +20,5 @@ try:
 except TypeError:
     bearer_token = r.json['access_token']
 
-print "Bearer token:"
-print bearer_token
+print "Paste the following to your config below module_urltitle"
+print "twitter_bearer: '%s'" % bearer_token
