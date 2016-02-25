@@ -489,9 +489,9 @@ def _handle_youtube_gdata(url):
     api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
     # match both plain and direct time url
-    match = re.match(r"https?://youtu.be/([^\?]+)(\?t=.*)?", url)
+    match = re.match(r"https?://youtu.be/([^\?]+)([\?#]t=.*)?", url)
     if not match:
-        match = re.match(r"https?://.*?youtube.com/watch\?.*?v=([^&]+)", url)
+        match = re.match(r"https?://.*?youtube.com/watch\?.*?v=([^&#]+)", url)
     if match:
         params = {'id': match.group(1),
                   'part': 'snippet,contentDetails,statistics',
