@@ -12,4 +12,4 @@ echo "      is broken, remove it and run this scrip to regenerate"
 echo
 
 source bin/activate
-VCR_RECORD_MODE=all coverage run --source pyfibot -m py.test
+VCR_RECORD_MODE=once coverage run --source pyfibot -m py.test
