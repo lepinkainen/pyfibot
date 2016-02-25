@@ -250,4 +250,33 @@ interactions:
       x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
       x-ebay-api-server-name: [___dm97MmQ3MWYrNmRhYDZ6aTUxYnUpNjMrPjEtNDcxLTYzPTs1Pjc=]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://open.api.ebay.com/shopping?ItemID=390629338875&IncludeSelector=ShippingCosts&version=515&siteid=77&appid=RikuLind-3b6d-4c30-937c-6e7d87b5d8be&callname=GetSingleItem&responseencoding=JSON
+  response:
+    body: {string: !!python/unicode '{"Timestamp":"2016-02-25T11:11:08.248Z","Ack":"Success","Build":"E949_CORE_APILW_17769283_R1","Version":"949","Item":{"ItemID":"390629338875","EndTime":"2016-03-06T00:14:04.000Z","ViewItemURLForNaturalSearch":"http://www.ebay.de/itm/New-Nano-V3-Sensor-Shield-I-O-Extension-Board-Expansion-Module-Uno-IO-f-Arduino-/390629338875","ListingType":"FixedPriceItem","Location":"Hong
+        Kong","GalleryURL":"http://thumbs4.ebaystatic.com/pict/3906293388758080_1.jpg","PictureURL":["http://i.ebayimg.com/00/s/NDUyWDUwMA==/z/Yz8AAOxyzHxRRSzB/$T2eC16FHJHIE9nysd9oSBRRSzBK7Mg~~60_1.JPG?set_id=8800005007"],"PrimaryCategoryID":"162","PrimaryCategoryName":"Computers/Tablets
+        & Networking:Other Computing & Networking","BidCount":0,"ConvertedCurrentPrice":{"Value":1.25,"CurrencyID":"EUR"},"ListingStatus":"Active","TimeLeft":"P9DT13H2M56S","Title":"New
+        Nano V3 Sensor Shield I/O Extension Board Expansion Module Uno IO f Arduino","ShippingCostSummary":{"ShippingServiceCost":{"Value":2.53,"CurrencyID":"EUR"},"ShippingType":"Flat","ListedShippingServiceCost":{"Value":2.0,"CurrencyID":"GBP"}},"Country":"HK","AutoPay":true,"QuantityAvailableHint":"MoreThan","QuantityThreshold":10}}'}
+    headers:
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-type: [text/plain;charset=utf-8]
+      date: ['Thu, 25 Feb 2016 11:11:08 GMT']
+      expires: ['Sat, 25 Dec 1999 00:00:00 GMT']
+      guid: [15318201-1670-a566-9927-f41783053340]
+      last-modified: ['Thu, 25 Feb 2016 11:11:08 GMT']
+      pragma: [no-cache]
+      server: [Apache-Coyote/1.1]
+      x-ebay-api-build-tag: [E949_CORE_APILW_17769283_R1]
+      x-ebay-api-pool-name: [___cDRidW9rdGZpdWY=]
+      x-ebay-api-server-name: [___ZW9nNGQ3MmYrYTJnYCgyNSg+NSs+MS0xNj07NT43]
+      x-ebay-request-id: ['15318201-1670-a566-9927-f41783053340!shopping!10.86.105.146!esbshopping[]']
+    status: {code: 200, message: OK}
 version: 1

@@ -287,4 +287,40 @@ interactions:
       strict-transport-security: [max-age=31536000;]
       x-content-type-options: [nosniff]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://api.spotify.com/v1/artists/3MXhtYDNuzQQmLfOKFgPiI
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAIySS2+dMBCF9/kViHUUwDYY7rqtVPWVZNUoiqqxGV9cGYyMyVP57zWGGzVKb5Wl
+        j8fnOzOep5MkSfHeoxvA/JqdmdJklzwFNejTaL1WD4uSdt6P0y7L7IjD2XZxJm2fgfN68hn99rPz
+        Vx++z48XF/1X9ePLp/25/pwGo+fThaGsMfYO3d/+nUO1HIfZmNNV8taDWTRO6cvbPQ4O48PrJO1t
+        G8Im0sA0abkU38Sig9lLUhj1q6C3xZZ1OhY2+ug2uvy3pIf9Ic+hFdT7zi9SRcutlzDNV4FCHNkO
+        IUsWDTJRq0oKwlhD6pZhzgjKshANqkIhYUqWWEpAkW5+d7r1XUSwPM7mLZw0/J1wZFxQ1QJn0HIi
+        KyELKZSs86JsBOTAOSulpOwNnObH4BV9JxvqusHQOCcsMAUUjeRVW9WQl4HJi4ISYIjlPxpf0NuH
+        D9BjxHzUg/09dzDo5BJmD7cADtafGu04G3DaxyUmcTipfxjXh+s6rJWz01HbNma33u2OrfXzHwAA
+        AP//AwDPcICDOQMAAA==
+    headers:
+      access-control-allow-credentials: ['true']
+      access-control-allow-headers: ['Accept, Authorization, Origin, Content-Type']
+      access-control-allow-methods: ['GET, POST, OPTIONS, PUT, DELETE']
+      access-control-allow-origin: ['*']
+      access-control-max-age: ['604800']
+      cache-control: ['public, max-age=7200']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Thu, 25 Feb 2016 11:11:01 GMT']
+      keep-alive: [timeout=600]
+      server: [nginx]
+      strict-transport-security: [max-age=31536000;]
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
 version: 1

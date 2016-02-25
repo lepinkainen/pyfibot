@@ -173,4 +173,33 @@ interactions:
       server: [nginx]
       strict-transport-security: [max-age=15768000]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://apina.biz/
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAz2PzU7DMBCE732KxQgKB5K0lAZoU4TEj7ggJLj0VG3sTbOqa0e2A+TtsQviYnln
+        RzPfLnm/Be9kJfKOpc+xY4PTrDNbAT4MmipRW6fI3UKxgBrlbutsb9SFtNpG8bgoot6hUmy2tzAp
+        uu+FANShEvdvL6/3AvLVsnb/7+ijZQ+eA4G0JiAbD3sM5Bg1hBZDnAYwNoDvOcBg+wwefUcy7vUA
+        3CRp7AgiAzmYXMNA6DxYrbLfntGDTR74Yt9CsIcaNj2lf2jp0H33Z10itI6aSggIHNKxzxbwKxJE
+        p8kEWCM1y10lUJMLZ+N1DJZoEp8m/KSj8flCrF7tMscV5PCfl9/xxlFCrgyR2nA4xX23cL3j6mT6
+        dBjaz6pR87KcXzX17LpsCpxcNjdNifV0NpNlXSh5OVdX0+ZmLlZr8qnjj/ste88gsaTweKHdMXkg
+        g7UmlY1+AALJqaDVAQAA
+    headers:
+      cache-control: ['no-cache, must-revalidate']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [text/html; charset=UTF-8]
+      date: ['Thu, 25 Feb 2016 11:11:23 GMT']
+      expires: ['Sat, 23 Oct 1999 00:55:20 GMT']
+      server: [nginx]
+      strict-transport-security: [max-age=15768000]
+    status: {code: 200, message: OK}
 version: 1

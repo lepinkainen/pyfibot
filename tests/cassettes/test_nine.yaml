@@ -685,4 +685,82 @@ interactions:
       x-powered-by: [HHVM/3.6.5]
       x-varnish: ['1179233050, 497361435, 1540236587']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Kimi_R%C3%A4ikk%C3%B6nen&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Thu, 25 Feb 2016 11:11:27 GMT']
+      location: ['https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Kimi_R%C3%A4ikk%C3%B6nen&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
+          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3031 frontend int(0)]
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-varnish: ['570572830']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['WMF-Last-Access=25-Feb-2016; GeoIP=:::::v6']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Kimi_R%C3%A4ikk%C3%B6nen&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA31VwW7jNhD9FUKnFnAUO0mdTWD40G6DFrvuYffYLYqxzVQjUaQqkkbVYP+9b0TJ
+        chphDUOiRM7MmzdvRi/ZnsKhOLi6MTro7DHLFtnfUbdd9viSWdfWZPhffcwef3/JnltX48QHrvnP
+        T1/icqnvuKpk8by22sIyuGFfze1//WORNfSX9uJ7tb57t5SFvGEE6F8sMotd3AIHo7/lbJHpf0JL
+        h4BDm2a72W/l6NWOApOfs9hc77fqO5+r1X2ujKuoijGQWj3cP6iffePc98pZ5aNDysQwUBSDi22h
+        2XBJCv8n8BENbNSVp7Ykq2oiNjXZWvtALefqlxQYxiVdGDx6nzbUk25bnLwKZAx7T/nmutl+sUhh
+        BrMi4zgEvowcW7Ke1GeKe92ywctTdNaSulkuV/lc5sozt6FjtTt8pFZbGGlVUTzqyrOY3UhyVDpW
+        IyoFBiidsXJiDcaaJkYg8gFpTp5IFWPKnktBG1k11BbEdS37YCk49n2s3S4RJxHg3Pf2cH8rAHD/
+        IVcfLnDdX/pOKYDWWlx+PuBYyzTyKSnBxynRddT7rsMiMSMIxrxeFyxKfm8588KZa7iOfvJPqknH
+        0jUImomgB1Wm96bS2i4EyxvsrYCwZxIA6ycOreuP7S12qmhKHQJyBAHzpeyr1DsSBoUn5AgTRATJ
+        0PMZBugf7CUdqFrS72ABKH7kg+zAeCrE6mY2aIOO8CKOitgD5//7AJl8dCH6GVE/raaKz7kO0Vod
+        xIPRdcOWa0AZWmXD218PGsXaXPNWErQVjcpLoV5VBM+jZ/UJrfxeW8tekYX8zsXQIhRsIDSKB+J6
+        /efqN5kzIRqtp6NWnZiNTo8+DKhQ2ZZi0WcqIlIOyGPVr5EGhD4cPA2w2DY8GNejdhLMuuuOenQ8
+        quWCXEMli3z8WEhmkXJDRYg11t+eHaAAHRqEZNaWrI3hPN78q7nmDJ8bY2rWS2M6kZpMpoHzkEuV
+        AHmvvVTpyugC/TdMggvag7pd5/KepADnYJ6OuJ6Iqwj9nMgEUVgtW2WEhn3foarQtmIzpKZM0q+w
+        PSF5N5HxYyuxE5L3CNSpHa4TqNlvijSJxmchRpFq39G3qxnEaIGqYulErlyJ+91Sxh2JEp5T6aY2
+        Ro8O6kFgbfQoiVHhUyYT+pVE7TqfPk/oydtxBikgSBnMgZcmRZmGWSfTRMaDTAfUU9o7TbSqf8jz
+        t07rLjkrNAa3nY1RUqimGMMUPw+P9ZSELLKv+P0H0uHaVmEIAAA=
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      backend-timing: [D=42909 t=1456398687774318]
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['950']
+      content-type: [application/json; charset=utf-8]
+      date: ['Thu, 25 Feb 2016 11:11:27 GMT']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
+      x-cache: ['cp1054 pass+chfp(0), cp3031 pass+chfp(0), cp3007 frontend pass+chfp(0)']
+      x-client-ip: ['2001:1bc8:1004::1']
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-powered-by: [HHVM/3.6.5]
+      x-varnish: ['4086024927, 106036930, 1543805904']
+    status: {code: 200, message: OK}
 version: 1

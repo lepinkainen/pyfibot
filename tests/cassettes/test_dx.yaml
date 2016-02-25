@@ -345,4 +345,39 @@ interactions:
       x-aspnetmvc-version: ['4.0']
       x-powered-by: [ASP.NET]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: [!!python/unicode DXGlobalization=lang=en&locale=en-US&currency=EUR]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://www.dx.com/bi/GetSKUInfo?sku=151659
+  response:
+    body: {string: "{\"success\":true,\"products\":[{\"sku\":151659,\"headLine\":\"Wireless
+        Bluetooth Audio Music Receiver Adapter - Black\",\"shortHeadline\":\"Wireless
+        Bluetooth Audio Music R...\",\"rewriteUrl\":\"http://www.dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659\",\"imageUrl\":\"//img.dxcdn.com/productimages/sku_151659_1_small.jpg\",\"listPrice\":\"\u20AC25.91\",\"price\":\"\u20AC14.39\",\"avgRating\":4,\"reviewCount\":25,\"isDeliveryTag\":false,\"category\":\"Bluetooth
+        &amp; IrDA\",\"categoryUrl\":\"http://www.dx.com/c/bluetooth-irda-304\",\"reviewUrl\":\"//club.dx.com/reviews/text/151659\",\"innerTag\":\"tag_mvp\",\"discountInfo\":\"\\u003cb\\u003e44%\\u003c/b\\u003e
+        OFF\",\"clearanceTip\":\"\"}]}"}
+    headers:
+      cache-control: [private]
+      connection: [keep-alive]
+      content-length: ['652']
+      content-type: [application/json; charset=utf-8]
+      date: ['Thu, 25 Feb 2016 11:11:09 GMT']
+      server: [nginx/1.8.1]
+      set-cookie: ['ASP.NET_SessionId=qlp0ixt45fqkzbb14neq2vgh; domain=.dx.com; expires=Fri,
+          11-Mar-2016 11:11:09 GMT; path=/; HttpOnly', 'ASP.NET_SessionId=qlp0ixt45fqkzbb14neq2vgh;
+          domain=.dx.com; expires=Fri, 11-Mar-2016 11:11:09 GMT; path=/; HttpOnly',
+        'DXGlobalization_lang=en; domain=.dx.com; expires=Fri, 11-Mar-2016 11:11:09
+          GMT; path=/', 'DXGlobalization_locale=en-US; domain=.dx.com; expires=Fri,
+          11-Mar-2016 11:11:09 GMT; path=/', 'DXGlobalization_currency=EUR; domain=.dx.com;
+          expires=Fri, 11-Mar-2016 11:11:09 GMT; path=/', sessionCookie=3ecb3164-53ee-4a94-b26c-45caeb8e2c15;
+          domain=.dx.com; path=/]
+      x-aspnet-version: [4.0.30319]
+      x-aspnetmvc-version: ['4.0']
+      x-powered-by: [ASP.NET]
+    status: {code: 200, message: OK}
 version: 1

@@ -304,4 +304,37 @@ interactions:
       server: [nginx/1.8.1]
       x-discogs-media-type: [discogs.v2]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      user-agent: [!!python/unicode pyfibot-urltitle]
+    method: GET
+    uri: https://api.discogs.com/users/rodneyfool
+  response:
+    body: {string: !!python/unicode '{"profile": "I am a developer for Discogs. I
+        work mostly on the Discogs Database, the [url=https://www.discogs.com/developers]Discogs
+        API[/url], and the [url=https://www.github.com/discogs/discogs_client]Discogs
+        API Client[/url].\r\n\r\n[img=https://i.imgur.com/THJet5f.jpg]", "wantlist_url":
+        "https://api.discogs.com/users/rodneyfool/wants", "rank": 462.0, "num_pending":
+        137, "id": 1578108, "num_for_sale": 0, "home_page": "", "location": "Deep
+        Space", "collection_folders_url": "https://api.discogs.com/users/rodneyfool/collection/folders",
+        "username": "rodneyfool", "collection_fields_url": "https://api.discogs.com/users/rodneyfool/collection/fields",
+        "releases_contributed": 10, "registered": "2012-08-15T21:13:36-07:00", "rating_avg":
+        3.54, "num_collection": 103, "releases_rated": 192, "num_lists": 3, "name":
+        "Rodney", "num_wantlist": 200, "inventory_url": "https://api.discogs.com/users/rodneyfool/inventory",
+        "uri": "https://www.discogs.com/user/rodneyfool", "avatar_url": "https://cdn.discogs.com/Icz2ia2xFkYP-JpbH-mc0ZFkwCo=/500x500/filters:strip_icc():format(jpeg)/discogs-avatars/U-1578108-1439845197.png.jpg",
+        "resource_url": "https://api.discogs.com/users/rodneyfool"}'}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: ['public, must-revalidate']
+      connection: [keep-alive]
+      content-length: ['1185']
+      content-type: [application/json]
+      date: ['Thu, 25 Feb 2016 11:11:19 GMT']
+      server: [nginx/1.8.1]
+      x-discogs-media-type: [discogs.v2]
+    status: {code: 200, message: OK}
 version: 1
