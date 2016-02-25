@@ -1150,7 +1150,7 @@ def _handle_dealextreme_www(url):
 
 
 def _handle_instagram(url):
-    """http*://instagram.com/p/*"""
+    """http*://*instagram.com/p/*"""
     from instagram.client import InstagramAPI
 
     CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
@@ -1158,7 +1158,7 @@ def _handle_instagram(url):
     api = InstagramAPI(client_id=CLIENT_ID)
 
     # todo: instagr.am
-    m = re.search('instagram\.com/p/([^/]+)', url)
+    m = re.search(r"instagram\.com/p/([^/]+)", url)
     if not m:
         return
 
@@ -1167,8 +1167,6 @@ def _handle_instagram(url):
     r = bot.get_url("http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
 
     media = api.media(r.json()['media_id'])
-
-    print(media)
 
     # media type video/image?
     # age/date? -> media.created_time  # (datetime object)
@@ -1179,10 +1177,25 @@ def _handle_instagram(url):
     else:
         user = media.user.full_name
 
-    if media.caption:
-        return "%s: %s [%d likes, %d comments]" % (user, media.caption.text, media.like_count, media.comment_count)
+    if media.like_count or media.comment_count:
+        info = "["
+        if media.like_count:
+            info += "%d ♥" % media.like_count
+        if media.comment_count:
+            info += ", %d comments" % media.comment_count
+        info += "]"
     else:
-        return "%s [%d likes, %d comments]" % (user, media.like_count, media.comment_count)
+        info = ""
+
+    if media.caption:
+        if len(media.caption.text) > 145:
+            caption = "{0:.145}…".format(media.caption.text)
+        else:
+            caption = media.caption.text
+
+        return "%s: %s %s" % (user, caption, info)
+    else:
+        return "%s: %s" % (user, info)
 
 
 def fetch_nettiX(url, fields_to_fetch):
