@@ -225,4 +225,121 @@ interactions:
       x-powered-by: [PHP/5.5.30]
       x-varnish: ['1778138247']
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/EcstaticWelllitHarpseal
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6yU227bMAyGX8XgtZf47ES367rzsK0tdrEMg2zTtjrJ1iS6aVr03QfFdrEEGFA0
+        u7JIkJ/4y9J/D029e0uogN3vlxUwwNISJ1FuUUopqOVGW+QSfFfxiSsEBq+mmm9jzZvDmkEVaIBB
+        mmZZnK9S8GGwaKZerrHMwwR82IqKWmCQxRH40KJoWgIGySoAH2rDFX7l5Fpil+gGde5yFhhEucso
+        nVwZCQxaIm3ZZrlZNoJ3tGjqXclpUfZqs/zHqAul9yNgoY4ZNX8awfWOCH2MoHZQhX0qRTstfSEk
+        Pp/zYgRMssbgc28JzenMa92AD/pU2giYaPu+OAtO4MVZMMmdYScLnkF/DxkG/4kbBjNX8dtUFa9F
+        /VyeFXf406AlI0rCatGIesRGp2EVl3KGXevmhGutRqWNqJ//RMdBGlFfiDtnA2GeJWkaZePTn5Jx
+        mK2TKJje8lyZpKtk7VylNMgJz0YfCZNkFWZRsnKIG4FbCyzK87UPJEi6igvixrs0XMjNEARRbj3R
+        edSid4YWDYEPeEuGf0CluAXWDVL6oKrUuV2SJlUW5nWSZeW6DMo8L+Iw4RikWRjl+3vKGwvsOyA3
+        1OredI2orbM2ToPBffDDh87WW2DgJFnufDR0Bnp0irt+oGFR4Gb5u7osvty8697HV66jH0yJU1O1
+        67jq5zHtUBisKkFzYoyc6R/Gl3j7WCPFL3wUWgl7EOuhkMK2WM37oS2N0CT6Dhh83HnnwljyOBEq
+        7b4e96w7YXIn7I3/t+z1zjjrfym5UFx0094PD38AAAD//wMAhEEmH58GAAA=
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['0']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [27a2d46f04d53702-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Thu, 25 Feb 2016 10:47:02 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d8e2a917b57da8f8bfda35c5afcd54fb81456397222; expires=Fri,
+          24-Feb-17 10:47:02 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B86F5C623795D8FF53189ED1BE5A8F9DDFCC48A241AAAFCAAE2B7D4A1713A706513C7A3F0F7641DEEC5E41FA6B256616B1;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: ['1792469805']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/EcstaticWelllitHarpseal
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6yU227bMAyGX8XgtZf47ES367rzsK0tdrEMg2zTtjrJ1iS6aVr03QfFdrEEGFA0
+        u7JIkJ/4y9J/D029e0uogN3vlxUwwNISJ1FuUUopqOVGW+QSfFfxiSsEBq+mmm9jzZvDmkEVaIBB
+        mmZZnK9S8GGwaKZerrHMwwR82IqKWmCQxRH40KJoWgIGySoAH2rDFX7l5Fpil+gGde5yFhhEucso
+        nVwZCQxaIm3ZZrlZNoJ3tGjqXclpUfZqs/zHqAul9yNgoY4ZNX8awfWOCH2MoHZQhX0qRTstfSEk
+        Pp/zYgRMssbgc28JzenMa92AD/pU2giYaPu+OAtO4MVZMMmdYScLnkF/DxkG/4kbBjNX8dtUFa9F
+        /VyeFXf406AlI0rCatGIesRGp2EVl3KGXevmhGutRqWNqJ//RMdBGlFfiDtnA2GeJWkaZePTn5Jx
+        mK2TKJje8lyZpKtk7VylNMgJz0YfCZNkFWZRsnKIG4FbCyzK87UPJEi6igvixrs0XMjNEARRbj3R
+        edSid4YWDYEPeEuGf0CluAXWDVL6oKrUuV2SJlUW5nWSZeW6DMo8L+Iw4RikWRjl+3vKGwvsOyA3
+        1OredI2orbM2ToPBffDDh87WW2DgJFnufDR0Bnp0irt+oGFR4Gb5u7osvty8697HV66jH0yJU1O1
+        67jq5zHtUBisKkFzYoyc6R/Gl3j7WCPFL3wUWgl7EOuhkMK2WM37oS2N0CT6Dhh83HnnwljyOBEq
+        7b4e96w7YXIn7I3/t+z1zjjrfym5UFx0094PD38AAAD//wMAhEEmH58GAAA=
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['1869']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [27a2da092e7a05af-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Thu, 25 Feb 2016 10:50:51 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=dfa744ccecbd79a614204f220936446f71456397451; expires=Fri,
+          24-Feb-17 10:50:51 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B8960B10499E0D136B44904A9FF7E1200AF9BC33EB2308C475B459AC4129063CBA85B180E94588869669B8CE501B3E8F88;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: [1496940256 1496843165]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://gfycat.com/cajax/get/EcstaticWelllitHarpseal
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA6yU227bMAyGX8XgtZf47ES367rzsK0tdrEMg2zTtjrJ1iS6aVr03QfFdrEEGFA0
+        u7JIkJ/4y9J/D029e0uogN3vlxUwwNISJ1FuUUopqOVGW+QSfFfxiSsEBq+mmm9jzZvDmkEVaIBB
+        mmZZnK9S8GGwaKZerrHMwwR82IqKWmCQxRH40KJoWgIGySoAH2rDFX7l5Fpil+gGde5yFhhEucso
+        nVwZCQxaIm3ZZrlZNoJ3tGjqXclpUfZqs/zHqAul9yNgoY4ZNX8awfWOCH2MoHZQhX0qRTstfSEk
+        Pp/zYgRMssbgc28JzenMa92AD/pU2giYaPu+OAtO4MVZMMmdYScLnkF/DxkG/4kbBjNX8dtUFa9F
+        /VyeFXf406AlI0rCatGIesRGp2EVl3KGXevmhGutRqWNqJ//RMdBGlFfiDtnA2GeJWkaZePTn5Jx
+        mK2TKJje8lyZpKtk7VylNMgJz0YfCZNkFWZRsnKIG4FbCyzK87UPJEi6igvixrs0XMjNEARRbj3R
+        edSid4YWDYEPeEuGf0CluAXWDVL6oKrUuV2SJlUW5nWSZeW6DMo8L+Iw4RikWRjl+3vKGwvsOyA3
+        1OredI2orbM2ToPBffDDh87WW2DgJFnufDR0Bnp0irt+oGFR4Gb5u7osvty8697HV66jH0yJU1O1
+        67jq5zHtUBisKkFzYoyc6R/Gl3j7WCPFL3wUWgl7EOuhkMK2WM37oS2N0CT6Dhh83HnnwljyOBEq
+        7b4e96w7YXIn7I3/t+z1zjjrfym5UFx0094PD38AAAD//wMAhEEmH58GAAA=
+    headers:
+      access-control-allow-origin: ['*']
+      age: ['2042']
+      cache-control: ['max-age=3600, public', no-cache="set-cookie"]
+      cf-ray: [27a2de428b893744-ARN]
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json]
+      date: ['Thu, 25 Feb 2016 10:53:44 GMT']
+      server: [cloudflare-nginx]
+      set-cookie: ['__cfduid=d0b41c6e439bf771a5925bef1415adbc51456397624; expires=Fri,
+          24-Feb-17 10:53:44 GMT; path=/; domain=.gfycat.com; HttpOnly', AWSELB=45571F3D1CB564660610CD8E78AF6C77C484B1D1B8960B10499E0D136B44904A9FF7E1200AF9BC33EB2308C475B459AC4129063CBA85B180E94588869669B8CE501B3E8F88;PATH=/;MAX-AGE=200]
+      via: [1.1 varnish]
+      x-powered-by: [PHP/5.5.30]
+      x-varnish: [1496949083 1496843165]
+    status: {code: 200, message: OK}
 version: 1

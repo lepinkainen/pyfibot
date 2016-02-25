@@ -702,4 +702,187 @@ interactions:
       via: [1.1 varnish]
       x-varnish: [1120371825 1120371666]
     status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://areena-v3.yle.fi/tv/3210197.json
+  response:
+    body: {string: !!python/unicode '{ "prodNumber": null, "playCount": 94, "links":
+        [ ], "reportCategory": "uutiset", "naviCategory": "tv_uutiset", "pageTitle":
+        "Jouluruoka eri puolella Suomea", "pageDesc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "masterPrograms": [ ], "masterSerieses":
+        [ { "id": "2418425", "rootId": "2418425", "episodeCountViewable": 257, "clipCountViewable":
+        4811, "episodeCountTotal": 3057, "name": "Ylen aamu-tv", "shortDesc": null,
+        "headLine": null, "img": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "uiMegaImg": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_334_aamutv2015-sarja1024.jpg",
+        "images":  { "orig": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "XS": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_65.jpg",
+        "S": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_160.jpg",
+        "M": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_220.jpg",
+        "L": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_620.jpg",
+        "XL": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg"
+        } } ], "series": null, "availableClips": [ ], "media":  { "id": "29-0_ng88dhvd",
+        "protection": 1, "contentId": null, "type": "video", "audioLang": "", "duration":
+        652, "subtitles": [ ], "downloadUrl": "" }, "downloadableMedias": [ ], "daysSincePublish":
+        64, "reportingTitle": "Jouluruoka eri puolella Suomea", "reportingAudio":
+        null, "images":  { "orig": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XS": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "S": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "M": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "L": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XL": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280"
+        }, "directlyPlayable": true, "published": "2015-12-23T08:55:00", "expires":
+        null, "classifications":  { "main": [ { "children": [ { "key": "uutisohjelmat",
+        "keyPath": "tv/uutiset/uutisohjelmat", "name": "Uutisohjelmat", "id": "163"
+        } ], "key": "uutiset", "keyPath": "tv/uutiset", "name": "Uutiset", "id": "162"
+        } ] }, "id": "3210197", "contentType": "CLIP", "type": "video", "title": "Jouluruoka
+        eri puolella Suomea", "desc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "headLine": null, "headLineText": null,
+        "duration": 10, "durationSec": 652, "ageLimit": "1", "restrictions": [ ],
+        "international": true, "broadcasted": null, "latestPublicationUiChannelName":
+        "Yle TV1" } '}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [keep-alive]
+      content-length: ['3438']
+      content-type: [application/json;charset=utf-8]
+      date: ['Thu, 25 Feb 2016 10:46:32 GMT']
+      server: [Apache-Coyote/1.1]
+      via: [1.1 varnish]
+      x-varnish: ['1272561434']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://areena-v3.yle.fi/tv/3210197.json
+  response:
+    body: {string: !!python/unicode '{ "prodNumber": null, "playCount": 94, "links":
+        [ ], "reportCategory": "uutiset", "naviCategory": "tv_uutiset", "pageTitle":
+        "Jouluruoka eri puolella Suomea", "pageDesc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "masterPrograms": [ ], "masterSerieses":
+        [ { "id": "2418425", "rootId": "2418425", "episodeCountViewable": 257, "clipCountViewable":
+        4811, "episodeCountTotal": 3057, "name": "Ylen aamu-tv", "shortDesc": null,
+        "headLine": null, "img": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "uiMegaImg": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_334_aamutv2015-sarja1024.jpg",
+        "images":  { "orig": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "XS": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_65.jpg",
+        "S": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_160.jpg",
+        "M": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_220.jpg",
+        "L": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_620.jpg",
+        "XL": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg"
+        } } ], "series": null, "availableClips": [ ], "media":  { "id": "29-0_ng88dhvd",
+        "protection": 1, "contentId": null, "type": "video", "audioLang": "", "duration":
+        652, "subtitles": [ ], "downloadUrl": "" }, "downloadableMedias": [ ], "daysSincePublish":
+        64, "reportingTitle": "Jouluruoka eri puolella Suomea", "reportingAudio":
+        null, "images":  { "orig": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XS": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "S": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "M": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "L": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XL": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280"
+        }, "directlyPlayable": true, "published": "2015-12-23T08:55:00", "expires":
+        null, "classifications":  { "main": [ { "children": [ { "key": "uutisohjelmat",
+        "keyPath": "tv/uutiset/uutisohjelmat", "name": "Uutisohjelmat", "id": "163"
+        } ], "key": "uutiset", "keyPath": "tv/uutiset", "name": "Uutiset", "id": "162"
+        } ] }, "id": "3210197", "contentType": "CLIP", "type": "video", "title": "Jouluruoka
+        eri puolella Suomea", "desc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "headLine": null, "headLineText": null,
+        "duration": 10, "durationSec": 652, "ageLimit": "1", "restrictions": [ ],
+        "international": true, "broadcasted": null, "latestPublicationUiChannelName":
+        "Yle TV1" } '}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [keep-alive]
+      content-length: ['3438']
+      content-type: [application/json;charset=utf-8]
+      date: ['Thu, 25 Feb 2016 10:50:19 GMT']
+      server: [Apache-Coyote/1.1]
+      via: [1.1 varnish]
+      x-varnish: ['1272562509']
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://areena-v3.yle.fi/tv/3210197.json
+  response:
+    body: {string: !!python/unicode '{ "prodNumber": null, "playCount": 94, "links":
+        [ ], "reportCategory": "uutiset", "naviCategory": "tv_uutiset", "pageTitle":
+        "Jouluruoka eri puolella Suomea", "pageDesc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "masterPrograms": [ ], "masterSerieses":
+        [ { "id": "2418425", "rootId": "2418425", "episodeCountViewable": 257, "clipCountViewable":
+        4811, "episodeCountTotal": 3057, "name": "Ylen aamu-tv", "shortDesc": null,
+        "headLine": null, "img": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "uiMegaImg": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_334_aamutv2015-sarja1024.jpg",
+        "images":  { "orig": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg",
+        "XS": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_65.jpg",
+        "S": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_160.jpg",
+        "M": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_220.jpg",
+        "L": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_620.jpg",
+        "XL": "http://areena-v3.yle.fi/static/mk/images/areena/series/69267763_621_aamutv2015-sarja940_720.jpg"
+        } } ], "series": null, "availableClips": [ ], "media":  { "id": "29-0_ng88dhvd",
+        "protection": 1, "contentId": null, "type": "video", "audioLang": "", "duration":
+        652, "subtitles": [ ], "downloadUrl": "" }, "downloadableMedias": [ ], "daysSincePublish":
+        64, "reportingTitle": "Jouluruoka eri puolella Suomea", "reportingAudio":
+        null, "images":  { "orig": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XS": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "S": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "M": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "L": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280",
+        "XL": "http://cfvod.kaltura.com/p/1955031/sp/0/thumbnail/entry_id/0_ng88dhvd/width/1280"
+        }, "directlyPlayable": true, "published": "2015-12-23T08:55:00", "expires":
+        null, "classifications":  { "main": [ { "children": [ { "key": "uutisohjelmat",
+        "keyPath": "tv/uutiset/uutisohjelmat", "name": "Uutisohjelmat", "id": "163"
+        } ], "key": "uutiset", "keyPath": "tv/uutiset", "name": "Uutiset", "id": "162"
+        } ] }, "id": "3210197", "contentType": "CLIP", "type": "video", "title": "Jouluruoka
+        eri puolella Suomea", "desc": "Miksi suomalaisessa joulup\u00f6yd\u00e4ss\u00e4
+        on kinkku ja laatikoita? Ent\u00e4 millaisia eroja l\u00f6ytyy juhlap\u00f6ydist\u00e4
+        id\u00e4ss\u00e4 ja l\u00e4nness\u00e4? Kysymyksiin vastasivat Ruokatiedon
+        viestint\u00e4p\u00e4\u00e4llikk\u00f6 Minna Asunmaa ja Maa- ja mets\u00e4talousnaisten
+        kotitalousopettaja Helena Velin.", "headLine": null, "headLineText": null,
+        "duration": 10, "durationSec": 652, "ageLimit": "1", "restrictions": [ ],
+        "international": true, "broadcasted": null, "latestPublicationUiChannelName":
+        "Yle TV1" } '}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [keep-alive]
+      content-length: ['3438']
+      content-type: [application/json;charset=utf-8]
+      date: ['Thu, 25 Feb 2016 10:53:21 GMT']
+      server: [Apache-Coyote/1.1]
+      via: [1.1 varnish]
+      x-varnish: ['1272562970']
+    status: {code: 200, message: OK}
 version: 1
