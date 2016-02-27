@@ -18,31 +18,37 @@ def botmock():
     module_urltitle.init(bot)
     return bot
 
-lengh_str_regex = u'\d+(h|m|s)(\d+(m))?(\d+s)?'
+length_str_regex = u'\d+(h|m|s)(\d+(m))?(\d+s)?'
 views_str_regex = u'\d+(\.\d+)?(k|M|Billion|Trillion)?'
-age_str_regex = u'(FRESH|(\d+(\.\d+)?(y|d) ago))'
+age_str_regex = u'(FRESH|(\d+(\.\d+)?(y|d) (ago|from now)))'
 
 
 @my_vcr.use_cassette
 def test_areena_radio(botmock):
-    regex = u'Title: (.*?) \[%s - %s plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = u'Title: (.*?) \[%s - %s( - exits in %s)?\]' % (length_str_regex, age_str_regex, age_str_regex)
     msg = "http://areena.yle.fi/1-2006973"
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
 @my_vcr.use_cassette
 def test_areena_tv(botmock):
-    regex = u'Title: (.*?) \[%s - %s plays - %s( - exits in \d+ (weeks|days|hours|minutes))?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = u'Title: (.*?) \[%s - %s( - exits in %s)?\]' % (length_str_regex, age_str_regex, age_str_regex)
     msg = "http://areena.yle.fi/1-3210197"
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
-# Broken
-# @my_vcr.use_cassette
-# def test_areena_series(botmock):
-#     regex = u'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
-#     msg = "http://areena.yle.fi/1-2540167"
-#     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
+@my_vcr.use_cassette
+def test_areena_tv_exiting(botmock):
+    regex = u'Title: (.*?) \[%s - %s( - exits in %s)?\]' % (length_str_regex, age_str_regex, age_str_regex)
+    msg = "http://areena.yle.fi/1-3093932"
+    check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
+
+
+@my_vcr.use_cassette
+def test_areena_series(botmock):
+    regex = u'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
+    msg = "http://areena.yle.fi/1-3257950"
+    check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
 @my_vcr.use_cassette

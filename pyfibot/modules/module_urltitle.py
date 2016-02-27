@@ -12,6 +12,7 @@ import logging
 import re
 from datetime import datetime
 from dateutil.tz import tzutc
+from dateutil.parser import parse as parse_datetime
 import math
 
 from types import TupleType
@@ -709,109 +710,137 @@ def _handle_aamulehti(url):
     return title
 
 
-def _handle_areena_v3(url):
-    """http://areena-v3.yle.fi/*"""
-    def areena_get_exit_str(text):
-        dt = datetime.strptime(text, '%Y-%m-%dT%H:%M:%S') - datetime.now()
-        if dt.days > 7:
-            return u'%i weeks' % (dt.days / 7)
-        if dt.days >= 1:
-            return u'%i days' % (dt.days)
-        if dt.seconds >= 3600:
-            return u'%i hours' % (dt.seconds / 3600)
-        return u'%i minutes' % (dt.seconds / 60)
-
-    splitted = url.split('/')
-    # if "suora" found in url (and in the correct place),
-    # needs a bit more special handling as no api is available
-    if len(splitted) > 4 and splitted[4] == 'suora':
-        bs = __get_bs(url)
-        if not bs:
-            return
-        try:
-            container = bs.find('section', {'class': 'simulcast'})
-        except:
-            return
-        channel = container.find('a', {'class': 'active'}).text.strip()
-        return '%s (LIVE)' % (channel)
-
-    # create json_url from original url
-    json_url = '%s.json' % url.split('?')[0]
-    r = bot.get_url(json_url)
-
-    try:
-        data = r.json()
-    except:
-        log.debug("Couldn't parse JSON.")
-        return
-
-    try:
-        content_type = data['contentType']
-    except KeyError:
-        # there's no clear identifier for series
-        if 'episodeCountTotal' in data:
-            content_type = 'SERIES'
-        else:
-            # assume EPISODE
-            content_type = 'EPISODE'
-
-    try:
-        if content_type in ['EPISODE', 'CLIP', 'PROGRAM']:
-            try:
-                name = data['pageTitle'].lstrip(': ')
-            except KeyError:
-                name = data['reportingTitle']
-            # sometimes there's a ": " in front of the name for some reason...
-            name = name.lstrip(': ')
-
-            duration = __get_length_str(data['durationSec'])
-            broadcasted = __get_age_str(datetime.strptime(data['published'], '%Y-%m-%dT%H:%M:%S'))
-            if data['expires']:
-                expires = ' - exits in %s' % areena_get_exit_str(data['expires'])
-            else:
-                expires = ''
-            play_count = __get_views(data['playCount'])
-            return '%s [%s - %s plays - %s%s]' % (name, duration, play_count, broadcasted, expires)
-
-        elif content_type == 'SERIES':
-            name = data['name']
-            episodes = data['episodeCountViewable']
-            latest_episode = __get_age_str(datetime.strptime(data['previousEpisode']['published'], '%Y-%m-%dT%H:%M:%S'))
-            return '%s [SERIES - %d episodes - latest episode: %s]' % (name, episodes, latest_episode)
-    except:
-        # We want to exit cleanly, so it falls back to default url handler
-        log.debug('Unhandled error in Areena.')
-        return
-
-
 def _handle_areena(url):
     """http://areena.yle.fi/*"""
+    def _parse_publication_events(data):
+        now = datetime.utcnow().replace(tzinfo=tzutc())
+
+        publicationEvents = data.get('publicationEvent', [])
+
+        ScheduledTransmission = [event for event in publicationEvents if event.get('type') == 'ScheduledTransmission']
+        if ScheduledTransmission:
+            ScheduledTransmission = ScheduledTransmission[0]
+
+        OnDemandPublication = [event for event in publicationEvents if event.get('temporalStatus') == 'currently' and event.get('type') == 'OnDemandPublication']
+        if OnDemandPublication:
+            OnDemandPublication = OnDemandPublication[0]
+
+        duration = get_duration(OnDemandPublication) or get_duration(ScheduledTransmission)
+
+        broadcasted = parse_datetime(ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
+        if broadcasted is None or broadcasted > now:
+            broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
+
+        exits = None
+        if OnDemandPublication and 'endTime' in OnDemandPublication:
+            exits = parse_datetime(OnDemandPublication['endTime'])
+
+        return ScheduledTransmission, OnDemandPublication, duration, broadcasted, exits
+
+    def get_duration(event):
+        if not event:
+            return
+
+        duration = event.get('duration') or event.get('media', {}).get('duration')
+        if duration is None:
+            return
+
+        match = re.match(r'P(\d+Y)?(\d+D)?T(\d+H)?(\d+M)?(\d+S)?', duration)
+        if not match:
+            return
+
+        # Kind of ugly, but works...
+        secs = 0
+        secs += 0 if not match.group(1) else int(match.group(1)[0:-1]) * 365 * 86400
+        secs += 0 if not match.group(2) else int(match.group(2)[0:-1]) * 86400
+        secs += 0 if not match.group(3) else int(match.group(3)[0:-1]) * 3600
+        secs += 0 if not match.group(4) else int(match.group(4)[0:-1]) * 60
+        secs += 0 if not match.group(5) else int(match.group(5)[0:-1])
+        return secs
+
+    def get_episode(identifier):
+        url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (identifier)
+        params = {
+            'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
+            'app_key': config.get('areena', {}).get('app_id', '25a08bbaa8101cca1bf0d1879bb13012'),
+        }
+        r = bot.get_url(url=url, params=params)
+        if r.status_code != 200:
+            return
+
+        data = r.json().get('data', None)
+        if not data:
+            return
+
+        title = data.get('title', {}).get('fi', None)
+        if not title:
+            return
+
+        _, _, duration, broadcasted, exits = _parse_publication_events(data)
+
+        title_data = []
+        if duration:
+            title_data.append(__get_length_str(duration))
+        if broadcasted:
+            title_data.append(__get_age_str(broadcasted))
+        if exits:
+            title_data.append('exits in %s' % __get_age_str(exits))
+        return '%s [%s]' % (title, ' - '.join(title_data))
+
+    def get_series(identifier):
+        url = 'https://external.api.yle.fi/v1/programs/items.json'
+        params = {
+            'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
+            'app_key': config.get('areena', {}).get('app_id', '25a08bbaa8101cca1bf0d1879bb13012'),
+            'series': identifier,
+            'order': 'publication.starttime:desc',
+            'availability': 'ondemand',
+            'type': 'program',
+        }
+        r = bot.get_url(url=url, params=params)
+        if r.status_code != 200:
+            return
+
+        data = r.json().get('data', None)
+        if not data:
+            return
+
+        latest_episode = data[0]
+        title = latest_episode.get('title', {}).get('fi', None)
+        if not title:
+            return
+
+        _, _, _, broadcasted, _ = _parse_publication_events(latest_episode)
+
+        title_data = ['SERIES', '%i episodes' % len(data)]
+        if broadcasted:
+            title_data.append('latest episode: %s' % __get_age_str(broadcasted))
+
+        return '%s [%s]' % (title, ' - '.join(title_data))
+
+    # There's still no endpoint to fetch the currently playing shows via API :(
     if 'suora' in url:
         bs = __get_bs(url)
         if not bs:
             return
         container = bs.find('div', {'class': 'selected'})
         channel = container.find('h3').text
-        program = container.find('span', {'class': 'status-current'}).next_element.next_element
-        link = program.find('a').get('href', None)
-        if not program:
+        try:
+            program = container.find('li', {'class': 'current-broadcast'}).find('div', {'class': 'program-title'})
+        except AttributeError:
             return '%s (LIVE)' % (channel)
+
+        link = program.find('a').get('href', None)
         if not link:
             return '%s - %s (LIVE)' % (channel, program.text.strip())
         return '%s - %s <http://areena.yle.fi/%s> (LIVE)' % (channel, program.text.strip(), link.lstrip('/'))
 
-    # TODO: Whole rewrite, as this relies on the old system which will be brought down...
     try:
-        identifier = url.split('-')[1]
-    except IndexError:
-        return
+        identifier = url.split('/')[-1].split('?')[0]
+    except:
+        log.debug('Areena identifier could not be found.')
 
-    tv = _handle_areena_v3('http://areena-v3.yle.fi/tv/%s' % (identifier))
-    if tv:
-        return tv
-    radio = _handle_areena_v3('http://areena-v3.yle.fi/radio/%s' % (identifier))
-    if radio:
-        return radio
+    return get_episode(identifier) or get_series(identifier)
 
 
 def _handle_wikipedia(url):
