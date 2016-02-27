@@ -862,6 +862,7 @@ def _handle_areena(url):
         identifier = url.split('/')[-1].split('?')[0]
     except:
         log.debug('Areena identifier could not be found.')
+        return
 
     # Try to get the episode (preferred) or series information from Areena
     return get_episode(identifier) or get_series(identifier)
