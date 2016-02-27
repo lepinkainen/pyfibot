@@ -807,6 +807,10 @@ def _handle_areena(url):
         if not title:
             return
 
+        promotionTitle = data.get('promotionTitle', {}).get('fi')
+        if promotionTitle:
+            title += ': %s' % promotionTitle
+
         _, _, duration, broadcasted, exits = _parse_publication_events(data)
 
         title_data = []
