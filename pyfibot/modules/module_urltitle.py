@@ -749,16 +749,15 @@ def _handle_areena(url):
             # If transmissions are found, use the first one
             OnDemandPublication = OnDemandPublication[0]
 
-        # Get duration from either transmission, preferring on-demand, as that's what the link points to
-        # Duration may change for example in radio broadcasts, if songs are cut out etc...
-        duration = get_duration(OnDemandPublication) or get_duration(ScheduledTransmission)
+        # Get duration from either transmission, preferring the scheduled transmission.
+        duration = get_duration(ScheduledTransmission) or get_duration(OnDemandPublication)
 
-        # Find the broadcast time of the scheduled transmission
-        # As Areena is an on-demand service mainly for normal broadcasts, in my opinion the scheduled transmission time is more important -kipe
-        broadcasted = parse_datetime(ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
+        # Find the broadcast time of the transmission
+        # First, try to get the time when the on-demand was added to Areena.
+        broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
         if broadcasted is None or broadcasted > now:
-            # If scheduled transmission wasn't found or the broadcast time is in the future, use the publication time of on-demand version
-            broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
+            # If on-demand wasn't found, fall back to the scheduled transmission.
+            broadcasted = parse_datetime(ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
 
         # Find the exit time of the on-demand publication
         exits = None
