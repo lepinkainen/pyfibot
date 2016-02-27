@@ -784,7 +784,7 @@ def _handle_areena(url):
         url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (identifier)
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
-            'app_key': config.get('areena', {}).get('app_id', '25a08bbaa8101cca1bf0d1879bb13012'),
+            'app_key': config.get('areena', {}).get('app_key', '25a08bbaa8101cca1bf0d1879bb13012'),
         }
         r = bot.get_url(url=url, params=params)
         if r.status_code != 200:
@@ -814,7 +814,7 @@ def _handle_areena(url):
         url = 'https://external.api.yle.fi/v1/programs/items.json'
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
-            'app_key': config.get('areena', {}).get('app_id', '25a08bbaa8101cca1bf0d1879bb13012'),
+            'app_key': config.get('areena', {}).get('app_key', '25a08bbaa8101cca1bf0d1879bb13012'),
             'series': identifier,
             'order': 'publication.starttime:desc',
             'availability': 'ondemand',
