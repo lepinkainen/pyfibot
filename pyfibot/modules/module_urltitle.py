@@ -100,7 +100,7 @@ def __get_length_str(secs):
     return ''.join(lengthstr)
 
 
-def __get_age_str(published):
+def __get_age_str(published, use_fresh=True):
     now = datetime.now(tz=published.tzinfo)
 
     # Check if the publish date is in the future (upcoming episode)
@@ -111,22 +111,32 @@ def __get_age_str(published):
         age = now - published
         future = False
 
-    halfyears, days = age.days // 182, age.days % 365
+    secs = age.total_seconds()
+
+    halfyears, days, hours, minutes = age.days // 182, age.days % 365, secs // 3600, secs // 60 % 60
+
     agestr = []
     years = halfyears * 0.5
+
+    # uploaded TODAY, whoa.
+    if years == 0 and days == 0 and use_fresh:
+        return 'FRESH'
+
     if years >= 1:
         agestr.append("%gy" % years)
     # don't display days for videos older than 6 months
     if years < 1 and days > 0:
         agestr.append("%dd" % days)
-    # complete the age string
-    if agestr and (years or days):
+
+    if not agestr:
+        agestr.append('%dh' % hours)
+
+    if not agestr:
+        agestr.append('%dm' % minutes)
+
+    if agestr:
         agestr.append(" from now" if future else " ago")
-    elif years == 0 and days == 0:  # uploaded TODAY, whoa.
-        agestr.append("FRESH")
-    # If it shouldn't happen, why is it needed? ;)
-    # else:
-    #     agestr.append("ANANASAKÄÄMÄ")  # this should never happen =)
+
     return "".join(agestr)
 
 
@@ -806,7 +816,7 @@ def _handle_areena(url):
         if broadcasted:
             title_data.append(__get_age_str(broadcasted))
         if exits:
-            title_data.append('exits in %s' % __get_age_str(exits))
+            title_data.append('exits in %s' % __get_age_str(exits, use_fresh=False))
         return '%s [%s]' % (title, ' - '.join(title_data))
 
     def get_series(identifier):
