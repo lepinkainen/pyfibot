@@ -775,21 +775,24 @@ def _handle_areena(url):
         if duration is None:
             return
 
-        match = re.match(r'P(\d+Y)?(\d+D)?T(\d+H)?(\d+M)?(\d+S)?', duration)
+        match = re.match(r'P((\d+)Y)?((\d+)D)?T?((\d+)H)?((\d+)M)?((\d+)S)?', duration)
         if not match:
             return
 
+        # Get match group values, defaulting to 0
+        match_groups = match.groups(0)
+
         # Kind of ugly, but works...
         secs = 0
-        secs += 0 if not match.group(1) else int(match.group(1)[0:-1]) * 365 * 86400
-        secs += 0 if not match.group(2) else int(match.group(2)[0:-1]) * 86400
-        secs += 0 if not match.group(3) else int(match.group(3)[0:-1]) * 3600
-        secs += 0 if not match.group(4) else int(match.group(4)[0:-1]) * 60
-        secs += 0 if not match.group(5) else int(match.group(5)[0:-1])
+        secs += int(match_groups[1]) * 365 * 86400
+        secs += int(match_groups[3]) * 86400
+        secs += int(match_groups[5]) * 3600
+        secs += int(match_groups[7]) * 60
+        secs += int(match_groups[9])
         return secs
 
     def get_episode(identifier):
-        ''' Gets episode infromation from Areena '''
+        ''' Gets episode information from Areena '''
         url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (identifier)
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
