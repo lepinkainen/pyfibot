@@ -713,24 +713,44 @@ def _handle_aamulehti(url):
 def _handle_areena(url):
     """http://areena.yle.fi/*"""
     def _parse_publication_events(data):
+        '''
+        Parses publication events from the data.
+        Returns:
+            - ScheduledTransmission
+            - OnDemandPublication
+            - duration [int, seconds]
+            - first broadcast time (or if in the future, the start of availability on-demand) [datetime]
+            - the exit time of the on-demand [datetime]
+        '''
         now = datetime.utcnow().replace(tzinfo=tzutc())
 
+        # Finds all publicationEvents from the data.
         publicationEvents = data.get('publicationEvent', [])
 
+        # Finds the scheduled transmissions
         ScheduledTransmission = [event for event in publicationEvents if event.get('type') == 'ScheduledTransmission']
         if ScheduledTransmission:
+            # If transmissions are found, use the first one
             ScheduledTransmission = ScheduledTransmission[0]
 
+        # Finds the on-demand transmissions
         OnDemandPublication = [event for event in publicationEvents if event.get('temporalStatus') == 'currently' and event.get('type') == 'OnDemandPublication']
         if OnDemandPublication:
+            # If transmissions are found, use the first one
             OnDemandPublication = OnDemandPublication[0]
 
+        # Get duration from either transmission, preferring on-demand, as that's what the link points to
+        # Duration may change for example in radio broadcasts, if songs are cut out etc...
         duration = get_duration(OnDemandPublication) or get_duration(ScheduledTransmission)
 
+        # Find the broadcast time of the scheduled transmission
+        # As Areena is an on-demand service mainly for normal broadcasts, in my opinion the scheduled transmission time is more important -kipe
         broadcasted = parse_datetime(ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
         if broadcasted is None or broadcasted > now:
+            # If scheduled transmission wasn't found or the broadcast time is in the future, use the publication time of on-demand version
             broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
 
+        # Find the exit time of the on-demand publication
         exits = None
         if OnDemandPublication and 'endTime' in OnDemandPublication:
             exits = parse_datetime(OnDemandPublication['endTime'])
@@ -738,6 +758,7 @@ def _handle_areena(url):
         return ScheduledTransmission, OnDemandPublication, duration, broadcasted, exits
 
     def get_duration(event):
+        ''' Parses duration of an event, returns integer value in seconds. '''
         if not event:
             return
 
@@ -759,6 +780,7 @@ def _handle_areena(url):
         return secs
 
     def get_episode(identifier):
+        ''' Gets episode infromation from Areena '''
         url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (identifier)
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
@@ -788,6 +810,7 @@ def _handle_areena(url):
         return '%s [%s]' % (title, ' - '.join(title_data))
 
     def get_series(identifier):
+        ''' Gets series information from Areena '''
         url = 'https://external.api.yle.fi/v1/programs/items.json'
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
@@ -840,6 +863,7 @@ def _handle_areena(url):
     except:
         log.debug('Areena identifier could not be found.')
 
+    # Try to get the episode (preferred) or series information from Areena
     return get_episode(identifier) or get_series(identifier)
 
 
