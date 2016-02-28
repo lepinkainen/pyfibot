@@ -814,7 +814,7 @@ def _handle_areena(url):
         if promotionTitle:
             title += ': %s' % promotionTitle
 
-        _, _, duration, broadcasted, exits = _parse_publication_events(data)
+        _, OnDemandPublication, duration, broadcasted, exits = _parse_publication_events(data)
 
         title_data = []
         if duration:
@@ -823,6 +823,8 @@ def _handle_areena(url):
             title_data.append(__get_age_str(broadcasted))
         if exits:
             title_data.append('exits in %s' % __get_age_str(exits, use_fresh=False))
+        if not OnDemandPublication:
+            title_data.append('not available')
         return '%s [%s]' % (title, ' - '.join(title_data))
 
     def get_series(identifier):

@@ -56,3 +56,10 @@ def test_areena_live(botmock):
     regex = u'Title: Yle TV2 - (.*?)( <http://areena.yle.fi/\d-\d+>)? \(LIVE\)'
     msg = "http://areena.yle.fi/tv/suora/tv2"
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
+
+
+@my_vcr.use_cassette
+def test_areena_not_available(botmock):
+    regex = u'Title: (.*?) \[%s - %s - not available\]' % (length_str_regex, age_str_regex)
+    msg = "http://areena.yle.fi/1-2372901"
+    check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
