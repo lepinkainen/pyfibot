@@ -6,12 +6,12 @@ but still decide show idiotic bulk data in the HTML title element
 """
 
 from __future__ import unicode_literals, print_function, division
-#from __future__ import print_function, division
 import fnmatch
 import urlparse
 import logging
 import re
 from datetime import datetime
+from dateutil.tz import tzutc
 import math
 
 from types import TupleType
@@ -100,7 +100,7 @@ def __get_length_str(secs):
 
 
 def __get_age_str(published):
-    now = datetime.now()
+    now = datetime.now(tz=published.tzinfo)
 
     # Check if the publish date is in the future (upcoming episode)
     if published > now:
@@ -437,7 +437,7 @@ def _handle_tweet(url):
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
     verified = tweet['user']['verified']
-    
+
     retweets = tweet['retweet_count']
     favorites = tweet['favorite_count']
     created = tweet['created_at']
@@ -542,7 +542,7 @@ def _handle_youtube_gdata(url):
         else:
             agerestricted = ""
 
-        ## Content age
+        # Content age
         published = entry['snippet']['publishedAt']
         published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
         agestr = __get_age_str(published)
@@ -698,6 +698,7 @@ def _handle_reddit(url):
     except:
         # parsing error, use default title
         return
+
 
 def _handle_aamulehti(url):
     """http://www.aamulehti.fi/*"""
