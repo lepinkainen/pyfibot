@@ -19,6 +19,8 @@ RUN git clone https://github.com/lepinkainen/pyfibot.git
 WORKDIR pyfibot
 RUN pip install --upgrade -r requirements.txt
 
-COPY config.yml /tmp/config.yml
+RUN mkdir /config
 
-ENTRYPOINT ["pyfibot/pyfibot.py", "/tmp/config.yml"]
+VOLUME /config
+
+ENTRYPOINT ["pyfibot/pyfibot.py", "/config/config.yml"]
