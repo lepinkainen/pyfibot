@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 if [ ! -x databases/ ]; then
   mkdir databases
 fi;
 
-bin/python pyfibot/pyfibot.py config.yml
+source bin/activate
+python pyfibot/pyfibot.py config.yml

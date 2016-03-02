@@ -1,3 +1,4 @@
+
 from __future__ import unicode_literals, print_function, division
 import subprocess
 import sys
@@ -38,7 +39,7 @@ def command_update(bot, user, channel, args):
         bot.say(channel, "Errors: %s" % err)
 
     # fetch new required packages if needed
-    cmd = ['../bin/pip', 'install', '-r', '../requirements.txt']
+    cmd = ['pip', 'install', '--upgrade', '--requirement', '../requirements.txt']
     log.debug("executing pip install in %s" % cwd)
 
     p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -46,8 +47,10 @@ def command_update(bot, user, channel, args):
     out, err = p.communicate()
 
     if res:
-        bot.say(channel, "Update failed:")
+        bot.say(channel, "Package update failed:")
         for line in out.split("\n"):
+            bot.say(channel, "%s" % line)
+        for line in err.split("\n"):
             bot.say(channel, "%s" % line)
     else:
         bot.say(channel, "Package status OK")
