@@ -1,21 +1,24 @@
-FROM lepinkainen/ubuntu-python-base
+FROM alpine
 MAINTAINER Riku Lindblad "riku.lindblad@gmail.com"
 
-# Add user to run as
-RUN useradd -ms /bin/bash pyfibot
-WORKDIR /home/pyfibot
+RUN apk add --update \
+    python \
+    python-dev \
+    build-base \
+    git \
+    py-pip \
+    openssl-dev \
+    libxml2-dev \
+    libxslt-dev \
+    libssl1.0 \
+    libffi-dev
 
-# Clone as user to allow live upgrades etc
-USER pyfibot
+RUN pip install --upgrade pip
+
 RUN git clone https://github.com/lepinkainen/pyfibot.git
 WORKDIR pyfibot
-
-# install requirements globally
-USER root
 RUN pip install --upgrade -r requirements.txt
 
-# config
 COPY config.yml /tmp/config.yml
 
-USER pyfibot
 ENTRYPOINT ["pyfibot/pyfibot.py", "/tmp/config.yml"]
