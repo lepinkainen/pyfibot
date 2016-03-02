@@ -97,6 +97,12 @@ module_urltitle:
   # https://dev.twitter.com/apps and generate token with
   # pyfibot/util/twitter_application_auth.py
   twitter_bearer: ''
+  # YLE Areena API information.
+  # If for some reason you don't want to use the default,
+  # you can get one from http://developer.yle.fi
+  areena:
+    app_id: 'cd556936'
+    app_key: '25a08bbaa8101cca1bf0d1879bb13012'
 
 module_openweather:
   # Application ID for OpenWeatherMap, required for use

@@ -1,0 +1,47 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://external.api.yle.fi/v1/programs/items/1-2372901.json?app_id=cd556936&app_key=25a08bbaa8101cca1bf0d1879bb13012
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=UTF-8]
+      date: ['Sun, 28 Feb 2016 00:07:46 GMT']
+      server: [nginx-clojure/0.4.2]
+    status: {code: 200, message: OK}
+version: 1
