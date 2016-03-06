@@ -442,8 +442,6 @@ def _handle_tweet(url):
             log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
         return
 
-    print(tweet)
-
     text = tweet['text'].strip()
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
@@ -451,25 +449,24 @@ def _handle_tweet(url):
 
     retweets = tweet['retweet_count']
     favorites = tweet['favorite_count']
-    created = tweet['created_at']
-    created_date = datetime.strptime(created, "%a %b %d %H:%M:%S +0000 %Y")
+    created_date = parse_datetime(tweet['created_at'])
 
     def twit_timestr(dt):
         """A coarse timestr function"""
 
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        td = datetime.now() - dt
-        if td.days > 30 * 6:
+        diff = datetime.now(tzutc()) - dt
+        if diff.days > 30 * 6:
             return "%i %s %i" % (dt.day, months[dt.month - 1], dt.year)
-        elif td.days > 30:
+        elif diff.days > 30:
             return "%i %s" % (dt.day, months[dt.month - 1])
-        elif td.days:
-            return "%id" % td.days
-        elif td.seconds > 3600:
-            return "%ih" % (td.seconds / 3600)
-        elif td.seconds > 60:
-            return "%im" % (td.seconds / 60)
+        elif diff.days:
+            return "%id" % diff.days
+        elif diff.seconds > 3600:
+            return "%ih" % (diff.seconds / 3600)
+        elif diff.seconds > 60:
+            return "%im" % (diff.seconds / 60)
         else:
             return "now"
 
