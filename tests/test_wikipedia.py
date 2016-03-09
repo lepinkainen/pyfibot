@@ -21,7 +21,7 @@ def botmock():
 def test_one(botmock):
     msg = u"https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
     assert \
-     ("#channel", u"Title: The Hatfield–McCoy feud involved two hillbilly families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
+     ("#channel", u"Title: The Hatfield–McCoy feud involved two rural families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
      module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
@@ -44,7 +44,7 @@ def test_three(botmock):
 @my_vcr.use_cassette()
 def test_four(botmock):
     msg = "http://en.wikipedia.org/wiki/Dynamo_(magician)"
-    eq_(("#channel", u"Title: Steven Frayne, commonly known by his stage name \"Dynamo\", is an English magician, best known for his award winning television show Dynamo: Magician Impossible."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
+    eq_(("#channel", u"Title: Steven Frayne, commonly known by his stage name \"Dynamo\", is an English magician, best known for his award-winning television show Dynamo: Magician Impossible."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
 
 
 @my_vcr.use_cassette()

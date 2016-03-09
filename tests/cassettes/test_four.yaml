@@ -15,15 +15,15 @@ interactions:
       age: ['0']
       connection: [close]
       content-length: ['0']
-      date: ['Thu, 25 Feb 2016 11:16:08 GMT']
+      date: ['Wed, 09 Mar 2016 21:46:32 GMT']
       location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Dynamo_%28magician%29&action=query']
       server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
+      set-cookie: ['WMF-Last-Access=09-Mar-2016;Path=/;HttpOnly;Expires=Sun, 10 Apr
+          2016 12:00:00 GMT', 'GeoIP=FI:13:Lappeenranta:60.98:28.26:v4; Path=/; Domain=.wikipedia.org']
       via: [1.1 varnish]
-      x-cache: [cp3030 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1803900933']
+      x-cache: [cp3007 frontend int(0)]
+      x-client-ip: [86.50.42.4]
+      x-varnish: ['907994923']
     status: {code: 301, message: TLS Redirect}
 - request:
     body: null
@@ -31,39 +31,41 @@ interactions:
       Accept: ['*/*']
       Accept-Encoding: ['gzip, deflate']
       Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
+      Cookie: ['GeoIP=FI:13:Lappeenranta:60.98:28.26:v4; WMF-Last-Access=09-Mar-2016']
       User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
     method: GET
     uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Dynamo_%28magician%29&action=query
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA22PQU/DMAyF/4rl0yZVjO7ASlX1NJA4cOLIEEo6r41InJKElTLtv+PChjjMJ8vv
-        +fPzAbVKTdd411tKhCVihu8fFEYsD8g+OGXNF22xfD7gLngnjvXIyvnXmVOtaYziuawk/yfAP+H4
-        kmGvWooTLV/e5MWqKKZ+GhqhnmcZsniuBWSSpYusDOkzBdUkUau+rnT9lGhPDPdBjUzVQtcw0z4w
-        5CtYU0NOU4D8tljOM5AHnWc7whv7gUGP0JkIMUkMkEMEGxTg79GJtMEMxKAY7ri1JnZwDpKBpphO
-        nJ0PPyA1qLCFwTAbbiGRpb2JxjPEzg9QmRO5hMcTBR5c72M02kpwU19Vi77e8PSWNHiU+gbhrbEw
+        H4sIAAAAAAAAA22PQU/DMAyF/4rl0yYVRndgpap6GkgcOHFkCCWd10YkTknCSpn233FhQxzwyfJ7
+        /vx8QK1S0zXe9ZYSYYmY4ds7hRHLA7IPTlnzSVssnw64C96JYz2ycv5l5lRrGqN4LivJ/wrwRzg+
+        Z9irluJEy5fXebEqiqmfhkao51mGLJ4rAZlk6V9WhvSRgmqSqFVfV7p+TLQnhrugRqZqoWuYaR8Y
+        8hWsqSGnKUB+UyznGciDzrMd4ZX9wKBH6EyEmCQGyCGCDQrw5+hE2mAGYlAMt9xaEzs4B8lAU0wn
+        zs6Hb5AaVNheDIbZcAuJLO1NNJ4hdn6AypzIJTycKHDveh+j0VaCm/qyWvT1hqe3pMGj1Bf+R6AN
         mgEAAA==
     headers:
       accept-ranges: [bytes]
       age: ['0']
-      backend-timing: [D=32232 t=1456398968487124]
+      backend-timing: [D=46487 t=1457559992596983]
       cache-control: ['private, must-revalidate, max-age=0']
       connection: [keep-alive]
       content-encoding: [gzip]
       content-length: ['289']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 11:16:08 GMT']
+      date: ['Wed, 09 Mar 2016 21:46:32 GMT']
+      p3p: ['CP="This is not a P3P policy! See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P
+          for more info."']
       server: [nginx/1.9.4]
       strict-transport-security: [max-age=31536000; includeSubDomains; preload]
       vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
       via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1052 pass+chfp(0), cp3009 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
+      x-analytics: [WMF-Last-Access=09-Mar-2016;https=1]
+      x-cache: ['cp1052 pass+chfp(0), cp3014 miss+chfp(0), cp3031 frontend pass+chfp(0)']
+      x-client-ip: [86.50.42.4]
       x-content-type-options: [nosniff]
       x-frame-options: [SAMEORIGIN]
       x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['964398620, 1362570110, 1544869300']
+      x-varnish: ['263025079, 3605415242, 1596688578']
     status: {code: 200, message: OK}
 version: 1
