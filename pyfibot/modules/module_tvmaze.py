@@ -6,12 +6,13 @@ from dateutil.relativedelta import *
 import pytz
 from datetime import datetime
 
+
 def command_ep(bot, user, channel, args):
     """Usage: ep <series name>"""
     return command_maze(bot, user, channel, args)
 
-def command_maze(bot, user, channel, args):
 
+def command_maze(bot, user, channel, args):
     try:
         show = pytvmaze.get_show(show_name=args, embed='episodes')
     except pytvmaze.exceptions.ShowNotFound:
@@ -28,7 +29,7 @@ def command_maze(bot, user, channel, args):
         # episode has id and name, but no airstamp yet (not announced)
         if not episode.airstamp:
             continue
-        
+
         delta = relativedelta(parse(episode.airstamp), now)
 
         # episode is in the past, stop searching
@@ -63,6 +64,7 @@ def command_maze(bot, user, channel, args):
             msg = "{0} on {1}".format(msg, show.network['name'])
 
     bot.say(channel, msg.encode("UTF-8"))
+
 
 def _ago(delta, exact=False):
     delta_msg = []

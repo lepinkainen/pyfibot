@@ -1372,8 +1372,7 @@ def _handle_nettikone(url):
 
 def _handle_hitbox(url):
     """http*://*hitbox.tv/*"""
-
-   # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
+    # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
     if re.match(r"http://(help|blog)\.hitbox\.tv/.*", url):
         return
 

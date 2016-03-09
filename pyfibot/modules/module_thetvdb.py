@@ -97,7 +97,7 @@ def command_tvdb(bot, user, channel, args):
         all_episodes = sorted(all_episodes, key=itemgetter('firstaired'))
         episode = all_episodes[-1]
 
-        ## episode age in years and days
+        # episode age in years and days
         td = now - datetime.strptime(episode['firstaired'], "%Y-%m-%d")
         years, days = td.days // 365, td.days % 365
         agestr = []

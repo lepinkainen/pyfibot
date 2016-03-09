@@ -42,7 +42,7 @@ def command_posti(bot, user, channel, args):
     if dt.days > 0:
         agestr.append('%dd' % dt.days)
     secs = dt.seconds
-    hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
+    hours, minutes = secs // 3600, secs // 60 % 60
     if hours > 0:
         agestr.append('%dh' % hours)
     if minutes > 0:
