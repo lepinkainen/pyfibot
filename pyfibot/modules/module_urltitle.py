@@ -10,7 +10,7 @@ import fnmatch
 import urlparse
 import logging
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.tz import tzutc
 from dateutil.parser import parse as parse_datetime
 import math
@@ -725,7 +725,6 @@ def _handle_areena(url):
         Returns:
             - ScheduledTransmission
             - OnDemandPublication
-            - duration [int, seconds]
             - first broadcast time (or if in the future, the start of availability on-demand) [datetime]
             - the exit time of the on-demand [datetime]
         '''
@@ -746,9 +745,6 @@ def _handle_areena(url):
             # If transmissions are found, use the first one
             OnDemandPublication = OnDemandPublication[0]
 
-        # Get duration from either transmission, preferring the scheduled transmission.
-        duration = get_duration(ScheduledTransmission) or get_duration(OnDemandPublication)
-
         # Find the broadcast time of the transmission
         # First, try to get the time when the on-demand was added to Areena.
         broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
@@ -761,7 +757,7 @@ def _handle_areena(url):
         if OnDemandPublication and 'endTime' in OnDemandPublication:
             exits = parse_datetime(OnDemandPublication['endTime'])
 
-        return ScheduledTransmission, OnDemandPublication, duration, broadcasted, exits
+        return ScheduledTransmission, OnDemandPublication, broadcasted, exits
 
     def get_duration(event):
         ''' Parses duration of an event, returns integer value in seconds. '''
@@ -807,18 +803,26 @@ def _handle_areena(url):
         if not title:
             return
 
+        episode_number = data.get('episodeNumber', -100)
+        season_number = data.get('partOfSeason', {}).get('seasonNumber', -100)
+
+        if episode_number != -100 and season_number != -100:
+            title += ' - %dx%02d' % (season_number, episode_number)
+
         promotionTitle = data.get('promotionTitle', {}).get('fi')
         if promotionTitle:
-            title += ': %s' % promotionTitle
+            title += ' - %s' % promotionTitle
 
-        _, OnDemandPublication, duration, broadcasted, exits = _parse_publication_events(data)
+        duration = get_duration(data)
+
+        _, OnDemandPublication, broadcasted, exits = _parse_publication_events(data)
 
         title_data = []
         if duration:
             title_data.append(__get_length_str(duration))
         if broadcasted:
             title_data.append(__get_age_str(broadcasted))
-        if exits:
+        if exits and datetime.now(tz=tzutc()) + timedelta(days=2 * 365) > exits:
             title_data.append('exits in %s' % __get_age_str(exits, use_fresh=False))
         if not OnDemandPublication:
             title_data.append('not available')
@@ -834,6 +838,7 @@ def _handle_areena(url):
             'order': 'publication.starttime:desc',
             'availability': 'ondemand',
             'type': 'program',
+            'limit': 100,
         }
         r = bot.get_url(url=url, params=params)
         if r.status_code != 200:
@@ -848,9 +853,13 @@ def _handle_areena(url):
         if not title:
             return
 
-        _, _, _, broadcasted, _ = _parse_publication_events(latest_episode)
+        _, _, broadcasted, _ = _parse_publication_events(latest_episode)
 
-        title_data = ['SERIES', '%i episodes' % len(data)]
+        title_data = ['SERIES']
+        if len(data) >= 100:
+            title_data.append('100+ episodes')
+        else:
+            title_data.append('%i episodes' % len(data))
         if broadcasted:
             title_data.append('latest episode: %s' % __get_age_str(broadcasted))
 

@@ -45,9 +45,22 @@ def test_areena_tv_exiting(botmock):
 
 
 @my_vcr.use_cassette
+def test_areena_tv_exiting_in_far_far_future(botmock):
+    from datetime import datetime
+
+    if datetime.utcnow() < datetime(2098, 1, 1):
+        regex = u'Title: Kummeli - 5x03 \[%s - %s\]' % (length_str_regex, age_str_regex)
+    else:
+        regex = u'Title: Kummeli - 5x03 \[%s - %s( - exits in %s)?\]' % (length_str_regex, age_str_regex, age_str_regex)
+
+    msg = "http://areena.yle.fi/1-1823488"
+    check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
+
+
+@my_vcr.use_cassette
 def test_areena_series(botmock):
-    regex = u'Title: (.*?) \[SERIES - \d+ episodes - latest episode: %s\]' % (age_str_regex)
-    msg = "http://areena.yle.fi/1-3257950"
+    regex = u'Title: Kummeli \[SERIES - 54 episodes - latest episode: %s\]' % (age_str_regex)
+    msg = "http://areena.yle.fi/1-3339547"
     check_re(regex, module_urltitle.handle_url(botmock, None, "#channel", msg, msg)[1])
 
 
