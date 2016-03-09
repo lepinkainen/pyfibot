@@ -4,7 +4,6 @@ from nose.tools import eq_
 import bot_mock
 from pyfibot.modules import module_urltitle
 from utils import check_re
-from time import sleep
 
 import pytest
 from vcr import VCR
@@ -15,7 +14,7 @@ my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
 import vcr
 import logging
 
-logging.basicConfig() # you need to initialize logging, otherwise you will not see anything from vcrpy
+logging.basicConfig()  # you need to initialize logging, otherwise you will not see anything from vcrpy
 vcr_log = logging.getLogger("vcr")
 vcr_log.setLevel(logging.DEBUG)
 
@@ -31,6 +30,7 @@ lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
 views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
 age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
 
+
 def __handle_url(botmock, msg):
     res = module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
     if type(res) == tuple:
@@ -38,16 +38,17 @@ def __handle_url(botmock, msg):
     else:
         return res
 
+
 @my_vcr.use_cassette
 def test_spotify_ignore(botmock):
     msg = "http://open.spotify.com/artist/4tuiQRw9bC9HZhSFJEJ9Mz"
-    assert None ==  __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
 
 
 @my_vcr.use_cassette
 def test_manual_ignore(botmock):
     msg = "- foofoo http://www.youtube.com/"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
 
 
 @my_vcr.use_cassette
@@ -143,6 +144,7 @@ def test_alko(botmock):
     msg = 'http://www.alko.fi/tuotteet/798684/'
     check_re(regex, __handle_url(botmock, msg))
 
+
 @my_vcr.use_cassette
 def test_google_play_music(botmock):
     msg = 'https://play.google.com/music/preview/Tkyqfh5koeirtbi76b2tsee6e2y'
@@ -213,6 +215,7 @@ def test_gfycat_direct_url(botmock):
     msg = "https://zippy.gfycat.com/QualifiedSpanishAmericankestrel.webm"
     check_re(regex, __handle_url(botmock, msg))
 
+
 @my_vcr.use_cassette
 def test_nettiauto(botmock):
     msg = "http://www.nettiauto.com/audi/s4/7695854"
@@ -223,27 +226,28 @@ def test_nettiauto(botmock):
 @my_vcr.use_cassette
 def test_apina(botmock):
     msg = "http://apina.biz"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
 
 
 @my_vcr.use_cassette
 def test_salakuunneltua(botmock):
     msg = "http://salakuunneltua.fi"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
 
 
 @my_vcr.use_cassette
 def test_travis(botmock):
     msg = "http://travis-ci.org/"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
 
 
 @my_vcr.use_cassette
 def test_ubuntupaste(botmock):
     msg = "http://paste.ubuntu.com/"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None
+
 
 @my_vcr.use_cassette
 def test_poliisifi(botmock):
     msg = "http://poliisi.fi/tietoa_poliisista/tiedotteet/1/1/merisotakoulun_upseerikokelas_menehtyi_ampuharjoituksessa_hangon_syndalenissa_42596"
-    assert None == __handle_url(botmock, msg)
+    assert __handle_url(botmock, msg) is None

@@ -1,0 +1,110 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: http://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Birger_Ek&action=query
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [close]
+      content-length: ['0']
+      date: ['Wed, 09 Mar 2016 22:09:35 GMT']
+      location: ['https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Birger_Ek&action=query']
+      server: [Varnish]
+      set-cookie: ['WMF-Last-Access=09-Mar-2016;Path=/;HttpOnly;Expires=Sun, 10 Apr
+          2016 12:00:00 GMT', 'GeoIP=FI:13:Lappeenranta:60.98:28.26:v4; Path=/; Domain=.wikipedia.org']
+      via: [1.1 varnish]
+      x-cache: [cp3030 frontend int(0)]
+      x-client-ip: [86.50.42.4]
+      x-varnish: ['3095632170']
+    status: {code: 301, message: TLS Redirect}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Cookie: ['WMF-Last-Access=09-Mar-2016; GeoIP=FI:13:Lappeenranta:60.98:28.26:v4']
+      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Birger_Ek&action=query
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      backend-timing: [D=70280 t=1457561376042552]
+      cache-control: ['private, must-revalidate, max-age=0']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-length: ['2550']
+      content-type: [application/json; charset=utf-8]
+      date: ['Wed, 09 Mar 2016 22:09:36 GMT']
+      p3p: ['CP="This is not a P3P policy! See https://fi.wikipedia.org/wiki/Toiminnot:CentralAutoLogin/P3P
+          for more info."']
+      server: [nginx/1.9.4]
+      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
+      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
+      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
+      x-analytics: [WMF-Last-Access=09-Mar-2016;https=1]
+      x-cache: ['cp1066 miss+chfp(0), cp3012 miss+chfp(0), cp3031 frontend miss+chfp(0)']
+      x-client-ip: [86.50.42.4]
+      x-content-type-options: [nosniff]
+      x-frame-options: [DENY]
+      x-powered-by: [HHVM/3.12.1]
+      x-varnish: ['3691056927, 2935588292, 1603684329']
+    status: {code: 200, message: OK}
+version: 1

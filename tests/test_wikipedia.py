@@ -20,25 +20,22 @@ def botmock():
 @my_vcr.use_cassette()
 def test_one(botmock):
     msg = u"https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
-    assert \
-     ("#channel", u"Title: The Hatfield–McCoy feud involved two rural families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
-     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+    assert ("#channel", u"Title: The Hatfield–McCoy feud involved two rural families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.") == \
+        module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()
 def test_two(botmock):
     msg = "http://fi.wikipedia.org/wiki/DTMF"
-    assert \
-     ("#channel", u"Title: DTMF on puhelinlaitteissa käytetty numeroiden äänitaajuusvalintatapa.") == \
-     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+    assert ("#channel", u"Title: DTMF on puhelinlaitteissa käytetty numeroiden äänitaajuusvalintatapa.") == \
+        module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()
 def test_three(botmock):
     msg = "http://en.wikipedia.org/wiki/Gender_performativity"
-    assert \
-     ("#channel", u"Title: Gender performativity is a term created by post-structuralist feminist philosopher Judith Butler in her 1990 book Gender Trouble, which has subsequently been used in a variety of academic fields.") == \
-     module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
+    assert ("#channel", u"Title: Gender performativity is a term created by post-structuralist feminist philosopher Judith Butler in her 1990 book Gender Trouble, which has subsequently been used in a variety of academic fields.") == \
+        module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
 @my_vcr.use_cassette()
@@ -53,11 +50,11 @@ def test_five(botmock):
     eq_(("#channel", u"Title: David Carroll Eddings oli yhdysvaltalainen kirjailija, joka kirjoitti useita suosittuja fantasiakirjoja."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
 
 
-# @my_vcr.use_cassette()
-# def test_six(botmock):
-#     msg = "http://fi.wikipedia.org/wiki/Birger_Ek"
-#     module_urltitle.init(botmock)
-#     eq_(("#channel", u"Title: Rolf Birger Ek oli suomalainen lentäjä ja Mannerheim-ristin ritari."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
+@my_vcr.use_cassette()
+def test_six(botmock):
+    msg = "http://fi.wikipedia.org/wiki/Birger_Ek"
+    module_urltitle.init(botmock)
+    eq_(("#channel", u"Title: Rolf Birger Ek oli suomalainen lentäjä ja Mannerheim-ristin ritari."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
 
 
 @my_vcr.use_cassette()
