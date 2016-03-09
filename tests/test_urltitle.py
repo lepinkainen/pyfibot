@@ -132,7 +132,7 @@ def test_ebay_cgi(botmock):
 
 @my_vcr.use_cassette
 def test_dx(botmock):
-    regex = 'Title: Wireless Bluetooth Audio Music Receiver Adapter - Black \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
+    regex = 'Title: Wireless Bluetooth Audio Music R... \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
     msg = 'http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659'
     check_re(regex, __handle_url(botmock, msg))
 

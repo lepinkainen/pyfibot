@@ -1213,7 +1213,7 @@ def _handle_dealextreme(url):
         return
 
     product = data['products'][0]
-    name = product['headLine']
+    name = product['shortHeadline']
     price = float(product['price'].replace(u'€', ''))
 
     if product['reviewCount'] > 0:
