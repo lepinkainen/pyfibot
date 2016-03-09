@@ -133,7 +133,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             # this network, connect to it and stop looking
             if address.host in ips:
                 log.debug("Connecting to %s / %s", server, address)
-                p = self.protocol(server)
+                p = self.protocol(self.config, server)
                 self.allBots[server.alias] = p
                 p.factory = self
                 return p
@@ -336,6 +336,9 @@ class PyFiBotFactory(ThrottledClientFactory):
             del self.config[k]
         for k in dd.changed():
             log.info('%s changed' % k)
+            if not isinstance(config[k], dict):
+                continue
+
             # compare configs
             d = DictDiffer(config[k], old_config[k])
             # add all changes to a big list
@@ -354,6 +357,11 @@ class PyFiBotFactory(ThrottledClientFactory):
             logging.root.setLevel(logging.DEBUG)
         else:
             logging.root.setLevel(logging.INFO)
+
+        # change cmdchar, default to "."
+        cmdchar = config.get('cmdchar', '.')
+        for key, bot in self.allBots.items():
+            bot.cmdchar = cmdchar
 
     def find_bot_for_network(self, network):
         if network not in self.allBots:
