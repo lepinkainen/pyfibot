@@ -5,6 +5,9 @@ nick: botnick
 admins:
   - root!root@localhost
 
+# Set the command character for the bot
+cmdchar: '.'
+
 # Networks to connect to
 networks:
   # Alias for network
