@@ -196,6 +196,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self.cmdchar = config.get('cmdchar', '.')
         self.network = network
         self.nickname = self.network.nickname
+        self.realname = self.network.realname or self.realname
         self.lineRate = self.network.linerate
         self.password = self.network.password
         # Text wrapper to clip overly long answers

@@ -8,6 +8,9 @@ admins:
 # Set the command character for the bot
 cmdchar: '.'
 
+# Set realname for the bot
+realname: 'https://github.com/lepinkainen/pyfibot'
+
 # Networks to connect to
 networks:
   # Alias for network
@@ -16,6 +19,8 @@ networks:
     server: irc.nerv.fi
     # We use a different nick on this network
     nick: botnick_nerv
+    # As well as different realname
+    realname: 'pyfibot'
     # List of channels to join
     channels:
       - pyfibot

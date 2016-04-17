@@ -53,11 +53,12 @@ log = logging.getLogger('core')
 
 class Network:
     """Represents an IRC network"""
-    def __init__(self, root, alias, address, nickname, channels=None, linerate=None, password=None, is_ssl=False):
+    def __init__(self, root, alias, address, nickname, realname=None, channels=None, linerate=None, password=None, is_ssl=False):
         self.root = root
         self.alias = alias                         # network name
         self.address = address                     # server address
         self.nickname = nickname                   # nick to use
+        self.realname = realname
         self.channels = channels or {}             # channels to join
         self.linerate = linerate
         self.password = password
@@ -142,8 +143,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         log.error("Unknown network address: " + repr(address))
         return InstantDisconnectProtocol()
 
-    def createNetwork(self, address, alias, nickname, channels=None, linerate=None, password=None, is_ssl=False):
-        self.setNetwork(Network("data", alias, address, nickname, channels, linerate, password, is_ssl))
+    def createNetwork(self, address, alias, nickname, realname, channels=None, linerate=None, password=None, is_ssl=False):
+        self.setNetwork(Network("data", alias, address, nickname, realname, channels, linerate, password, is_ssl))
 
     def setNetwork(self, net):
         self.data['networks'][net.alias] = net
@@ -434,6 +435,7 @@ def main():
     for network, settings in config['networks'].items():
         # settings = per network, config = global
         nick = settings.get('nick', None) or config['nick']
+        realname = settings.get('realname') or config.get('realname')
         linerate = settings.get('linerate', 0.5) or config.get('linerate', 0.5)
         password = settings.get('password', None)
         is_ssl = bool(settings.get('is_ssl', False))
@@ -460,7 +462,7 @@ def main():
         else:
             server_name = settings['server']
 
-        factory.createNetwork((server_name, port), network, nick, chanlist, linerate, password, is_ssl)
+        factory.createNetwork((server_name, port), network, nick, realname, chanlist, linerate, password, is_ssl)
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
             reactor.connectSSL(server_name, port, factory, ssl.ClientContextFactory())
