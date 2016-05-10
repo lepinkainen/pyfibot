@@ -366,8 +366,8 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
         info = title[1]
         title = title[0]
     # crop obscenely long titles
-    if len(title) > 200:
-        title = title[:200] + "..."
+    if len(title) > 400:
+        title = title[:400] + "..."
 
     if not info:
         return bot.say(channel, "%s %s" % (prefix, title))
