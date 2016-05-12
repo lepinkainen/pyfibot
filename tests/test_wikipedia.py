@@ -65,8 +65,8 @@ def test_seven(botmock):
 
 @my_vcr.use_cassette()
 def test_eight(botmock):
-    msg = "http://en.wikipedia.org/wiki/Lazarus_of_Bethany#In_culture"
-    eq_(("#channel", u"Title: Lazarus of Bethany, also known as Saint Lazarus or Lazarus of the Four Days, is the subject of a prominent miracle attributed to Jesus in the Gospel of John, in which Jesus restores him to life four d..."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
+    msg = "https://en.wikipedia.org/wiki/Byzantine_art#Periods"
+    eq_(("#channel", u"Title: Byzantine art is the name for the artistic products of the Eastern Roman Empire, as well as the nations and states that inherited culturally from the empire."), module_urltitle.handle_url(botmock, None, "#channel", msg, msg))
 
 
 @my_vcr.use_cassette()

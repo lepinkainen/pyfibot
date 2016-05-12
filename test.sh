@@ -8,7 +8,7 @@ echo "                           |___/ "
 echo
 echo "Note: this will only record new VCRs for missing tests"
 echo "      old ones won't be overwritten. If a certain VCR"
-echo "      is broken, remove it and run this scrip to regenerate"
+echo "      is broken, remove it and run this script to regenerate"
 echo
 
 source bin/activate
