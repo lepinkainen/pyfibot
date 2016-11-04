@@ -10,12 +10,11 @@ import fnmatch
 import urlparse
 import logging
 import re
+import math
 from datetime import datetime, timedelta
+from types import TupleType
 from dateutil.tz import tzutc
 from dateutil.parser import parse as parse_datetime
-import math
-
-from types import TupleType
 
 from repoze.lru import ExpiringLRUCache
 
@@ -36,6 +35,8 @@ CACHE_ENABLED = True
 
 
 def init(botref):
+    """Initialize the urltitle module"""
+
     global config
     global bot
     global handlers
@@ -58,12 +59,12 @@ def __get_bs(url):
 
     duration = (end - start).seconds
     if duration > TITLE_LAG_MAXIMUM:
-        log.error("Fetching title took %d seconds, not displaying title" % duration)
+        log.error("Fetching title took %d seconds, not displaying title", duration)
         return None
 
     content_type = r.headers['content-type'].split(';')[0]
     if content_type not in ['text/html', 'text/xml', 'application/xhtml+xml']:
-        log.debug("Content-type %s not parseable" % content_type)
+        log.debug("Content-type %s not parseable", content_type)
         return None
 
     if r.content:
@@ -87,6 +88,8 @@ def __get_title_tag(url):
 
 
 def __get_length_str(secs):
+    """Convert seconds to human readable string"""
+    
     lengthstr = []
     hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
     if hours > 0:
@@ -101,6 +104,8 @@ def __get_length_str(secs):
 
 
 def __get_age_str(published, use_fresh=True):
+    """Convert delta time to human readable format"""
+    
     now = datetime.now(tz=published.tzinfo)
 
     # Check if the publish date is in the future (upcoming episode)
@@ -141,6 +146,8 @@ def __get_age_str(published, use_fresh=True):
 
 
 def __get_views(views):
+    """Convert viewcount to human readable format"""
+
     if int(views) == 0:
         return '0'
     millnames = ['', 'k', 'M', 'Billion', 'Trillion']
