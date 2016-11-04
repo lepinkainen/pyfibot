@@ -7,7 +7,7 @@ import requests
 
 def handle_url(bot, user, channel, url, msg):
     """inform about large files (over 5MB)"""
-    browser = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11"
+    browser = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0"
     s = requests.session()
     s.stream = True  # Don't fetch content unless asked
     s.headers.update({'User-Agent': browser})

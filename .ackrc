@@ -3,3 +3,4 @@
 --ignore-directory=local
 --ignore-directory=include
 --ignore-directory=build
+--ignore-directory=tests

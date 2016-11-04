@@ -224,7 +224,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def getUrl(self, url, nocache=False, params=None, headers=None, cookies=None):
         """Gets data, bs and headers for the given url, using the internal cache if necessary"""
 
-        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0"
+        browser = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0"
         # Common session for all requests
         s = requests.session()
         s.stream = True  # Don't fetch content unless asked
