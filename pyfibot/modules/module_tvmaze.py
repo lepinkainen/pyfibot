@@ -13,8 +13,10 @@ def command_ep(bot, user, channel, args):
 
 
 def command_maze(bot, user, channel, args):
+    tvm = pytvmaze.TVMaze('pyfibot')
+
     try:
-        show = pytvmaze.get_show(show_name=args, embed='episodes')
+        show = tvm.get_show(show_name=args, embed='episodes')
     except pytvmaze.exceptions.ShowNotFound:
         bot.say(channel, "Show '%s' not found" % args)
         return
@@ -56,12 +58,14 @@ def command_maze(bot, user, channel, args):
     show_id = "%s %s '%s'" % (show.name, "%dx%02d" % (next_episode.season_number, next_episode.episode_number), next_episode.title)
 
     if show.status == "Ended":
-        msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (show_id, next_episode.airdate, _ago(latest_delta), show.network['name'])
+        msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (show_id, next_episode.airdate, _ago(latest_delta), show.network.name)
     else:
         msg = "Next episode of {0} airs {1} ({2})".format(show_id, next_episode.airdate, _ago(next_delta))
         # Not all shows have network info for some reason
         if show.network:
-            msg = "{0} on {1}".format(msg, show.network['name'])
+            msg = "{0} on {1}".format(msg, show.network.name)
+        elif show.web_channel:
+            msg = "{0} on {1}".format(msg, show.web_channel.name)
 
     bot.say(channel, msg.encode("UTF-8"))
 
