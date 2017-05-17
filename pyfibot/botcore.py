@@ -18,6 +18,7 @@ from twisted.python import rebuild
 from types import FunctionType
 
 import re
+import inspect
 import string
 import logging
 from util import pyfiurl
@@ -407,7 +408,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             for cname, command in commands:
                 if not self.factory.isAdmin(user) and cname.startswith('admin'):
                     continue
-                log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
+                i = inspect.getcallargs(command, self, user, channel, cmnd)
+                if 'silent' not in i:
+                    log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 # Defer commands to threads
                 d = threads.deferToThread(command, self, user, channel, self.factory.to_unicode(args.strip()))
                 d.addCallback(self.printResult, "command %s completed" % cname)
