@@ -17,6 +17,7 @@ from twisted.python import rebuild
 
 from types import FunctionType
 
+import re
 import string
 import logging
 from util import pyfiurl
@@ -161,10 +162,11 @@ class CoreCommands(object):
     def command_help(self, user, channel, cmnd):
         """Get help on all commands or a specific one. Usage: help [<command>]"""
 
-        commands = []
+        commands, admin_commands = [], []
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             commands += [(c.replace("command_", ""), ref) for c, ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
+            admin_commands += [(c.replace("admin_", ""), ref) for c, ref in mylocals.items() if c.startswith("admin_%s" % cmnd)]
         # Help for a specific command
         if len(cmnd) > 0:
             for cname, ref in commands:
@@ -175,7 +177,10 @@ class CoreCommands(object):
         # Generic help
         else:
             commandlist = ", ".join([c for c, ref in commands])
+            admin_commandlist = ", ".join([c for c, ref in admin_commands])
             self.say(channel, "Available commands: %s" % commandlist)
+            if self.factory.isAdmin(user):
+                self.say(channel, "Available admin commands: %s" % admin_commandlist)
 
 
 class PyFiBot(irc.IRCClient, CoreCommands):
@@ -397,9 +402,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            commands = [(c, ref) for c, ref in mylocals.items() if c == "command_%s" % cmnd]
+            commands = [(c, ref) for c, ref in mylocals.items() if re.match(r'(command|admin)_%s' % cmnd, c)]
 
             for cname, command in commands:
+                if not self.factory.isAdmin(user) and cname.startswith('admin'):
+                    continue
                 log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
                 # Defer commands to threads
                 d = threads.deferToThread(command, self, user, channel, self.factory.to_unicode(args.strip()))
