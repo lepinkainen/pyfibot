@@ -403,7 +403,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            commands = [(c, ref) for c, ref in mylocals.items() if re.match(r'(command|admin)_%s' % cmnd, c)]
+            commands = [(c, ref) for c, ref in mylocals.items() if c == "command_%s" % cmnd]
+            commands += [(c, ref) for c, ref in mylocals.items() if c == "admin_%s" % cmnd]
 
             for cname, command in commands:
                 if not self.factory.isAdmin(user) and cname.startswith('admin'):
