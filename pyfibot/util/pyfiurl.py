@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-## (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
+# (c)2004 Timo Reunanen <parker _et_ wolfenstein _dit_ org>
 
-## Thanks to Shrike for helping this :)
+# Thanks to Shrike for helping this :)
 
-## Made by #python.fi ppl for python ppl
+# Made by #python.fi ppl for python ppl
 
 """Find absolute URLs from strings"""
 
@@ -43,7 +43,7 @@ _countrycodes = ['ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao',
 
 _schemes = ['http://', 'https://', 'ftp://', 'svn://']
 
-## domainlabel   = alphanum | alphanum *( alphanum | "-" ) alphanum
+# domainlabel   = alphanum | alphanum *( alphanum | "-" ) alphanum
 _domainlabel = r'''
 (?:
   [a-z0-9]
@@ -56,7 +56,7 @@ _domainlabel = r'''
 )
 '''
 
-## toplabel      = alpha | alpha *( alphanum | "-" ) alphanum
+# toplabel      = alpha | alpha *( alphanum | "-" ) alphanum
 _toplabel = r'''
 (?P<toplabel>
   (?:
@@ -70,7 +70,7 @@ _toplabel = r'''
 '''
 
 
-## hostname      = *( domainlabel "." ) toplabel [ "." ]
+# hostname      = *( domainlabel "." ) toplabel [ "." ]
 _hostname = r'''
 (?P<hostname>
   (?: %(_domainlabel)s [.])+
@@ -80,33 +80,33 @@ _hostname = r'''
 
 _ipv4 = r"""
 (?P<ipv4>
-  (?:(?<=[^0-9]) | \A)                  ## Doesn't start with number
-  (?:[0-9]{1,3}\.){3}[0-9]{1,3}         ## '123.123.123.123'
-  (?![0-9])                             ## And doesn't end with number
+  (?:(?<=[^0-9]) | \A)                  # Doesn't start with number
+  (?:[0-9]{1,3}\.){3}[0-9]{1,3}         # '123.123.123.123'
+  (?![0-9])                             # And doesn't end with number
 )
 """
 
 _singleNum = r"""[0-9a-f]{0,4}"""
 _ipv6 = r"""
 (?:
-  [[]                                    ## Start [
+  [[]                                    # Start [
   (?P<ipv6>
-    (?: %(_singleNum)s[:] ){2,7}         ## xxxx:xxxx:[xxxx:[xxxx:[xxxx:[xxxx:[xxxx:]]]]]
-    %(_singleNum)s                       ## xxxx
+    (?: %(_singleNum)s[:] ){2,7}         # xxxx:xxxx:[xxxx:[xxxx:[xxxx:[xxxx:[xxxx:]]]]]
+    %(_singleNum)s                       # xxxx
   )
-  []]                                    ## End ]
+  []]                                    # End ]
 )
 """ % globals()
 
-## host          = hostname | IPv4address | IPv6address [ ":" port ]
+# host          = hostname | IPv4address | IPv6address [ ":" port ]
 _host = r'''
 (?P<host>
-  (?:                                   ## Must be one of these
+  (?:                                   # Must be one of these
     %(_hostname)s |
     %(_ipv4)s |
     %(_ipv6)s
   )
-  (?:                                   ## Check if port is defined
+  (?:                                   # Check if port is defined
     :
      (?P<port>
       [0-9]+
@@ -115,9 +115,9 @@ _host = r'''
 )
 ''' % globals()
 
-## def emacsHack():
-##   pass
-## "
+# def emacsHack():
+#   pass
+# "
 
 validPathChars = [string.ascii_letters,
                   string.digits,
@@ -144,7 +144,7 @@ def grab(txt, needScheme=True):
 
     possibleUrls = []
 
-    ## Try to find all possible URI's
+    # Try to find all possible URI's
     while 1:
         srch = hostRe.search(txt, seekpos)
         if not srch:
@@ -152,21 +152,21 @@ def grab(txt, needScheme=True):
 
         valid = False
 
-        ## Find possible URI with valid hostname, ipv4 or ipv6
+        # Find possible URI with valid hostname, ipv4 or ipv6
         if srch.group('host'):
             if srch.group('ipv4'):
-                ## Check if it is valid ipv4
+                # Check if it is valid ipv4
                 ip = [x for x in srch.group('ipv4').split('.') if int(x) > 255]
                 if ip == []:
                     valid = True
 
             elif srch.group('hostname'):
-                ## Check if valid country code
+                # Check if valid country code
                 if srch.group('toplabel') in _countrycodes:
                     valid = True
 
             elif srch.group('ipv6'):
-                ## ipv6 is always valid :P (yeah right...)
+                # ipv6 is always valid :P (yeah right...)
                 valid = True
 
         if not valid:
@@ -176,7 +176,7 @@ def grab(txt, needScheme=True):
         s = srch.start('host')
         e = srch.end('host')
 
-        ## Check if there is userinfo in URI
+        # Check if there is userinfo in URI
         if s > 1 and txt[s - 1] == '@':
             s -= 1
 
@@ -185,7 +185,7 @@ def grab(txt, needScheme=True):
 
             s += 1
 
-        ## Check if there is scheme
+        # Check if there is scheme
         schemeFound = False
         for scheme in _schemes:
             if txt[s - len(scheme):s] == scheme:
@@ -193,16 +193,16 @@ def grab(txt, needScheme=True):
                 schemeFound = True
                 break
 
-        ## If scheme neede and no scheme found, skip it
+        # If scheme neede and no scheme found, skip it
         if needScheme and not schemeFound:
             seekpos = srch.end('host')
             continue
 
-        ## Try to figure out rest of URI
+        # Try to figure out rest of URI
         while e < len(txt) and txt[e] in validPathChars:
             e += 1
 
-        ## Some silly hack
+        # Some silly hack
         ns = s
 
         for v in [('<', '>'), ('(', ')'), ('{', '}'), ('[', ']'), '"', "'"]:
