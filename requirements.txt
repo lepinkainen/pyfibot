@@ -4,7 +4,7 @@ pyyaml==3.12
 jsonschema >= 1.0.0
 beautifulsoup4==4.6.0
 pyopenssl==17.2.0
-ndg-httpsclient
+ndg-httpsclient==0.4.2
 pyasn1
 tvdb_api
 repoze.lru
