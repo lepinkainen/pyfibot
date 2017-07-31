@@ -11,7 +11,7 @@ repoze.lru==0.6
 pygeoip==0.3.2
 sqlalchemy==1.1.12
 dataset==0.8.0
-python-instagram
+python-instagram==1.3.2
 simplejson >= 3.0.0
 httplib2 >= 0.8.0
 feedparser >= 5.1.3
