@@ -1,21 +1,21 @@
 twisted >= 12.0.0
 requests >= 2.1.0
-pyyaml
+pyyaml==3.12
 jsonschema >= 1.0.0
-beautifulsoup4
-pyopenssl
-ndg-httpsclient
-pyasn1
-tvdb_api
-repoze.lru
-pygeoip
-sqlalchemy
-dataset
-python-instagram
+beautifulsoup4==4.6.0
+pyopenssl==17.2.0
+ndg-httpsclient==0.4.2
+pyasn1==0.3.1
+tvdb_api==1.10
+repoze.lru==0.6
+pygeoip==0.3.2
+sqlalchemy==1.1.12
+dataset==0.8.0
+python-instagram==1.3.2
 simplejson >= 3.0.0
 httplib2 >= 0.8.0
 feedparser >= 5.1.3
-service_identity
+service_identity==17.0.0
 python-dateutil >= 2.2
-pytz
-pytvmaze
+pytz==2017.2
+pytvmaze==2.0.8
