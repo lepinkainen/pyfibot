@@ -8,7 +8,7 @@ ndg-httpsclient==0.4.2
 pyasn1==0.3.1
 tvdb_api==1.10
 repoze.lru==0.6
-pygeoip
+pygeoip==0.3.2
 sqlalchemy
 dataset
 python-instagram
