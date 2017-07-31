@@ -3,7 +3,7 @@ requests >= 2.1.0
 pyyaml==3.12
 jsonschema >= 1.0.0
 beautifulsoup4==4.6.0
-pyopenssl
+pyopenssl==17.2.0
 ndg-httpsclient
 pyasn1
 tvdb_api
