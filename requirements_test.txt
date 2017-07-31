@@ -1,4 +1,4 @@
-vcrpy
+vcrpy==1.11.1
 pytest
 pytest-pep8
 pytest-flakes
