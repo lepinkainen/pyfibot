@@ -1,6 +1,6 @@
 twisted >= 12.0.0
 requests >= 2.1.0
-pyyaml
+pyyaml==3.12
 jsonschema >= 1.0.0
 beautifulsoup4
 pyopenssl
