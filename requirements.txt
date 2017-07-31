@@ -9,7 +9,7 @@ pyasn1==0.3.1
 tvdb_api==1.10
 repoze.lru==0.6
 pygeoip==0.3.2
-sqlalchemy
+sqlalchemy==1.1.12
 dataset
 python-instagram
 simplejson >= 3.0.0
