@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import logging
 from nose.tools import eq_
 import bot_mock
 from pyfibot.modules import module_urltitle
@@ -10,9 +11,6 @@ from vcr import VCR
 my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
              cassette_library_dir="tests/cassettes/",
              record_mode=pytest.config.getoption("--vcrmode"))
-
-import vcr
-import logging
 
 logging.basicConfig()  # you need to initialize logging, otherwise you will not see anything from vcrpy
 vcr_log = logging.getLogger("vcr")
