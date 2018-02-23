@@ -1,0 +1,40 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+twisted = "*"
+requests = "*"
+pyyaml = "*"
+jsonschema = ">=1.0.0"
+"beautifulsoup4" = "*"
+pyopenssl = "*"
+ndg-httpsclient = "*"
+"pyasn1" = "*"
+tvdb-api = "*"
+"repoze.lru" = "*"
+pygeoip = "*"
+sqlalchemy = "*"
+dataset = "*"
+python-instagram = "*"
+simplejson = ">=3.0.0"
+"httplib2" = ">=0.8.0"
+feedparser = ">=5.1.3"
+service-identity = "*"
+python-dateutil = ">=2.2"
+pytz = "*"
+pytvmaze = "*"
+"functools32" = "*"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "2.7"
