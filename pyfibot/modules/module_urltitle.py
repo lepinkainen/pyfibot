@@ -89,7 +89,7 @@ def __get_title_tag(url):
 
 def __get_length_str(secs):
     """Convert seconds to human readable string"""
-    
+
     lengthstr = []
     hours, minutes, seconds = secs // 3600, secs // 60 % 60, secs % 60
     if hours > 0:
@@ -105,7 +105,7 @@ def __get_length_str(secs):
 
 def __get_age_str(published, use_fresh=True):
     """Convert delta time to human readable format"""
-    
+
     now = datetime.now(tz=published.tzinfo)
 
     # Check if the publish date is in the future (upcoming episode)
@@ -151,7 +151,8 @@ def __get_views(views):
     if int(views) == 0:
         return '0'
     millnames = ['', 'k', 'M', 'Billion', 'Trillion']
-    millidx = max(0, min(len(millnames) - 1, int(math.floor(math.log10(abs(views)) / 3.0))))
+    millidx = max(0, min(len(millnames) - 1,
+                         int(math.floor(math.log10(abs(views)) / 3.0))))
     return '%.0f%s' % (views / 10 ** (3 * millidx), millnames[millidx])
 
 
@@ -302,7 +303,8 @@ def _check_redundant(url, title):
     """Returns true if the url and title are similar enough."""
     # Remove hostname from the title
     hostname = urlparse.urlparse(url.lower()).netloc
-    hostname = ".".join(hostname.split('@')[-1].split(':')[0].lstrip('www.').split('.'))
+    hostname = ".".join(hostname.split(
+        '@')[-1].split(':')[0].lstrip('www.').split('.'))
     cmp_title = title.lower()
     for part in hostname.split('.'):
         idx = cmp_title.replace(' ', '').find(part)
@@ -310,11 +312,13 @@ def _check_redundant(url, title):
             break
 
     if idx > len(cmp_title) / 2:
-        cmp_title = cmp_title[0:idx + (len(title[0:idx]) - len(title[0:idx].replace(' ', '')))].strip()
+        cmp_title = cmp_title[0:idx + (len(title[0:idx]) -
+                                       len(title[0:idx].replace(' ', '')))].strip()
     elif idx == 0:
         cmp_title = cmp_title[idx + len(hostname):].strip()
     # Truncate some nordic letters
-    unicode_to_ascii = {u'\u00E4': 'a', u'\u00C4': 'A', u'\u00F6': 'o', u'\u00D6': 'O', u'\u00C5': 'A', u'\u00E5': 'a'}
+    unicode_to_ascii = {u'\u00E4': 'a', u'\u00C4': 'A',
+                        u'\u00F6': 'o', u'\u00D6': 'O', u'\u00C5': 'A', u'\u00E5': 'a'}
     for i in unicode_to_ascii:
         cmp_title = cmp_title.replace(i, unicode_to_ascii[i])
 
@@ -350,7 +354,8 @@ def _levenshtein_distance(s, t):
             if len(s) > i - 1 and len(t) > j - 1 and s[i - 1] == t[j - 1]:
                 d[i][j] = d[i - 1][j - 1]
             else:
-                d[i][j] = min((d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + 1))
+                d[i][j] = min(
+                    (d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + 1))
 
     return d[len(s)][len(t)]
 
@@ -393,7 +398,8 @@ def _handle_verkkokauppa(url):
     except:
         price = "???€"
     try:
-        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).find('strong').text.strip()
+        availability = bs.find('div', {'id': 'productAvailabilityInfo'}).find(
+            'strong').text.strip()
     except:
         availability = ""
     return "%s | %s (%s)" % (product, price, availability)
@@ -428,7 +434,7 @@ def _handle_tweet2(url):
 
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
-    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false"
+    tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false&tweet_mode=extended"
     test = re.match(r"https?://.*?twitter\.com\/(\w+)/status(es)?/(\d+)", url)
     if not test:
         return
@@ -437,7 +443,8 @@ def _handle_tweet(url):
 
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
-        log.info("Use util/twitter_application_auth.py to request a bearer token for tweet handling")
+        log.info(
+            "Use util/twitter_application_auth.py to request a bearer token for tweet handling")
         return _parse_tweet_from_src(url)
     headers = {'Authorization': 'Bearer ' + bearer_token}
 
@@ -446,10 +453,11 @@ def _handle_tweet(url):
     tweet = data.json()
     if 'errors' in tweet:
         for error in tweet['errors']:
-            log.warning("Error reading tweet (code %s) %s" % (error['code'], error['message']))
+            log.warning("Error reading tweet (code %s) %s" %
+                        (error['code'], error['message']))
         return
 
-    text = tweet['text'].strip()
+    text = tweet['full_text'].strip()
     user = tweet['user']['screen_name']
     name = tweet['user']['name'].strip()
     verified = tweet['user']['verified']
@@ -481,7 +489,8 @@ def _handle_tweet(url):
     if verified:
         user = "✔{0}".format(user)
 
-    tweet = "{0} ({1}) {2}: {3} [♻ {4} ♥ {5}]".format(name, user, twit_timestr(created_date), text, retweets, favorites)
+    tweet = "{0} ({1}) {2}: {3} [♻ {4} ♥ {5}]".format(
+        name, user, twit_timestr(created_date), text, retweets, favorites)
     return tweet
 
 
@@ -585,7 +594,8 @@ def _handle_imdb(url):
         votes = "0"
     genre = data['Genre'].lower()
 
-    title = '%s (%s) - %s/10 (%s votes) - %s' % (name, year, rating, votes, genre)
+    title = '%s (%s) - %s/10 (%s votes) - %s' % (name,
+                                                 year, rating, votes, genre)
 
     return title
 
@@ -595,7 +605,8 @@ def _handle_helmet(url):
     bs = __get_bs(url)
     if not bs:
         return
-    title = bs.find(attr={'class': 'bibInfoLabel'}, text='Teoksen nimi').next.next.next.next.string
+    title = bs.find(attr={'class': 'bibInfoLabel'},
+                    text='Teoksen nimi').next.next.next.next.string
     return title
 
 
@@ -622,9 +633,12 @@ def _handle_alko(url):
     if not bs:
         return
     name = bs.find('h1', {'itemprop': 'name'}).text
-    price = float(bs.find('span', {'itemprop': 'price'}).text.replace(',', '.'))
-    size = float(bs.find('div', {'class': 'product-details'}).contents[0].strip().replace(',', '.'))
-    e_per_l = float(bs.find('div', {'class': 'product-details'}).contents[4].strip().replace(',', '.'))
+    price = float(
+        bs.find('span', {'itemprop': 'price'}).text.replace(',', '.'))
+    size = float(bs.find(
+        'div', {'class': 'product-details'}).contents[0].strip().replace(',', '.'))
+    e_per_l = float(bs.find(
+        'div', {'class': 'product-details'}).contents[4].strip().replace(',', '.'))
     drinktype = bs.find('h3', {'itemprop': 'category'}).text
     alcohol = float(
         re.sub(
@@ -654,7 +668,8 @@ def _handle_vimeo(url):
     likes = __get_views(info.get('stats_number_of_likes', 0))
     views = __get_views(info.get('stats_number_of_plays', 0))
 
-    agestr = __get_age_str(datetime.strptime(info['upload_date'], '%Y-%m-%d %H:%M:%S'))
+    agestr = __get_age_str(datetime.strptime(
+        info['upload_date'], '%Y-%m-%d %H:%M:%S'))
     lengthstr = __get_length_str(info['duration'])
 
     return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
@@ -667,7 +682,8 @@ def _handle_stackoverflow(url):
     if match is None:
         return
     question_id = match.group(1)
-    content = bot.get_url(api_url % question_id, params={'site': 'stackoverflow'})
+    content = bot.get_url(api_url % question_id, params={
+                          'site': 'stackoverflow'})
 
     try:
         data = content.json()
@@ -706,7 +722,8 @@ def _handle_reddit(url):
         num_comments = data['num_comments']
         over_18 = data['over_18']
 
-        result = "{0} [{1} pts, {2} comments]".format(title, score, num_comments)
+        result = "{0} [{1} pts, {2} comments]".format(
+            title, score, num_comments)
         if over_18:
             result = "{0} (NSFW)".format(result)
         return result
@@ -741,23 +758,27 @@ def _handle_areena(url):
         publicationEvents = data.get('publicationEvent', [])
 
         # Finds the scheduled transmissions
-        ScheduledTransmission = [event for event in publicationEvents if event.get('type') == 'ScheduledTransmission']
+        ScheduledTransmission = [event for event in publicationEvents if event.get(
+            'type') == 'ScheduledTransmission']
         if ScheduledTransmission:
             # If transmissions are found, use the first one
             ScheduledTransmission = ScheduledTransmission[0]
 
         # Finds the on-demand transmissions
-        OnDemandPublication = [event for event in publicationEvents if event.get('temporalStatus') == 'currently' and event.get('type') == 'OnDemandPublication']
+        OnDemandPublication = [event for event in publicationEvents if event.get(
+            'temporalStatus') == 'currently' and event.get('type') == 'OnDemandPublication']
         if OnDemandPublication:
             # If transmissions are found, use the first one
             OnDemandPublication = OnDemandPublication[0]
 
         # Find the broadcast time of the transmission
         # First, try to get the time when the on-demand was added to Areena.
-        broadcasted = parse_datetime(OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
+        broadcasted = parse_datetime(
+            OnDemandPublication['startTime']) if OnDemandPublication and 'startTime' in OnDemandPublication else None
         if broadcasted is None or broadcasted > now:
             # If on-demand wasn't found, fall back to the scheduled transmission.
-            broadcasted = parse_datetime(ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
+            broadcasted = parse_datetime(
+                ScheduledTransmission['startTime']) if ScheduledTransmission and 'startTime' in ScheduledTransmission else None
 
         # Find the exit time of the on-demand publication
         exits = None
@@ -771,11 +792,13 @@ def _handle_areena(url):
         if not event:
             return
 
-        duration = event.get('duration') or event.get('media', {}).get('duration')
+        duration = event.get('duration') or event.get(
+            'media', {}).get('duration')
         if duration is None:
             return
 
-        match = re.match(r'P((\d+)Y)?((\d+)D)?T?((\d+)H)?((\d+)M)?((\d+)S)?', duration)
+        match = re.match(
+            r'P((\d+)Y)?((\d+)D)?T?((\d+)H)?((\d+)M)?((\d+)S)?', duration)
         if not match:
             return
 
@@ -793,7 +816,8 @@ def _handle_areena(url):
 
     def get_episode(identifier):
         ''' Gets episode information from Areena '''
-        url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (identifier)
+        url = 'https://external.api.yle.fi/v1/programs/items/%s.json' % (
+            identifier)
         params = {
             'app_id': config.get('areena', {}).get('app_id', 'cd556936'),
             'app_key': config.get('areena', {}).get('app_key', '25a08bbaa8101cca1bf0d1879bb13012'),
@@ -822,7 +846,8 @@ def _handle_areena(url):
 
         duration = get_duration(data)
 
-        _, OnDemandPublication, broadcasted, exits = _parse_publication_events(data)
+        _, OnDemandPublication, broadcasted, exits = _parse_publication_events(
+            data)
 
         title_data = []
         if duration:
@@ -830,7 +855,8 @@ def _handle_areena(url):
         if broadcasted:
             title_data.append(__get_age_str(broadcasted))
         if exits and datetime.now(tz=tzutc()) + timedelta(days=2 * 365) > exits:
-            title_data.append('exits in %s' % __get_age_str(exits, use_fresh=False))
+            title_data.append('exits in %s' %
+                              __get_age_str(exits, use_fresh=False))
         if not OnDemandPublication:
             title_data.append('not available')
         return '%s [%s]' % (title, ' - '.join(title_data))
@@ -868,7 +894,8 @@ def _handle_areena(url):
         else:
             title_data.append('%i episodes' % len(data))
         if broadcasted:
-            title_data.append('latest episode: %s' % __get_age_str(broadcasted))
+            title_data.append('latest episode: %s' %
+                              __get_age_str(broadcasted))
 
         return '%s [%s]' % (title, ' - '.join(title_data))
 
@@ -880,7 +907,8 @@ def _handle_areena(url):
         container = bs.find('div', {'class': 'selected'})
         channel = container.find('h3').text
         try:
-            program = container.find('li', {'class': 'current-broadcast'}).find('div', {'class': 'program-title'})
+            program = container.find(
+                'li', {'class': 'current-broadcast'}).find('div', {'class': 'program-title'})
         except AttributeError:
             return '%s (LIVE)' % (channel)
 
@@ -1006,7 +1034,8 @@ def _handle_imgur(url):
         if match:
             resource_id = match.group(1)
             endpoint = _endpoint
-            log.debug("using endpoint %s for resource %s" % (endpoint, resource_id))
+            log.debug("using endpoint %s for resource %s" %
+                      (endpoint, resource_id))
             break
 
     if not endpoint:
@@ -1017,8 +1046,10 @@ def _handle_imgur(url):
     if not r.content:
         if endpoint != "gallery/r/all":
             endpoint = "gallery/r/all"
-            log.debug("switching to endpoint gallery/r/all because of empty response")
-            r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+            log.debug(
+                "switching to endpoint gallery/r/all because of empty response")
+            r = bot.get_url("%s/%s/%s" %
+                            (api, endpoint, resource_id), headers=headers)
             if not r.content:
                 log.warn("Empty response after retry!")
                 return
@@ -1038,14 +1069,16 @@ def _handle_imgur(url):
     elif data['status'] == 404 and endpoint != "gallery/r/all":
         endpoint = "gallery/r/all"
         log.debug("Not found, seeing if it is a subreddit image")
-        r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
+        r = bot.get_url("%s/%s/%s" %
+                        (api, endpoint, resource_id), headers=headers)
         data = r.json()
         if data['status'] == 200:
             title = create_title(r.json())
         else:
             return None
     else:
-        log.debug("imgur API error: %d %s" % (data['status'], data['data']['error']))
+        log.debug("imgur API error: %d %s" %
+                  (data['status'], data['data']['error']))
         return None
 
     return title
@@ -1064,11 +1097,13 @@ def _handle_liveleak(url):
         return
     title = bs.find('span', 'section_title').text.strip()
     info = bs.find('span', id='item_info_%s' % id)
-    info = info.renderContents().decode("iso8859-1")  # we need to render as unicode because if unicode_literals
+    # we need to render as unicode because if unicode_literals
+    info = info.renderContents().decode("iso8859-1")
 
     # need to do this kind of crap, as the data isn't contained by a span
     try:
-        added_by = BeautifulSoup(info.split(u'<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
+        added_by = BeautifulSoup(info.split(
+            u'<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
     except:
         added_by = '???'
 
@@ -1078,12 +1113,14 @@ def _handle_liveleak(url):
         date_added = '???'
 
     try:
-        views = __get_views(int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
+        views = __get_views(
+            int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
     except:
         views = '???'
 
     try:
-        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')[1].split('<br')[0], 'html.parser').text.strip()
+        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')
+                             [1].split('<br')[0], 'html.parser').text.strip()
     except:
         tags = 'none'
 
@@ -1168,9 +1205,9 @@ def _handle_ebay(url):
     if 'ShippingCostSummary' in item and \
        'ShippingServiceCost' in item['ShippingCostSummary'] and \
        item['ShippingCostSummary']['ShippingServiceCost']['Value'] != 0:
-            price = '%.1f%s (postage %.1f%s)' % (
-                price, currency,
-                item['ShippingCostSummary']['ShippingServiceCost']['Value'], currency)
+        price = '%.1f%s (postage %.1f%s)' % (
+            price, currency,
+            item['ShippingCostSummary']['ShippingServiceCost']['Value'], currency)
     else:
         price = '%.1f%s' % (price, currency)
 
@@ -1250,7 +1287,8 @@ def _handle_instagram(url):
 
     shortcode = m.group(1)
 
-    r = bot.get_url("http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
+    r = bot.get_url(
+        "http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
 
     media = api.media(r.json()['media_id'])
 
@@ -1314,7 +1352,8 @@ def fetch_nettiX(url, fields_to_fetch):
 
     try:
         # Try to find price for the item, if found -> add to fields
-        price = bs.find('div', {'class': 'pl10 mt15 lnht22'}).find('span').text.strip()
+        price = bs.find('div', {'class': 'pl10 mt15 lnht22'}).find(
+            'span').text.strip()
         if price:
             fields.append(price)
     except AttributeError:
@@ -1334,7 +1373,8 @@ def fetch_nettiX(url, fields_to_fetch):
                 # For example cars might have registeration date includet in a span
                 [s.extract() for s in f.findAll('span')]
                 # Get field data
-                field_info = f.find('div', {'class': 'ad_details'}).text.strip()
+                field_info = f.find(
+                    'div', {'class': 'ad_details'}).text.strip()
                 # If the data was found and it's not "Ei ilmoitettu", add to fields
                 if field_info and field_info != 'Ei ilmoitettu':
                     fields.append(field_info)
@@ -1479,7 +1519,8 @@ def _handle_discogs(url):
         'master': '{0[artists][0][name]} - {0[title]} - ({0[year]})',
     }
 
-    m = re.match(r'http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
+    m = re.match(
+        r'http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
 
     if m:
         m = m.groups()
@@ -1502,7 +1543,8 @@ def _handle_discogs(url):
                 title.append('{0[num_for_sale]} item%s for sale' % plural)
 
             if data['releases_rated'] > 10:
-                title.append('Rating avg: {0[rating_avg]} (total {0[releases_rated]})')
+                title.append(
+                    'Rating avg: {0[rating_avg]} (total {0[releases_rated]})')
 
             title = ' - '.join(title).format(data)
 
@@ -1543,7 +1585,8 @@ def _handle_gfycat(url):
 
     api_url = "https://gfycat.com/cajax/get/%s"
 
-    m = re.match(r"https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
+    m = re.match(
+        r"https?://(?:\w+\.)?gfycat.com/([\w]+)(?:\.gif|\.webm|\.mp4)?", url)
     if not m:
         return
 
