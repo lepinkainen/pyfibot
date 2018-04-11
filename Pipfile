@@ -1,12 +1,9 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
 twisted = "*"
 requests = "*"
 pyyaml = "*"
@@ -30,11 +27,9 @@ pytz = "*"
 pytvmaze = "*"
 "functools32" = "*"
 
-
 [dev-packages]
-
-
+pylint = "*"
+"pep8" = "*"
 
 [requires]
-
 python_version = "2.7"
