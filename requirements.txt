@@ -6,7 +6,7 @@ beautifulsoup4==4.6.0
 pyopenssl==17.5.0
 ndg-httpsclient==0.4.3
 pyasn1==0.4.2
-tvdb_api==1.10
+tvdb_api==2.0
 repoze.lru==0.7
 pygeoip==0.3.2
 sqlalchemy==1.2.6
