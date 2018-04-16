@@ -21,7 +21,7 @@ def command_posti(bot, user, channel, args):
     if not args:
         return bot.say(channel, 'Tracking ID is required.')
 
-    url = 'http://www.posti.fi/henkiloasiakkaat/seuranta/api/shipments/%s' % quote_plus(args)
+    url = 'https://www.posti.fi/henkiloasiakkaat/seuranta/api/shipments/%s' % quote_plus(args)
 
     try:
         r = bot.get_url(url)
