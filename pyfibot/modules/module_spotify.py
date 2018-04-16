@@ -10,14 +10,6 @@ import requests
 
 log = logging.getLogger('spotify')
 
-def init(botref):
-    """Initialize the urltitle module"""
-
-    global config
-    global bot
-    bot = botref
-    config = bot.config.get("module_spotify", {})
-
 def get_token(client_id, client_secret):
     token = client_id + ":" + client_secret
     encoded_token = base64.b64encode(token)
@@ -31,6 +23,7 @@ def get_token(client_id, client_secret):
 
 def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""
+    config = bot.config.get("module_spotify", {})
 
     m = re.match(r".*(https?:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*", args)
     if not m:
