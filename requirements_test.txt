@@ -1,4 +1,4 @@
-vcrpy==1.11.1
+vcrpy==1.12.0
 pytest==3.5.1
 pytest-pep8==1.0.6
 pytest-flakes==3.0.2
