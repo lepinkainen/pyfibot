@@ -388,7 +388,7 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
 
 
 def _handle_verkkokauppa(url):
-    """http://www.verkkokauppa.com/*/product/*"""
+    """https://www.verkkokauppa.com/*/product/*"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -576,13 +576,13 @@ def _handle_youtube_gdata(url):
 
 
 def _handle_imdb(url):
-    """http://*imdb.com/title/tt*"""
-    m = re.match(r"http://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
+    """https://*imdb.com/title/tt*"""
+    m = re.match(r"https://.*?\.imdb\.com/title/(tt[0-9]+)/?", url)
     if not m:
         return
 
     params = {'i': m.group(1)}
-    r = bot.get_url('http://www.omdbapi.com/', params=params)
+    r = bot.get_url('https://www.omdbapi.com/', params=params)
     data = r.json()
 
     name = data['Title']
@@ -601,7 +601,7 @@ def _handle_imdb(url):
 
 
 def _handle_helmet(url):
-    """http://www.helmet.fi/record=*fin"""
+    """https://www.helmet.fi/record=*fin"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -654,7 +654,7 @@ def _handle_alko(url):
 
 def _handle_vimeo(url):
     """*vimeo.com/*"""
-    data_url = "http://vimeo.com/api/v2/video/%s.json"
+    data_url = "https://vimeo.com/api/v2/video/%s.json"
     match = re.match(r"http(s?)://.*?vimeo.com/(\d+)", url)
     if not match:
         return None
@@ -677,7 +677,7 @@ def _handle_vimeo(url):
 
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
-    api_url = 'http://api.stackexchange.com/2.2/questions/%s'
+    api_url = 'https://api.stackexchange.com/2.2/questions/%s'
     match = re.match(r'.*stackoverflow.com/questions/([0-9]+)', url)
     if match is None:
         return
@@ -733,7 +733,7 @@ def _handle_reddit(url):
 
 
 def _handle_aamulehti(url):
-    """http://www.aamulehti.fi/*"""
+    """https://www.aamulehti.fi/*"""
     bs = __get_bs(url)
     if not bs:
         return
@@ -742,7 +742,7 @@ def _handle_aamulehti(url):
 
 
 def _handle_areena(url):
-    """http://areena.yle.fi/*"""
+    """https://areena.yle.fi/*"""
     def _parse_publication_events(data):
         '''
         Parses publication events from the data.
@@ -915,7 +915,7 @@ def _handle_areena(url):
         link = program.find('a').get('href', None)
         if not link:
             return '%s - %s (LIVE)' % (channel, program.text.strip())
-        return '%s - %s <http://areena.yle.fi/%s> (LIVE)' % (channel, program.text.strip(), link.lstrip('/'))
+        return '%s - %s <https://areena.yle.fi/%s> (LIVE)' % (channel, program.text.strip(), link.lstrip('/'))
 
     try:
         identifier = url.split('/')[-1].split('?')[0]
@@ -950,7 +950,7 @@ def _handle_wikipedia(url):
         }
 
         language = url.split('/')[2].split('.')[0]
-        api = "http://%s.wikipedia.org/w/api.php" % (language)
+        api = "https://%s.wikipedia.org/w/api.php" % (language)
 
         r = bot.get_url(api, params=params)
 
@@ -1085,7 +1085,7 @@ def _handle_imgur(url):
 
 
 def _handle_liveleak(url):
-    """http://*liveleak.com/view?i=*"""
+    """https://*liveleak.com/view?i=*"""
     try:
         id = url.split('view?i=')[1]
     except IndexError:
@@ -1128,7 +1128,7 @@ def _handle_liveleak(url):
 
 
 def _handle_dailymotion(url):
-    """http://*dailymotion.com/video/*"""
+    """https://*dailymotion.com/video/*"""
     video_id = url.split('/')[-1].split('_')[0]
     params = {
         'fields': ','.join([
@@ -1174,7 +1174,7 @@ def _handle_ebay(url):
     site_id = config.get('ebay_siteid', 77)
     currency = config.get('ebay_currency', 'e')
 
-    api_url = 'http://open.api.ebay.com/shopping'
+    api_url = 'https://open.api.ebay.com/shopping'
     params = {
         'callname': 'GetSingleItem',
         'responseencoding': 'JSON',
@@ -1230,7 +1230,7 @@ def _handle_ebay_no_prefix(url):
 def _handle_ebay_cgi(url):
     """http*://cgi.ebay.*/ws/eBayISAPI.dll?ViewItem&item=*"""
     item_id = url.split('item=')[1].split('&')[0]
-    fake_url = 'http://ebay.com/itm/%s' % item_id
+    fake_url = 'https://ebay.com/itm/%s' % item_id
     return _handle_ebay(fake_url)
 
 
@@ -1238,7 +1238,7 @@ def _handle_dealextreme(url):
     """http*://dx.com/p/*"""
     sku = url.split('?')[0].split('-')[-1]
     cookies = {'DXGlobalization': 'lang=en&locale=en-US&currency=EUR'}
-    api_url = 'http://www.dx.com/bi/GetSKUInfo?sku=%s' % sku
+    api_url = 'https://www.dx.com/bi/GetSKUInfo?sku=%s' % sku
 
     r = bot.get_url(api_url, cookies=cookies)
 
@@ -1273,7 +1273,7 @@ def _handle_dealextreme_www(url):
 
 
 def _handle_instagram(url):
-    """http*://*instagram.com/p/*"""
+    """https://*instagram.com/p/*"""
     from instagram.client import InstagramAPI
 
     CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
@@ -1288,7 +1288,7 @@ def _handle_instagram(url):
     shortcode = m.group(1)
 
     r = bot.get_url(
-        "http://api.instagram.com/oembed?url=http://instagram.com/p/%s/" % shortcode)
+        "https://api.instagram.com/oembed?url=https://instagram.com/p/%s/" % shortcode)
 
     media = api.media(r.json()['media_id'])
 
@@ -1335,7 +1335,7 @@ def fetch_nettiX(url, fields_to_fetch):
     # Strip useless stuff from url
     site = re.split('https?\:\/\/(www.)?(m.)?', url)[-1]
     # Fetch BS from mobile site, as it's a lot easier to parse
-    bs = __get_bs('http://m.%s' % site)
+    bs = __get_bs('https://m.%s' % site)
     if not bs:
         return
 
@@ -1420,17 +1420,17 @@ def _handle_nettikone(url):
 def _handle_hitbox(url):
     """http*://*hitbox.tv/*"""
     # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
-    if re.match(r"http://(help|blog)\.hitbox\.tv/.*", url):
+    if re.match(r"https://(help|blog)\.hitbox\.tv/.*", url):
         return
 
     # Hitbox titles are populated by JavaScript so they return a useless "{{meta.title}}", don't show those
-    elif not re.match(r"http://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
+    elif not re.match(r"https://(www\.)?hitbox\.tv/([A-Za-z0-9]+)$", url):
         return False
 
     # For actual stream pages, let's fetch information via the hitbox API
     else:
         streamname = url.rsplit('/', 2)[2]
-        api_url = 'http://api.hitbox.tv/media/live/%s' % streamname
+        api_url = 'https://api.hitbox.tv/media/live/%s' % streamname
 
         r = bot.get_url(api_url)
 
@@ -1459,7 +1459,7 @@ def _handle_hitbox(url):
 
 
 def _handle_google_play_music(url):
-    """http*://play.google.com/music/*"""
+    """https://play.google.com/music/*"""
     bs = __get_bs(url)
     if not bs:
         return False
@@ -1475,11 +1475,11 @@ def _handle_google_play_music(url):
 
 
 def _handle_steamstore(url):
-    """http://store.steampowered.com/app/*"""
+    """https://store.steampowered.com/app/*"""
 
     # https://wiki.teamfortress.com/wiki/User:RJackson/StorefrontAPI
-    api_url = "http://store.steampowered.com/api/appdetails/"
-    app = re.match(r"http://store\.steampowered\.com\/app/(?P<id>\d+)", url)
+    api_url = "https://store.steampowered.com/api/appdetails/"
+    app = re.match(r"https://store\.steampowered\.com\/app/(?P<id>\d+)", url)
     params = {'appids': app.group('id'), 'cc': 'fi'}
 
     r = bot.get_url(api_url, params=params)
@@ -1507,7 +1507,7 @@ def _handle_pythonorg(url):
 
 
 def _handle_discogs(url):
-    """http://*discogs.com/*"""
+    """https://*discogs.com/*"""
 
     apiurl = 'https://api.discogs.com/'
     headers = {'user-agent': 'pyfibot-urltitle'}
@@ -1624,7 +1624,7 @@ def _handle_salakuunneltua(url):
 
 
 def _handle_apina(url):
-    """http://apina.biz/*"""
+    """https://apina.biz/*"""
     return False
 
 
