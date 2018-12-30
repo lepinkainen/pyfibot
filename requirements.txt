@@ -5,7 +5,7 @@ jsonschema >= 1.0.0
 beautifulsoup4==4.6.3
 pyopenssl==18.0.0
 ndg-httpsclient==0.4.4
-pyasn1==0.4.4
+pyasn1==0.4.5
 tvdb_api==2.0
 repoze.lru==0.7
 pygeoip==0.3.2
