@@ -18,9 +18,9 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:e9ffdece0eece55f4108b14b6b0f29ffc730d58e28446a434fe41a1cc5c5f266"
+                "sha256:35660f7e6159288e2be111126be148ef04cbf7306da73c8b8bd4400837bb08e3"
             ],
-            "version": "==1.0.5"
+            "version": "==1.0.6"
         },
         "asn1crypto": {
             "hashes": [
@@ -319,11 +319,11 @@
         },
         "pyopenssl": {
             "hashes": [
-                "sha256:26ff56a6b5ecaf3a2a59f132681e2a80afcc76b4f902f612f518f92c2a1bf854",
-                "sha256:6488f1423b00f73b7ad5167885312bb0ce410d3312eb212393795b53c8caa580"
+                "sha256:aeca66338f6de19d1aa46ed634c3b9ae519a64b458f8468aec688e7e3c20f200",
+                "sha256:c727930ad54b10fc157015014b666f2d8b41f70c0d03e83ab67624fd3dd5d1e6"
             ],
             "index": "pypi",
-            "version": "==18.0.0"
+            "version": "==19.0.0"
         },
         "python-dateutil": {
             "hashes": [
@@ -634,9 +634,9 @@
         },
         "wrapt": {
             "hashes": [
-                "sha256:d4d560d479f2c21e1b5443bbd15fe7ec4b37fe7e53d335d3b9b0a7b1226fe3c6"
+                "sha256:4aea003270831cceb8a90ff27c4031da6ead7ec1886023b80ce0dfe0adf61533"
             ],
-            "version": "==1.10.11"
+            "version": "==1.11.1"
         }
     }
 }
