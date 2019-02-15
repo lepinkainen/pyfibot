@@ -732,15 +732,6 @@ def _handle_reddit(url):
         return
 
 
-def _handle_aamulehti(url):
-    """https://www.aamulehti.fi/*"""
-    bs = __get_bs(url)
-    if not bs:
-        return
-    title = bs.find("h1").string
-    return title
-
-
 def _handle_areena(url):
     """https://areena.yle.fi/*"""
     def _parse_publication_events(data):
@@ -972,15 +963,15 @@ def _handle_wikipedia(url):
     content = re.sub(r'\(.*?\)', '', content)
     # Remove " , ", which might be left behind after cleaning up
     # the brackets
-    content = re.sub('\s+([,.])', '\\1 ', content)
+    content = re.sub(r'\s+([,.])', '\\1 ', content)
     # Remove multiple spaces
-    content = re.sub('\s+', ' ', content)
+    content = re.sub(r'\s+', ' ', content)
     # Strip possible trailing whitespace
     content = content.rstrip()
 
     # Define sentence break as something ending in a period and starting with a capital letter,
     # with a whitespace or newline in between
-    sentences = re.split('\.\s(?=[A-ZÅÄÖ])', content)
+    sentences = re.split(r'\.\s(?=[A-ZÅÄÖ])', content)
     # Remove empty values from list.
     sentences = filter(None, sentences)
 
@@ -1022,11 +1013,11 @@ def _handle_imgur(url):
     headers = {"Authorization": "Client-ID %s" % client_id}
 
     # regexes and matching API endpoints
-    endpoints = [("imgur.com/r/.*?/(.*)", "gallery/r/all"),
-                 ("i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
-                 ("imgur.com/gallery/(.*)", "gallery"),
-                 ("imgur.com/a/([^\?]+)", "album"),
-                 ("imgur.com/([^\./]+)", "gallery")]
+    endpoints = [(r"imgur.com/r/.*?/(.*)", "gallery/r/all"),
+                 (r"i.imgur.com/(.*)\.(jpg|png|gif)", "gallery"),
+                 (r"imgur.com/gallery/(.*)", "gallery"),
+                 (r"imgur.com/a/([^\?]+)", "album"),
+                 (r"imgur.com/([^\./]+)", "gallery")]
 
     endpoint = None
     for regex, _endpoint in endpoints:
@@ -1333,7 +1324,7 @@ def fetch_nettiX(url, fields_to_fetch):
     '''
 
     # Strip useless stuff from url
-    site = re.split('https?\:\/\/(www.)?(m.)?', url)[-1]
+    site = re.split(r'https?\:\/\/(www.)?(m.)?', url)[-1]
     # Fetch BS from mobile site, as it's a lot easier to parse
     bs = __get_bs('https://m.%s' % site)
     if not bs:

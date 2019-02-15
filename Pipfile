@@ -28,7 +28,7 @@ pytvmaze = "*"
 "functools32" = "*"
 
 [dev-packages]
-pylint = "*"
+pylint = "<2.0.0"
 "pep8" = "*"
 "autopep8" = "*"
 

@@ -30,8 +30,8 @@ def clean_answer(_string):
     if _string:
         res = re.sub("[ ]{2,}", " ",
                      _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
-        res = res.replace("\:0e3f", u'฿')
-        res = res.replace("\:ffe5", u'￥')
+        res = res.replace(r"\:0e3f", u'฿')
+        res = res.replace(r"\:ffe5", u'￥')
         return res
 
 
