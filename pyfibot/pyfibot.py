@@ -20,6 +20,9 @@ import logging.handlers
 import json
 import jsonschema
 from copy import deepcopy
+import botcore
+from util.dictdiffer import DictDiffer
+import socket
 
 import colorlogger
 USE_COLOR = True
@@ -42,11 +45,8 @@ except ImportError:
     sys.exit(1)
 
 # default timeout for socket connections
-import socket
 socket.setdefaulttimeout(20)
 
-import botcore
-from util.dictdiffer import DictDiffer
 
 log = logging.getLogger('core')
 

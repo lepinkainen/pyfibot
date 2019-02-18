@@ -1,11 +1,10 @@
 """
 """
 from __future__ import unicode_literals, print_function, division
+from twisted.internet import reactor
 
 # rejoin after 1 minute
 delay = 61
-
-from twisted.internet import reactor
 
 
 def handle_kickedFrom(bot, channel, kicker, message):

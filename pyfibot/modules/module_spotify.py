@@ -10,6 +10,7 @@ import requests
 
 log = logging.getLogger('spotify')
 
+
 def get_token(client_id, client_secret):
     token = client_id + ":" + client_secret
     encoded_token = base64.b64encode(token)
@@ -20,6 +21,7 @@ def get_token(client_id, client_secret):
     r = requests.post(auth_url, payload, headers=headers)
 
     return r.json()['access_token']
+
 
 def handle_privmsg(bot, user, channel, args):
     """Grab Spotify URLs from the messages and handle them"""

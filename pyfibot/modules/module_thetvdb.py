@@ -6,6 +6,7 @@ Displays next episode if one exists, previous if no future episodes are known
 
 from __future__ import unicode_literals, print_function, division
 from datetime import datetime, timedelta
+from operator import itemgetter
 
 api_ok = True
 try:
@@ -14,7 +15,6 @@ try:
 except:
     print("tvdb api not available")
     api_ok = False
-from operator import itemgetter
 
 
 class SmartUI(tvdb_api.BaseUI):
