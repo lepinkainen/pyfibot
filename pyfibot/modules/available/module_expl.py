@@ -13,7 +13,7 @@ def expl_parseterm(expl):
     expl = expl[0]
     expl = expl.lower()
     expl = expl.strip()
-    invalidchars = re.compile("[^a-z0-9\ :\.-]")
+    invalidchars = re.compile(r"[^a-z0-9\ :\.-]")
     expl = invalidchars.sub("_", expl)
     return expl
 

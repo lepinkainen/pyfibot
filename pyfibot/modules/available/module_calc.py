@@ -19,15 +19,15 @@ def calc(str, match=True):
         str = str.group(0)[1:-1]
 
     while True:
-        newstr = re.sub("[(][-+*^%/\d.]*[)]", calc, str)
+        newstr = re.sub(r"[(][-+*^%/\d.]*[)]", calc, str)
         if (newstr == str):
             break
         else:
             str = newstr
 
-    for op in ["[\^]", "[*/%]", "[-+]"]:
+    for op in [r"[\^]", "[*/%]", "[-+]"]:
         while True:
-            newstr = re.sub("(\-?[\d.]+)(%s)(\-?[\d.]+)" % op, doTheMath, str)
+            newstr = re.sub(r"(\-?[\d.]+)(%s)(\-?[\d.]+)" % op, doTheMath, str)
             if (newstr == str):
                 break
             else:

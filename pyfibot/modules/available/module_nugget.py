@@ -27,9 +27,9 @@ class Nuggets():
 
     def cleanNuggets(self, ugly_nugget_list):
         for nugget in ugly_nugget_list:
-            temp = re.sub('<.*?>', '', str(nugget))
-            if re.search('\.\.\.', temp):
-                self.nugget_list.append(re.sub('\.\.\.', '', temp))
+            temp = re.sub(r'<.*?>', '', str(nugget))
+            if re.search(r'\.\.\.', temp):
+                self.nugget_list.append(re.sub(r'\.\.\.', '', temp))
 
     def getSentence(self):
         return self.question + self.nugget_list[random.randint(0, len(self.nugget_list))]

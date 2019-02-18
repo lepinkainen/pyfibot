@@ -119,7 +119,7 @@ def handle_privmsg(bot, user, channel, args):
             return self
 
     m = re.match(
-        ".*(https?:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*",
+        r".*(https?:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*",
         args)
     if not m:
         return None

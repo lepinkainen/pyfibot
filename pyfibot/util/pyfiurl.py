@@ -123,7 +123,7 @@ validPathChars = [string.ascii_letters,
                   string.digits,
                   '/;?:@&=+$,%#'
                   '-_.!~*()',
-                  'ÅÄÖåäö[]<>{}^\|\'`–',  # not so valid but used
+                  r'ÅÄÖåäö[]<>{}^\|\'`–',  # not so valid but used
                   ]
 
 validUserinfoChars = [string.ascii_letters,
