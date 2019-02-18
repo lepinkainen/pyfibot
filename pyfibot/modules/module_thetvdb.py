@@ -30,12 +30,6 @@ class SmartUI(tvdb_api.BaseUI):
         if len(allSeries) > 0:
             return allSeries[0]
 
-if __name__ == "__main__":
-    api = tvdb_api.Tvdb(custom_ui=SmartUI)
-    print(api['doctor who'])        # Doctor Who 2005
-    print(api['castle'])            # Castle 2009
-    print(api['house of cards'])    # House of Cards (US)
-
 
 def command_tvdb(bot, user, channel, args):
     """Usage: tvdb <series name>"""
@@ -121,3 +115,10 @@ def command_tvdb(bot, user, channel, args):
         msg += " [Ended]"
 
     bot.say(channel, msg.encode("UTF-8"))
+
+
+if __name__ == "__main__":
+    api = tvdb_api.Tvdb(custom_ui=SmartUI)
+    print(api['doctor who'])        # Doctor Who 2005
+    print(api['castle'])            # Castle 2009
+    print(api['house of cards'])    # House of Cards (US)

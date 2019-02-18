@@ -30,6 +30,7 @@ def find_gets(path):
                 config_options[f][clean_string(m.group(2))] = clean_string(m.group(3))
     pprint(config_options)
 
+
 if __name__ == '__main__':
     for p in ['pyfibot', 'pyfibot/modules', 'pyfibot/modules/available']:
         find_gets(os.path.join('.', p))
