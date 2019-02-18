@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# pylint: disable=unused-variable,no-member
 
 """
 A modular python bot based on the twisted matrix irc library

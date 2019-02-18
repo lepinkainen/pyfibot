@@ -224,6 +224,7 @@ def handle_url(bot, user, channel, url, msg):
 
     global handlers
     # try to find a specific handler for the URL
+    # pylint: disable=unused-variable
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
         if fnmatch.fnmatch(url, pattern):

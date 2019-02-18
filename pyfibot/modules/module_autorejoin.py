@@ -12,4 +12,5 @@ def handle_kickedFrom(bot, channel, kicker, message):
     bot.log("Kicked by %s from %s. Reason: %s" % (kicker, channel, message))
     bot.log("Rejoining in %d seconds" % delay)
     bot.network.channels.remove(channel)
+    # pylint: disable=no-member
     reactor.callLater(delay, bot.join, channel)
