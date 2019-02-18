@@ -1,5 +1,4 @@
 # configs, databases and virtualenv artifacts
-config.yml
 include/
 man/
 module_autoop.db

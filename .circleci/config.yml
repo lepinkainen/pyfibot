@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:  # required for runs that don't use workflows
+    working_directory: ~/pyfibot
+    docker:
+      - image: circleci/python:2.7  # primary container for the build job
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout  # checkout source code to working directory
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python2.7/site-packages
+      - run:
+          command: |  # use pipenv to install dependencies
+            sudo pip install pipenv
+            pipenv install -d
+            make test
+      - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python2.7/site-packages"
