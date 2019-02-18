@@ -417,7 +417,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
 
-    ### Overrides for twisted.words.irc core commands ###
+    # Overrides for twisted.words.irc core commands #
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
 
@@ -469,7 +469,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         message = self.factory.to_utf8(message)
         return super(PyFiBot, self).quit(message)
 
-    ### Overrides for twisted.words.irc internal commands ###
+    # Overrides for twisted.words.irc internal commands #
     def XXregister(self, nickname, hostname='foo', servername='bar'):
         nickname = self.factory.to_utf8(nickname)
         hostname = self.factory.to_utf8(hostname)
@@ -479,7 +479,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
         # self.register(nickname, hostname, servername)
 
-    ### LOW-LEVEL IRC HANDLERS ###
+    # LOW-LEVEL IRC HANDLERS #
 
     def irc_JOIN(self, prefix, params):
         """override the twisted version to preserve full userhost info"""
@@ -527,9 +527,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         else:
             self.userLeft(prefix, None, params[0])
 
-    ###### HANDLERS ######
+    # HANDLERS #
 
-    ## ME
+    # ME #
     def joined(self, channel):
         """I joined a channel"""
         self._runhandler("joined", channel)
@@ -554,7 +554,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """I changed my nick"""
         self._runhandler("nickChanged", nick)
 
-    ## OTHER PEOPLE
+    # OTHER PEOPLE
     def userJoined(self, user, channel):
         """Someone joined"""
         self._runhandler("userJoined", user, channel)
@@ -583,9 +583,9 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         """MOTD"""
         self._runhandler("receivedMOTD", self.factory.to_unicode(motd))
 
-    ## SERVER INFORMATION
+    # SERVER INFORMATION
 
-    ## Network = Quakenet -> do Q auth
+    # Network = Quakenet -> do Q auth
     def isupport(self, options):
         log.info(self.network.alias + " SUPPORTS: " + ",".join(options))
 
