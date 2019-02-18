@@ -4,7 +4,6 @@ Returns the first Youtube video found with the given keywords using Youtube API.
 """
 
 from __future__ import unicode_literals, print_function, division
-import json
 
 
 def command_youtube(bot, user, channel, args):

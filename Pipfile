@@ -26,6 +26,7 @@ python-dateutil = ">=2.2"
 pytz = "*"
 pytvmaze = "*"
 "functools32" = "*"
+flake8 = "*"
 
 [dev-packages]
 pylint = "<2.0.0"

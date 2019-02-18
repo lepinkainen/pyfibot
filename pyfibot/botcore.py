@@ -17,7 +17,6 @@ from twisted.python import rebuild
 
 from types import FunctionType
 
-import re
 import inspect
 import string
 import logging

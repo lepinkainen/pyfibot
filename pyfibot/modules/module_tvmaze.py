@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 import pytvmaze
-from dateutil.parser import *
-from dateutil.relativedelta import *
+from dateutil.parser import parse
+from dateutil.relativedelta import relativedelta
 import pytz
 from datetime import datetime
 

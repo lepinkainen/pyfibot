@@ -93,7 +93,7 @@ def handle_privmsg(bot, user, channel, args):
                 if self.data.get('album') and self.data.get('album').get('name'):
                     self.output += ' (from "%s")' % self.data.get('album').get('name')
 
-            if data_type == "album":
+            elif data_type == "album":
                 artist = ', '.join([artist.get('name') for artist in self.data.get('artists')])
                 name = self.data.get('name')
                 tracks = self.data.get('tracks').get('total')
@@ -103,10 +103,10 @@ def handle_privmsg(bot, user, channel, args):
 
                 self.output = "\002[Spotify Album]\002 %s (%s, %s tracks) by %s" % (name, released, tracks, artist)
 
-            if data_type == "artist":
+            elif data_type == "artist":
                 self.output = "\002[Spotify Artist]\002 %s" % self.data.get('name')
 
-            if data_type == "playlist":
+            elif data_type == "playlist":
                 name = self.data.get('name')
                 owner = self.data.get('owner').get('id')
                 followers = self.data.get('followers').get('total')
