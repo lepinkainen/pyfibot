@@ -31,4 +31,3 @@ def command_youtube(bot, user, channel, args):
             return bot.say(channel, "No results")
     else:
         return bot.say(channel, "No results")
-

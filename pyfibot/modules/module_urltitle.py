@@ -312,8 +312,7 @@ def _check_redundant(url, title):
             break
 
     if idx > len(cmp_title) / 2:
-        cmp_title = cmp_title[0:idx + (len(title[0:idx]) -
-                                       len(title[0:idx].replace(' ', '')))].strip()
+        cmp_title = cmp_title[0:idx + (len(title[0:idx]) - len(title[0:idx].replace(' ', '')))].strip()
     elif idx == 0:
         cmp_title = cmp_title[idx + len(hostname):].strip()
     # Truncate some nordic letters
