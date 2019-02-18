@@ -18,10 +18,10 @@ CHANNEL_PREFIXES = '&#!+'
 
 
 def init(botconfig):
-    open_DB(True)
+    open_db(True)
 
 
-def open_DB(createTable=False):
+def open_db(createTable=False):
     conn = sqlite3.connect('module_autoop.db')
     c = conn.cursor()
     if createTable:
@@ -32,7 +32,7 @@ def open_DB(createTable=False):
 
 def add_op(channel, hostmask, modes='o'):
     if not get_op_status(channel, hostmask):
-        conn, c = open_DB()
+        conn, c = open_db()
         c.execute('INSERT INTO autoops VALUES (?, ?, ?);', (channel, hostmask, modes))
         conn.commit()
         conn.close()
@@ -41,7 +41,7 @@ def add_op(channel, hostmask, modes='o'):
 
 def remove_op(channel, hostmask):
     if get_op_status(channel, hostmask):
-        conn, c = open_DB()
+        conn, c = open_db()
         c.execute('DELETE FROM autoops WHERE channel = ? AND ? GLOB hostmask;', (channel, hostmask))
         conn.commit()
         conn.close()
@@ -49,7 +49,7 @@ def remove_op(channel, hostmask):
 
 
 def get_op_status(channel, hostmask):
-    conn, c = open_DB()
+    conn, c = open_db()
     c.execute('SELECT * FROM autoops WHERE channel = ? AND ? GLOB hostmask LIMIT 1;', (channel, hostmask))
     if c.fetchone():
         retval = True
@@ -60,7 +60,7 @@ def get_op_status(channel, hostmask):
 
 
 def get_user_channels(hostmask):
-    conn, c = open_DB()
+    conn, c = open_db()
     c.execute('SELECT channel FROM autoops WHERE ? GLOB hostmask;', (hostmask,))
     rows = c.fetchall()
     conn.close()
@@ -68,7 +68,7 @@ def get_user_channels(hostmask):
 
 
 def get_ops(channel):
-    conn, c = open_DB()
+    conn, c = open_db()
     c.execute('SELECT hostmask FROM autoops WHERE channel = ?;', (channel,))
     rows = c.fetchall()
     conn.close()
@@ -83,13 +83,13 @@ def check_hostmask(hostmask):
 
 
 def op_user(bot, user, channel):
-    nick = getNick(user)
+    nick = bot.getNick(user)
     bot.log('auto-opping %s on %s' % (user, channel))
     bot.mode(channel, True, 'o', user=nick)
 
 
 def handle_userJoined(bot, user, channel):
-    if isAdmin(user) or get_op_status(channel, user):
+    if bot.isAdmin(user) or get_op_status(channel, user):
         op_user(bot, user, channel)
 
 
@@ -129,7 +129,7 @@ def command_autoop(bot, user, channel, args):
             return bot.say(channel, "You're not an op in %s." % channel)
 
     else:
-        if isAdmin(user):
+        if bot.isAdmin(user):
             if len(args) < 3:
                 return bot.say(channel, 'Command must have channel and hostmask as arguments.')
 
@@ -150,5 +150,5 @@ def command_autoop(bot, user, channel, args):
 
 def command_op(bot, user, channel, args):
     """Get op status from bot if you are authorized"""
-    if isAdmin(user) or get_op_status(channel, user):
+    if bot.isAdmin(user) or get_op_status(channel, user):
         op_user(bot, user, channel)

@@ -51,7 +51,7 @@ socket.setdefaulttimeout(20)
 log = logging.getLogger('core')
 
 
-class Network:
+class Network(object):
     """Represents an IRC network"""
     def __init__(self, root, alias, address, nickname, realname=None, channels=None, linerate=None, password=None, is_ssl=False):
         self.root = root

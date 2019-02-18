@@ -13,7 +13,7 @@ except ImportError:
 
 
 def handle_userJoined(bot, user, channel):
-    nick = getNick(user)
+    nick = bot.getNick(user)
     userhost = user.split("!")[1]
     username, host = userhost.split("@")
     username = username.replace("~", "").replace("-", "")
@@ -30,7 +30,7 @@ def command_webchat(bot, user, channel, args):
     if origin:
         return bot.say(channel, "webchat from %s" % origin)
     else:
-        return bot.say(channel, "%s: %s is not a valid webchat hex ip" % (getNick(user), args))
+        return bot.say(channel, "%s: %s is not a valid webchat hex ip" % (bot.getNick(user), args))
 
 
 def webchat_getorigin(hexip):
@@ -49,7 +49,7 @@ def webchat_getorigin(hexip):
     if ip:
         addr = '.'.join(ip)
         hostname = socket.getfqdn(addr)
-        if hostname != origin:
+        if hostname != addr:
             origin = "%s -> %s" % (addr, hostname)
         else:
             origin = addr

@@ -57,3 +57,6 @@ nosetests.xml
 /pyfibot/GeoLiteCity.dat
 /pyfibot/modules/imgur_auth.dat
 /undoc.pickle
+
+# VSCode
+.vscode

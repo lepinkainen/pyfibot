@@ -9,7 +9,7 @@ log = logging.getLogger("update")
 
 def command_update(bot, user, channel, args):
     """Update bot sources from git"""
-    if not isAdmin(user):
+    if not bot.isAdmin(user):
         return
 
     pull_ok = False

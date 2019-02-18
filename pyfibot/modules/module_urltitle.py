@@ -176,7 +176,7 @@ def __escaped_fragment(url, meta=False):
 def command_cache(bot, user, channel, args):
     """Enable or disable url title caching"""
     global CACHE_ENABLED
-    if isAdmin(user):
+    if bot.isAdmin(user):
         CACHE_ENABLED = not CACHE_ENABLED
         # cache was just disabled, clear it
         if not CACHE_ENABLED:

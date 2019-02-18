@@ -1,9 +1,10 @@
+from __future__ import unicode_literals, print_function, division
 import requests
 import base64
 import sys
 
 if len(sys.argv) < 3:
-    print "Usage: twitter_application_auth.py <consumer key> <consumer secret>"
+    print("Usage: twitter_application_auth.py <consumer key> <consumer secret>")
     sys.exit(1)
 
 consumer_key = sys.argv[1]
@@ -20,5 +21,5 @@ try:
 except TypeError:
     bearer_token = r.json['access_token']
 
-print "Paste the following to your config below module_urltitle"
-print "twitter_bearer: '%s'" % bearer_token
+print("Paste the following to your config below module_urltitle")
+print("twitter_bearer: '%s'" % bearer_token)

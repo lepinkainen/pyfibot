@@ -27,6 +27,7 @@ pytz = "*"
 pytvmaze = "*"
 "functools32" = "*"
 flake8 = "*"
+pylint = "*"
 
 [dev-packages]
 pylint = "<2.0.0"
