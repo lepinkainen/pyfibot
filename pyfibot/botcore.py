@@ -476,8 +476,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         servername = self.factory.to_utf8(servername)
         return super(PyFiBot, self).register(nickname, hostname, servername)
 
-        #self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
-        #self.register(nickname, hostname, servername)
+        # self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))
+        # self.register(nickname, hostname, servername)
 
     ### LOW-LEVEL IRC HANDLERS ###
 

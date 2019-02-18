@@ -10,7 +10,7 @@ def command_youtube(bot, user, channel, args):
     """<message> Returns the first Youtube video found with the given keywords. Usage: .youtube sultans of swing"""
     search = args
 
-    #replacing spaces with +
+    # replacing spaces with +
     search = search.replace(" ", "+")
 
     if len(search) > 0:

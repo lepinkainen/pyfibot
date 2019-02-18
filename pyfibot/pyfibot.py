@@ -249,7 +249,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             return None
 
         size = int(r.headers.get('Content-Length', 0)) // 1024
-        #log.debug("Content-Length: %dkB" % size)
+
         if size > 2048:
             log.warn("Content too large, will not fetch: %skB %s" % (size, url))
             return None

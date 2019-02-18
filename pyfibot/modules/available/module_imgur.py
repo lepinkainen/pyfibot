@@ -57,7 +57,7 @@ def handle_url(bot, user, channel, url, msg):
     content_type = r.headers['content-type'].split(';')[0]
 
     if content_type.startswith("image/"):
-        #log.info(channel, upload_images([url]))
+        # log.info(channel, upload_images([url]))
         responses = upload_images([url], user, channel)
         for r in responses:
             log.debug("Uploaded image http://imgur.com/%s by %s from %s to gallery" % (r.get('id', ''), user, channel))
@@ -113,7 +113,7 @@ def upload_images(urls, user=None, channel=None):
 
         images.append(r.json()['data'])
 
-        #log.info("%s uploaded to imgur gallery" % r.json()['data'].get('link', ''))
+        # log.info("%s uploaded to imgur gallery" % r.json()['data'].get('link', ''))
 
     return images
 

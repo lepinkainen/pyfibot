@@ -38,7 +38,7 @@ class Nuggets():
 class NuggetsEn(Nuggets):
     def __init__(self, archive_num):
         self.question = "Did you know, "
-        #archive_max checked 13-8-2009
+        # archive_max checked 13-8-2009
         self.archive_max = 246
         self.archive_num = archive_num
         if self.archive_num > self.archive_max:
@@ -60,7 +60,7 @@ class NuggetsEn(Nuggets):
 class NuggetsFi(Nuggets):
     def __init__(self, archive_num):
         self.question = "Tiesitkö, että "
-        #archive_max checked 13-8-2009
+        # archive_max checked 13-8-2009
         self.archive_max = 6
         self.archive_num = archive_num
         if self.archive_num > self.archive_max:
