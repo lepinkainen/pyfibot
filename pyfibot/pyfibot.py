@@ -196,7 +196,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def _unload_removed_modules(self):
         """Unload modules removed from modules -directory"""
         # find all modules in namespace, which aren't present in modules -directory
-        removed_modules = [m for m in self.ns if not m in self._findmodules()]
+        removed_modules = [m for m in self.ns if m not in self._findmodules()]
         self._finalize_modules(removed_modules)
 
     def _findmodules(self):

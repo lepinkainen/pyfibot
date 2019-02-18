@@ -1,4 +1,4 @@
-STYLE_IGNORE=E713,E501,E722
+STYLE_IGNORE=E501,E722
 
 test:
-	pycodestyle --ignore=$(STYLE_IGNORE) pyfibot/
+	pycodestyle --show-source --show-pep8 --ignore=$(STYLE_IGNORE) pyfibot/

@@ -122,7 +122,7 @@ def command_del(bot, user, channel, args):
         return
 
     term = expl_parseterm(args)
-    if not term in termlist:
+    if term not in termlist:
         return bot.say(user, "Term '%s' doesn't exist." % term)
 
     expl = expl_getexpl(expldir, term)
