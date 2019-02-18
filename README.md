@@ -3,8 +3,6 @@ CI Build status: [![CircleCI](https://circleci.com/gh/lepinkainen/pyfibot/tree/m
 pyfibot
 =======
 
-[![Join the chat at https://gitter.im/lepinkainen/pyfibot](https://badges.gitter.im/lepinkainen/pyfibot.svg)](https://gitter.im/lepinkainen/pyfibot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 A Python IRC-bot made using the [Twisted Matrix](http://twistedmatrix.com/trac/) IRC-library.
 
 Supports online module reloading - only major core changes require a
