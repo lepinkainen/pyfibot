@@ -158,17 +158,17 @@ def handle_userRenamed(bot, user, newnick):
         # if row is found with new or old nick -> user is on the channel -> update
         if table.find_one(nick=nick, ident=ident, host=host) or \
            table.find_one(nick=newnick, ident=ident, host=host):
-                # need to create a deep copy of data, as dataset seems to put changed fields back to data...
-                # haven't found any documentation on this, so might be a bug?
-                tmp_data = deepcopy(data)
+            # need to create a deep copy of data, as dataset seems to put changed fields back to data...
+            # haven't found any documentation on this, so might be a bug?
+            tmp_data = deepcopy(data)
 
-                # update the old user
-                table.upsert(tmp_data, ['nick', 'ident', 'host'])
+            # update the old user
+            table.upsert(tmp_data, ['nick', 'ident', 'host'])
 
-                # update new user
-                tmp_data = deepcopy(data)
-                tmp_data['nick'] = newnick
-                table.upsert(tmp_data, ['nick', 'ident', 'host'])
+            # update new user
+            tmp_data = deepcopy(data)
+            tmp_data['nick'] = newnick
+            table.upsert(tmp_data, ['nick', 'ident', 'host'])
 
 
 def handle_action(bot, user, channel, message):
