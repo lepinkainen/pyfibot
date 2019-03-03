@@ -6,5 +6,7 @@ def command_oraakkeli(bot, user, channel, args):
     if not args:
         return
     args = urllib.quote_plus(args)
-    r = getUrl("http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args)
+    r = getUrl(
+        "http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args
+    )
     return bot.say(channel, "Oraakkeli vastaa: %s" % r.text)

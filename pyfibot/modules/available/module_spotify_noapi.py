@@ -19,12 +19,11 @@ import logging
 
 from bs4 import BeautifulSoup
 
-log = logging.getLogger('spotify')
+log = logging.getLogger("spotify")
 
 
 def handle_privmsg(bot, user, channel, args):
     class SpotifyData(object):
-
         def __init__(self):
             self._data = None
             self.output = None
@@ -37,8 +36,8 @@ def handle_privmsg(bot, user, channel, args):
 
            """
             for script in scripts:
-                if re.search(r'Spotify.Entity', script.string):
-                    return re.sub(r'[\n\t]', '', script.string)
+                if re.search(r"Spotify.Entity", script.string):
+                    return re.sub(r"[\n\t]", "", script.string)
 
         @staticmethod
         def _ms_human_readable(ms):
@@ -62,10 +61,10 @@ def handle_privmsg(bot, user, channel, args):
            Takes a list of <script> elements, selects the desired one and morphs contents to a neat json dict
 
            """
-            soup = BeautifulSoup(value, 'html.parser')
-            script = self._parse_script_elements(soup.find_all('script'))
+            soup = BeautifulSoup(value, "html.parser")
+            script = self._parse_script_elements(soup.find_all("script"))
             if script:
-                element = re.search(r'Spotify.Entity = ({.*});', script).group(1)
+                element = re.search(r"Spotify.Entity = ({.*});", script).group(1)
                 self._data = json.loads(element)
 
         @data.deleter
@@ -85,53 +84,69 @@ def handle_privmsg(bot, user, channel, args):
                 return
 
             if data_type == "track":
-                artist = ', '.join([artist.get('name') for artist in self.data.get('artists')])
-                name = self.data.get('name')
-                duration = self._ms_human_readable(int(self.data.get('duration_ms')))
+                artist = ", ".join(
+                    [artist.get("name") for artist in self.data.get("artists")]
+                )
+                name = self.data.get("name")
+                duration = self._ms_human_readable(int(self.data.get("duration_ms")))
 
-                self.output = "\002[Spotify]\002 %s - %s [%sm%ss]" % (artist, name, duration[0], duration[1])
-                if self.data.get('album') and self.data.get('album').get('name'):
-                    self.output += ' (from "%s")' % self.data.get('album').get('name')
+                self.output = "\002[Spotify]\002 %s - %s [%sm%ss]" % (
+                    artist,
+                    name,
+                    duration[0],
+                    duration[1],
+                )
+                if self.data.get("album") and self.data.get("album").get("name"):
+                    self.output += ' (from "%s")' % self.data.get("album").get("name")
 
             elif data_type == "album":
-                artist = ', '.join([artist.get('name') for artist in self.data.get('artists')])
-                name = self.data.get('name')
-                tracks = self.data.get('tracks').get('total')
+                artist = ", ".join(
+                    [artist.get("name") for artist in self.data.get("artists")]
+                )
+                name = self.data.get("name")
+                tracks = self.data.get("tracks").get("total")
                 released = 0
-                if re.match(r'\d{4}', self.data.get('release_date')):
-                    released = re.match(r'\d{4}', self.data.get('release_date')).group()
+                if re.match(r"\d{4}", self.data.get("release_date")):
+                    released = re.match(r"\d{4}", self.data.get("release_date")).group()
 
-                self.output = "\002[Spotify Album]\002 %s (%s, %s tracks) by %s" % (name, released, tracks, artist)
+                self.output = "\002[Spotify Album]\002 %s (%s, %s tracks) by %s" % (
+                    name,
+                    released,
+                    tracks,
+                    artist,
+                )
 
             elif data_type == "artist":
-                self.output = "\002[Spotify Artist]\002 %s" % self.data.get('name')
+                self.output = "\002[Spotify Artist]\002 %s" % self.data.get("name")
 
             elif data_type == "playlist":
-                name = self.data.get('name')
-                owner = self.data.get('owner').get('id')
-                followers = self.data.get('followers').get('total')
-                tracks = self.data.get('tracks').get('total')
+                name = self.data.get("name")
+                owner = self.data.get("owner").get("id")
+                followers = self.data.get("followers").get("total")
+                tracks = self.data.get("tracks").get("total")
 
-                self.output = "\002[Spotify Playlist]\002 %s by %s (%s tracks, %s followers)" % (
-                    name, owner, tracks, followers
+                self.output = (
+                    "\002[Spotify Playlist]\002 %s by %s (%s tracks, %s followers)"
+                    % (name, owner, tracks, followers)
                 )
 
             return self
 
     m = re.match(
         r".*(https?:\/\/open.spotify.com\/|spotify:)(?P<item>album|artist|track|user[:\/]\S+[:\/]playlist)[:\/](?P<id>[a-zA-Z0-9]+)\/?.*",
-        args)
+        args,
+    )
     if not m:
         return None
 
-    spotify_id = m.group('id')
-    item = m.group('item').replace(':', '/').split('/')
+    spotify_id = m.group("id")
+    item = m.group("item").replace(":", "/").split("/")
 
     if item[-1] not in ("track", "album", "artist", "playlist"):
         bot.log("Given endpoint not yet supported")
         return
 
-    r = re.search(r'(https?:\/\/\S+)', args)
+    r = re.search(r"(https?:\/\/\S+)", args)
     if r:
         url = r.group()
     elif item[-1] == "playlist":
@@ -140,7 +155,7 @@ def handle_privmsg(bot, user, channel, args):
         url = "https://open.spotify.com/%s/%s" % (item[-1], spotify_id)
 
     user_agent = {
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G900R4 Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36'
+        "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; SM-G900R4 Build/MMB29M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/55.0.2883.91 Mobile Safari/537.36"
     }
     r = bot.get_url(url=url, headers=user_agent)
     if r.status_code != 200:

@@ -7,10 +7,10 @@ import random
 
 
 class MyOpener(FancyURLopener):
-    version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
+    version = "Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11"
 
 
-class Nuggets():
+class Nuggets:
     def __init__(self):
         self.nugget_list = []
         self.getNuggets()
@@ -27,12 +27,14 @@ class Nuggets():
 
     def cleanNuggets(self, ugly_nugget_list):
         for nugget in ugly_nugget_list:
-            temp = re.sub(r'<.*?>', '', str(nugget))
-            if re.search(r'\.\.\.', temp):
-                self.nugget_list.append(re.sub(r'\.\.\.', '', temp))
+            temp = re.sub(r"<.*?>", "", str(nugget))
+            if re.search(r"\.\.\.", temp):
+                self.nugget_list.append(re.sub(r"\.\.\.", "", temp))
 
     def getSentence(self):
-        return self.question + self.nugget_list[random.randint(0, len(self.nugget_list))]
+        return (
+            self.question + self.nugget_list[random.randint(0, len(self.nugget_list))]
+        )
 
 
 class NuggetsEn(Nuggets):
@@ -43,7 +45,9 @@ class NuggetsEn(Nuggets):
         self.archive_num = archive_num
         if self.archive_num > self.archive_max:
             self.archive_num = random.randint(1, self.archive_max)
-        self.url = "http://en.wikipedia.org/wiki/Wikipedia:Recent_additions_" + str(self.archive_num)
+        self.url = "http://en.wikipedia.org/wiki/Wikipedia:Recent_additions_" + str(
+            self.archive_num
+        )
         Nuggets.__init__(self)
 
     def getNuggets(self):
@@ -65,7 +69,10 @@ class NuggetsFi(Nuggets):
         self.archive_num = archive_num
         if self.archive_num > self.archive_max:
             self.archive_num = random.randint(1, self.archive_max)
-        self.url = "http://fi.wikipedia.org/wiki/Wikipedia:Tiesitk%C3%B6_ett%C3%A4.../Arkisto" + str(self.archive_num)
+        self.url = (
+            "http://fi.wikipedia.org/wiki/Wikipedia:Tiesitk%C3%B6_ett%C3%A4.../Arkisto"
+            + str(self.archive_num)
+        )
         Nuggets.__init__(self)
 
     def getNuggets(self):

@@ -1,4 +1,5 @@
 import datetime
+
 try:
     from pyPgSQL import PgSQL
 except:
@@ -19,6 +20,7 @@ except:
 # WITHOUT OIDS;
 # ALTER TABLE pyfibot.urls OWNER TO <user>;
 
+
 def init(bot):
     global config
     config = bot.config.get("module_pgsqlwanha", None)
@@ -28,10 +30,18 @@ def handle_url(bot, user, channel, url, msg):
     return
     if not config:
         return
-    cx = PgSQL.connect(database=config["database"], host=config["host"], user=config["user"], password=config["password"])
+    cx = PgSQL.connect(
+        database=config["database"],
+        host=config["host"],
+        user=config["user"],
+        password=config["password"],
+    )
     cur = cx.cursor()
     # find the oldest instance of given url on this channel
-    cur.execute("SELECT * FROM pyfibot.urls WHERE channel=%s AND url=%s ORDER BY timestamp;", (channel, url))
+    cur.execute(
+        "SELECT * FROM pyfibot.urls WHERE channel=%s AND url=%s ORDER BY timestamp;",
+        (channel, url),
+    )
     res = cur.fetchone()
     if res:
         url, channel, userhost, timestamp, urlid = res
@@ -52,10 +62,17 @@ def handle_url(bot, user, channel, url, msg):
         # don't alert for the same person
         if getNick(user) != getNick(userhost):
             if channel != "#wow":
-                bot.say(channel, "%s: wanha. (by %s %s ago)" % (getNick(user), getNick(userhost), agestr))
+                bot.say(
+                    channel,
+                    "%s: wanha. (by %s %s ago)"
+                    % (getNick(user), getNick(userhost), agestr),
+                )
     cur = cx.cursor()
     # always store URLs, this structure can handle it, sqlite can't
-    cur.execute("INSERT INTO pyfibot.urls (userid, channel, url, timestamp) VALUES(%s, %s, %s, NOW());", (user, channel, url))
+    cur.execute(
+        "INSERT INTO pyfibot.urls (userid, channel, url, timestamp) VALUES(%s, %s, %s, NOW());",
+        (user, channel, url),
+    )
     cx.commit()
     cur.close()
     cx.close()

@@ -1,5 +1,6 @@
 try:
     import sqlite3
+
     sqlite = sqlite3
 except:
     import sqlite
@@ -41,10 +42,19 @@ def handle_url(bot, user, channel, url, msg):
         if seconds > 0:
             agestr += "%d s" % seconds
         # don't alert for the same person
-        if getNick(user) != getNick(userhost) and channel not in config.get("channels", []):
-            ret = bot.say(channel, "%s: wanha. (by %s %s ago)" % (getNick(user), getNick(userhost), agestr))
+        if getNick(user) != getNick(userhost) and channel not in config.get(
+            "channels", []
+        ):
+            ret = bot.say(
+                channel,
+                "%s: wanha. (by %s %s ago)"
+                % (getNick(user), getNick(userhost), agestr),
+            )
     else:
-        cur.execute("INSERT INTO urls VALUES(%s, %s, %s, %s, %d)", (urlid, user, url, channel, int(time.time())))
+        cur.execute(
+            "INSERT INTO urls VALUES(%s, %s, %s, %s, %d)",
+            (urlid, user, url, channel, int(time.time())),
+        )
     con.commit()
     cur.close()
     con.close()

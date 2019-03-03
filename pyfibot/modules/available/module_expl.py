@@ -27,7 +27,7 @@ def expl_getdir(channel):
 
 def expl_getlist(expldir):
     list = os.listdir(expldir)
-    dotfile = re.compile(r'(^[^\.])')
+    dotfile = re.compile(r"(^[^\.])")
     list = filter(dotfile.match, list)
     return list
 
@@ -46,7 +46,10 @@ def check_params(bot, args, channel):
 
     expldir = expl_getdir(channel)
     if not expldir:
-        bot.log("No expldir for channel %s, create %s to enable expl." % (channel, os.path.join(sys.path[0], "expl", channel)))
+        bot.log(
+            "No expldir for channel %s, create %s to enable expl."
+            % (channel, os.path.join(sys.path[0], "expl", channel))
+        )
         return False
 
     termlist = expl_getlist(expldir)
@@ -101,7 +104,7 @@ def command_add(bot, user, channel, args):
         return bot.say(user, "Term '%s' already exists." % term)
 
     expl = args[1]
-    f = file(os.path.join(expldir, term), 'w')
+    f = file(os.path.join(expldir, term), "w")
     f.write(expl)
     f.write("\n")  # add a newline to make it easier to admin
     f.close()
@@ -127,7 +130,9 @@ def command_del(bot, user, channel, args):
 
     expl = expl_getexpl(expldir, term)
     os.unlink(os.path.join(expldir, term))
-    bot.log("Term '%s' for %s deleted by %s (contained: %s)" % (term, channel, user, expl))
+    bot.log(
+        "Term '%s' for %s deleted by %s (contained: %s)" % (term, channel, user, expl)
+    )
     return bot.say(user, "Term '%s' deleted (contained: %s)" % (term, expl))
 
 
@@ -150,4 +155,8 @@ def command_ls(bot, user, channel, args):
         first = "first 20 of "
 
     matchlist.sort()
-    return bot.say(user, "Terms matching '%s' (%stotal %d): %s" % (pattern, first, matches, ", ".join(matchlist[0:20])))
+    return bot.say(
+        user,
+        "Terms matching '%s' (%stotal %d): %s"
+        % (pattern, first, matches, ", ".join(matchlist[0:20])),
+    )
