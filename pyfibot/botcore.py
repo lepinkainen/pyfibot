@@ -57,7 +57,7 @@ class CoreCommands(object):
                 self.factory._unload_removed_modules()
                 # reload modules
                 self.factory._loadmodules()
-            except Exception, e:
+            except Exception as e:
                 self.say(channel, "Rehash error: %s" % e)
                 log.error("Rehash error: %s" % e)
             else:
@@ -92,11 +92,14 @@ class CoreCommands(object):
         except KeyError:
             self.say(channel, "I am not on that network.")
         else:
-            log.debug("Attempting to join channel %s on ", (newchannel, network))
+            log.debug("Attempting to join channel %s on ",
+                      (newchannel, network))
             if newchannel in bot.network.channels:
-                self.say(channel, "I am already in %s on %s." % (newchannel, network))
+                self.say(channel, "I am already in %s on %s." %
+                         (newchannel, network))
                 log.debug("Already on channel %s" % channel)
-                log.debug("Channels I'm on this network: %s" % bot.network.channels)
+                log.debug("Channels I'm on this network: %s" %
+                          bot.network.channels)
             else:
                 if password:
                     bot.join(newchannel, key=password)
@@ -140,7 +143,8 @@ class CoreCommands(object):
                 bot.network.channels.remove(newchannel)
                 bot.part(newchannel)
             else:
-                log.debug("Attempted to part channel I am not on: %s@%s" % (newchannel, network))
+                log.debug("Attempted to part channel I am not on: %s@%s" %
+                          (newchannel, network))
                 log.debug("Channels on network: %s" % bot.network.channels)
 
     def command_quit(self, user, channel, args):
@@ -155,7 +159,8 @@ class CoreCommands(object):
     def command_channels(self, user, channel, args):
         """Usage: channels <network> - List channels the bot is on"""
         if not args:
-            self.say(channel, "Please specify a network: %s" % ", ".join(self.factory.allBots.keys()))
+            self.say(channel, "Please specify a network: %s" %
+                     ", ".join(self.factory.allBots.keys()))
             return
 
         self.say(channel, "I am on %s" % self.network.channels)
@@ -166,8 +171,10 @@ class CoreCommands(object):
         commands, admin_commands = [], []
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
-            commands += [(c.replace("command_", ""), ref) for c, ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
-            admin_commands += [(c.replace("admin_", ""), ref) for c, ref in mylocals.items() if c.startswith("admin_%s" % cmnd)]
+            commands += [(c.replace("command_", ""), ref)
+                         for c, ref in mylocals.items() if c.startswith("command_%s" % cmnd)]
+            admin_commands += [(c.replace("admin_", ""), ref)
+                               for c, ref in mylocals.items() if c.startswith("admin_%s" % cmnd)]
         # Help for a specific command
         if len(cmnd) > 0:
             for cname, ref in commands:
@@ -181,7 +188,8 @@ class CoreCommands(object):
             admin_commandlist = ", ".join([c for c, ref in admin_commands])
             self.say(channel, "Available commands: %s" % commandlist)
             if self.factory.isAdmin(user):
-                self.say(channel, "Available admin commands: %s" % admin_commandlist)
+                self.say(channel, "Available admin commands: %s" %
+                         admin_commandlist)
 
 
 class PyFiBot(irc.IRCClient, CoreCommands):
@@ -248,7 +256,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 log.info("I'm on Quakenet, authenticating...")
                 self.mode(self.nickname, '+', 'x')  # Hide ident
                 log.info("Authenticating...")
-                self.say("Q@CServe.quakenet.org", "AUTH %s %s" % (authname, authpass))
+                self.say("Q@CServe.quakenet.org", "AUTH %s %s" %
+                         (authname, authpass))
             # more generic authentication
             else:
                 # Get authentication service
@@ -258,16 +267,20 @@ class PyFiBot(irc.IRCClient, CoreCommands):
                 if authservice:
                     # Command used for authentication
                     # Default: "IDENTIFY authname authpass"
-                    authcommand = network_conf.get('authcommand', 'IDENTIFY %(authname)s %(authpass)s')
-                    authcommand = authcommand % {'authname': authname, 'authpass': authpass}
+                    authcommand = network_conf.get(
+                        'authcommand', 'IDENTIFY %(authname)s %(authpass)s')
+                    authcommand = authcommand % {
+                        'authname': authname, 'authpass': authpass}
 
                     log.info('Authenticating to "%s"' % authservice)
-                    log.debug('Authentication command used: "%s"' % authcommand)
+                    log.debug('Authentication command used: "%s"' %
+                              authcommand)
                     self.say(authservice, authcommand)
                 else:
                     log.info('authservice not set, authentication not attempted')
         else:
-            log.debug('authname or authpass not found, authentication not attempted')
+            log.debug(
+                'authname or authpass not found, authentication not attempted')
 
         authdelay = network_conf.get('authdelay', None)
         if authdelay:
@@ -286,7 +299,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             else:
                 self.join(chan)
 
-        log.info("joined %d channel(s): %s" % (len(self.network.channels), ", ".join(self.network.channels)))
+        log.info("joined %d channel(s): %s" %
+                 (len(self.network.channels), ", ".join(self.network.channels)))
         self._runEvents("signedon")
 
     def pong(self, user, secs):
@@ -347,7 +361,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         urls = pyfiurl.grab(msg)
         if urls:
             for url in urls:
-                self._runhandler("url", user, reply, url, self.factory.to_unicode(msg))
+                self._runhandler("url", user, reply, url,
+                                 self.factory.to_unicode(msg))
 
     def _runhandler(self, handler, *args, **kwargs):
         """Run a handler for an event"""
@@ -356,7 +371,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            handlers = [(h, ref) for h, ref in mylocals.items() if h == handler and type(ref) == FunctionType]
+            handlers = [(h, ref) for h, ref in mylocals.items()
+                        if h == handler and type(ref) == FunctionType]
 
             for hname, func in handlers:
                 # defer each handler to a separate thread, assign callbacks to see when they end
@@ -371,13 +387,16 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             myglobals, mylocals = env
 
             # find all matching events
-            events = [(h, ref) for h, ref in mylocals.items() if h == eventname and type(ref) == FunctionType]
+            events = [(h, ref) for h, ref in mylocals.items()
+                      if h == eventname and type(ref) == FunctionType]
 
             for ename, func in events:
                 # defer each handler to a separate thread, assign callbacks to see when they end
                 d = threads.deferToThread(func, self, *args, **kwargs)
-                d.addCallback(self.printResult, "%s %s event completed" % (module, ename))
-                d.addErrback(self.printError, "%s %s event error" % (module, ename))
+                d.addCallback(self.printResult,
+                              "%s %s event completed" % (module, ename))
+                d.addErrback(self.printError, "%s %s event error" %
+                             (module, ename))
 
     def _command(self, user, channel, cmnd):
         """Handles bot commands.
@@ -395,7 +414,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         # core commands
         method = getattr(self, "command_%s" % cmnd, None)
         if method is not None:
-            log.info("internal command %s called by %s (%s) on %s" % (cmnd, user, self.factory.isAdmin(user), channel))
+            log.info("internal command %s called by %s (%s) on %s" %
+                     (cmnd, user, self.factory.isAdmin(user), channel))
             method(user, channel, args)
             return
 
@@ -403,17 +423,21 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         for module, env in self.factory.ns.items():
             myglobals, mylocals = env
             # find all matching command functions
-            commands = [(c, ref) for c, ref in mylocals.items() if c == "command_%s" % cmnd]
-            commands += [(c, ref) for c, ref in mylocals.items() if c == "admin_%s" % cmnd]
+            commands = [(c, ref) for c, ref in mylocals.items()
+                        if c == "command_%s" % cmnd]
+            commands += [(c, ref) for c, ref in mylocals.items()
+                         if c == "admin_%s" % cmnd]
 
             for cname, command in commands:
                 if not self.factory.isAdmin(user) and cname.startswith('admin'):
                     continue
                 i = inspect.getcallargs(command, self, user, channel, cmnd)
                 if 'silent' not in i:
-                    log.info("module command %s called by %s (%s) on %s" % (cname, user, self.factory.isAdmin(user), channel))
+                    log.info("module command %s called by %s (%s) on %s" %
+                             (cname, user, self.factory.isAdmin(user), channel))
                 # Defer commands to threads
-                d = threads.deferToThread(command, self, user, channel, self.factory.to_unicode(args.strip()))
+                d = threads.deferToThread(
+                    command, self, user, channel, self.factory.to_unicode(args.strip()))
                 d.addCallback(self.printResult, "command %s completed" % cname)
                 d.addErrback(self.printError, "command %s error" % cname)
 
@@ -540,7 +564,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def noticed(self, user, channel, message):
         """I received a notice"""
-        self._runhandler("noticed", user, channel, self.factory.to_unicode(message))
+        self._runhandler("noticed", user, channel,
+                         self.factory.to_unicode(message))
 
     def modeChanged(self, user, channel, set, modes, args):
         """Mode changed on user or channel"""
@@ -548,7 +573,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def kickedFrom(self, channel, kicker, message):
         """I was kicked from a channel"""
-        self._runhandler("kickedFrom", channel, kicker, self.factory.to_unicode(message))
+        self._runhandler("kickedFrom", channel, kicker,
+                         self.factory.to_unicode(message))
 
     def nickChanged(self, nick):
         """I changed my nick"""
@@ -561,19 +587,23 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def userLeft(self, user, channel, message):
         """Someone left"""
-        self._runhandler("userLeft", user, channel, self.factory.to_unicode(message))
+        self._runhandler("userLeft", user, channel,
+                         self.factory.to_unicode(message))
 
     def userKicked(self, kickee, channel, kicker, message):
         """Someone got kicked by someone"""
-        self._runhandler("userKicked", kickee, channel, kicker, self.factory.to_unicode(message))
+        self._runhandler("userKicked", kickee, channel, kicker,
+                         self.factory.to_unicode(message))
 
     def action(self, user, channel, data):
         """An action"""
-        self._runhandler("action", user, channel, self.factory.to_unicode(data))
+        self._runhandler("action", user, channel,
+                         self.factory.to_unicode(data))
 
     def topicUpdated(self, user, channel, topic):
         """Save topic to maindb when it changes"""
-        self._runhandler("topicUpdated", user, channel, self.factory.to_unicode(topic))
+        self._runhandler("topicUpdated", user, channel,
+                         self.factory.to_unicode(topic))
 
     def userRenamed(self, oldnick, newnick):
         """Someone changed their nick"""
@@ -596,7 +626,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         log.info(self.network.alias + " YOURHOST: " + info)
 
     def myInfo(self, servername, version, umodes, cmodes):
-        log.info(self.network.alias + " MYINFO: %s %s %s %s" % (servername, version, umodes, cmodes))
+        log.info(self.network.alias + " MYINFO: %s %s %s %s" %
+                 (servername, version, umodes, cmodes))
 
     def luserMe(self, info):
         log.info(self.network.alias + " LUSERME: " + info)
