@@ -1,5 +1,5 @@
-# line length and bare except
-STYLE_IGNORE=E501,E722
+# line length and bare except. Also ignore W503 and E203 as pycodestyle is breaking pep8
+STYLE_IGNORE=E501,E722,W503,E203
 # Ignore 'undefined name'
 FLAKE_IGNORE=F821
 
