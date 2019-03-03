@@ -8,9 +8,12 @@ from utils import check_re
 
 import pytest
 from vcr import VCR
-my_vcr = VCR(path_transformer=VCR.ensure_suffix('.yaml'),
-             cassette_library_dir="tests/cassettes/",
-             record_mode=pytest.config.getoption("--vcrmode"))
+
+my_vcr = VCR(
+    path_transformer=VCR.ensure_suffix(".yaml"),
+    cassette_library_dir="tests/cassettes/",
+    record_mode=pytest.config.getoption("--vcrmode"),
+)
 
 logging.basicConfig()  # you need to initialize logging, otherwise you will not see anything from vcrpy
 vcr_log = logging.getLogger("vcr")
@@ -24,9 +27,9 @@ def botmock():
     return bot
 
 
-lengh_str_regex = '\d+(h|m|s)(\d+(m))?(\d+s)?'
-views_str_regex = '\d+(\.\d+)?(k|M|Billion|Trillion)?'
-age_str_regex = '(FRESH|(\d+(\.\d+)?(y|d) ago))'
+lengh_str_regex = "\d+(h|m|s)(\d+(m))?(\d+s)?"
+views_str_regex = "\d+(\.\d+)?(k|M|Billion|Trillion)?"
+age_str_regex = "(FRESH|(\d+(\.\d+)?(y|d) ago))"
 
 
 def __handle_url(botmock, msg):
@@ -52,50 +55,71 @@ def test_manual_ignore(botmock):
 @my_vcr.use_cassette
 def test_iltalehti(botmock):
     msg = "http://www.iltalehti.fi/ulkomaat/2013072917307393_ul.shtml"
-    assert "Title: Saksassa syntyi jättivauva - yli kuusi kiloa!" == __handle_url(botmock, msg)
+    assert "Title: Saksassa syntyi jättivauva - yli kuusi kiloa!" == __handle_url(
+        botmock, msg
+    )
 
 
 @my_vcr.use_cassette
 def test_iltasanomat(botmock):
     msg = "http://www.iltasanomat.fi/viihde/art-1288596309269.html"
-    assert "Title: Muistatko Mari Sainion juontaman sarjan, josta sai palkinnoksi isdn-liittymän?" == __handle_url(botmock, msg)
+    assert (
+        "Title: Muistatko Mari Sainion juontaman sarjan, josta sai palkinnoksi isdn-liittymän?"
+        == __handle_url(botmock, msg)
+    )
 
 
 @my_vcr.use_cassette
 def test_verkkokauppacom(botmock):
     msg = "http://www.verkkokauppa.com/fi/product/55124/dfbfn/Coca-Cola-Vanilla-USA-virvoitusjuoma-355-ml"
-    regex = 'Title: Coca-Cola Vanilla USA virvoitusjuoma 355 ml \| \d+,\d+ € \(.*?\)'
+    regex = "Title: Coca-Cola Vanilla USA virvoitusjuoma 355 ml \| \d+,\d+ € \(.*?\)"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_stackoverflow(botmock):
     msg = "http://stackoverflow.com/questions/6905508/python-search-html-document-for-capital-letters"
-    assert "Title: Python search HTML document for capital letters - 0pts - python/regex/coda/letters/capitalize" == __handle_url(botmock, msg)
+    assert (
+        "Title: Python search HTML document for capital letters - 0pts - python/regex/coda/letters/capitalize"
+        == __handle_url(botmock, msg)
+    )
 
 
 @my_vcr.use_cassette
 def test_wiki_fi(botmock):
     msg = "http://fi.wikipedia.org/wiki/Kimi_Räikkönen"
-    assert "Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1 -sarjan maailmanmestari." == __handle_url(botmock, msg)
+    assert (
+        "Title: Kimi-Matias Räikkönen on suomalainen autourheilija ja Formula 1 -sarjan maailmanmestari."
+        == __handle_url(botmock, msg)
+    )
 
 
 @my_vcr.use_cassette
 def test_wiki_en(botmock):
     msg = "http://en.wikipedia.org/wiki/IPhone"
-    assert "Title: iPhone is a line of smartphones designed and marketed by Apple Inc." == __handle_url(botmock, msg)
+    assert (
+        "Title: iPhone is a line of smartphones designed and marketed by Apple Inc."
+        == __handle_url(botmock, msg)
+    )
 
 
 @my_vcr.use_cassette
 def test_imdb(botmock):
-    regex = 'Title: Wreck-It Ralph \(2012\) - [\d.]{1,}/10 \(%s votes\) - .*' % views_str_regex
+    regex = (
+        "Title: Wreck-It Ralph \(2012\) - [\d.]{1,}/10 \(%s votes\) - .*"
+        % views_str_regex
+    )
     msg = "http://www.imdb.com/title/tt1772341/"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_youtube(botmock):
-    regex = 'Title: (.*?) by (.*?) \[%s - %s views - %s( - age restricted)?\]' % (lengh_str_regex, views_str_regex, age_str_regex)
+    regex = "Title: (.*?) by (.*?) \[%s - %s views - %s( - age restricted)?\]" % (
+        lengh_str_regex,
+        views_str_regex,
+        age_str_regex,
+    )
     msg = "http://www.youtube.com/watch?v=awsolTK175c"
     module_urltitle.init(botmock)
     check_re(regex, __handle_url(botmock, msg))
@@ -103,69 +127,78 @@ def test_youtube(botmock):
 
 @my_vcr.use_cassette
 def test_vimeo(botmock):
-    regex = 'Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]' % (lengh_str_regex, views_str_regex, views_str_regex, age_str_regex)
-    msg = 'http://vimeo.com/29996808'
+    regex = "Title: (.*?) by (.*?) \[%s - %s likes - %s views - %s]" % (
+        lengh_str_regex,
+        views_str_regex,
+        views_str_regex,
+        age_str_regex,
+    )
+    msg = "http://vimeo.com/29996808"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_liveleak(botmock):
-    regex = 'Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]' % (views_str_regex)
-    msg = 'http://www.liveleak.com/view?i=f8e_1374614129'
+    regex = (
+        "Title: (.*?) by (.*?) \[%s views - Jul-23-2013 - tags\: sword, cut, hand, watermelon, fail\]"
+        % (views_str_regex)
+    )
+    msg = "http://www.liveleak.com/view?i=f8e_1374614129"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_ebay(botmock):
-    msg = 'https://ebay.com/itm/390629338875'
-    regex = 'Title: .*? \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from .*?\]'
+    msg = "https://ebay.com/itm/390629338875"
+    regex = "Title: .*? \[\d+\.\de \(postage \d+\.\de\) - over \d+ available - ships from .*?\]"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_ebay_cgi(botmock):
-    msg = 'http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&item=121136837564'
-    regex = 'Title: .*? \[\d+\.\de - over \d+ available - ships from .*?\]'
+    msg = "http://cgi.ebay.co.uk/ws/eBayISAPI.dll?ViewItem&item=121136837564"
+    regex = "Title: .*? \[\d+\.\de - over \d+ available - ships from .*?\]"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_dx(botmock):
-    regex = 'Title: Wireless Bluetooth Audio Music R... \[\d+\.\d+e - \[\** *\] - \d+ reviews\]'
-    msg = 'http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659'
+    regex = "Title: Wireless Bluetooth Audio Music R... \[\d+\.\d+e - \[\** *\] - \d+ reviews\]"
+    msg = "http://dx.com/p/wireless-bluetooth-audio-music-receiver-adapter-black-151659"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_alko(botmock):
-    regex = 'Title: Sandels A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\%\, \d\.\d\de/l, \d\.\d\de/annos, oluet]'
-    msg = 'http://www.alko.fi/tuotteet/798684/'
+    regex = "Title: Sandels A tölkki \[\d\.\d\de, \d\.\d\dl, \d\.\d\%\, \d\.\d\de/l, \d\.\d\de/annos, oluet]"
+    msg = "http://www.alko.fi/tuotteet/798684/"
     check_re(regex, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_google_play_music(botmock):
-    msg = 'https://play.google.com/music/preview/Tkyqfh5koeirtbi76b2tsee6e2y'
-    responses = ['Title: Villiviini - Ultra Bra', None]
+    msg = "https://play.google.com/music/preview/Tkyqfh5koeirtbi76b2tsee6e2y"
+    responses = ["Title: Villiviini - Ultra Bra", None]
     assert __handle_url(botmock, msg) in responses
 
 
 @my_vcr.use_cassette
 def test_steamstore(botmock):
-    msg = 'http://store.steampowered.com/app/440/'
-    title = 'Title: Team Fortress 2 | Free to play'
+    msg = "http://store.steampowered.com/app/440/"
+    title = "Title: Team Fortress 2 | Free to play"
     eq_(title, __handle_url(botmock, msg))
 
 
 @my_vcr.use_cassette
 def test_meta_fragment(botmock):
-    msg = 'https://www.redbullsoundselect.com/events'
-    title = 'Title: Events | Red Bull Sound Select'
+    msg = "https://www.redbullsoundselect.com/events"
+    title = "Title: Events | Red Bull Sound Select"
     eq_(title, __handle_url(botmock, msg))
 
 
 # Only a couple of tests and 1.5s sleep because rate is limited to
 # 1 request/sec/ip; if an API breaks, it often breaks completely.
+
 
 @my_vcr.use_cassette
 def test_discogs_release(botmock):
@@ -204,7 +237,10 @@ def test_pythonorg(botmock):
 @my_vcr.use_cassette
 def test_github(botmock):
     msg = "https://github.com/lepinkainen/pyfibot"
-    assert "Title: GitHub - lepinkainen/pyfibot: Pyfibot the Python IRC bot" == __handle_url(botmock, msg)
+    assert (
+        "Title: GitHub - lepinkainen/pyfibot: Pyfibot the Python IRC bot"
+        == __handle_url(botmock, msg)
+    )
 
 
 @my_vcr.use_cassette
@@ -217,7 +253,10 @@ def test_gfycat_direct_url(botmock):
 @my_vcr.use_cassette
 def test_nettiauto(botmock):
     msg = "http://www.nettiauto.com/audi/s4/7695854"
-    assert "Title: Audi S4 [2004, 129 958 km, 4.2 l Bensiini, Manuaali, Neliveto]" == __handle_url(botmock, msg)
+    assert (
+        "Title: Audi S4 [2004, 129 958 km, 4.2 l Bensiini, Manuaali, Neliveto]"
+        == __handle_url(botmock, msg)
+    )
 
 
 # Test ignored titles

@@ -23,11 +23,13 @@ class BotMock(botcore.CoreCommands):
     def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
         print("Getting url %s" % url)
 
-        browser = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0"
+        browser = (
+            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0"
+        )
         # Common session for all requests
         s = requests.session()
         s.stream = True  # Don't fetch content unless asked
-        s.headers.update({'User-Agent': browser})
+        s.headers.update({"User-Agent": browser})
         # Custom headers from requester
         if headers:
             s.headers.update(headers)
@@ -44,7 +46,7 @@ class BotMock(botcore.CoreCommands):
             print("[ERROR] Connection error when connecting to %s" % url)
             return None
 
-        size = int(r.headers.get('Content-Length', 0)) // 1024
+        size = int(r.headers.get("Content-Length", 0)) // 1024
         # log.debug("Content-Length: %dkB" % size)
         if size > 2048:
             print("[WARNING] Content too large, will not fetch: %skB %s" % (size, url))
@@ -68,9 +70,9 @@ class BotMock(botcore.CoreCommands):
                 _string = unicode(_string)
             except:
                 try:
-                    _string = _string.decode('utf-8')
+                    _string = _string.decode("utf-8")
                 except:
-                    _string = _string.decode('iso-8859-1')
+                    _string = _string.decode("iso-8859-1")
         return _string
 
 
@@ -91,18 +93,22 @@ class FactoryMock(pyfibot.PyFiBotFactory):
                 config = yaml.load(file(test_config))
 
         pyfibot.PyFiBotFactory.__init__(self, config)
-        self.createNetwork(('localhost', 6667), 'nerv', 'pyfibot', ['#pyfibot'], 0.5, None, False)
-        self.createNetwork(('localhost', 6667), 'localhost', 'pyfibot', ['#pyfibot'], 0.5, None, False)
+        self.createNetwork(
+            ("localhost", 6667), "nerv", "pyfibot", ["#pyfibot"], 0.5, None, False
+        )
+        self.createNetwork(
+            ("localhost", 6667), "localhost", "pyfibot", ["#pyfibot"], 0.5, None, False
+        )
         self.startFactory()
         self.buildProtocol(None)
 
     def startFactory(self):
-        self.moduledir = './pyfibot/modules/'
+        self.moduledir = "./pyfibot/modules/"
         self.allBots = {}
 
     def buildProtocol(self, address):
         # Go through all defined networks
-        for network, server in self.data['networks'].items():
+        for network, server in self.data["networks"].items():
             p = self.protocol(network=server)
             self.allBots[server.alias] = p
             p.factory = self
