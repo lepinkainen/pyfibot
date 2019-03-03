@@ -1,9 +1,9 @@
-
 from __future__ import unicode_literals, print_function, division
 import subprocess
 import sys
 
 import logging
+
 log = logging.getLogger("update")
 
 
@@ -15,7 +15,7 @@ def command_update(bot, user, channel, args):
     pull_ok = False
     pip_ok = False
 
-    cmd = ['git', 'pull']
+    cmd = ["git", "pull"]
     cwd = sys.path[0]
 
     log.debug("Executing git pull in %s" % cwd)
@@ -39,7 +39,7 @@ def command_update(bot, user, channel, args):
         bot.say(channel, "Errors: %s" % err)
 
     # fetch new required packages if needed
-    cmd = ['pip', 'install', '--upgrade', '--requirement', '../requirements.txt']
+    cmd = ["pip", "install", "--upgrade", "--requirement", "../requirements.txt"]
     log.debug("executing pip install in %s" % cwd)
 
     p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

@@ -5,21 +5,21 @@ import os
 import re
 from pprint import pprint
 
-get_rg = re.compile(r'[^\.](config|settings|network_conf)\.get\((.*?),(.*?)\)')
+get_rg = re.compile(r"[^\.](config|settings|network_conf)\.get\((.*?),(.*?)\)")
 
 
 def clean_string(string):
-    return string.strip().strip('\'"')
+    return string.strip().strip("'\"")
 
 
 def find_gets(path):
     config_options = {}
 
     for f in os.listdir(path):
-        if not f.endswith('.py'):
+        if not f.endswith(".py"):
             continue
 
-        with open(os.path.join(path, f), 'r') as f_handle:
+        with open(os.path.join(path, f), "r") as f_handle:
             lines = f_handle.readlines()
 
         for l in lines:
@@ -31,6 +31,6 @@ def find_gets(path):
     pprint(config_options)
 
 
-if __name__ == '__main__':
-    for p in ['pyfibot', 'pyfibot/modules', 'pyfibot/modules/available']:
-        find_gets(os.path.join('.', p))
+if __name__ == "__main__":
+    for p in ["pyfibot", "pyfibot/modules", "pyfibot/modules/available"]:
+        find_gets(os.path.join(".", p))

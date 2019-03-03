@@ -5,7 +5,7 @@ import logging
 import re
 import xml.etree.ElementTree as etree
 
-log = logging.getLogger('wolfram_alpha')
+log = logging.getLogger("wolfram_alpha")
 
 
 appid = None
@@ -28,10 +28,13 @@ def clean_question(_string):
 
 def clean_answer(_string):
     if _string:
-        res = re.sub("[ ]{2,}", " ",
-                     _string.replace(' | ', ': ').replace('\n', ' | ').replace('~~', ' ≈ ')).strip()
-        res = res.replace(r"\:0e3f", u'฿')
-        res = res.replace(r"\:ffe5", u'￥')
+        res = re.sub(
+            "[ ]{2,}",
+            " ",
+            _string.replace(" | ", ": ").replace("\n", " | ").replace("~~", " ≈ "),
+        ).strip()
+        res = res.replace(r"\:0e3f", "฿")
+        res = res.replace(r"\:ffe5", "￥")
         return res
 
 
@@ -41,7 +44,7 @@ def command_wa(bot, user, channel, args):
         log.warn("Appid not specified in configuration!")
         return False
 
-    r = bot.get_url(query % (urllib.quote(args.encode('utf-8')), appid))
+    r = bot.get_url(query % (urllib.quote(args.encode("utf-8")), appid))
 
     if r.status_code != 200:
         return
@@ -49,7 +52,14 @@ def command_wa(bot, user, channel, args):
     root = etree.fromstring(r.content)
     # Find all pods with plaintext answers
     # Filter out None -answers, strip strings and filter out the empty ones
-    plain_text_pods = filter(None, [p.text.strip() for p in root.findall('.//subpod/plaintext') if p is not None and p.text is not None])
+    plain_text_pods = filter(
+        None,
+        [
+            p.text.strip()
+            for p in root.findall(".//subpod/plaintext")
+            if p is not None and p.text is not None
+        ],
+    )
 
     # no answer pods found, check if there are didyoumeans-elements
     if not plain_text_pods:
@@ -76,4 +86,4 @@ def command_wa(bot, user, channel, args):
     question = clean_question(plain_text_pods[0])
     # and second is the best answer
     answer = clean_answer(plain_text_pods[1])
-    return bot.say(channel, '%s = %s' % (question, answer))
+    return bot.say(channel, "%s = %s" % (question, answer))

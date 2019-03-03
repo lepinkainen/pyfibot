@@ -13,10 +13,10 @@ def command_ep(bot, user, channel, args):
 
 
 def command_maze(bot, user, channel, args):
-    tvm = pytvmaze.TVMaze('pyfibot')
+    tvm = pytvmaze.TVMaze("pyfibot")
 
     try:
-        show = tvm.get_show(show_name=args, embed='episodes')
+        show = tvm.get_show(show_name=args, embed="episodes")
     except pytvmaze.exceptions.ShowNotFound:
         bot.say(channel, "Show '%s' not found" % args)
         return
@@ -35,9 +35,7 @@ def command_maze(bot, user, channel, args):
         delta = relativedelta(parse(episode.airstamp), now)
 
         # episode is in the past, stop searching
-        if delta.months <= 0 and \
-           delta.days <= 0 and \
-           delta.minutes <= 0:
+        if delta.months <= 0 and delta.days <= 0 and delta.minutes <= 0:
             break
         else:
             # episode is (still) in the future
@@ -55,12 +53,23 @@ def command_maze(bot, user, channel, args):
             bot.say(channel, "No new episodes found for %s" % show.name)
             return
 
-    show_id = "%s %s '%s'" % (show.name, "%dx%02d" % (next_episode.season_number, next_episode.episode_number), next_episode.title)
+    show_id = "%s %s '%s'" % (
+        show.name,
+        "%dx%02d" % (next_episode.season_number, next_episode.episode_number),
+        next_episode.title,
+    )
 
     if show.status == "Ended":
-        msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (show_id, next_episode.airdate, _ago(latest_delta), show.network.name)
+        msg = "Latest episode of %s aired on %s (%s ago) on %s [Ended]" % (
+            show_id,
+            next_episode.airdate,
+            _ago(latest_delta),
+            show.network.name,
+        )
     else:
-        msg = "Next episode of {0} airs {1} ({2})".format(show_id, next_episode.airdate, _ago(next_delta))
+        msg = "Next episode of {0} airs {1} ({2})".format(
+            show_id, next_episode.airdate, _ago(next_delta)
+        )
         # Not all shows have network info for some reason
         if show.network:
             msg = "{0} on {1}".format(msg, show.network.name)

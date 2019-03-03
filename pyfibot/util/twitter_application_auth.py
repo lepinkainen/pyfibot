@@ -12,14 +12,14 @@ consumer_secret = sys.argv[2]
 token = consumer_key + ":" + consumer_secret
 encoded_token = base64.b64encode(token)
 
-payload = {'grant_type': 'client_credentials'}
-headers = {'Authorization': 'Basic ' + encoded_token}
+payload = {"grant_type": "client_credentials"}
+headers = {"Authorization": "Basic " + encoded_token}
 auth_url = "https://api.twitter.com/oauth2/token"
 r = requests.post(auth_url, payload, headers=headers)
 try:
-    bearer_token = r.json()['access_token']
+    bearer_token = r.json()["access_token"]
 except TypeError:
-    bearer_token = r.json['access_token']
+    bearer_token = r.json["access_token"]
 
 print("Paste the following to your config below module_urltitle")
 print("twitter_bearer: '%s'" % bearer_token)
