@@ -3,5 +3,4 @@ if [ ! -x databases/ ]; then
   mkdir databases
 fi;
 
-source bin/activate
-python pyfibot/pyfibot.py config.yml
+pipenv run pyfibot/pyfibot.py config.yml
