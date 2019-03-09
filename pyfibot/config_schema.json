@@ -6,56 +6,84 @@
     "properties": {
         "admins": {
             "id": "admins",
-            "items": {"id": "0", "required": true, "type": "string"},
+            "items": {
+                "id": "0",
+                "required": true,
+                "type": "string"
+            },
             "required": false,
-            "type": "array",
+            "type": "array"
         },
         "logging": {
             "id": "logging",
             "properties": {
-                "debug": {"id": "debug", "required": false, "type": "boolean"}
+                "debug": {
+                    "id": "debug",
+                    "required": false,
+                    "type": "boolean"
+                }
             },
             "required": false,
-            "type": "object",
+            "type": "object"
         },
         "module_urltitle": {
             "id": "module_urltitle",
             "properties": {
                 "ignore_urls": {
                     "id": "ignore_urls",
-                    "items": {"id": "0", "required": false, "type": "string"},
+                    "items": {
+                        "id": "0",
+                        "required": false,
+                        "type": "string"
+                    },
                     "required": false,
-                    "type": "array",
+                    "type": "array"
                 },
                 "ignore_users": {
                     "id": "ignore_users",
-                    "items": {"id": "0", "required": false, "type": "string"},
+                    "items": {
+                        "id": "0",
+                        "required": false,
+                        "type": "string"
+                    },
                     "required": false,
-                    "type": "array",
+                    "type": "array"
                 },
                 "youtube_devid": {
                     "id": "youtube_devid",
                     "required": false,
-                    "type": "string",
+                    "type": "string"
                 },
                 "check_redundant": {
                     "id": "check_redundant",
                     "required": false,
-                    "type": "boolean",
-                },
+                    "type": "boolean"
+                }
             },
             "required": false,
-            "type": "object",
+            "type": "object"
         },
         "module_wolfram_alpha": {
             "id": "module_wolfram_alpha",
             "properties": {
-                "appid": {"id": "appid", "required": false, "type": "string"}
+                "appid": {
+                    "id": "appid",
+                    "required": false,
+                    "type": "string"
+                }
             },
             "required": false,
-            "type": "object",
+            "type": "object"
         },
-        "networks": {"id": "networks", "required": true, "type": "object"},
-        "nick": {"id": "nick", "required": false, "type": "string"},
-    },
+        "networks": {
+            "id": "networks",
+            "required": true,
+            "type": "object"
+        },
+        "nick": {
+            "id": "nick",
+            "required": false,
+            "type": "string"
+        }
+    }
 }
