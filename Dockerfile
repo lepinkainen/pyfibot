@@ -16,4 +16,4 @@ RUN pip install pipenv && pipenv install
 WORKDIR /pyfibot
 VOLUME /config
 
-ENTRYPOINT ["pyfibot/pyfibot.py", "/config/config.yml"]
+ENTRYPOINT ["/usr/local/bin/pipenv run", "pyfibot/pyfibot.py", "/config/config.yml"]
