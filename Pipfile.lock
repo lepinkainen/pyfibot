@@ -18,9 +18,9 @@
     "default": {
         "alembic": {
             "hashes": [
-                "sha256:4a4811119efbdc5259d1f4c8f6de977b36ad3bcc919f59a29c2960c5ef9149e4"
+                "sha256:9f907d7e8b286a1cfb22db9084f9ce4fde7ad7956bb496dc7c952e10ac90e36a"
             ],
-            "version": "==1.1.0"
+            "version": "==1.2.1"
         },
         "asn1crypto": {
             "hashes": [
@@ -55,7 +55,7 @@
                 "sha256:9d98697f088eb1b0fa451391f91afb5e3ebde16bbdb272819fd091151fda4f1a",
                 "sha256:f0b0e4eba956de51238e17573b7087e852dfe9854afd2e9c873f73fc0ca0a6dd"
             ],
-            "markers": "python_version == '2.7'",
+            "markers": "python_version < '3'",
             "version": "==1.5"
         },
         "beautifulsoup4": {
@@ -172,7 +172,7 @@
                 "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
                 "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version < '3.4'",
             "version": "==1.1.6"
         },
         "feedparser": {
@@ -210,11 +210,11 @@
         },
         "httplib2": {
             "hashes": [
-                "sha256:6901c8c0ffcf721f9ce270ad86da37bc2b4d32b8802d4a9cec38274898a64044",
-                "sha256:cf6f9d5876d796539ec922a2c9b9a7cad9bfd90f04badcdc3bcfa537168052c3"
+                "sha256:34537dcdd5e0f2386d29e0e2c6d4a1703a3b982d34c198a5102e6e5d6194b107",
+                "sha256:409fa5509298f739b34d5a652df762cb0042507dc93f6633e306b11289d6249d"
             ],
             "index": "pypi",
-            "version": "==0.13.1"
+            "version": "==0.14.0"
         },
         "hyperlink": {
             "hashes": [
@@ -242,7 +242,7 @@
                 "sha256:64b28eec5e78e7510698f6d4da08800a5c575caa4a286c93d651c5d3ff7b6794",
                 "sha256:b146c751ea45cad6188dd6cf2d9b757f6f4f8d6ffb96a023e6f2e26eea02a72c"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version < '3.3'",
             "version": "==1.0.22"
         },
         "isort": {
@@ -534,10 +534,10 @@
         },
         "soupsieve": {
             "hashes": [
-                "sha256:8662843366b8d8779dec4e2f921bebec9afd856a5ff2e82cd419acc5054a1a92",
-                "sha256:a5a6166b4767725fd52ae55fee8c8b6137d9a51e9f1edea461a062a759160118"
+                "sha256:605f89ad5fdbfefe30cdc293303665eff2d188865d4dbe4eb510bba1edfbfce3",
+                "sha256:b91d676b330a0ebd5b21719cb6e9b57c57d433671f65b9c28dd3461d9a1ed0b6"
             ],
-            "version": "==1.9.3"
+            "version": "==1.9.4"
         },
         "sqlalchemy": {
             "hashes": [
@@ -589,10 +589,10 @@
         },
         "urllib3": {
             "hashes": [
-                "sha256:b246607a25ac80bedac05c6f282e3cdaf3afb65420fd024ac94435cabe6e18d1",
-                "sha256:dbe59173209418ae49d485b87d1681aefa36252ee85884c31346debd19463232"
+                "sha256:3de946ffbed6e6746608990594d08faac602528ac7015ac28d33cee6a45b7398",
+                "sha256:9a107b99a5393caf59c7aa3c1249c16e6879447533d0887f4336dde834c7be86"
             ],
-            "version": "==1.25.3"
+            "version": "==1.25.6"
         },
         "wrapt": {
             "hashes": [
@@ -655,7 +655,7 @@
                 "sha256:9d98697f088eb1b0fa451391f91afb5e3ebde16bbdb272819fd091151fda4f1a",
                 "sha256:f0b0e4eba956de51238e17573b7087e852dfe9854afd2e9c873f73fc0ca0a6dd"
             ],
-            "markers": "python_version == '2.7'",
+            "markers": "python_version < '3'",
             "version": "==1.5"
         },
         "configparser": {
@@ -673,7 +673,7 @@
                 "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
                 "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
             ],
-            "markers": "python_version < '3'",
+            "markers": "python_version < '3.4'",
             "version": "==1.1.6"
         },
         "futures": {
