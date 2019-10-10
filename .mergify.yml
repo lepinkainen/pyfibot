@@ -1,9 +1,19 @@
 pull_request_rules:
-  - name: automatic merge when CI passes
+  - name: automatic Dependabot merge when CI passes
     conditions:
+      - author=dependabot[bot]
       - "status-success=ci/circleci: build"
       - status-success=pyup.io/safety-ci
       - base=master
     actions:
       merge:
         method: merge
+  - name: delete head branch after merge
+    conditions: []
+    actions:
+      delete_head_branch: {}
+  - name: remove outdated reviews
+    conditions:
+      - base=master
+    actions:
+      dismiss_reviews: {}
