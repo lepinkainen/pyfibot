@@ -1,7 +1,7 @@
 pull_request_rules:
   - name: automatic merge when CI passes
     conditions:
-      - status-success=ci/circleci
+      - "status-success=ci/circleci: build"
       - status-success=pyup.io/safety-ci
       - base=master
     actions:
