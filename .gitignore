@@ -5,6 +5,8 @@ module_autoop.db
 pyfibot/bot.config
 rss.db
 databases/
+# Don't let actual configs to version control
+config.yml
 
 #imdbpy
 etc
