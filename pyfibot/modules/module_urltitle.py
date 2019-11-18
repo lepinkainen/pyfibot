@@ -243,6 +243,25 @@ def handle_url(bot, user, channel, url, msg):
                 # No specific handler, use generic
                 pass
 
+    # post data to Lambda if enabled
+    if config.get('lambda_enable', False):
+        lambdafunc = config.get('lambda_url')
+        headers = {'x-api-key': config.get('lambda_apikey')}
+        outdata = {'url': url, 'channel': channel, 'user': user}
+
+        import requests
+        r = requests.post(lambdafunc, json=outdata, headers=headers)
+        data = r.json()
+
+        title = data.get('title')
+        # Print out the raw response if title isn't found
+        if not title:
+            print(data)
+
+        _title(bot, channel, data.get('title'))
+
+        return
+
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
     bs = __get_bs(url)
