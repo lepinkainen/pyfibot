@@ -4,10 +4,8 @@ from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
 from math import isnan
 
-global api_key
 global default_place
 default_place = "Helsinki"
-api_key = "c86a0cb3-e0bf-4604-bfe9-de3ca92e0afc"
 
 # Time format for the API
 TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
@@ -71,16 +69,12 @@ WAWA = {
 
 
 def init(bot):
-    global api_key
     global default_place
     config = bot.config.get("module_fmi", {})
     default_place = config.get("default_place", default_place)
-    api_key = config.get("api_key", api_key)
-
 
 def command_saa(bot, user, channel, args):
     """ Command to fetch data from FMI """
-    global api_key
     global default_place
 
     if args:
@@ -99,7 +93,7 @@ def command_saa(bot, user, channel, args):
         "starttime": starttime,
     }
 
-    r = bot.get_url("http://data.fmi.fi/fmi-apikey/%s/wfs" % api_key, params=params)
+    r = bot.get_url("http://opendata.fmi.fi/wfs", params=params)
     bs = BeautifulSoup(r.text)
 
     # Get FMI name, gives the observation place more accurately
