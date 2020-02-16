@@ -73,6 +73,7 @@ def init(bot):
     config = bot.config.get("module_fmi", {})
     default_place = config.get("default_place", default_place)
 
+
 def command_saa(bot, user, channel, args):
     """ Command to fetch data from FMI """
     global default_place
@@ -82,7 +83,8 @@ def command_saa(bot, user, channel, args):
     else:
         place = default_place
 
-    starttime = (datetime.utcnow() - timedelta(minutes=10)).strftime(TIME_FORMAT) + "Z"
+    starttime = (datetime.utcnow() - timedelta(minutes=10)
+                 ).strftime(TIME_FORMAT) + "Z"
     params = {
         "request": "getFeature",
         "storedquery_id": "fmi::observations::weather::timevaluepair",
