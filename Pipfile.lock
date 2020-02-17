@@ -112,7 +112,7 @@
                 "sha256:254c1d9c79f60c45dfde850850883d5aaa7f19a23f13561243a050d5a7c3fe4c",
                 "sha256:c7d282687a5308319bf3d2e7706e575c635b0a470342641c93bea0ea3b5331df"
             ],
-            "markers": "python_version < '3.2'",
+            "markers": "python_version == '2.7'",
             "version": "==4.0.2"
         },
         "constantly": {
@@ -127,7 +127,7 @@
                 "sha256:01f490098c18b19d2bd5bb5dc445b2054d2fa97f09a4280ba2c5f3c394c8162e",
                 "sha256:3355078a159fbb44ee60ea80abd0d87b80b78c248643b49aa6d94673b413609b"
             ],
-            "markers": "python_version < '3.4'",
+            "markers": "python_version < '3'",
             "version": "==0.6.0.post1"
         },
         "cryptography": {
@@ -158,11 +158,11 @@
         },
         "dataset": {
             "hashes": [
-                "sha256:06e6e8166a2ce12524ffbed97b82866caeaa2dd8e85ee65baccf3b815528e22e",
-                "sha256:22305959711499b0da0464298f3589cd33cccf84cfdcce91dae352a528cb4821"
+                "sha256:434def1e8053956b12346f8a7d2c482dabbd377d8b73e23b5bf2b46666917030",
+                "sha256:efeca3127901a52cd1c1f266794ea61be8a3b020765205e4724b56e77587ef6c"
             ],
             "index": "pypi",
-            "version": "==1.1.2"
+            "version": "==1.2.0"
         },
         "entrypoints": {
             "hashes": [
@@ -178,7 +178,7 @@
                 "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
                 "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
             ],
-            "markers": "python_version < '3.4'",
+            "markers": "python_version < '3'",
             "version": "==1.1.6"
         },
         "feedparser": {
@@ -728,7 +728,7 @@
                 "sha256:254c1d9c79f60c45dfde850850883d5aaa7f19a23f13561243a050d5a7c3fe4c",
                 "sha256:c7d282687a5308319bf3d2e7706e575c635b0a470342641c93bea0ea3b5331df"
             ],
-            "markers": "python_version < '3.2'",
+            "markers": "python_version == '2.7'",
             "version": "==4.0.2"
         },
         "enum34": {
@@ -738,7 +738,7 @@
                 "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79",
                 "sha256:8ad8c4783bf61ded74527bffb48ed9b54166685e4230386a9ed9b1279e2df5b1"
             ],
-            "markers": "python_version < '3.4'",
+            "markers": "python_version < '3'",
             "version": "==1.1.6"
         },
         "futures": {
