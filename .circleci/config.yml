@@ -14,6 +14,8 @@ jobs:
           command: |  # use pipenv to install dependencies
             sudo pip install pipenv
             pipenv install --dev   # Install with dev dependencies
+      - run:
+          command: | # Run tests
             pipenv run make test
       - save_cache:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
