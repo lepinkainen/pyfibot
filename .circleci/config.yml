@@ -1,10 +1,12 @@
 version: 2.1
+
 executors:
   docker-publisher:
     environment:
-      IMAGE_NAME: pyfibot
+      IMAGE_NAME: lepinkainen/pyfibot
     docker:
-      -image: circleci/buildpack-deps:stretch
+      - image: circleci/buildpack-deps:stretch
+
 jobs:
   build:  # required for runs that don't use workflows
     working_directory: ~/pyfibot
