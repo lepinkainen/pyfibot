@@ -39,7 +39,7 @@ def command_korona(bot, user, channel, args):
         if country == None:
             country = "N/A"
 
-        topstr.append(country+":"+str(count))
+        topstr.append(country + ":" + str(count))
 
     msg = msg + " ".join(topstr)
 
