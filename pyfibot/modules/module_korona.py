@@ -27,7 +27,7 @@ def command_korona(bot, user, channel, args):
         )
         raise e
 
-    msg = "[COVID-19] Vahvistettuja tapauksia: %s Kuolleita: %s" % (len(data['confirmed']), len(data['deaths']))
+    msg = "[COVID-19] Vahvistettuja tapauksia: %s Kuolleita: %s Parantunut: %s" % (len(data['confirmed']), len(data['deaths']), len(data['recovered']))
 
     # top5 infection sources
     top5 = Counter(map(lambda x: x['infectionSourceCountry'], data['confirmed'])).most_common(5)
@@ -36,6 +36,9 @@ def command_korona(bot, user, channel, args):
 
     topstr = []
     for country, count in top5:
+        if country == None:
+            country = "N/A"
+
         topstr.append(country+":"+str(count))
 
     msg = msg + " ".join(topstr)
