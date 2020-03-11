@@ -36,7 +36,7 @@ def command_korona(bot, user, channel, args):
 
     topstr = []
     for country, count in top5:
-        if country == None:
+        if country is None:
             country = "N/A"
 
         topstr.append(country + ":" + str(count))
