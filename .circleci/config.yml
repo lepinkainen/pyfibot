@@ -36,7 +36,7 @@ jobs:
           command: docker build -t $IMAGE_NAME:latest .
   publish-latest:
     environment:
-      IMAGE_NAME: pyfibot
+      IMAGE_NAME: lepinkainen/pyfibot
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:
