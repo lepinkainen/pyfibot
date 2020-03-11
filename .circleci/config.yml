@@ -61,7 +61,7 @@ workflows:
                only: master
       - publish-latest:
           requires:
-            - docker_build
+            - docker-build
           filters:
             branches:
               only: master
