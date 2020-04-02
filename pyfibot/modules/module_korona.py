@@ -20,7 +20,7 @@ def command_korona(bot, user, channel, args):
     """Get latest info about COVID-19 in Finland (Source: https://github.com/HS-Datadesk/koronavirus-avoindata )"""
 
     # Generic data
-    url = "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaData"
+    url = "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaData/v2"
     try:
         r = bot.get_url(url)
         data = r.json()
