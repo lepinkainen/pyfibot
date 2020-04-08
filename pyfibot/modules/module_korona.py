@@ -31,6 +31,10 @@ def command_korona(bot, user, channel, args):
         )
         raise e
 
+    if data.get("message", "") == "Internal server error":
+        bot.say(channel, "API Error: %s (Blame HS Datadesk at: https://github.com/HS-Datadesk/koronavirus-avoindata )" % data.get("message", "Unknown"))
+        return
+
     # Data from THL, via HS datadesk since the THL api is a pain
     url = "https://w3qa5ydb4l.execute-api.eu-west-1.amazonaws.com/prod/finnishCoronaHospitalData"
     try:
