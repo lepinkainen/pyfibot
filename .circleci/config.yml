@@ -68,7 +68,9 @@ workflows:
       - build:
           filters:
             branches:
-              only: master
+              only:  
+                - master  
+                - /dependabot.*/
       - docker-build:
           filters:
              branches:
