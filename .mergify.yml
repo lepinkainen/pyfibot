@@ -2,6 +2,7 @@ pull_request_rules:
   - name: automatic Dependabot merge when CI passes
     conditions:
       - author~=^dependabot(|-preview)\[bot\]$
+      - "status-success=ci/circleci: build"
       - status-success=pyup.io/safety-ci
       - base=master
     actions:
