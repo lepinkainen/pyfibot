@@ -574,8 +574,12 @@ def _handle_youtube_gdata(url):
 
         # Content age
         published = entry['snippet']['publishedAt']
-        published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
-        agestr = __get_age_str(published)
+        try:
+            published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
+        except ValueError: # Sometimes the decimal point is omitted
+            published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%SZ")
+        finally:
+            agestr = __get_age_str(published)
 
         return "%s by %s [%s - %s views - %s%s]" % (
             title, channel, duration, views, agestr, agerestricted)
