@@ -78,7 +78,7 @@ def command_korona(bot, user, channel, args):
     }
 
     msg = "[COVID-19 SUOMESSA]"
-    msg += " Vahvistettuja tapauksia: {confirmed} ({today_confirmed:+d}), Kuolleita: {deaths} ({today_deaths:+d}), Osastolla: {total_hospitalised} ({today_hospitalised:+d}), joista teholla: {total_icu} ({today_icu:+d})".format(**display)
+    msg += " Vahvistettuja tapauksia: {confirmed}, Kuolleita: {deaths} ({today_deaths:+d}), Osastolla: {total_hospitalised} ({today_hospitalised:+d}), joista teholla: {total_icu} ({today_icu:+d})".format(**display)
 
     # top5 infection sources
     top5 = Counter(map(lambda x: x['infectionSourceCountry'], data['confirmed'])).most_common(5)
