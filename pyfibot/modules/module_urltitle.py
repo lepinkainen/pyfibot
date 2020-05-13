@@ -576,7 +576,7 @@ def _handle_youtube_gdata(url):
         published = entry['snippet']['publishedAt']
         try:
             published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%S.%fZ")
-        except ValueError: # Sometimes the decimal point is omitted
+        except ValueError:  # Sometimes the decimal point is omitted
             published = datetime.strptime(published, "%Y-%m-%dT%H:%M:%SZ")
         finally:
             agestr = __get_age_str(published)
