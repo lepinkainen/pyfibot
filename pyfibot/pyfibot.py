@@ -197,7 +197,8 @@ class PyFiBotFactory(ThrottledClientFactory):
     def clientConnectionLost(self, connector, reason):
         """Connection lost for some reason"""
         log.info(
-            "connection to %s lost: %s" % (str(connector.getDestination().host), reason)
+            "connection to %s lost: %s" % (
+                str(connector.getDestination().host), reason)
         )
 
         # find bot that connects to the address that just disconnected
@@ -214,7 +215,8 @@ class PyFiBotFactory(ThrottledClientFactory):
                     del self.allBots[n.alias]
                     return
                 else:
-                    log.info("No active connection to known network %s" % n.address[0])
+                    log.info("No active connection to known network %s" %
+                             n.address[0])
 
     def _finalize_modules(self, modules=None):
         """Call all module finalizers"""
@@ -261,14 +263,16 @@ class PyFiBotFactory(ThrottledClientFactory):
         """Global methods for modules"""
         g = {}
 
-        g["getUrl"] = self.get_url
-        g["get_url"] = self.get_url
-        g["getNick"] = self.getNick
-        g["getIdent"] = self.getIdent
-        g["getHost"] = self.getHost
-        g["isAdmin"] = self.isAdmin
-        g["to_utf8"] = self.to_utf8
-        g["to_unicode"] = self.to_unicode
+        # This crap don't work at all, move it to botcore and proxy it to here
+        # g["getUrl"] = self.get_url
+        # g["get_url"] = self.get_url
+        # g["getNick"] = self.getNick
+        # g["getIdent"] = self.getIdent
+        # g["getHost"] = self.getHost
+        #g["isAdmin"] = self.isAdmin
+        #g["is_admin"] = self.is_admin
+        # g["to_utf8"] = self.to_utf8
+        # g["to_unicode"] = self.to_unicode
         return g
 
     def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
@@ -304,7 +308,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         size = int(r.headers.get("Content-Length", 0)) // 1024
 
         if size > 2048:
-            log.warn("Content too large, will not fetch: %skB %s" % (size, url))
+            log.warn("Content too large, will not fetch: %skB %s" %
+                     (size, url))
             return None
 
         return r
@@ -440,7 +445,8 @@ def init_logging(config):
         )
         # Append file name + number if debug is enabled
         if config.get("debug", False):
-            FORMAT = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
+            FORMAT = "%s %s" % (
+                FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
         COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
         formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
     else:
@@ -520,7 +526,8 @@ def main():
                 )[0][4][0]
             except IndexError:
                 log.error(
-                    "No IPv6 address found for %s (force_ipv6 = true)" % (network)
+                    "No IPv6 address found for %s (force_ipv6 = true)" % (
+                        network)
                 )
                 continue
         else:
@@ -538,7 +545,8 @@ def main():
         )
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
-            reactor.connectSSL(server_name, port, factory, ssl.ClientContextFactory())
+            reactor.connectSSL(server_name, port, factory,
+                               ssl.ClientContextFactory())
         else:
             log.info("connecting to %s:%d" % (server_name, port))
             reactor.connectTCP(server_name, port, factory)
