@@ -45,7 +45,8 @@ def init(botref):
     bot = botref
     config = bot.config.get("module_urltitle", {})
     # load handlers in init, as the data doesn't change between rehashes anyways
-    handlers = [(h, ref) for h, ref in globals().items() if h.startswith("_handle_")]
+    handlers = [(h, ref)
+                for h, ref in globals().items() if h.startswith("_handle_")]
 
 
 def __get_bs(url):
@@ -333,7 +334,8 @@ def _check_redundant(url, title):
             break
 
     if idx > len(cmp_title) / 2:
-        cmp_title = cmp_title[0:idx + (len(title[0:idx]) - len(title[0:idx].replace(' ', '')))].strip()
+        cmp_title = cmp_title[0:idx + (len(title[0:idx]) -
+                                       len(title[0:idx].replace(' ', '')))].strip()
     elif idx == 0:
         cmp_title = cmp_title[idx + len(hostname):].strip()
     # Truncate some nordic letters
@@ -513,8 +515,10 @@ def _handle_youtube_gdata_new(url):
 def _handle_youtube_gdata(url):
     """http*://*youtube.com/watch?*v=*"""
 
-    api_key = config.get('google_apikey',
-                         'AIzaSyD5a4Johhq5K0ARWX-rQMwsNz0vTtQbKNY')
+    api_key = config.get('youtube_apikey', None)
+    if api_key is None:
+        log.warning('Set API key in configuration: %s', error)
+        return
 
     api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
@@ -1042,7 +1046,12 @@ def _handle_imgur(url):
             log.warn("Empty response!")
             return
 
-    data = r.json()
+    try:
+        data = r.json()
+    except:
+        log.error("Error decoding JSON:")
+        log.error(data)
+        return
 
     if data['status'] == 200:
         title = create_title(r.json())
