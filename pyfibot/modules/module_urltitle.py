@@ -50,7 +50,7 @@ def init(botref):
                 for h, ref in globals().items() if h.startswith("_handle_")]
 
 
-def __get_bs(url):
+def __get_bs(bot, url):
     """Attempt to get a beautifulsoup object for the given url"""
 
     # Fetch the content and measure how long it took
@@ -259,8 +259,12 @@ def handle_url(bot, user, channel, url, msg):
 
         title = data.get('title')
         # Print out the raw response if title isn't found
-        if not title:
-            print(data)
+        if not title and data.get("errorMessage") == "Source url is not HTML":
+            pass  # Skip this error
+        elif not title:
+            log.warn("Title not found for: %s" % data)
+        else:
+            log.debug(data)
 
         _title(bot, channel, data.get('title'))
 
@@ -268,7 +272,7 @@ def handle_url(bot, user, channel, url, msg):
 
     log.debug("No specific handler found, using generic")
     # Fall back to generic handler
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
 
     # Handle case of failed connection
     if not bs:
@@ -510,18 +514,14 @@ def _handle_youtube_shorturl(url):
     return _handle_youtube_gdata(url)
 
 
-def _handle_youtube_gdata_new(url):
-    """http*://youtube.com/watch#!v=*"""
-    return _handle_youtube_gdata(url)
-
-
 def _handle_youtube_gdata(url):
     """http*://*youtube.com/watch?*v=*"""
 
     api_key = config.get('youtube_apikey', None)
     if api_key is None:
-        log.warning('Set API key in configuration: %s', error)
-        return
+        log.warning(
+            'Set API key in configuration to activate YouTube API titles')
+        return None  # Fall back to generic handler
 
     api_url = 'https://www.googleapis.com/youtube/v3/videos'
 
