@@ -1000,7 +1000,7 @@ def _handle_imgur(url):
         section = data['data']['section']
         title = data['data']['title']
 
-        if not title and data['data'].get('images', None) != None:
+        if not title and data['data'].get('images', None) is not None:
             # If title wasn't found, use title and section of first image
             title = data['data']['images'][0]['title']
             section = data['data']['images'][0]['section']
