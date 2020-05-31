@@ -333,50 +333,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     # TODO: Move the function here completely
     def get_url(self, url, nocache=False, params=None, headers=None, cookies=None):
-        browser = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0"
-        # Common session for all requests
-        s = requests.session()
-        s.stream = True  # Don't fetch content unless asked
-        s.headers.update({"User-Agent": browser})
-        s.headers.update({"Accept-Language": "*"})
-        s.headers.update(
-            {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
-        # Custom headers from requester
-        if headers:
-            s.headers.update(headers)
-        # Custom cookies from requester
-        if cookies:
-            s.cookies.update(cookies)
-
-        try:
-            r = s.get(url, params=params, timeout=5)
-        except requests.exceptions.InvalidSchema:
-            log.error("Invalid schema in URI: %s" % url)
-            return None
-        except requests.exceptions.SSLError:
-            log.error("SSL Error when connecting to %s" % url)
-            return None
-        except requests.exceptions.ConnectionError:
-            log.error("Connection error when connecting to %s" % url)
-            return None
-
-        size = int(r.headers.get("Content-Length", 0)) // 1024
-        size = size / 1024 / 1024  # Size in MB
-
-        content_type = r.headers.get("content-type", None)
-        if not content_type:
-            content_type = "Unknown"
-
-        if size > 5:
-            bot.say(channel, "File size: %s MB - Content-Type: %s" %
-                    (int(size), content_type))
-
-        if size > 2:
-            log.warn("Content too large, will not fetch: %skB %s" %
-                     (size, url))
-            return None
-
-        return r
+        return self.factory.get_url(url, nocache, params, headers, cookies)
 
     def getUrl(self, url, nocache=False, params=None, headers=None, cookies=None):
         return self.get_url(url, nocache, params, headers, cookies)
