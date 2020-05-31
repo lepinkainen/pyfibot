@@ -22,6 +22,7 @@ from types import FunctionType
 import inspect
 import string
 import logging
+import requests
 from util import pyfiurl
 
 # line splitting
@@ -40,7 +41,7 @@ class CoreCommands(object):
         self.say(
             channel,
             "%s: My current ping is %.0fms"
-            % (self.factory.getNick(user), self.pingAve * 100.0),
+            % (self.get_nick(user), self.pingAve * 100.0),
         )
 
     def command_rehash(self, user, channel, args):
@@ -555,7 +556,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
         if "!" and "@" in channel:
-            channel = self.factory.getNick(channel)
+            channel = self.get_gick(channel)
 
         # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
@@ -609,7 +610,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
     def irc_JOIN(self, prefix, params):
         """override the twisted version to preserve full userhost info"""
-        nick = self.factory.getNick(prefix)
+        nick = self.get_nick(prefix)
         channel = params[-1]
 
         if nick == self.nickname:
@@ -626,7 +627,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def irc_PART(self, prefix, params):
         """override the twisted version to preserve full userhost info"""
 
-        nick = self.factory.getNick(prefix)
+        nick = self.get_nick(prefix)
         channel = params[0]
 
         if nick == self.nickname:
@@ -647,7 +648,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         Twisted IRCClient doesn't handle this at all.."""
 
-        nick = self.factory.getNick(prefix)
+        nick = self.get_nick(prefix)
         if nick == self.nickname:
             self.left(params)
         else:
