@@ -1573,6 +1573,9 @@ def _handle_gitio(url):
     """http*://git.io*"""
     return __get_title_tag(url)
 
+def _handle_bitchute(url):
+    """http*://*bitchute.com*"""
+    return __get_title_tag(url)
 
 def _handle_gfycat(url):
     """http*://*gfycat.com/*"""
