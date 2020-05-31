@@ -22,6 +22,7 @@ from repoze.lru import ExpiringLRUCache
 
 from bs4 import BeautifulSoup
 
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 log = logging.getLogger("urltitle")
 config = None
@@ -238,6 +239,7 @@ def handle_url(bot, user, channel, url, msg):
                 # Handler found, but suggests using the default title instead
                 break
             elif title:
+                log.info("Found specific handler for %s" % url)
                 # handler found, abort
                 return _title(bot, channel, title, True, url=url)
             else:
@@ -246,6 +248,7 @@ def handle_url(bot, user, channel, url, msg):
 
     # post data to Lambda if enabled
     if config.get('lambda_enable', False):
+	log.info("Using lambda handler for %s" % url)
         lambdafunc = config.get('lambda_url')
         headers = {'x-api-key': config.get('lambda_apikey')}
         outdata = {'url': url, 'channel': channel, 'user': user}
