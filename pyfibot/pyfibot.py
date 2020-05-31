@@ -269,8 +269,8 @@ class PyFiBotFactory(ThrottledClientFactory):
         # g["getNick"] = self.getNick
         # g["getIdent"] = self.getIdent
         # g["getHost"] = self.getHost
-        #g["isAdmin"] = self.isAdmin
-        #g["is_admin"] = self.is_admin
+        # g["isAdmin"] = self.isAdmin
+        # g["is_admin"] = self.is_admin
         # g["to_utf8"] = self.to_utf8
         # g["to_unicode"] = self.to_unicode
         return g
