@@ -286,6 +286,9 @@ class PyFiBotFactory(ThrottledClientFactory):
         s = requests.session()
         s.stream = True  # Don't fetch content unless asked
         s.headers.update({"User-Agent": browser})
+        s.headers.update({"Accept-Language": "*"})
+        s.headers.update(
+            {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
         # Custom headers from requester
         if headers:
             s.headers.update(headers)
@@ -294,7 +297,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             s.cookies.update(cookies)
 
         try:
-            r = s.get(url, params=params)
+            r = s.get(url, params=params, timeout=5)
         except requests.exceptions.InvalidSchema:
             log.error("Invalid schema in URI: %s" % url)
             return None
