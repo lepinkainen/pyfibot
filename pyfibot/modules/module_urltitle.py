@@ -248,7 +248,7 @@ def handle_url(bot, user, channel, url, msg):
 
     # post data to Lambda if enabled
     if config.get('lambda_enable', False):
-	log.info("Using lambda handler for %s" % url)
+        log.info("Using lambda handler for %s" % url)
         lambdafunc = config.get('lambda_url')
         headers = {'x-api-key': config.get('lambda_apikey')}
         outdata = {'url': url, 'channel': channel, 'user': user}

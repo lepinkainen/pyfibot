@@ -22,7 +22,6 @@ from types import FunctionType
 import inspect
 import string
 import logging
-import requests
 from util import pyfiurl
 
 # line splitting
