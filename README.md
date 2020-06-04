@@ -1,5 +1,9 @@
-CI Build status: [![CircleCI](https://circleci.com/gh/lepinkainen/pyfibot/tree/master.svg?style=svg)](https://circleci.com/gh/lepinkainen/pyfibot/tree/master)
+[![CircleCI](https://circleci.com/gh/lepinkainen/pyfibot/tree/master.svg?style=svg)](https://circleci.com/gh/lepinkainen/pyfibot/tree/master)
 [![Updates](https://pyup.io/repos/github/lepinkainen/pyfibot/shield.svg)](https://pyup.io/repos/github/lepinkainen/pyfibot/)
+[![Mergify Status][mergify-status]][mergify]
+
+[mergify]: https://mergify.io
+[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/lepinkainen/pyfibot&style=flat
 
 
 pyfibot
