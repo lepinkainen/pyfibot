@@ -98,12 +98,16 @@ def op_user(bot, user, channel):
 
 
 def handle_userJoined(bot, user, channel):
-    if bot.isAdmin(user) or get_op_status(channel, user):
+    if bot.is_admin(user) or get_op_status(channel, user):
         op_user(bot, user, channel)
 
 
 def command_autoop(bot, user, channel, args):
     """Usage: .autoop [add|remove|list|status]"""
+
+    # disallow all non-admin access
+    if not bot.is_admin(user):
+        return
 
     if not args:
         return bot.say(channel, "Valid commands are %s" % ", ".join(map(str, COMMANDS)))
@@ -152,7 +156,7 @@ def command_autoop(bot, user, channel, args):
             return bot.say(channel, "You're not an op in %s." % channel)
 
     else:
-        if bot.isAdmin(user):
+        if bot.is_admin(user):
             if len(args) < 3:
                 return bot.say(
                     channel, "Command must have channel and hostmask as arguments."

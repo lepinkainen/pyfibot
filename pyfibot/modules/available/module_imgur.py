@@ -8,8 +8,8 @@ import sys
 log = logging.getLogger("imgur")
 
 # Bot application ID
-CLIENT_ID = "a7a5d6bc929d48f"
-CLIENT_SECRET = "57b1f90a12d4d72762b4b1bf644af5157f73fed5"
+CLIENT_ID = ""
+CLIENT_SECRET = ""
 
 DATAFILE = os.path.join(sys.path[0], "modules", "imgur_auth.dat")
 
@@ -143,7 +143,8 @@ def _refresh_token(client_id, client_secret, refresh_token):
         new_access_token = r.json()["access_token"]
         new_refresh_token = r.json()["refresh_token"]
         log.info(
-            "Updated imgur access token for account %s" % r.json()["account_username"]
+            "Updated imgur access token for account %s" % r.json()[
+                "account_username"]
         )
 
         f = open(DATAFILE, "w")
