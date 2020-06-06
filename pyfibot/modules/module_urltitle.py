@@ -328,6 +328,7 @@ def handle_url(bot, user, channel, url, msg):
         pass
 
 
+# TODO: This seriously needs some unit tests
 def _check_redundant(url, title):
     """Returns true if the url and title are similar enough."""
     # Remove hostname from the title
@@ -443,6 +444,7 @@ def _handle_tweet2(url):
     return _handle_tweet(url)
 
 
+# Working 2020-06-06
 def _handle_tweet(url):
     """http*://twitter.com/*/statuses/*"""
     tweet_url = "https://api.twitter.com/1.1/statuses/show.json?id=%s&include_entities=false&tweet_mode=extended"
@@ -592,16 +594,7 @@ def _handle_youtube_gdata(url):
             title, channel, duration, views, agestr, agerestricted)
 
 
-def _handle_helmet(url):
-    """https://www.helmet.fi/record=*fin"""
-    bs = __get_bs(bot, url)
-    if not bs:
-        return
-    title = bs.find(attr={'class': 'bibInfoLabel'},
-                    text='Teoksen nimi').next.next.next.next.string
-    return title
-
-
+# Broken, falls back to generic handler
 def _handle_ircquotes(url):
     """http://*ircquotes.fi/[?]*"""
     bs = __get_bs(bot, url)
@@ -619,6 +612,7 @@ def _handle_alko2(url):
     return _handle_alko(url)
 
 
+# Broken
 def _handle_alko(url):
     """http*://www.alko.fi/tuotteet/*"""
     bs = __get_bs(bot, url)
@@ -644,6 +638,7 @@ def _handle_alko(url):
     return re.sub("[ ]{2,}", " ", '%s [%.2fe, %.2fl, %.1f%%, %.2fe/l, %.2fe/annos, %s]' % (name, price, size, alcohol, e_per_l, value, drinktype))
 
 
+# Working 2020-06-06
 def _handle_vimeo(url):
     """*vimeo.com/*"""
     data_url = "https://vimeo.com/api/v2/video/%s.json"
@@ -667,6 +662,7 @@ def _handle_vimeo(url):
     return "%s by %s [%s - %s likes - %s views - %s]" % (title, user, lengthstr, likes, views, agestr)
 
 
+# Working 2020-06-06
 def _handle_stackoverflow(url):
     """*stackoverflow.com/questions/*"""
     api_url = 'https://api.stackexchange.com/2.2/questions/%s'
@@ -690,6 +686,7 @@ def _handle_stackoverflow(url):
         return
 
 
+# Working 2020-06-06
 def _handle_reddit(url):
     """*reddit.com/r/*/comments/*/*"""
     if url[-1] != "/":
@@ -724,15 +721,8 @@ def _handle_reddit(url):
         return
 
 
-def _handle_aamulehti(url):
-    """https://www.aamulehti.fi/*"""
-    bs = __get_bs(bot, url)
-    if not bs:
-        return
-    title = bs.find("h1").string
-    return title
-
-
+# Working 2020-06-06
+# There is an API though: https://developer.yle.fi
 def _handle_areena(url):
     """https://areena.yle.fi/*"""
     def _parse_publication_events(data):
@@ -919,6 +909,7 @@ def _handle_areena(url):
     return get_episode(identifier) or get_series(identifier)
 
 
+# Working 2020-06-06
 def _handle_wikipedia(url):
     """*wikipedia.org*"""
 
@@ -993,6 +984,7 @@ def _handle_wikipedia(url):
         return content
 
 
+# Broken
 def _handle_imgur(url):
     """http*://*imgur.com*"""
 
@@ -1080,10 +1072,11 @@ def _handle_imgur(url):
     return title
 
 
+# Broken, but fixable (url format changed, maybe other parts)
 def _handle_liveleak(url):
-    """https://*liveleak.com/view?i=*"""
+    """https://*liveleak.com/v?t=*"""
     try:
-        id = url.split('view?i=')[1]
+        id = url.split('v?t=')[1]
     except IndexError:
         log.debug('ID not found')
         return
@@ -1123,6 +1116,8 @@ def _handle_liveleak(url):
     return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
 
 
+# Broken but fixable, API response has changed
+# https://api.dailymotion.com/video/x7u660h
 def _handle_dailymotion(url):
     """https://*dailymotion.com/video/*"""
     video_id = url.split('/')[-1].split('_')[0]
@@ -1157,6 +1152,7 @@ def _handle_dailymotion(url):
         return
 
 
+# Working 2020-06-06
 def _handle_ebay(url):
     """http*://*.ebay.*/itm/*"""
     try:
@@ -1230,6 +1226,7 @@ def _handle_ebay_cgi(url):
     return _handle_ebay(fake_url)
 
 
+# Broken, API has changed
 def _handle_dealextreme(url):
     """http*://dx.com/p/*"""
     sku = url.split('?')[0].split('-')[-1]
@@ -1268,56 +1265,7 @@ def _handle_dealextreme_www(url):
     return _handle_dealextreme(url)
 
 
-def _handle_instagram(url):
-    """https://*instagram.com/p/*"""
-    from instagram.client import InstagramAPI
-
-    CLIENT_ID = '879b81dc0ff74f179f5148ca5752e8ce'
-
-    api = InstagramAPI(client_id=CLIENT_ID)
-
-    # todo: instagr.am
-    m = re.search(r"instagram\.com/p/([^/]+)", url)
-    if not m:
-        return
-
-    shortcode = m.group(1)
-
-    r = bot.get_url(
-        "https://api.instagram.com/oembed?url=https://instagram.com/p/%s/" % shortcode)
-
-    media = api.media(r.json()['media_id'])
-
-    # media type video/image?
-    # age/date? -> media.created_time  # (datetime object)
-
-    # full name = username for some users, don't bother displaying both
-    if media.user.full_name.lower() != media.user.username.lower():
-        user = "%s (%s)" % (media.user.full_name, media.user.username)
-    else:
-        user = media.user.full_name
-
-    if media.like_count or media.comment_count:
-        info = "["
-        if media.like_count:
-            info += "%d ♥" % media.like_count
-        if media.comment_count:
-            info += ", %d comments" % media.comment_count
-        info += "]"
-    else:
-        info = ""
-
-    if media.caption:
-        if len(media.caption.text) > 145:
-            caption = "{0:.145}…".format(media.caption.text)
-        else:
-            caption = media.caption.text
-
-        return "%s: %s %s" % (user, caption, info)
-    else:
-        return "%s: %s" % (user, info)
-
-
+# Broken, but should be fixable
 def fetch_nettiX(url, fields_to_fetch):
     '''
     Creates a title for NettiX -services.
@@ -1413,6 +1361,7 @@ def _handle_nettikone(url):
     return fetch_nettiX(url, ['Vuosimalli', 'Osasto', 'Moottorin tilavuus', 'Mittarilukema', 'Polttoaine'])
 
 
+# Hitbox is now smashcast, this is broken
 def _handle_hitbox(url):
     """http*://*hitbox.tv/*"""
     # Blog and Help subdomains aren't implemented in Angular JS and works fine with default handler
@@ -1454,22 +1403,7 @@ def _handle_hitbox(url):
         return False
 
 
-def _handle_google_play_music(url):
-    """https://play.google.com/music/*"""
-    bs = __get_bs(bot, url)
-    if not bs:
-        return False
-
-    title = bs.find('meta', {'property': 'og:title'})
-    description = bs.find('meta', {'property': 'og:description'})
-    if not title:
-        return False
-    elif title['content'] == description['content']:
-        return False
-    else:
-        return title['content']
-
-
+# Working, 2020-06-06
 def _handle_steamstore(url):
     """https://store.steampowered.com/app/*"""
 
@@ -1493,15 +1427,7 @@ def _handle_steamstore(url):
     return "%s | %s" % (name, price)
 
 
-def _handle_pythonorg(url):
-    """http*://*python.org/*"""
-    title = __get_title_tag(url)
-    if title == 'Welcome to Python.org':
-        return False
-
-    return title.replace(' | Python.org', '')
-
-
+# Broken, but might be fixable, they do have an API
 def _handle_discogs(url):
     """https://*discogs.com/*"""
 
@@ -1566,21 +1492,7 @@ def _handle_discogs(url):
         return title
 
 
-def _handle_github(url):
-    """http*://*github.com*"""
-    return __get_title_tag(url)
-
-
-def _handle_gitio(url):
-    """http*://git.io*"""
-    return __get_title_tag(url)
-
-
-def _handle_bitchute(url):
-    """http*://*bitchute.com*"""
-    return __get_title_tag(url)
-
-
+# Broken, but there is an API
 def _handle_gfycat(url):
     """http*://*gfycat.com/*"""
 
@@ -1616,19 +1528,3 @@ def _handle_gfycat(url):
     title.append("%s views" % j['views'])
 
     return " ".join(title)
-
-
-# IGNORED TITLES
-def _handle_travis(url):
-    """http*://travis-ci.org/*"""
-    return False
-
-
-def _handle_ubuntupaste(url):
-    """http*://paste.ubuntu.com/*"""
-    return False
-
-
-def _handle_poliisi(url):
-    """http*://*poliisi.fi/*/tiedotteet/*"""
-    return False
