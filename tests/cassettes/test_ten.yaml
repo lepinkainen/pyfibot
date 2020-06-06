@@ -2,712 +2,86 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Mon, 28 Dec 2015 12:59:28 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3014 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['542603127']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA2VPS2sCMRD+K0MKRWHV1WIp22XBg31A6aUHD9LDbDJugrtJmmS1VvzvzVq1lOY0
-        +eZ7zZ6VGLjkprE1BWIZYwn7aMntWLZnjoRyxINn2XLPVs40kXCXTobjMfJIDCb+n+fzOVzAw3vC
-        LFbkO/1NGvHpZNrNHagEy85YwnTkpNFEhZr++SSMPoNDHuImt0VeFn/2+agsQHlA2MaGNXkPmsLW
-        uLXSFfiAWqAToDQESScVrLBR9Q56W6m47NQNunW8WkCrBbkjtXRRChobgoUaPKh+AoI2VBtLF7tj
-        k7dThoeZ94YrDMposM7wWCbpho0SXRmpKjkI0pm2krYNv4Vrw7EGdITn7h56i5fZq++D+UmaXl+N
-        b9P7x6cvKGPcMB/Zgh3i+wbGInx1uAEAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['310']
-      content-type: [application/json; charset=utf-8]
-      date: ['Mon, 28 Dec 2015 12:59:28 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
-      x-cache: ['cp1054 miss+chfp(0), cp3004 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3101813390, 3395340787, 1277120040']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:14:57 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['3692226763']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
     uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
+        H4sIAAAAAAAAA3VVXW/jNhD8Kwv1oU7hD9mBg6sbBDB6ySW4+NpecshD3QdKoi0iFKmSVBwnyH/v
+        LCU79h36FHnJHe7OzG5ek0yEvMxtVWsZZDJLkn6yEc4os/bJ7DWRz8GJPMTvX3B8fb+4pUpsKZP4
+        o1fWVbIgYYqRddSYTGhh8jYSr9lKBVJGKyNJVWIt/ZC+eUki0NY2juzGkFP+cUifDX/XzmZaVp6E
+        k6SVD4wVqAyh9rPRaLPZDPGgEhv1qIbWrUf8MbqrZa6Eni22t8KsGzwzunwO0nhlzewePVx2bfz0
+        u3iSIvhh8vbWT/5tpNtyZw6QTsY2/35NVs5WaPVDOhmOxyIHI8Hi983l5SXtg2//9JOa++H80xTx
+        6WTK3xxURTLbxfqJwZ0UICpo+QNOf0cxTs7ri/Ps4uj8fJRdkAIdtEGFWnpPRoaNdY9QiHwAz8IV
+        YJhCKbss8jKQXTGXweZWe+ptSpWXjFMLF8/49oMaXKlDuJWolN6e9DnzSRUcKtW6HITS2WZd1k14
+        r0LbXGhWSewQ8MzD7fyLPyHbVjNdNmkq0k/XL5ShziHdI7gveSM8FfJJalvLfQOx97vuiqe59xbC
+        BshIrApN0vQD9f6cfyVRc5HI5NAg/XUwOTuhrlDExqfRgnWTwURl+8BHmcsqk6497s2/3N0cwoxP
+        B+PJYDw++a7QEoVmUsKnMjgLpRSK3pIWmdSa7ekJqrVkTqNe2bbjdq614nkYno8gbX0RcdmrK5W3
+        XTF41eigBngvRg7Ihk7wvpbCBxrTWq1Fhmmq0YGXuUV7vTF9QmgEzrlbD8W0HGDYHv8PZpqmVMkI
+        5I+Q0uF0h8X9wyrsujxuhpZBdCV5qKIvWCyh3ECZIN1K5JIAk8saqOAYfm4TWkOaGXxT4LGvV9EJ
+        +BFK6jU1BUvjs7T1yeL6BdarLAZ/cbP4A0SBEHjMB5gMG6G7L+HIgIsF1kXstKWv8cCPed29Fa+X
+        XCtpgsd15ieaueC1ELZ4qGh0S3mXMZmeDf6aL04O1TrWEWxhgAQvJSYAzTug5BGEWc7f56NuTzxf
+        soQBoRpaS7SxxIJ9kssERRnB23OZPCBA42USq+x+TpbJkK7Y9JUqBmzPfsv6vpaAWUZ6Ll1Qqy2r
+        wj6MUNGGux3yXosvVV23ylTCNNAtNE4634csHnF7MIX77I9OrAKdDlPq7Q+PptjYQCtlhFYvwGhM
+        UBrTAV8AjPe8FA6eumsyL7FxTcDwYBo5zFN31v+e5B2tHcu7piaxqbbbbnz61C02k+umALmiKBQf
+        wDYr7Hk0h02lHuGobwM2R//IbpSXwhipqTWkb+rautDffcBCrvXjwSbrUnzrqGiyH4y6UUCLRwLj
+        YYzwvxEPErZlwUbDbEpuk1qxIlI3KS1s9DhfYLJ/9jstno+XB0i9CZhmPNIiTd6V3thG8+pClF0P
+        Ld4Hj1/IRS1yHgNItK9jlx0HAP8h397+AwZzKO4gCAAA
     headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:14:57 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1066 miss+chfp(0), cp3007 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3654600626, 2930985539, 1338591145']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:15:57 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['3692377156']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:15:57 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1066 pass+chfp(0), cp3041 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3654675253, 2207318457, 1338647402']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 09:17:43 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3041 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['2903678514']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 09:17:43 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1066 miss+chfp(0), cp3007 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3659261185, 2932928296, 1342302002']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:21:12 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3005 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1724134512']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=37660 t=1456251672382698]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:21:12 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1066 miss+chfp(0), cp3007 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3785795368, 590882610, 721420640']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:22:49 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3005 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1724449230']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=59750 t=1456251769910391]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:22:50 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1066 pass+chfp(0), cp3012 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3786104564, 4156175314, 721735627']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:47:10 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1794581479']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=27620 t=1456397230509677]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:47:10 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1066 pass+chfp(0), cp3007 miss+chfp(0), cp3007 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['4264639755, 942761311, 1538574522']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:50:59 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1795982085']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=47517 t=1456397459915847]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:51:00 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1066 miss+chfp(0), cp3031 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['4265581699, 103208566, 1539572902']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:53:52 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3031 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['564497441']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=220094 t=1456397633097547]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:53:53 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1066 pass+chfp(0), cp3009 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['4266186342, 1359369261, 1540239274']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 11:11:28 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3014 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['181284354']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3VSXW/bMAz8K4SeEiAfTroUQxAEyEO6dlg2rCvQh3UPskzbQmTJk+imadD/PspO
-        0gzDAgSwSB55d+RBpJJUqVxVGyQUcyEG4neDfi/mB+Ex0x4VBTH/eRC5dxUXfEymo8lEKi4kx++7
-        9XoN5+Dbr4GoZYEh4q8Sjs+ms/gdgzoT81NsICzXJNxEk8F/+gwEvpCXijizqJeLdPlXfjFOl6AD
-        SNgxQ4MhgEXaOb/VtoBA0mbSZ6AtUIlHFOSy0mYPvV2pVRnRlfRbVp1BYzP0bWnqGQpWVgiPenij
-        +wPI8BmNq/HcrmXy4zgjwCoEp7Qk7SzU3ikmM4gfzzqLZEpdlEMqvWuKsm7onbBxShqQHuWJe4De
-        45fV19AH102aPTVJIpNPt6+Q8rgRPHDwrG4nwwW5uB6YJqzzOCw+riDKkXWk0wn4LG0j/T4mP4wW
-        43r5ZNnfh5LtCDUqnWvVSSm5O75wKBpUNYb0kCe3qUgSLiS5HCSBQRkIJlDoQqaaoGZLAyoXCcQ/
-        BLbDIBhtt/9Dz5IEKmzx4bJBjxOdFxtOjUM/WsGU4wmo9np1KJlnumfOhLZ1PjootWfVhD6XCoF7
-        Kay5NVa8aNUBuuuwc95MvIL7m9ZrflAJvaYGcjC5Pk2/feWLqJxH2NxtvrFl7AhvMRCvsQqneuSd
-        Uzwdt7Ot3M6/JnD/Fnesy13jQRmNlgKXR5vac8nQBk17HpQ1pvP8iJjOroffV5v+++q6D/HGvz8l
-        lV0RzgMAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=46077 t=1456398688329112]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['577']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 11:11:28 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1066 pass+chfp(0), cp3004 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['4269491703, 1090419051, 1543807475']
-    status: {code: 200, message: OK}
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:07:02 GMT
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      server:
+      - mw1285.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass"
+      set-cookie:
+      - WMF-Last-Access=06-Jun-2020;Path=/;HttpOnly;secure;Expires=Wed, 08 Jul 2020
+        12:00:00 GMT
+      - WMF-Last-Access-Global=06-Jun-2020;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Wed,
+        08 Jul 2020 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3054 miss, cp3056 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.187.11
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

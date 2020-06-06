@@ -2,862 +2,97 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Mon, 28 Dec 2015 12:59:28 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3040 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['53595287']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA8VUYU/bMBD9KydPYlSK2rSFjbZZpIKo4MuoBtI+UISc+NpYOHZmO3QF8d93TtrC
-        NPi8fIiSu3fv3nty8swy7vMiN2Wl0CMbMxaxXzXaDRs/M21syZV8QsHGt89saU1JiHMhndH3U8u1
-        R3cvzP137nJZovaGpum2w8AWA8LAG8zLXcQsCmkx9+5f5g+mtsxzVIs6jnHU0FR8hS5IHRyNjofh
-        IVQk6W0KEdPUjWlUeoV/TUcMf3vLc0/VpEqTLD0XHy5PelkKh4mjNFR6avmTVJJrmBvr61WNDscH
-        n/pf4knSayGJq6jdLP22YD+wsoTRnntJGyR1CoRLWmN1U+IK5oXR6GUOU1UVPEMPh5fzaWfB0lsS
-        PMhPwv048y7IXx7D4brTVOLX7lfcV4bx0IeXk6F8AlGDbjtOtuhyUfcxE76+I8GkNJ1AZqyGwRCu
-        cm8ytNAfHcWdCB60WWvgDiiffXb/NY0quBz2sXWi2lh2PkixdMDB0jCdMHgVV1mzROda+qUxPiNl
-        5HNdGKgU3xCYh8mlsWtuRRcuMFCtpUC1Ib4VFQnjDWTYCF5Z5HROfDttwSyBGMlliV1yQwGORhEQ
-        cE28j8bT8E9jlYD5Hh9oziiI2m4g27wTwwwF2jYmgs+2quFCOm9o5oCX1QSuQ5COwnIU0mx2cd3p
-        wg1ROV4ibJDbCBKZzuhY57jnSHoyJcMPwVKB0gbfJak6pR5tE5+vKBqpNVoXPOeFMa71vVfxro9J
-        eNmAQ0XfNpHvz8ybTPa1JpodcuqL8Af6KJerswi4FsHKDUXc6NfkUEAhy+0hIhuKkggU/TiG0tCz
-        1EtVE5ekOCs09JfbbRjEvoC8XdNNelXKXuj6A62hhsARBQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['663']
-      content-type: [application/json; charset=utf-8]
-      date: ['Mon, 28 Dec 2015 12:59:29 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
-      x-cache: ['cp1053 miss+chfp(0), cp3014 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['204816567, 3167068808, 1277120502']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:14:57 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3008 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1915419821']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
     uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
   response:
     body:
       string: !!binary |
-        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
-        OwwAAA==
+        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
     headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:14:58 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1055 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3344282631, 2172120628, 1338591454']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:15:57 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3009 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1249146918']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        OwwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:15:58 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1055 pass+chfp(0), cp3005 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3344351713, 1766568464, 1338647833']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 09:17:43 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3014 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['598503959']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        OwwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 09:17:44 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1055 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['3348586992, 2173931151, 1342302504']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:21:12 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1149584004']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=34819 t=1456251672900162]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:21:12 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1055 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['209513588, 4016424921, 721421567']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:22:50 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3040 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['3548182285']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=34071 t=1456251770459632]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:22:50 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1055 pass+chfp(0), cp3004 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['209803975, 734452617, 721737127']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:47:10 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3005 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['2178739123']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=64887 t=1456397231073520]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:47:11 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1055 pass+chfp(0), cp3030 miss+chfp(0), cp3007 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['665691926, 65819192, 1538575742']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:51:00 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3014 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['177394626']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=45609 t=1456397460546168]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:51:00 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1055 miss+chfp(0), cp3041 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['666612275, 56812552, 1539580156']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:53:53 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3030 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1796950724']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=46628 t=1456397633828167]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:53:53 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1055 pass+chfp(0), cp3004 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['667175351, 1087966525, 1540240785']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 11:11:28 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3009 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['2202864693']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Edison_Arantes_do_Nascimento&action=query
-  response:
-    body:
-      string: !!binary |
-        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
-        MgwAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=37184 t=1456398688887287]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['1486']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 11:11:28 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1055 pass+chfp(0), cp3006 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['670311743, 416018486, 1543808865']
-    status: {code: 200, message: OK}
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:07:02 GMT
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      server:
+      - mw1375.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass"
+      set-cookie:
+      - WMF-Last-Access=06-Jun-2020;Path=/;HttpOnly;secure;Expires=Wed, 08 Jul 2020
+        12:00:00 GMT
+      - WMF-Last-Access-Global=06-Jun-2020;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Wed,
+        08 Jul 2020 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3054 miss, cp3056 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.187.11
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

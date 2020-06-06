@@ -2,660 +2,79 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Mon, 28 Dec 2015 12:59:25 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=28-Dec-2015;Path=/;HttpOnly;Expires=Fri, 29 Jan
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3009 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1187103532']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=28-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exsentences=5&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnB3XIESRSlokKjpEEK2s8ErHNvY64MQ3buzkYACgavVzPjb
-        n1UZzdbZOCePjKpTqlGvFfOiulWFmGft6QNH1T2saspxlsQthhHzU8I8bT7TiXiRbxx/TPhlnh8b
-        lfQzlo163R6ujsd2KzeNBP4lNSpIYi8oYo//0hqF75y1ZUn0aejN8Geu35kBqIAGxjyDzagZRzAL
-        pFj4onCulmuWBQvDhDOFrUiOfCwxOeHd1ZHYwU2VaTJQgE08tO0eTIwv0NN34/scq/HY72ho4M2R
-        deB0gVJNQblmYL+AQQxQi0wgIA0nnQl5gTiBtnqU9hYmQj+Wy36XBnWW9wke7zCnngEAAA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['280']
-      content-type: [application/json; charset=utf-8]
-      date: ['Mon, 28 Dec 2015 12:59:26 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=28-Dec-2015;https=1]
-      x-cache: ['cp1065 miss+chfp(0), cp3013 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['2662359647, 3281789897, 1277116995']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:14:54 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3008 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1915416948']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
     uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnB3XIFyilLQIFHTAUK2syErHNvY64MQ3buzRkCBwNVoZ/zt
-        z6qMZjvZMEeHjOqgVKNeCqZFHVblQ5q1o3cc1OFuVWMKsySu0Q+YHiOmsfpMR+JFvnH4MeGXeXpo
-        VNRPmCv1st1d7PdtlbVGAv8qNcpLYisoYof/0hqFb5y0ZUl0se9M/2eu25geKIMGxjSDTagZBzAL
-        xJD5LHMqlkuSBTPDiDP5KuJELuQQJ+HdlIF4gqsi0yQgD7W4a9stmBCeoaPvxrcpFOOw21DfwOtE
-        doJJZ8jFZJRrenYLGEQPJcsEAtJw1ImQFwgjaKsHaW9hJHRDPu82sb/3dbNPoU7yPgAOntpJqQEA
-        AA==
+        H4sIAAAAAAAAA41U0WobMRD8leX6Vlw7BEqJawyhhBaaPCV9akrRyeu7JTrputqzfQn+9+7KdlJC
+        KX3yWlqNZmZH91TVTnzrU9cHFKzmVTWpto4jxSZX86cKd8LOS6nf6vaXu5tr6NwINepPWCfucAUu
+        rmaJYYi1Cy76w0ppSx0JUAwUEahzDeYpfMsITmBMA0PaRmDKD1P4Gq3uOdUBuwyOEQJlMSyBVqTP
+        89lsu91O9UJyW3qgaeJmZsXstkdPLsxvxmsXm0GvmV3tBGOmFOd3quHqKOPNJ7dBJ3la7feT6teA
+        PJqyqDJcoEdcVfPvT9WaU6daP2NcIf/skU2mE9qQjOqPpOdNeLW5/zGpWPkxFs9eY8HfsW6TsQef
+        YhYevChrSGtoypnStGbXdBhFmy/7PpB31pRfup6R1f3CojevTdv5xfvzi7MPZ1bbIqnG09qkitqj
+        P0IS8D+YHOOgnYt+edciLOpl/teZxaxeAuk4QVpMPGoWYI0dRcpdCYmdTiE1I7g6DWJtGpxIa8zi
+        Tlh+CDKwXpKYGop5Ah361hmI1gbjE6cQHBO+MsVjX1CsCXc9Y7ZQGA27SUmLarIjpBXrgZyiXmTt
+        Daehh6O8su2KuimUvK11CiGMkwL0TxMgC/VDcKLkpNU4H5eVMh6S7pSgbwk3Gvf7ypQP+b4ylu4E
+        jXFDnKKlYALblnyrD8qioKMbT/JOfzUf2KhZj6geJH3bpUGJMmpK1OGkCdSeE3iNrdtQ4jxdzPql
+        zvbSBOuDFVQ0RuO+MqVpaFqISVyt6yt9nxS96MBE3fljtvI87lzsKQiW2JZ6vUy2iIcBuOyZalV9
+        0Gye1SUPZi5k3L2zz8yBvmJr+fEkhfjFs+Npn4YyRceSjc3BZ4PIGiH7Bh1xlGPE6X00tfop2O9/
+        A5D3p2cJBQAA
     headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['286']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:14:54 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1052 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['2736849373, 2172119146, 1338588183']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 08:15:54 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3003 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['470867806']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnB3XIFyilLQIFHTAUK2syErHNvY64MQ3buzRkCBwNVoZ/zt
-        z6qMZjvZMEeHjOqgVKNeCqZFHVblQ5q1o3cc1OFuVWMKsySu0Q+YHiOmsfpMR+JFvnH4MeGXeXpo
-        VNRPmCv1st1d7PdtlbVGAv8qNcpLYisoYof/0hqFb5y0ZUl0se9M/2eu25geKIMGxjSDTagZBzAL
-        xJD5LHMqlkuSBTPDiDP5KuJELuQQJ+HdlIF4gqsi0yQgD7W4a9stmBCeoaPvxrcpFOOw21DfwOtE
-        doJJZ8jFZJRrenYLGEQPJcsEAtJw1ImQFwgjaKsHaW9hJHRDPu82sb/3dbNPoU7yPgAOntpJqQEA
-        AA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['286']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:15:54 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1052 pass+chfp(0), cp3007 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['2736920723, 2931016586, 1338645173']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 29 Dec 2015 09:17:40 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=29-Dec-2015;Path=/;HttpOnly;Expires=Sat, 30 Jan
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3008 frontend (0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1919199978']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=29-Dec-2015']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnB3XIFyilLQIFHTAUK2syErHNvY64MQ3buzRkCBwNVoZ/zt
-        z6qMZjvZMEeHjOqgVKNeCqZFHVblQ5q1o3cc1OFuVWMKsySu0Q+YHiOmsfpMR+JFvnH4MeGXeXpo
-        VNRPmCv1st1d7PdtlbVGAv8qNcpLYisoYof/0hqFb5y0ZUl0se9M/2eu25geKIMGxjSDTagZBzAL
-        xJD5LHMqlkuSBTPDiDP5KuJELuQQJ+HdlIF4gqsi0yQgD7W4a9stmBCeoaPvxrcpFOOw21DfwOtE
-        doJJZ8jFZJRrenYLGEQPJcsEAtJw1ImQFwgjaKsHaW9hJHRDPu82sb/3dbNPoU7yPgAOntpJqQEA
-        AA==
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['286']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 09:17:40 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=29-Dec-2015;https=1]
-      x-cache: ['cp1052 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['2741278808, 2173928976, 1342298623']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:21:08 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3003 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['326742246']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=30507 t=1456251669132272]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:21:09 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1052 miss+chfp(0), cp3030 miss+chfp(0), cp3004 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['494811466, 4016416879, 721409527']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Tue, 23 Feb 2016 18:22:46 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=23-Feb-2016;Path=/;HttpOnly;Expires=Sat, 26 Mar
-          2016 12:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3013 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['1400971983']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=23-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=35052 t=1456251766776565]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:22:46 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=23-Feb-2016;https=1]
-      x-cache: ['cp1052 pass+chfp(0), cp3012 miss+chfp(0), cp3004 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['495107231, 4156167241, 721724207']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:47:07 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3041 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['391044117']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=91957 t=1456397227298585]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:47:07 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1052 pass+chfp(0), cp3030 miss+chfp(0), cp3007 frontend miss+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['958729838, 65812061, 1538564180']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:50:56 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3031 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['563386997']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=51023 t=1456397456734395]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:50:56 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1052 miss+chfp(0), cp3014 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['959624763, 795837802, 1539547257']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 10:53:49 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3008 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['2771879933']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=44075 t=1456397629711264]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:53:49 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1055 miss+chfp(0), cp3030 pass+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['667162761, 67007279, 1540225817']
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 25 Feb 2016 11:11:24 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=25-Feb-2016;Path=/;HttpOnly;Expires=Mon, 28 Mar
-          2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3014 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['181272890']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=25-Feb-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAA3WQvU7EMBCEX2XlOnAcV6CcohQ0SNR0gJDtbPAKxzb2+iCc7t1ZS0CBwNVoZ/zt
-        z1EZzdbZuCSPjGqvVKdeK+ZV7Y8qxLxoTx84qf39Uc05LpK4wTBhfkqY5+YzHYhX+cbxx4Rf5umx
-        U0k/Y2nUq357udv1TbYaCfyr1KkgiQtBEXv8l9YpfOesLUtiSONgxj9zw8aMQAU0MOYFbEbNOIFZ
-        IcXCZ4VztVyzLFgYZlwoNJEc+VhicsK7rROxg+sq02SgAK247fsLMDG+wEDfje9yrMbjsKGxgzdH
-        1oHTBUo1BeWagf0KBjFALTKBgDQcdCbkFeIM2upJ2luYCf1UzodNGh9C20yEOsn7BLgYdLmnAQAA
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=35943 t=1456398684890724]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['285']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 11:11:24 GMT']
-      server: [nginx/1.9.4]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=25-Feb-2016;https=1]
-      x-cache: ['cp1052 pass+chfp(0), cp3007 miss+chfp(0), cp3007 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.6.5]
-      x-varnish: ['963429635, 946433556, 1543795172']
-    status: {code: 200, message: OK}
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:07:00 GMT
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      server:
+      - mw1348.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass"
+      set-cookie:
+      - WMF-Last-Access=06-Jun-2020;Path=/;HttpOnly;secure;Expires=Wed, 08 Jul 2020
+        12:00:00 GMT
+      - WMF-Last-Access-Global=06-Jun-2020;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Wed,
+        08 Jul 2020 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3050 miss, cp3056 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.187.11
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

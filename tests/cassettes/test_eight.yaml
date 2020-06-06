@@ -2,78 +2,86 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Byzantine_art%23Periods&action=query
-  response:
-    body: {string: !!python/unicode ''}
-    headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      connection: [close]
-      content-length: ['0']
-      date: ['Thu, 12 May 2016 05:51:47 GMT']
-      location: ['https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Byzantine_art%23Periods&action=query']
-      server: [Varnish]
-      set-cookie: ['WMF-Last-Access=12-May-2016;Path=/;HttpOnly;secure;Expires=Mon,
-          13 Jun 2016 00:00:00 GMT', 'GeoIP=:::::v6; Path=/; secure; Domain=.wikipedia.org']
-      via: [1.1 varnish]
-      x-cache: [cp3033 frontend int(0)]
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-varnish: ['539862511']
-    status: {code: 301, message: TLS Redirect}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      Cookie: ['GeoIP=:::::v6; WMF-Last-Access=12-May-2016']
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
     uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Byzantine_art%23Periods&action=query
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA21UbU8bMQz+K1b2YSAdsAnGJISQALF9mBATTPuyTlOac3vRcsktcSgd4r/vSa6U
-        AkOi14tj+3mxe6+mWkxnQj84FlZHSjXqT+a4VEf3yofYa2f/cquOftyrWQw9bpwt/2ov1vMvHeXN
-        V442tAlpEjaDhKB6+NmoQc85lWqHBx8P99+Vb+XIouZ40iiPOB5ixfGrGo3iO4naCCLHw8nx9ORZ
-        /HhvekI2kXRMXvdMsxDrC2I2iTU0xNBmI4nCrAYudBKOnq5Drz1tratt00U/2MgN6UQLdq48x7Ji
-        g0+kfUtJtHA51kLWdyAv3JLJTnLUzi2piFSzuBbbpW9dyPNu44isJHYzvHGcI7lmAAy/TdSycZUY
-        WrmCs6UMcK6mf0KDQuIcYKRiDnANMOj9wYf9hkBnuWZ3FaULbbh7RIxbj6GLHMPwgmagBAToP4/M
-        tdtlTs72j+kr7XhV4pJbEI9Re9a+gcScON4CbcWg08Abgo+0wW6UaWQHe6pVhj3OLFroGSoudGx3
-        j/eGk4mH2afkcz/lWCqtgJjgBQVD1HFJCyujsk8jMXoIYvjYsMX6mcvsDSBO8SZNzQ1ZCJOV65Up
-        Wz+noQBDOyu0VSpPNsYRa9IHv2DtpJuo7eIteKO2cblF5bPs5jpa3dANx2l5FqalynVOz/SuYvvg
-        d17a5OzvUf5rHvLUYXyB5Tt7a3hd7AtwtpgZRG6ssW4JMp01HXUao+gCIEkRFKb+V5uW0wD3VoQx
-        GAHXIsHD0bZHCRa8OS/YlZV/u3SKC+NajXq+GrrzLpbl074wul21KWCuROraraDYMiTCKA0LUGui
-        hpBkZw15d6LonKNopK8XGr8GmL66knUPQ7RziyVF/qrLS8pN5WSBX8c6DCALp9oikcVEIWzL/XnV
-        2HQ5Qk2ND8hkCmWYB7R9uYX/sdFnbIrhJ6+f3Ifbyepaa5T2lT4mYK3jhkl1g7xQq5dP41++qAf8
-        /QMDnC6QpwUAAA==
+        H4sIAAAAAAAAA31V72/bNhD9Vwj1Q9tBsZu1awEjCJAG2Qa0Rook25dlGE7S2SJCkRp/RFGD/O97
+        R9mOkxT7YJkij3fv3r073RcVxbqtXdcbjlwsiqIsBvJW23UoFvcF30VPdczrn3D8+9Xyq+poVBXj
+        z6yc77hRZJu58yrZigzZetrJZq7TUWlrtGWlO1pzmKk/AiuKanTJKzdY5XW4makvVta9d5XhLijy
+        rIwOUXxF1cbYh8V8PgzDDAE1DfpGz5xfz2Uxv+y51mQWy/Er2XVCmPnZXWQbtLOLK+Rwtknj1Snd
+        MsUwKx4eyuLfxH6UzCzSIKO/c1Ms/rovVt51yPXz+J1sBPJ/yMdX39hr1wTwE93+IZDG4uHvsugl
+        O/H28cOnj+/fyUq2NHxOO2VhcY6/qKPhFz7KLdk4OeqPj6rjJ+dH8+pYSaFAFwcVW1aVa8DwSp22
+        2IuarPrNM9+ItbzXwmaTkLYYyYUzAqHeqgvXwfjNzv9bddb12nOpKKiBjZF/uWApgsKQyxkixRyY
+        pKIt6JDi1MnE5MmYUQlt+RZnZzN11bq0bve2lI6BzQpv7Ne4vLvRcJ0lApzAxjmeoVz9BIQmG/2K
+        KDldIIoZuINqgUUdfvjlfZltcOCjaoB0m/MjiX2uoNJBecKJV7VhyMyLB7nVgjTnR8nQyl7vjAaL
+        ZLYnpdIrRNCAoVEHaC4gyyXZccfsuY+ta9zdli242R6dJe/6ZxQ7FSTdhtcoXIa7TMHobnt9kwNv
+        XCwhfSw8WSZborwc2N+ytBowUEAbPBZ7ovx12JRoIlXyRNOqmi32NELQCh7R8s3s2h7Nobv++ETZ
+        1FUgxq22QGpnIxw6TyBo0LF9xu2kHySGx54ktF2ZxHkiVHiLZb7rUlTQecomFWPWqF6AIRymxRvx
+        fL3XHBB95+zAZGJ7XbwVXSFv+K5NauBZ7C9SeMJsptU6e/C8IEbfTERfcJ8qgyZB1D/Z6hqlGVpd
+        tyow0FDc1+cjmK2Qbd4/fAcmJi6hDiFYdr8gowY34flS19qMW88toWGMA/go1KP8P2RR/IgpmeDA
+        D0Oe+zJ2AQNARtteb+wDmepDaCA02TQSDiANuslEuz6Z3NXSD0HmBHa13WA5/PnRz0yd5zbZMNfS
+        rZjuQ9kNGswtKFOcCm4XkLTJDMbWywyQimd166ZBy55gUiKxOEhuTwXwQ7YnQnL4qYmzyLVtuGc8
+        rNQuJBCMyl+yrzTlK5+TWZPXNFMnIvLse7UZIk/j1NTrSP87XQTfNE8nMb/o+N0UFpHdTqzmMOcx
+        5nm77RES9Pg6IaoxcHZdoKTxYIdmdl2oU/aRprn0jOHNBHZer7XNHG/CPJdRmTnV6EbyuRWVZ9DR
+        iOx0LfVHgFx94apukxcC8cCIqWVglPkj3IkVflMgUZOwfTr2XlpuYrvcUV1O35a8SBDpVAiXdfSC
+        sdpBwH6vE/JAszK/x800wnf64eE/lu8msqYIAAA=
     headers:
-      accept-ranges: [bytes]
-      age: ['0']
-      backend-timing: [D=56149 t=1463032307699848]
-      cache-control: ['private, must-revalidate, max-age=0']
-      connection: [keep-alive]
-      content-encoding: [gzip]
-      content-length: ['751']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 12 May 2016 05:51:47 GMT']
-      p3p: ['CP="This is not a P3P policy! See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P
-          for more info."']
-      server: [mw1145.eqiad.wmnet]
-      strict-transport-security: [max-age=31536000; includeSubDomains; preload]
-      vary: ['Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization']
-      via: ['1.1 varnish, 1.1 varnish, 1.1 varnish']
-      x-analytics: [WMF-Last-Access=12-May-2016;https=1]
-      x-cache: ['cp1053 pass+chfp(0), cp3031 miss+chfp(0), cp3032 frontend pass+chfp(0)']
-      x-client-ip: ['2001:1bc8:1004::1']
-      x-content-type-options: [nosniff]
-      x-frame-options: [SAMEORIGIN]
-      x-powered-by: [HHVM/3.12.1]
-      x-varnish: ['3353123920, 2330517286, 1473812354']
-    status: {code: 200, message: OK}
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:07:01 GMT
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      server:
+      - mw1408.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass"
+      set-cookie:
+      - WMF-Last-Access=06-Jun-2020;Path=/;HttpOnly;secure;Expires=Wed, 08 Jul 2020
+        12:00:00 GMT
+      - WMF-Last-Access-Global=06-Jun-2020;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Wed,
+        08 Jul 2020 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3058 miss, cp3056 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.187.11
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+    status:
+      code: 200
+      message: OK
 version: 1

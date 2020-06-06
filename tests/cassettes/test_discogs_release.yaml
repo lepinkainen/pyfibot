@@ -2,958 +2,461 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [pyfibot-urltitle]
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
-    uri: https://api.discogs.com/releases/249504
+    uri: http://www.discogs.com/release/249504
+  response:
+    body:
+      string: !!python/unicode "<html>\r\n<head><title>308 Permanent Redirect</title></head>\r\n<body>\r\n<center><h1>308
+        Permanent Redirect</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
+    headers:
+      connection:
+      - keep-alive
+      content-length:
+      - '164'
+      content-type:
+      - text/html
+      date:
+      - Sat, 06 Jun 2020 14:06:52 GMT
+      location:
+      - https://www.discogs.com/release/249504
+    status:
+      code: 308
+      message: Permanent Redirect
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://www.discogs.com/release/249504
   response:
     body:
       string: !!binary |
-        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
+        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
+        LhP59iV0be53vPdfAJJC027rjQEA
     headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [Keep-Alive]
-      content-encoding: [gzip]
-      content-length: ['2164']
-      content-type: [application/json]
-      date: ['Mon, 28 Dec 2015 13:16:26 GMT']
-      reproxy-status: ['yes']
-      server: [lighttpd]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body:
-      string: !!binary |
-        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
-        1d7M157Jljrd3hn+G2Dcf8UNHwAA
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [Keep-Alive]
-      content-encoding: [gzip]
-      content-length: ['2187']
-      content-type: [application/json]
-      date: ['Tue, 29 Dec 2015 08:15:48 GMT']
-      reproxy-status: ['yes']
-      server: [lighttpd]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body:
-      string: !!binary |
-        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
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [Keep-Alive]
-      content-encoding: [gzip]
-      content-length: ['2164']
-      content-type: [application/json]
-      date: ['Tue, 29 Dec 2015 09:20:48 GMT']
-      reproxy-status: ['yes']
-      server: [lighttpd]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body:
-      string: !!binary |
-        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
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [Keep-Alive]
-      content-encoding: [gzip]
-      content-length: ['2164']
-      content-type: [application/json]
-      date: ['Tue, 29 Dec 2015 09:22:15 GMT']
-      reproxy-status: ['yes']
-      server: [lighttpd]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 98, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 507, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Tue, 23 Feb 2016 18:21:02 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 98, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 507, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Tue, 23 Feb 2016 18:22:37 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 99, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 509, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Thu, 25 Feb 2016 10:47:00 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 99, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 509, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Thu, 25 Feb 2016 10:50:50 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 99, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 509, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Thu, 25 Feb 2016 10:53:42 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      user-agent: [!!python/unicode pyfibot-urltitle]
-    method: GET
-    uri: https://api.discogs.com/releases/249504
-  response:
-    body: {string: !!python/unicode '{"styles": ["Euro-Disco"], "videos": [{"duration":
-        426, "embed": true, "title": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "description": "Rick Astley - Never Gonna Give You Up (Escape
-        to New York Mix)", "uri": "http://www.youtube.com/watch?v=rYehxpzipa8"}, {"duration":
-        387, "embed": true, "title": "Never Gonna Give You Up (Escape From Newton
-        Mix) - Rick Astley", "description": "Never Gonna Give You Up (Escape From
-        Newton Mix) - Rick Astley", "uri": "http://www.youtube.com/watch?v=SjlIuoMFPww"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up", "description": "Rick Astley - Never Gonna Give You Up", "uri": "http://www.youtube.com/watch?v=dQw4w9WgXcQ"},
-        {"duration": 213, "embed": true, "title": "Rick Astley - Never Gonna Give
-        You Up (Instrumental) HD Audio", "description": "Rick Astley - Never Gonna
-        Give You Up (Instrumental) HD Audio", "uri": "http://www.youtube.com/watch?v=graKroRK8Hg"}],
-        "series": [], "labels": [{"name": "RCA", "entity_type": "1", "catno": "PB
-        41447", "resource_url": "https://api.discogs.com/labels/895", "id": 895, "entity_type_name":
-        "Label"}], "community": {"status": "Accepted", "rating": {"count": 61, "average":
-        3.44}, "want": 99, "contributors": [{"username": "memory", "resource_url":
-        "https://api.discogs.com/users/memory"}, {"username": "vargind", "resource_url":
-        "https://api.discogs.com/users/vargind"}, {"username": "alistairk", "resource_url":
-        "https://api.discogs.com/users/alistairk"}, {"username": "hog", "resource_url":
-        "https://api.discogs.com/users/hog"}, {"username": "rwrackham", "resource_url":
-        "https://api.discogs.com/users/rwrackham"}, {"username": "jan_marian", "resource_url":
-        "https://api.discogs.com/users/jan_marian"}, {"username": "_80_", "resource_url":
-        "https://api.discogs.com/users/_80_"}, {"username": "chillyboy64", "resource_url":
-        "https://api.discogs.com/users/chillyboy64"}, {"username": "perlator", "resource_url":
-        "https://api.discogs.com/users/perlator"}, {"username": "djcarbines", "resource_url":
-        "https://api.discogs.com/users/djcarbines"}], "have": 509, "submitter": {"username":
-        "memory", "resource_url": "https://api.discogs.com/users/memory"}, "data_quality":
-        "Correct"}, "year": 1987, "images": [{"uri": "", "height": 600, "width": 600,
-        "resource_url": "", "type": "primary", "uri150": ""}, {"uri": "", "height":
-        600, "width": 600, "resource_url": "", "type": "secondary", "uri150": ""},
-        {"uri": "", "height": 600, "width": 600, "resource_url": "", "type": "secondary",
-        "uri150": ""}, {"uri": "", "height": 600, "width": 600, "resource_url": "",
-        "type": "secondary", "uri150": ""}], "format_quantity": 1, "id": 249504, "genres":
-        ["Electronic", "Pop"], "thumb": "", "extraartists": [{"join": "", "name":
-        "Me Company", "anv": "Me Co", "tracks": "", "role": "Design", "resource_url":
-        "https://api.discogs.com/artists/547352", "id": 547352}, {"join": "", "name":
-        "Mark McGuire", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/78275", "id": 78275}, {"join": "", "name":
-        "Mike Duffy", "anv": "", "tracks": "", "role": "Engineer", "resource_url":
-        "https://api.discogs.com/artists/95941", "id": 95941}, {"join": "", "name":
-        "Miles Showell", "anv": "MS", "tracks": "", "role": "Mastered By", "resource_url":
-        "https://api.discogs.com/artists/383408", "id": 383408}, {"join": "", "name":
-        "Pete Hammond", "anv": "Mixmaster Pete Hammond", "tracks": "", "role": "Mixed
-        By", "resource_url": "https://api.discogs.com/artists/34067", "id": 34067},
-        {"join": "", "name": "Stock, Aitken & Waterman", "anv": "Stock / Aitken /
-        Waterman", "tracks": "", "role": "Producer, Written-By", "resource_url": "https://api.discogs.com/artists/20942",
-        "id": 20942}], "title": "Never Gonna Give You Up", "artists": [{"join": ",",
-        "name": "Rick Astley", "anv": "", "tracks": "", "role": "", "resource_url":
-        "https://api.discogs.com/artists/72872", "id": 72872}], "date_changed": "2015-12-23T09:58:28-08:00",
-        "master_id": 96559, "tracklist": [{"duration": "3:32", "position": "A", "type_":
-        "track", "title": "Never Gonna Give You Up"}, {"duration": "3:30", "position":
-        "B", "type_": "track", "title": "Never Gonna Give You Up (Instrumental)"}],
-        "status": "Accepted", "released_formatted": "Jul 1987", "estimated_weight":
-        60, "master_url": "https://api.discogs.com/masters/96559", "released": "1987-07-00",
-        "date_added": "2004-04-30T08:10:05-07:00", "country": "UK", "notes": "UK Release
-        has a black label with the text \"Manufactured In England\" printed on it.\n\nSleeve:\n\u2117
-        1987 \u2022 BMG Records (UK) Ltd. \u00a9 1987 \u2022 BMG Records (UK) Ltd.\nDistributed
-        in the UK by BMG Records \u2022  Distribu\u00e9 en Europe par BMG/Ariola \u2022
-        Vertrieb en Europa d\u00fcrch BMG/Ariola.\n\nCenter labels:\n\u2117 1987 Pete
-        Waterman Ltd.\nOriginal Sound Recording made by PWL.\nBMG Records (UK) Ltd.
-        are the exclusive licensees for the world.\n\nDurations do not appear on the
-        release.\n", "identifiers": [{"type": "Barcode", "value": "5012394144777"},
-        {"type": "Label Code", "value": "LC 0316"}, {"type": "Matrix / Runout", "description":
-        "A side runout etchings, variant 1", "value": "PB 41447 A2 UTOPIA MS [encircled]"},
-        {"type": "Matrix / Runout", "description": "B side runout etchings, variant
-        1", "value": "PB 41447-B.2 UTOPIA MS [encircled]"}, {"type": "Matrix / Runout",
-        "description": "A side runout etchings, variant 2", "value": "PB 41447 A4
-        UTOPIA MS."}, {"type": "Matrix / Runout", "description": "B side runout etchings,
-        variant 2", "value": "PB 41447 B4 UTOPIA MS \u2665 RD."}, {"type": "Matrix
-        / Runout", "description": "A side label matrix", "value": "PB 41447 A\u2021"},
-        {"type": "Matrix / Runout", "description": "B side label matrix", "value":
-        "PB 41447 B\u2021"}, {"type": "Other", "description": "Distribution code D",
-        "value": "AC"}, {"type": "Other", "description": "Distribution code F", "value":
-        "RC110"}, {"type": "Other", "description": "Distribution code UK", "value":
-        "AA"}], "companies": [{"name": "BMG Records (UK) Ltd.", "entity_type": "13",
-        "catno": "", "resource_url": "https://api.discogs.com/labels/82835", "id":
-        82835, "entity_type_name": "Phonographic Copyright (p)"}, {"name": "BMG Records
-        (UK) Ltd.", "entity_type": "14", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Copyright (c)"}, {"name": "Pete Waterman
-        Ltd.", "entity_type": "13", "catno": "", "resource_url": "https://api.discogs.com/labels/301937",
-        "id": 301937, "entity_type_name": "Phonographic Copyright (p)"}, {"name":
-        "All Boys Music Ltd.", "entity_type": "21", "catno": "", "resource_url": "https://api.discogs.com/labels/273945",
-        "id": 273945, "entity_type_name": "Published By"}, {"name": "BMG Records",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/26385",
-        "id": 26385, "entity_type_name": "Distributed By"}, {"name": "BMG Ariola",
-        "entity_type": "9", "catno": "", "resource_url": "https://api.discogs.com/labels/33652",
-        "id": 33652, "entity_type_name": "Distributed By"}, {"name": "RCA Records",
-        "entity_type": "8", "catno": "", "resource_url": "https://api.discogs.com/labels/29656",
-        "id": 29656, "entity_type_name": "Marketed By"}, {"name": "Utopia Studios",
-        "entity_type": "29", "catno": "", "resource_url": "https://api.discogs.com/labels/266218",
-        "id": 266218, "entity_type_name": "Mastered At"}, {"name": "BMG Records (UK)
-        Ltd.", "entity_type": "5", "catno": "", "resource_url": "https://api.discogs.com/labels/82835",
-        "id": 82835, "entity_type_name": "Licensed To"}, {"name": "PWL", "entity_type":
-        "4", "catno": "", "resource_url": "https://api.discogs.com/labels/30024",
-        "id": 30024, "entity_type_name": "Record Company"}], "uri": "https://www.discogs.com/Rick-Astley-Never-Gonna-Give-You-Up/release/249504",
-        "formats": [{"qty": "1", "descriptions": ["7\"", "45 RPM", "Single"], "name":
-        "Vinyl"}], "resource_url": "https://api.discogs.com/releases/249504", "data_quality":
-        "Correct"}'}
-    headers:
-      access-control-allow-origin: ['*']
-      cache-control: ['public, must-revalidate']
-      connection: [keep-alive]
-      content-length: ['7949']
-      content-type: [application/json]
-      date: ['Thu, 25 Feb 2016 11:11:18 GMT']
-      server: [nginx/1.8.1]
-      x-discogs-media-type: [discogs.v2]
-    status: {code: 200, message: OK}
+      connection:
+      - keep-alive
+      content-encoding:
+      - gzip
+      content-type:
+      - text/html; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:06:53 GMT
+      set-cookie:
+      - sid=a51da6a96c72f247882a58b773a91c36; Domain=www.discogs.com; Expires=Tue,
+        04-Jun-2030 14:06:53 GMT; Path=/
+      - language2=en; Domain=www.discogs.com; Path=/
+      - session="BXEYubDVoBnZGrQJQJcJtvCMTCQ=?"; Domain=www.discogs.com; Secure; HttpOnly;
+        Path=/
+      strict-transport-security:
+      - max-age=15724800
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
 version: 1

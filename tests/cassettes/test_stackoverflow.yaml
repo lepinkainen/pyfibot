@@ -2,321 +2,75 @@ interactions:
 - request:
     body: null
     headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
     method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+    uri: https://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPXxIox7bQyvtobeqQp5gIF1IaGKGpaP57w0MqHvrKYn9
-        nv2e4zsThINh5Y87I2jXCxsX6pRkLtPY4rs9uarBHj0SoTZrAEZB0Is/yH66TM0SNSvvFj9OBCQs
-        ucwKl00GdSVqVuZJGCfRHqBlRFauxYWx9bC2BYFzHKnSQDa1IketGtFjJQZoV3RHNJrS9+d5fmk1
-        3IBAv3A1+M+rH15zzHkUhuc0zq7nKLlmed0kRZryGNM8/2QuYZSf6ouoUZLgSp705fXzqbmEtn0t
-        zNjDUkkYtmbA36gT5hcsq20h33YFVoAhm1Q31E2v5k3Basr4T4v+R+rDZcJUIM28uSxJT+iym8C5
-        4mqSxMo0DA/vWO/IbWDnIjinSWyTz9iOtwHDlbYaA6sLDFXASdwELVW9jS6MwyhKgzjI7Cdp3P7i
-        Yyouiixx2e8JzZbae6VpkP/f6MEy/k7xn5viGQTNO6+jofdqxafBjthrlPb2PfH+bQ4J6tcRv25M
-        58l0vnz/9tU5mI5lOjvTOZgPu2cdmGrY3DfQG1xtKIJqgHc7mSA43hoHEFLIlpVRljz+ApfLew3i
-        AgAA
+        H4sIAAAAAAAACoxSTY+bMBD9K8iHnCB8BQJIUdXuoT200krtpVpVaGKG4C7YrD2ETaP895qPqDn2
+        ZHvevJl5z3NlgrAzrHi5MoLTdGH9hRolmcs0nvDdnlxVYI8WiVCbKQC9IGjFH2S/XKZGiZoVV5vf
+        DwQkLLkI93uXDQZ1KSpWZLsw3kVrgC49smKqLowtiJWtCJxjT6UGstCU2WtVixZL0cFpym6IelP4
+        /jiO25OGMxDoLVedv1z98JhhxqMwTJN4f0yj3XGfVfUuTxIeY5JlH8whjLJNdRAVShJcyY0+PH/e
+        1IfQtq+E6Vu4lBK6uRnwV2qE+Q2XSbeQrw8TGLKoOqOuWzXOI0yqjL9o9B+5N5cJU4I04yyzID2g
+        y84Cx5KrQRIr0ii9i8dqzZwdS/MgTXaxBZfYmm8DhitthwzsYGCoBE7iLOhSVrN3YRxGURLEgbWf
+        a5x/4xGK83y/c9nbgGaGxNIrSYJs+mhJ1p2yFRylmZx4enI+/fS+f3TibfA/VtzrGn8t6i/b5BkE
+        zRuvoa71KsWHzvbxaqW9dZe8f9tFgtqp9/PMdBam8+XHt6/OnelYprMynTvzZnexAVN2sz81tMaa
+        /TYogrKDd+tdYD1b3ho7EFLIEyuiPL/9BQAA//8DADPk3CUGAwAA
     headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['459']
-      content-type: [application/json; charset=utf-8]
-      date: ['Mon, 28 Dec 2015 13:16:14 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPXxIox7bQyvtobeqQp5gIF1IaGKGpaP57w0MqHvrKYn9
-        nv2e4zsThINh5Y87I2jXCxsX6pRkLtPY4rs9uarBHj0SoTZrAEZB0Is/yH66TM0SNSvvFj9OBCQs
-        ucwKl00GdSVqVuZJGCfRHqBlRFauxYWx9bC2BYFzHKnSQDa1IketGtFjJQZoV3RHNJrS9+d5fmk1
-        3IBAv3A1+M+rH15zzHkUhuc0zq7nKLlmed0kRZryGNM8/2QuYZSf6ouoUZLgSp705fXzqbmEtn0t
-        zNjDUkkYtmbA36gT5hcsq20h33YFVoAhm1Q31E2v5k3Basr4T4v+R+rDZcJUIM28uSxJT+iym8C5
-        4mqSxMo0DA/vWO/IbWDnIjinSWyTz9iOtwHDlbYaA6sLDFXASdwELVW9jS6MwyhKgzjI7Cdp3P7i
-        Yyouiixx2e8JzZbae6VpkP/f6MEy/k7xn5viGQTNO6+jofdqxafBjthrlPb2PfH+bQ4J6tcRv25M
-        58l0vnz/9tU5mI5lOjvTOZgPu2cdmGrY3DfQG1xtKIJqgHc7mSA43hoHEFLIlpVRFj3+AhFsIVvi
-        AgAA
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['459']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 08:15:34 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcFC+Bg+pFGP7aGV9tBbVSFPMJAuEJqYYelo/nsDA+reekpi
-        v2e/5/jOJGFvWPHjzgia9cLGhVo1MJdpbPDdnkJVYI8OiVCbNQCjJOjkH2Q/XabmATUr7hY/TgQk
-        LblIc5dNBnUpK1ZkMY/icA/QMiIr1uLS2HpY2YIgBI5UaiCbWpGjVrXssJQ9NCu6JRpN4fvzPL80
-        Gm5AoF+E6v3n1efXDDMRcn5OovR6DuNrmlV1nCeJiDDJsk/mwsPsVF1khQNJoYaTvrx+PtUXbttX
-        0owdLOUA/dYMxBu10vyCZbUth7ddgRVgyCbVDXXdqXlTsJoy/tOi/5H6cJk0JQxm3lwWpCd02U3i
-        XAo1DcSKhPPDO1Y7chvYOQ/OSRzZ5DO2423ACKWtxsDqAkMlCJI3SUtZbaPjEQ/DJIiC1H6Sxu0v
-        PqaiPE9jl/2e0GypvVeSBNn/jR4s4+8U/7kpnkHQovVa6juvUmLq7Yi9Wmlv3xPv3+aQpG4d8evG
-        dJ5M58v3b1+dg+lYprMznYP5sHvWgin7zX0NncHVhiIoe3i3kwmC462xBznIoWFFmPLHX9I/DHDi
-        AgAA
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['459']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 09:20:34 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPXxIox7bQyvtobeqQp5gIF1IaGKGpaP57w0MqHvrKYn9
-        nv2e4zsThINh5Y87I2jXCxsX6pRkLtPY4rs9uarBHj0SoTZrAEZB0Is/yH66TM0SNSvvFj9OBCQs
-        ucwKl00GdSVqVuZJGCfRHqBlRFauxYWx9bC2BYFzHKnSQDa1IketGtFjJQZoV3RHNJrS9+d5fmk1
-        3IBAv3A1+M+rH15zzHkUhuc0zq7nKLlmed0kRZryGNM8/2QuYZSf6ouoUZLgSp705fXzqbmEtn0t
-        zNjDUkkYtmbA36gT5hcsq20h33YFVoAhm1Q31E2v5k3Basr4T4v+R+rDZcJUIM28uSxJT+iym8C5
-        4mqSxMo0DA/vWO/IbWDnIjinSWyTz9iOtwHDlbYaA6sLDFXASdwELVW9jS6MwyhKgzjI7Cdp3P7i
-        Yyouiixx2e8JzZbae6VpkP/f6MEy/k7xn5viGQTNO6+jofdqxafBjthrlPb2PfH+bQ4J6tcRv25M
-        58l0vnz/9tU5mI5lOjvTOZgPu2cdmGrY3DfQG1xtKIJqgHc7mSA43hoHEFLIlpVRFjz+ApMOF2ni
-        AgAA
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['459']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 29 Dec 2015 09:22:03 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
-        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
-        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
-        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
-        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
-        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
-        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
-        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWU58+/+Acdw+IC
-        AAA=
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['458']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:20:46 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
-        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
-        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
-        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
-        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
-        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
-        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
-        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWUZ8+/uTYG2uIC
-        AAA=
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['458']
-      content-type: [application/json; charset=utf-8]
-      date: ['Tue, 23 Feb 2016 18:22:23 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
-        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
-        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
-        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
-        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
-        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
-        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
-        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWU58+/+Acdw+IC
-        AAA=
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['458']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:46:45 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
-        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
-        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
-        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
-        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
-        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
-        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
-        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWUZ8+/uTYG2uIC
-        AAA=
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['458']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:50:29 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPXxIox7bQyvtobeqQp5gIF1IaGKGpaP57w0MqHvrKYn9
-        nv2e4zsThINh5Y87I2jXCxsX6pRkLtPY4rs9uarBHj0SoTZrAEZB0Is/yH66TM0SNSvvFj9OBCQs
-        ucwKl00GdSVqVuZJGCfRHqBlRFauxYWx9bC2BYFzHKnSQDa1IketGtFjJQZoV3RHNJrS9+d5fmk1
-        3IBAv3A1+M+rH15zzHkUhuc0zq7nKLlmed0kRZryGNM8/2QuYZSf6ouoUZLgSp705fXzqbmEtn0t
-        zNjDUkkYtmbA36gT5hcsq20h33YFVoAhm1Q31E2v5k3Basr4T4v+R+rDZcJUIM28uSxJT+iym8C5
-        4mqSxMo0TA/vWO/IbWDnIjinSWyTz9iOtwHDlbYaA6sLDFXASdwELVW9jS6MwyhKgzjI7Cdp3P7i
-        Yyouiixx2e8JzZbae6VpkP/f6MEy/k7xn5viGQTNO6+jofdqxafBjthrlPb2PfH+bQ4J6tcRv25M
-        58l0vnz/9tU5mI5lOjvTOZgPu2cdmGrY3DfQG1xtKIJqgHc7mSA43hoHEFLIlpVRkT3+AnYqnl3i
-        AgAA
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['459']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 10:53:30 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
-- request:
-    body: null
-    headers:
-      Accept: ['*/*']
-      Accept-Encoding: ['gzip, deflate']
-      Connection: [keep-alive]
-      User-Agent: ['Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0']
-    method: GET
-    uri: http://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAEAIVSTY+cMAz9KyiHOcHyPQNIox7bQyvtobeqQp5gIF1IaGKGpaP57w1f6t56SmK/
-        Z7/n+MEEYW9Y8ePBCJrlwoaZWiWZyzQ2+G5PriqwR4dEqM0SgEEQdOIPsp8uU5NEzYqHxQ8jAQlL
-        Li65y0aDuhQVK7IkjJNoD9A8ICuW4sLYeljZgsA5DlRqIJtakINWteiwFD00C7olGkzh+9M0vTQa
-        7kCgX7jq/e3qh7cMMx6F4TmNL7dzlNwuWVUneZryGNMs+2SuYZSdqquoUJLgSp709fXzqb6Gtn0l
-        zNDBXEro12bA36gV5hfMi20h33YFVoAhm1R31HWnplXBYsr4m0X/I/XpMmFKkGZaXRakR3TZXeBU
-        cjVKYkUapod3rHbkOrBzHpzTJLbJLbbjbcBwpa3GwOoCQyVwEndBc1mtowvjMIrSIA4u9pM0rn/x
-        MRXn+SVx2e8RzZrae6VpkP3f6MEy/k7xt03xDILmrddS33mV4mNvR+zVSnv7nnj/NocEdcuIX1em
-        szGdL9+/fXUOpmOZzs50DubT7lkLpuxX9zV0BhcbiqDs4d1OJgiOt8YehBSyYUWUJ8+/tXmzduIC
-        AAA=
-    headers:
-      access-control-allow-credentials: ['false']
-      access-control-allow-methods: ['GET, POST']
-      access-control-allow-origin: ['*']
-      cache-control: [private]
-      content-encoding: [gzip]
-      content-length: ['458']
-      content-type: [application/json; charset=utf-8]
-      date: ['Thu, 25 Feb 2016 11:11:04 GMT']
-      x-content-type-options: [nosniff]
-    status: {code: 200, message: OK}
+      access-control-allow-credentials:
+      - 'false'
+      access-control-allow-methods:
+      - GET, POST
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - private
+      content-encoding:
+      - gzip
+      content-length:
+      - '495'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Sat, 06 Jun 2020 14:06:37 GMT
+      server:
+      - Microsoft-IIS/10.0
+      set-cookie:
+      - prov=637c9147-fee1-4504-816b-da660560f1b9; expires=Fri, 01 Jan 2055 00:00:00
+        GMT; domain=.stackexchange.com; path=/; secure; samesite=none; httponly
+      strict-transport-security:
+      - max-age=2592000
+      x-aspnet-duration-ms:
+      - '5'
+      x-content-type-options:
+      - nosniff
+      x-flags:
+      - AA
+      x-is-crawler:
+      - '0'
+      x-providence-cookie:
+      - 637c9147-fee1-4504-816b-da660560f1b9
+      x-redis-count:
+      - '14'
+      x-redis-duration-ms:
+      - '1'
+      x-request-guid:
+      - 7af2877f-1200-49c2-8ae0-1c49cadb5ef3
+      x-route-name:
+      - Questions/GetByIds
+      x-sql-count:
+      - '3'
+      x-sql-duration-ms:
+      - '1'
+    status:
+      code: 200
+      message: OK
 version: 1
