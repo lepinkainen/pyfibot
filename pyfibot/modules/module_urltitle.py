@@ -80,7 +80,7 @@ def __get_bs(bot, url):
 def __get_title_tag(url):
     """Get the plain title tag for the site"""
 
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return False
 
@@ -284,7 +284,7 @@ def handle_url(bot, user, channel, url, msg):
     if fragment and fragment.get('content') == '!':
         log.debug("Fragment meta tag on page, getting non-ajax version")
         url = __escaped_fragment(url, meta=True)
-        bs = __get_bs(url)
+        bs = __get_bs(bot, url)
 
     # Try and get title meant for social media first, it's usually fairly accurate
     title = bs.find('meta', {'property': 'og:title'})
@@ -417,7 +417,7 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
 
 
 def _parse_tweet_from_src(url):
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     container = bs.find('div', {'class': 'tweet'})
@@ -594,7 +594,7 @@ def _handle_youtube_gdata(url):
 
 def _handle_helmet(url):
     """https://www.helmet.fi/record=*fin"""
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     title = bs.find(attr={'class': 'bibInfoLabel'},
@@ -604,7 +604,7 @@ def _handle_helmet(url):
 
 def _handle_ircquotes(url):
     """http://*ircquotes.fi/[?]*"""
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     chan = bs.find("span", {'class': 'quotetitle'}).next.next.string
@@ -621,7 +621,7 @@ def _handle_alko2(url):
 
 def _handle_alko(url):
     """http*://www.alko.fi/tuotteet/*"""
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     name = bs.find('h1', {'itemprop': 'name'}).text
@@ -726,7 +726,7 @@ def _handle_reddit(url):
 
 def _handle_aamulehti(url):
     """https://www.aamulehti.fi/*"""
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     title = bs.find("h1").string
@@ -893,7 +893,7 @@ def _handle_areena(url):
 
     # There's still no endpoint to fetch the currently playing shows via API :(
     if 'suora' in url:
-        bs = __get_bs(url)
+        bs = __get_bs(bot, url)
         if not bs:
             return
         container = bs.find('div', {'class': 'selected'})
@@ -1088,7 +1088,7 @@ def _handle_liveleak(url):
         log.debug('ID not found')
         return
 
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return
     title = bs.find('span', 'section_title').text.strip()
@@ -1331,7 +1331,7 @@ def fetch_nettiX(url, fields_to_fetch):
     # Strip useless stuff from url
     site = re.split(r'https?\:\/\/(www.)?(m.)?', url)[-1]
     # Fetch BS from mobile site, as it's a lot easier to parse
-    bs = __get_bs('https://m.%s' % site)
+    bs = __get_bs(bot, 'https://m.%s' % site)
     if not bs:
         return
 
@@ -1456,7 +1456,7 @@ def _handle_hitbox(url):
 
 def _handle_google_play_music(url):
     """https://play.google.com/music/*"""
-    bs = __get_bs(url)
+    bs = __get_bs(bot, url)
     if not bs:
         return False
 
