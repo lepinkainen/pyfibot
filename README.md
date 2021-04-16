@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/lepinkainen/pyfibot/tree/master.svg?style=svg)](https://circleci.com/gh/lepinkainen/pyfibot/tree/master)
+[![Python application](https://github.com/lepinkainen/pyfibot/actions/workflows/python-app.yml/badge.svg)](https://github.com/lepinkainen/pyfibot/actions/workflows/python-app.yml)
 [![Updates](https://pyup.io/repos/github/lepinkainen/pyfibot/shield.svg)](https://pyup.io/repos/github/lepinkainen/pyfibot/)
 [![Mergify Status][mergify-status]][mergify]
 
