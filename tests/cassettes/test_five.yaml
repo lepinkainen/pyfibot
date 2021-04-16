@@ -48,21 +48,25 @@ interactions:
       - inline; filename=api-result.json
       content-encoding:
       - gzip
+      content-length:
+      - '1130'
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 16 Apr 2021 20:49:06 GMT
+      - Fri, 16 Apr 2021 21:11:15 GMT
       nel:
       - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
         0.0}'
       p3p:
       - CP="See https://fi.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
         info."
+      permissions-policy:
+      - interest-cohort=()
       report-to:
       - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
         }] }'
       server:
-      - mw1383.eqiad.wmnet
+      - mw1286.eqiad.wmnet
       server-timing:
       - cache;desc="pass", host;desc="cp3050"
       set-cookie:
@@ -73,12 +77,10 @@ interactions:
       - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
       strict-transport-security:
       - max-age=106384710; includeSubDomains; preload
-      transfer-encoding:
-      - chunked
       vary:
       - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
       x-cache:
-      - cp3060 miss, cp3050 pass
+      - cp3052 miss, cp3050 pass
       x-cache-status:
       - pass
       x-client-ip:
@@ -88,7 +90,7 @@ interactions:
       x-frame-options:
       - DENY
       x-request-id:
-      - e37f9c1f-885b-4e7f-8113-686822f9f5bf
+      - 2054af7d-5e71-41bc-9b75-c5ce0f076630
     status:
       code: 200
       message: OK

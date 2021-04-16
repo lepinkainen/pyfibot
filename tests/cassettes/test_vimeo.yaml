@@ -1,0 +1,107 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://vimeo.com/api/v2/video/29996808.json
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA51WbW/iOBD+KxYfTl2J0rwCiW7vRHlpo5ayAtru6npCJnETL46ds53S6HT//cah
+        vSVLdUv3AyJxnueZ8cx4PH/83aJJK3SCIOj2rX67palmpBW2xk9EVjqjPEWRQgM0Jzl9DtHycoym
+        g+U8+txqtxKiYkkLTQU3jLvx/MvyMrq5iBaD+Xgafe5EN5PZr2uJHs5+e5APfO9xPju/uI+uF7Ob
+        znA2fRszHkXL8Qidf0FzsSZSowtJU7Wu0D1lSuwjR9F8PDTYwc0IfZrPRrfDHfGKSsBPiExLYCDM
+        kx9q3c+j5XJ8Y9jDikMEMBoyoTak2gPdRYvbwTUaTyZgd2Gw5wxvCLoWVbIHG85n96PF7HZu3Bks
+        EZHPhRRJZytkUkiiVCcW+dubn0TX00W4t2CFTg+doglVGolHdE1SArs5sYPA+9CAuX2ALTE9HWYU
+        TbHSRKKT5ZZyNJI4FVx9qFluk+V5R4l7PyXuu8AayZJvCP+PZQe9/j7MDi3nCB8AFhgfMgLZZWyn
+        1A+aEDs4SsmxARZJqIypAN+qQ9/t0DWYGY8Jui0AOEBLmhMUcQQR4Lhm2N8xukcZ9+z3hxJYPrA+
+        ZZTRAl110IjGG7QoCIkzdFKJUpdrYorq4WyLdZz9/vTx62dyl46Vp2bil0eCdSnJR0kY1iSpDfR6
+        +wac0DYZXmiJeUrQCFeq9sJvghxTLYMNlXUA+v3mV9cyOxMaM2gbMWaslrD2Qe6LBKNxHcx7wRMi
+        Gd6FyrebWM/5QcbdXYkN0DnRJo5LkQspxbZGdveRXmiZCF5kAvIDho3qIiMvPvpNqOvsbzPof/fV
+        FNmVqDDnVP2FtaK1OaeJ8oK69jvoPhNhbW5EcMIqNFAKKwXpNklo+OiHtnWkj3uP09tFNNzvGCcD
+        YChRypgk6FGKvBaaYi3pM1qIkieQ5XjTPKqOsQw9Eo1EmWIOL0NWrtegsBTGcw11dlVKXOGccoHu
+        sKTYXADfValJ7iV9IvB3y8AM9Fga74welsp1yUEjRkPMcvNKMBC/iBJNsISMwjmDqngBKXCuroGh
+        2B2ZKX1uVkLd/z5JURCDyyDYylR0Ua0lwZvDDP7MZuHyKyWDSy/TulDhw9nD2RO0BbE7eq+3qUEV
+        TOBklcBxA7Rj2fapbZ1aLnJg793QdgGTizVlZHWcoM7KfM0xZSuVw8lqMGin5sQJ39GeaEIEsC3b
+        cbqu7a1sy3ru+Z2vRdpQyklCy/x9Ug5I2b51oMWwTMn7pLreq0ypiFyZeaTX73q2/bLAcW4UpVin
+        2/q2Njqv6P+J2jfCK7gQEmqR6iNi9wo1jjq+7/SClWs9u9aB1BHBe0Or50MiDrR+HLw3pExS4Xcg
+        lpXv13Its0ejpTQ0tBWHtIKmeFwxuiGqBZ246x9+LBjcE62w70ONeoefwVpOuAYEpBzGRjhRu5nR
+        DUBsSxOdmU99q93KCE0zDQXgwIvGKXBaWxxnYqs2FK2l0BmRqo3iCrQLGCjaSMX09JHCUsl0G0kz
+        p7bRph78Hl8GP1jeTX3py9S3K4t6OX19BmWU182xjci36ZcqhHeqEBUCW0pWhaRPOK7ANcyrLThE
+        Wv/8+S8E5xKgSgsAAA==
+    headers:
+      accept-ranges:
+      - bytes
+      access-control-allow-origin:
+      - '*'
+      age:
+      - '55'
+      cache-control:
+      - max-age=60
+      connection:
+      - keep-alive
+      content-disposition:
+      - attachment; filename=vimeo.json
+      content-encoding:
+      - gzip
+      content-length:
+      - '1210'
+      content-security-policy-report-only:
+      - 'default-src https: data: blob: wss: ''unsafe-inline'' ''unsafe-eval''; report-uri
+        /_csp'
+      content-type:
+      - application/json
+      date:
+      - Fri, 16 Apr 2021 21:11:10 GMT
+      etag:
+      - '"6cfb684e03efd20795e132fb81231ec4"'
+      expires:
+      - Fri, 16 Apr 2021 20:28:02 GMT
+      last-modified:
+      - Thu, 15 Apr 2021 08:21:02 GMT
+      server:
+      - nginx
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      vary:
+      - User-Agent, Accept-Encoding
+      via:
+      - 1.1 varnish, 1.1 varnish
+      x-bapp-server:
+      - api-v9793-xkg49
+      x-cache:
+      - MISS, HIT
+      x-cache-hits:
+      - 0, 1
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - sameorigin
+      x-ratelimit-limit:
+      - '3600'
+      x-ratelimit-remaining:
+      - '3599'
+      x-ratelimit-reset:
+      - '1618608422'
+      x-served-by:
+      - cache-bwi5146-BWI, cache-bma1648-BMA
+      x-timer:
+      - S1618607470.165763,VS0,VE1
+      x-ua-compatible:
+      - IE=edge
+      x-vimeo-dc:
+      - ge
+      x-xss-protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

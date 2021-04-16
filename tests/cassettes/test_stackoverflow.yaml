@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://api.stackexchange.com/2.2/questions/6905508?site=stackoverflow
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAACoxSy47bMAz8FUOHnOL4nTgGgqLdQ3togQXaS7EoBEamY3VtySvR8aZB/r3yI2iO
+        PUkiOTPkiFcmCVvLipcrIziNF9ZdqNaKrZnBE767U+gS3NEgERo7BqCTBI38g+zXmulBoWHF1dV3
+        PQFJBy6i3W7NeouGy5IVeRolabwE6NIhK0Z2aR0hlo4RhMCOuAFyqbGyM7qSDXLZwmmsrok6WwTB
+        MAybk4EzEJiN0G0wX4PomGMu4ijaZsnuuI3T4y4vq3SfZSLBLM8/2EMU56vyIEtUJIVWK3N4/ryq
+        DpGTL6XtGrhwBe0kBuKVaml/w2WcW6rXhw4suaw+o6kaPUwtjFPZYJ4xeMTe1kxaDsoO05gFmR7X
+        7Cxx4EL3ilixTdP78FgulZNj2324zdLEJefYUu8CVmjjmgxdY2CJgyB5lnTh5eRdlERxnIVJ6OwX
+        BqffeEwl+/3OSb71aKeUnLWyLMzHj1bk3OGNFKjs6MTTk/fpp//9o5dswv+x4s5rg4U0mLfJtwhG
+        1H5NbeOXWvSt0/Erbfxll/x/20WSmlH7eUJ6M9L78uPbV++O9BzSW5DeHXlzu1iD5e3kTwWNdWa/
+        9ZqAt/DuvAudZ/PbYAtSSXViRbyPbn8BAAD//wMA+LB0zgYDAAA=
+    headers:
+      access-control-allow-credentials:
+      - 'false'
+      access-control-allow-methods:
+      - GET, POST
+      access-control-allow-origin:
+      - '*'
+      cache-control:
+      - private
+      content-encoding:
+      - gzip
+      content-length:
+      - '494'
+      content-security-policy:
+      - upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 21:11:09 GMT
+      set-cookie:
+      - prov=e0c17f44-206f-43da-a260-76999bbfe752; expires=Fri, 01 Jan 2055 00:00:00
+        GMT; domain=.stackexchange.com; path=/; secure; samesite=none; httponly
+      strict-transport-security:
+      - max-age=15552000
+      x-content-type-options:
+      - nosniff
+      x-request-guid:
+      - cd6626ae-2b8f-40ac-a7c0-033bc5709cfb
+    status:
+      code: 200
+      message: OK
+version: 1

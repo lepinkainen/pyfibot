@@ -1489,8 +1489,8 @@ def _handle_discogs(url):
 
             title = fmt.format(data)
 
-    if title:
-        return title
+        if title:
+            return title
 
 
 # Broken, but there is an API

@@ -63,18 +63,20 @@ interactions:
       content-type:
       - application/json; charset=utf-8
       date:
-      - Fri, 16 Apr 2021 20:49:08 GMT
+      - Fri, 16 Apr 2021 21:11:17 GMT
       nel:
       - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
         0.0}'
       p3p:
       - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
         info."
+      permissions-policy:
+      - interest-cohort=()
       report-to:
       - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
         }] }'
       server:
-      - mw1315.eqiad.wmnet
+      - mw1346.eqiad.wmnet
       server-timing:
       - cache;desc="pass", host;desc="cp3050"
       set-cookie:
@@ -90,7 +92,7 @@ interactions:
       vary:
       - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
       x-cache:
-      - cp3060 miss, cp3050 pass
+      - cp3062 miss, cp3050 pass
       x-cache-status:
       - pass
       x-client-ip:
@@ -100,7 +102,7 @@ interactions:
       x-frame-options:
       - SAMEORIGIN
       x-request-id:
-      - 3861d145-bc20-4af9-bc55-df875449cfe8
+      - 9760d120-7309-4da0-8de4-103de639ded4
     status:
       code: 200
       message: OK
