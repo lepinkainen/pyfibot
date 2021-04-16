@@ -1,0 +1,97 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Ramon_Llull&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VWbW/bNhD+KzcNBdrB0avlt3kGiqxAiyaFkTbYh7oIaPlscZFIjaTiuEX++x5K
+        9pIlqD7IFPnc3XN3zzH5EayFK8pC103FjoNZEAyCvTBKqp0NZj8CvndGFK5b/4bj918uL6gWB1oz
+        fqqtNjVvSKhNpA21ai0qoYp+p4PpWjqSqpKKSdZixzaka8skHB10a0jvFRlpb0P6qPy6MXpdcW1J
+        GKZKWud9OSqda+wsivb7fYiAUuzlrQy12UV+EX1uuJCiml0eLoTatQgTvbt3rKzUavYFObw7pvHr
+        ubhj4WwYPDwMgn9aNgefmUIaopLfeRPMvv4ItkbXyPVK1FrdXFRtVaEqTp+2qN96+DYIGp+R9zCa
+        jsZjv/A7Em66jUGgcBrDWLqKn9kPTsXF/rxZzNeLJ6fzaL0gej234FUtzoXzhZ2t2jgW8Tzqd+e2
+        EYo613+sgituDFtWTjhkjZqTK5k+KMdGdVuiomWpFTtZ0NuqKcWaHb3+sHz7ZhUsvhr4TvOpfxeT
+        WvvfcUr9p39PuO1/viE84i5+pyKkJM08KI2TrPvMkjxKRm9oL9BBCAAU8JJojhpQo6uD38KqlJW2
+        uinZDKjSuyNgbyTY9to5WM/Td6LL4yMEucFab+lS/K1NIUJ6D0lZKgz04GWyl67sXADa2WylsQ4k
+        AKe9Nrfe+FhJSAuRhGsNh3TFBcpWHci2Ziu8emuhWlsY2ThLttR7KhGoc+E0lZAQdMob4aOuYcZ3
+        8FWR99IaydaruIbilTvGVcQVF11fQEybw4m8qKymQkOoGzZe6tQAxCgCuPqpbI/t7M0GxLaXOtju
+        5B2rjplU26plzJ2PdMFyreT3cB41i5VaqfkvZ2e0Up94v1wibT+Phhtt3EothbF9CvU+yUbxSp2L
+        osSOkzXPKI3TJB4mo9RLITseEt830hxwmk/TOIbNnwclavQKaWDk3Iy2yIoB95eKLDr+dkZf74Q5
+        dFKJDd9JP5r9ly1F8g3w5XUXl1qLEZpRHGbjKWoLtxu7UleMCv//PI8nj+dLJGV0wdai2969b47S
+        Gwav1rNKMJBREncP4Nq6Pjzy8YKTqqhaoC1ugRnlcT6KozSejpM8RYEcI8QXRkJoOu6mXVv77vbg
+        JJlOX4Dfy13JkF/n3idLG25cCXQeDUHg3X3j7ycvJd8FQ9tW9Qo58o2j3BO9VtZBiOhZ0ZqnfnzE
+        x+PmeT49tdEk7/z458TsohXPCpmMM1Qm9Jj/6ulRNdcQ3Qk3jCej4XgU5ekwnUwe/X1q63Uv2L9w
+        F68FbnfUBmOIQai02PAGSSNnsD07W/SCRDENyoKSdyk9Fqkj1uuTXr8a1HZQQOx24I61f7NS6CGo
+        viIajqGRZETdk9CZ05jtlaJ0EmYpzpMsC9Nk2J9ndGrf7IPa6rW+98hxOIk7ZByO0/HJ03PkzZP7
+        yluNwnTkrdIszNPk51ZsLEQOA/DIvEE8DdM8f2FwDrHerLW+BTYBZAgsTeNwOI1fYD+XKM3Nhvvr
+        SXb+k6QnRHkaTnFr/4yQFVJh7IkmYT72+GEcptPpC/wS/XaHhj0UFUo8NBuhQkfXk0foJVzeaNcX
+        BuB00oGHSOIlD68P3JripvtPoJMD/g4/PPwL9LOxAoYIAAA=
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:06 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1287.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3056 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - 04e4cf1a-d948-474b-b636-9058a0ef0992
+    status:
+      code: 200
+      message: OK
+version: 1

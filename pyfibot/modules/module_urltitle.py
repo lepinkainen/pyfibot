@@ -940,6 +940,7 @@ def _handle_wikipedia(url):
         try:
             content = r.json()['query']['pages'].values()[0]['extract']
             content = BeautifulSoup(content, 'html.parser').get_text()
+            content = content.strip()
         except KeyError:
             return
         return content

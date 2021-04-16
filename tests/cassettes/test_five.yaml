@@ -1,0 +1,95 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=David_Eddings&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3VVbW/bOAz+KzwfBmwHx7b8EidB0S9dgQFri+LWYh+WoVBsJWFsSz5JTuoN/e9H
+        OS/tZTd/sSM+JB8+JJWf3oLbYl2opq2FFd7M83xvx7VEuTLe7Kcnnq3mhR2+/yLzp4fbG2h4DwtB
+        r3qpdCNK4LIMlYZOLnjNZbE/GWCqQQsoa5QCsOErYQJ4NAK4hV51GtROgkZTBfBZuu9Wq0UtGgNc
+        C6jRWBfLwtra1szCcLfbBZQQ+Q4rDJRehe4j/NKKAnk9u+1vuFx1lCa8frZCGlRy9kA1XB/K+POK
+        bwW3JvBeXnzvn07o3lUmqQxe4w9RerNvP72lVg3V+pFvsXy6LstBDN+z6ngIx8OX777XuqpclDjK
+        88h9uBOkUMOB70my0suircUvEfyjxGS5aC8vFpd7+xXXWtX1EXcRLi7hfR7AWqCcd1Ek0qrrLAc2
+        TRh8aVXFpfDhKzdrglslYd7FEUsgDqAS5q1HHEVTF94Q6Apt78Od2PKSfwBVI/TrsjdbXlvqJDVN
+        QoV6w7HGDfdhQ2mGA4XWInRGIAU0nTL0u9twWHJpuUE+YDZ86DU2LVKc9Z7DMaTaUHteg/EGjSCT
+        Mrx2be8Qmt55LMfmreuWY6OcIwl1I3C1/q9ApEZ+qnzi1KobPJWdf/Ch6SiZCyOh6ww2lJeiWaEq
+        M3ydctmKICRRI3RFBHvCVLg5CGkwuAjby7m8+GM0grm8E7v7e5pXN+1atErbubwniWl6Fz00Oxbn
+        +Vxe8WJNJxYbMSM+MYtSNqZ3HrODEcRzi7onazYlwtFcfuwlaVNAoSQNtJ2RxLURBHcriwW3NOJm
+        Bt++09H94xCb+kIDOIMoiLMJGEGupZnLvwWvz+xpnr3a74m4VoUwhlZ5i9RS4ipVKSh35zLHbMxC
+        Fg0PwZWxg9IRcXbrjrKoO0Ib2iNXQDbJwzia5iyLSQRLQygfBJHmltZfr7qGyjmAWZxG8Tn4E3VX
+        GAtDeLfJUIrWrh2PMCUC18+t2/CtgNYprWHZycLJceIbZo7oozRWY0t9KTr9Nk5EGV/N7Xk9e2qR
+        C+KeI62bjp+pSFtOsgQOcxLToRrRKN0fcfGEJSwbh1mcxpPJa7y7rlkQebWEr3SVLThdjiQMWhQG
+        asVLUZI+VDBRHY0OE0dKatKE9B7qeVVoILYfQHj/zm+MX9A+Gd8ehP8wl9RAovoOIE3HwTiKYXgY
+        jKyinZ9LmGbBNHd2WqBsOj3ab91iSjH7fLoPHDah6h2WZcE4S86xn4SssN6vcdiq9d6HBdPx4BMF
+        ecTOfR5QWFVzGuyqUgRPoiCLCc6ScRBP0z08/3946FbauhONWyRnlgR5Ss4wZkGS753Z+OTsFC+5
+        5aOldmAWpIkDZyyIkl+Ife7ofpQcK/604U9Y7a8C8oM0YIMfmwRpNt77Zb9hqKw5FEZu0eTgFieH
+        PiS/cXtbFCTBdDo45sEkzs95fuml7Zs9u5GjWp2IDyNEf30vL/8CBCUdvvkHAAA=
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:06 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://fi.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1383.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3060 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - e37f9c1f-885b-4e7f-8113-686822f9f5bf
+    status:
+      code: 200
+      message: OK
+version: 1

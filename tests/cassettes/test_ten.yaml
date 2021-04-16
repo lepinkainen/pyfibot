@@ -1,0 +1,104 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=802.11ac&action=query
+  response:
+    body:
+      string: !!binary |
+        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
+        CwAA
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:07 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1375.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3062 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - 7b1c4a79-85b0-46c1-afbd-70fcfb8d85e1
+    status:
+      code: 200
+      message: OK
+version: 1

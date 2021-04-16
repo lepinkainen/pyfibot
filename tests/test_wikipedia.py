@@ -25,7 +25,7 @@ def test_one(botmock):
     msg = u"https://en.wikipedia.org/wiki/Hatfield–McCoy_feud"
     assert (
         "#channel",
-        u"Title: The Hatfield–McCoy feud involved two rural families of the West Virginia–Kentucky area along the Tug Fork of the Big Sandy River.",
+        u"Title: The Hatfield\u2013McCoy feud, also described by journalists as the Hatfield\u2013McCoy war, involved two rural American families of the West Virginia\u2013Kentucky area along the Tug Fork of the Big Sandy River in the years 1863\u20131891.",
     ) == module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
@@ -34,7 +34,7 @@ def test_two(botmock):
     msg = "http://fi.wikipedia.org/wiki/DTMF"
     assert (
         "#channel",
-        u"Title: DTMF on puhelinlaitteissa käytetty numeroiden äänitaajuusvalintatapa.",
+        u"Title: DTMF on puhelinlaitteissa k\xe4ytetty numeroiden \xe4\xe4nitaajuusvalinta.",
     ) == module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
@@ -43,7 +43,7 @@ def test_three(botmock):
     msg = "http://en.wikipedia.org/wiki/Gender_performativity"
     assert (
         "#channel",
-        u"Title: Gender performativity is a term created by post-structuralist feminist philosopher Judith Butler in her 1990 book Gender Trouble, which has subsequently been used in a variety of academic fields.",
+        u"Title: The social construction of gender is a theory in feminism and sociology about the manifestation of cultural origins, mechanisms, and corollaries of gender perception and expression in the context of interpersonal and group social interaction.",
     ) == module_urltitle.handle_url(botmock, None, "#channel", msg, msg)
 
 
@@ -53,7 +53,7 @@ def test_four(botmock):
     eq_(
         (
             "#channel",
-            u'Title: Steven Frayne, commonly known by his stage name "Dynamo", is an English magician, best known for his award-winning television show Dynamo: Magician Impossible.',
+            u'Title: Steven Frayne, better known by his stage name Dynamo, is a British magician born in Bradford, West Yorkshire.',
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )
@@ -90,7 +90,7 @@ def test_seven(botmock):
     eq_(
         (
             "#channel",
-            u"Title: Ramon Llull, T.O.S.F. was a philosopher, logician, Franciscan tertiary and Majorcan writer.",
+            u"Title: Ramon Llull was a mathematician, polymath, philosopher, logician, writer and mystic from the Kingdom of Majorca.",
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )
@@ -102,7 +102,7 @@ def test_eight(botmock):
     eq_(
         (
             "#channel",
-            u"Title: Byzantine art is the name for the artistic products of the Eastern Roman Empire, as well as the nations and states that inherited culturally from the empire.",
+            u"Title: Byzantine art comprises the body of Christian Greek artistic products of the Eastern Roman Empire, as well as the nations and states that inherited culturally from the empire.",
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )
@@ -126,7 +126,7 @@ def test_ten(botmock):
     eq_(
         (
             "#channel",
-            u"Title: IEEE 802.11ac is a wireless networking standard in the 802.11 family, developed in the IEEE Standards Association process, providing high-throughput wireless local area networks on the 5\xa0GHz band.",
+            u"Title: IEEE 802.11ac-2013 or 802.11ac is a wireless networking standard in the 802.11 set of protocols, providing high-throughput wireless local area networks on the 5\xa0GHz band.",
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )
@@ -138,7 +138,7 @@ def test_eleven(botmock):
     eq_(
         (
             "#channel",
-            u"Title: Edson Arantes do Nascimento, known as Pelé, is a retired Brazilian professional footballer who played as a forward.",
+            u"Title: Edson Arantes do Nascimento, known as Pel\xe9, is a Brazilian former professional footballer who played as a forward.",
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )
@@ -150,7 +150,7 @@ def test_twelve(botmock):
     eq_(
         (
             "#channel",
-            u"Title: Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, and starring Atkinson in the title role.",
+            u"Title: Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, produced by Tiger Aspect and starring Atkinson as the title character.",
         ),
         module_urltitle.handle_url(botmock, None, "#channel", msg, msg),
     )

@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://fi.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Birger_Ek&action=query
+  response:
+    body:
+      string: !!binary |
+        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
+        /tlDDYHtowg8nX3Gz/8B98JDEbcdAAA=
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:06 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://fi.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1316.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3056 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-request-id:
+      - 6625478d-cd9d-4782-b5f5-2e3c153ac882
+    status:
+      code: 200
+      message: OK
+version: 1

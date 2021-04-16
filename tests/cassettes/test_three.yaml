@@ -1,0 +1,97 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Gender_performativity&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA41Wa2/bNhT9K5yGAu3gyHrZiYwgQNEVG7A+gjXdPtRFQMnXElGJ1EjKjlrkv+9c
+        yY67tCjmL6LFw8tzDg+v/SUopC/r0rRdQ56CVRDMgr20WunKBasvAd15K0s/jn/B9O83r1+JVg6i
+        IDyarbEtbYTUm7mxoteFbKQupzcjzLTKC6UbpUmoVlbkQvHekZBeDKa3wuy1sMp9CsUfmsedNUVD
+        rRPSkmiU81zLi9r7zq3m8/1+H2JDJffqkwqNreY8mL/rqFSyWb0eXkld9dhm/vLOk3bK6NUNNLw8
+        yPj5hdyR9C4M7u9nwT892YGVaciQjfpMm2D14UuwtaaF1t9Ib8jedmRZpvRqp/wAf7x5mBSPJu8/
+        zgILfpZGzx7XEt+v9c4we1Ea7bztSw/WwmxFNa4ZQVsrq5a0B/h51zWqlAxyJ9RDZbg/sujYa9aW
+        5Iskj84jHvNLBY3Hd7NAA4OHV76h/8HkEAcgL7urm5rEZXHlfrTmcl5cCYXjFL4mYwdkQWypVVq5
+        dgwJrzaNqQYhC9N7hiE4Wm3JeXmsVfaN7y02MVZVSruZaKmsJRfBmMuUxpqmkVbRI1NK6sYqDKK7
+        zpLjUDAN3gmkPTTxEoWRxQJnNDZieGVN34mDvHFajupCMeZti1NommE2FvqhCcJ51fWN9CDna8T5
+        8BqUaUq6BMGyVrRD3NcBK+/dOmCW8lia9E5ZozkFM7GvVVnjQnEUcHTDUd7xK/JBFcz6TPDA4G6P
+        ABC1hJTAYYMEAnMsXlAtd8pYF17Ouyuc7XNhiQnzLfZQ/tW5+YejdKP0EchprFWHQn5PNJkrXWlV
+        gRKTHvZDwv1K8yu6E09x5whHyoUxenbkqOzJjMPS0vTj8UjrHVM5GIgKDtng5sJrJ4KanoVrzTrW
+        Gs+fzs7EWr+h/fU1Ggq3I0udsX6tr6V12KIYRLuP0zxb6xfYF2+8amklkiiJoyzO4ihJo+Vhkk1W
+        dsDsIk+iKFrrXwctW1VOUdJ+JbaycQS4aU8XdSU+7KQd1n0SxZGlneIQTt9cLeOPgF+/H/cVvcMl
+        XYkojC+WsAllN26t/ySc0n/nkyw9zV9DlDUl0g0/uTwfnTYbmqwD33wxj6PxA7Rxftodctg5pcum
+        B9ghMYzN0vN5EuXn8SKBP8jtWt8Q9HBkpK16TuEBvETVx9jfVVXj/oqx+njfNriG9UrE6TzD/i/v
+        Om7OO6STzwAJ6PV0Zw5s0/mCeb7n24RUoZ329us6vONpunssZ2KWRXnMdfhzZPaql49tThIYEzLm
+        wU1GtdRyyA+45GKRZ0Aukiy5uDjVe9O3Bfgj2n/jh6iQ+GmDNcpzH2qM3NCGyWYs5uzsaoojvLSw
+        BY6Pkk4mjcSmdIqnT2bobdxh3MwfrH+21jAbVJ8IkaRxGC/PxfiJxZk3XjZrLbILBAfzcRyH6Xl0
+        nD+e3uoFknFbGPOJsWmYLxgbxeEy+hb7Gm1XoXncKud6ViuyJLzgFSLPw2iZTivS04rnbWHugIuT
+        MGOW8C1cLrNvKl+//esWt6lkFmIRnqeMjVNkOv4G+3bs+bK5Re8macua14BHzGvEMszy5fdV7qlg
+        KHzIRmgaRvl3REqlbw23xvGI8Mfg/v5fTVCTLRcJAAA=
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:05 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1396.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3060 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - a8907f9a-e274-484e-8ad9-b75ab11c8120
+    status:
+      code: 200
+      message: OK
+version: 1

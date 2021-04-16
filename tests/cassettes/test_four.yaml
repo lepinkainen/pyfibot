@@ -1,0 +1,87 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Dynamo_%28magician%29&action=query
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA21TbW/TQAz+K9bxZUNZ05aXlapU2tgQYxtC6iYEDCEn8Rqr9xLurs3C1P+OL10R
+        H1CkxLHPj5/H9j2qAmNZl840miKpqVKZatFbtsugpo+KHqLHMvb2cwl/uLm+AoMdFCQffe+8oQrQ
+        VrnzsLYFarTlztMfc4YjsNVsCdjgksIAbgMBRujc2oNrLXgOqwFc2mQ33hWaTAD0BJpDTFgR6hib
+        MM3ztm0HUpCx5RUPnF/mycgXDZWMenrdXaFdrqVMfv4QyQZ2dnojGs6fZDx7hxvCGAZqu83UrzX5
+        LimzIgM1/6ZKTb8/qnvvjGg96ywa9/NAaLPA20PpTXR/A/BPYPsjU01Sl9BG49ejyfFkkuzkZEHd
+        +zJl5cxQgDhq+i9Wtm+6RGcNlBpDeHunTHtEpondEel4p+Z3dpY36d3MZ8V8EWlDFt577CzN8mIO
+        B4XzFkbHcEYlmYI8jN5MxoeZDC5G+Vv17S46qDlAiEIThAiBgO0oJZQMJIhw6jlyqGHPEXpsthLA
+        SlagyuALhQhfnV+Fmj0N4IMkRtK04TQDCLVrYcZP0FO43iNdmMaFwDLzWc5z8OJK3YePa93BeDga
+        QXSwoCbuNIjnZdYvV8BWqBtohUasCU4TgXMr0iKyNWQjfPZu6dGIKJSV7vconRSMcQ8hxguR4LAq
+        UZJP0iFZz6eJ1CgKZEVlAVNW67yudqVTxxZEckXgIkhhzSJTfmRlLfY50EpyIOob7DZC/PjVMBsO
+        h9CQk5sGWHqR3QPfXmZwsg4ycc2YwcKtYw0n955L7Kt9oha+UbpX1WA38vTI/m63fwAqaAFCvgMA
+        AA==
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-length:
+      - '628'
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:05 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1316.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3056 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - 64cf3ad5-e334-441a-ba2b-11e7582068f2
+    status:
+      code: 200
+      message: OK
+version: 1

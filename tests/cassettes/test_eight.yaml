@@ -1,0 +1,105 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0
+    method: GET
+    uri: https://en.wikipedia.org/w/api.php?redirects=&format=json&exintro=&prop=extracts&titles=Byzantine_art%23Periods&action=query
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      accept-ranges:
+      - bytes
+      age:
+      - '0'
+      cache-control:
+      - private, must-revalidate, max-age=0
+      connection:
+      - keep-alive
+      content-disposition:
+      - inline; filename=api-result.json
+      content-encoding:
+      - gzip
+      content-type:
+      - application/json; charset=utf-8
+      date:
+      - Fri, 16 Apr 2021 20:49:07 GMT
+      nel:
+      - '{ "report_to": "wm_nel", "max_age": 86400, "failure_fraction": 0.05, "success_fraction":
+        0.0}'
+      p3p:
+      - CP="See https://en.wikipedia.org/wiki/Special:CentralAutoLogin/P3P for more
+        info."
+      report-to:
+      - '{ "group": "wm_nel", "max_age": 86400, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0"
+        }] }'
+      server:
+      - mw1342.eqiad.wmnet
+      server-timing:
+      - cache;desc="pass", host;desc="cp3050"
+      set-cookie:
+      - WMF-Last-Access=16-Apr-2021;Path=/;HttpOnly;secure;Expires=Tue, 18 May 2021
+        12:00:00 GMT
+      - WMF-Last-Access-Global=16-Apr-2021;Path=/;Domain=.wikipedia.org;HttpOnly;secure;Expires=Tue,
+        18 May 2021 12:00:00 GMT
+      - GeoIP=FI:18:J__rvenp____:60.49:25.09:v4; Path=/; secure; Domain=.wikipedia.org
+      strict-transport-security:
+      - max-age=106384710; includeSubDomains; preload
+      transfer-encoding:
+      - chunked
+      vary:
+      - Accept-Encoding,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization
+      x-cache:
+      - cp3058 miss, cp3050 pass
+      x-cache-status:
+      - pass
+      x-client-ip:
+      - 85.156.185.160
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - SAMEORIGIN
+      x-request-id:
+      - e83ce52b-a6e0-4af6-8689-91a7e7faf3ec
+    status:
+      code: 200
+      message: OK
+version: 1
