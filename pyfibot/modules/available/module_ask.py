@@ -30,7 +30,7 @@ def init(botconfig):
     global askconfig
     # Read configuration
     configfile = os.path.join(sys.path[0], "modules", "module_ask.conf")
-    askconfig = yaml.load(file(configfile))
+    askconfig = yaml.load(file(configfile), Loader=yaml.FullLoader)
 
 
 def command_ask(bot, user, channel, args):
@@ -45,7 +45,8 @@ def getSTARTReply(q):
     # Some variables
     sentences = askconfig.get("sentences", 1)
     absmaxlen = askconfig.get("maxlength", 120)
-    url = "http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % urllib.quote_plus(q)
+    url = "http://start.csail.mit.edu/startfarm.cgi?QUERY=%s" % urllib.quote_plus(
+        q)
     # For parsing
     answers = []
     media = False  # Do we have media such as js, img in the results
@@ -104,10 +105,12 @@ def getSTARTReply(q):
 
             # Cleanups on html depth
             [
-                sup.replaceWith(("^%s" % sup.string) if sup.string is not None else " ")
+                sup.replaceWith(("^%s" % sup.string)
+                                if sup.string is not None else " ")
                 for sup in answer.findAll("sup")
             ]  # Handle <SUP> tags
-            [br.replaceWith(" ") for br in answer.findAll("br")]  # Handle <BR> tags
+            [br.replaceWith(" ")
+             for br in answer.findAll("br")]  # Handle <BR> tags
             [
                 td.extract()
                 for td in answer.findAll("td")
@@ -138,7 +141,8 @@ def getSTARTReply(q):
         # Try to find suitable data for IRC
         try:
             answer = min(
-                (ans for ans in answers if len(ans) > 10 and not medias.search(ans)),
+                (ans for ans in answers if len(ans)
+                 > 10 and not medias.search(ans)),
                 key=len,
             )
         except:

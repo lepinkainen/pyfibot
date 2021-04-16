@@ -4,7 +4,7 @@ import json
 import jsonschema
 
 print("Loading config..")
-config = yaml.load(file("config.yml"))
+config = yaml.load(file("config.yml"), Loader=yaml.FullLoader)
 print("Loading json schema..")
 schema = json.load(file("pyfibot/config_schema.json"))
 

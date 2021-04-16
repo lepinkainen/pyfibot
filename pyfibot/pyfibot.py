@@ -465,7 +465,7 @@ def read_config():
     config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
     if os.path.exists(config_file):
-        config = yaml.load(file(config_file))
+        config = yaml.load(file(config_file), Loader=yaml.FullLoader)
     else:
         print(
             "No config file found, please edit example.yml and rename it to config.yml"
