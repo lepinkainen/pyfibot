@@ -1,0 +1,27 @@
+pull_request_rules:
+  - name: automatic Dependabot merge when CI passes
+    conditions:
+      - author=dependabot[bot]
+      - check-success=Run tests
+      - check-success=Build project
+      - base=master
+    actions:
+      merge:
+        method: merge
+  - name: label Dependabot
+    conditions:
+      - author=dependabot[bot]
+    actions:
+      label:
+        add:
+          - dependabot
+  - name: delete head branch after merge
+    conditions:
+      - merged
+    actions:
+      delete_head_branch:
+  - name: remove outdated reviews
+    conditions:
+      - base=master
+    actions:
+      dismiss_reviews: {}
