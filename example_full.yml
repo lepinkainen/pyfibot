@@ -90,9 +90,10 @@ module_urltitle:
   # default: none
   ignore_users:
     - 'rss-bot!rss-bot@example.com'
-  # Application ID for eBay handler
-  # default: RikuLind-3b6d-4c30-937c-6e7d87b5d8be (appid for pyfibot)
-  ebay_appid: RikuLind-3b6d-4c30-937c-6e7d87b5d8be
+  # Youtube developer ID and API key
+  # grab it from: https://developers.google.com/youtube/registering_an_application
+  youtube_devid: asdfg
+  youtube_apikey: "abbaacdc"
   # Site ID for eBay handler
   # https://developer.ebay.com/DevZone/merchandising/docs/Concepts/SiteIDToGlobalID.html
   # default: 77 (Germany, for euros)
