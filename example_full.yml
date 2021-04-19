@@ -92,6 +92,7 @@ module_urltitle:
     - 'rss-bot!rss-bot@example.com'
   # Youtube developer ID and API key
   # grab it from: https://developers.google.com/youtube/registering_an_application
+  # NOTE: You _will_ need to enable the api properly, check the logs during the first run
   youtube_devid: asdfg
   youtube_apikey: "abbaacdc"
   # Site ID for eBay handler
