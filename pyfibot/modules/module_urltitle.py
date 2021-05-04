@@ -1443,7 +1443,7 @@ def _handle_discogs(url):
     }
 
     m = re.match(
-        r'http:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
+        r'https:\/\/(?:www\.)?discogs\.com\/(?:([A-Za-z0-9-]+)\/)?(release|master|artist|label|item|seller|user)\/(\d+|[A-Za-z0-9_.-]+)', url)
 
     if m:
         m = m.groups()
