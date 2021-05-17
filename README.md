@@ -26,7 +26,7 @@ Module highlights
 * URL title fetching with custom handlers via API calls for speed and
 efficiency
     * IMDb
-    * Youtube / Dailymotion / Liveleak
+    * Youtube / Dailymotion
     * Wikipedia
     * Imgur
     * Instagram
