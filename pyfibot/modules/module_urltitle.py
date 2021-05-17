@@ -1073,50 +1073,6 @@ def _handle_imgur(url):
     return title
 
 
-# Broken, but fixable (url format changed, maybe other parts)
-def _handle_liveleak(url):
-    """https://*liveleak.com/v?t=*"""
-    try:
-        id = url.split('v?t=')[1]
-    except IndexError:
-        log.debug('ID not found')
-        return
-
-    bs = __get_bs(bot, url)
-    if not bs:
-        return
-    title = bs.find('span', 'section_title').text.strip()
-    info = bs.find('span', id='item_info_%s' % id)
-    # we need to render as unicode because if unicode_literals
-    info = info.renderContents().decode("iso8859-1")
-
-    # need to do this kind of crap, as the data isn't contained by a span
-    try:
-        added_by = BeautifulSoup(info.split(
-            u'<strong>By:</strong>')[1].split('<br')[0], 'html.parser').find('a').text
-    except:
-        added_by = '???'
-
-    try:
-        date_added = info.split('</span>')[1].split('<span>')[0].strip()
-    except:
-        date_added = '???'
-
-    try:
-        views = __get_views(
-            int(info.split('<strong>Views:</strong>')[1].split('|')[0].strip()))
-    except:
-        views = '???'
-
-    try:
-        tags = BeautifulSoup(info.split('<strong>Tags:</strong>')
-                             [1].split('<br')[0], 'html.parser').text.strip()
-    except:
-        tags = 'none'
-
-    return '%s by %s [%s views - %s - tags: %s]' % (title, added_by, views, date_added, tags)
-
-
 # Broken but fixable, API response has changed
 # https://api.dailymotion.com/video/x7u660h
 def _handle_dailymotion(url):
