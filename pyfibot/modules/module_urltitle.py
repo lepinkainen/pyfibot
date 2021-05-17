@@ -457,7 +457,7 @@ def _handle_tweet(url):
     bearer_token = config.get("twitter_bearer")
     if not bearer_token:
         log.info(
-            "Read https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens about how to request a bearer token for tweet handling")
+            "Read https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens about how to generate a bearer token for tweet handling")
         return _parse_tweet_from_src(url)
     headers = {'Authorization': 'Bearer ' + bearer_token}
 
