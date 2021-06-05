@@ -1379,7 +1379,10 @@ def _handle_steamstore(url):
         if data['price_overview']['discount_percent'] != 0:
             price += " (-%s%%)" % data['price_overview']['discount_percent']
     else:
-        price = "Free to play"
+        if 'is_free' in data and data['is_free']:
+            price = "Free to play"
+        else:
+            price = "Price: N/A"
 
     return "%s | %s" % (name, price)
 
