@@ -229,7 +229,8 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         self.lineRate = self.network.linerate
         self.password = self.network.password
         # Text wrapper to clip overly long answers
-        self.tw = textwrap.TextWrapper(width=400, break_long_words=True)
+        # 510 is the spec maximum (512 - CRLF)
+        self.tw = textwrap.TextWrapper(width=480, break_long_words=True)
         log.info("bot initialized")
 
     def __repr__(self):
