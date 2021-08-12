@@ -9,4 +9,4 @@ def command_oraakkeli(bot, user, channel, args):
     r = bot.get_url(
         "http://www.lintukoto.net/viihde/oraakkeli/index.php?kysymys=%s&html=0" % args
     )
-    return bot.say(channel, "Oraakkeli vastaa: %s" % r.text)
+    return bot.say(channel, "Lintukodon Oraakkeli vastaa: %s" % r.text)
