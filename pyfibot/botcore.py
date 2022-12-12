@@ -513,7 +513,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
 
         # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
         if "!" and "@" in channel:
-            channel = self.get_gick(channel)
+            channel = self.get_nick(channel)
 
         # wrap long text into suitable fragments
         msg = self.tw.wrap(message)
