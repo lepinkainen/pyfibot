@@ -99,3 +99,9 @@ exclude = [
     ".mypy_cache",
     ".pytest_cache"
 ]
+
+[dependency-groups]
+dev = [
+    "types-pyyaml>=6.0.12.20241230",
+    "types-requests>=2.31.0.6",
+]

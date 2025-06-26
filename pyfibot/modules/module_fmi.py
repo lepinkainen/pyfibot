@@ -76,8 +76,6 @@ def init(bot):
 
 def command_saa(bot, user, channel, args):
     """Command to fetch data from FMI"""
-    global default_place
-
     if args:
         place = args
     else:

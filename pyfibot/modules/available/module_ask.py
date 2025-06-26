@@ -83,7 +83,8 @@ def getSTARTReply(q):
                 [
                     tag
                     for tag in fail_tags[0](text=True)
-                    if type(tag) != Comment and re.search("Accept|Abort", tag) is None
+                    if not isinstance(tag, Comment)
+                    and re.search("Accept|Abort", tag) is None
                 ]
             )
             s = re.sub(
@@ -99,9 +100,7 @@ def getSTARTReply(q):
             return unicode("Fail: " + s).encode("utf-8")
 
     else:
-
         for answer in data_tags:
-
             # Cleanups on html depth
             [
                 sup.replaceWith(("^%s" % sup.string) if sup.string is not None else " ")

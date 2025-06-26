@@ -449,7 +449,7 @@ def grab(txt, needScheme=True):
         ns = s
 
         for v in [("<", ">"), ("(", ")"), ("{", "}"), ("[", "]"), '"', "'"]:
-            if type(v) == tuple:
+            if isinstance(v, tuple):
                 sc, ec = v
             else:
                 sc = ec = v

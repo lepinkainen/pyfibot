@@ -235,7 +235,6 @@ def handle_url(bot, user, channel, url, msg):
             log.debug("Cache hit")
             return _title(bot, channel, title, True)
 
-    global handlers
     # try to find a specific handler for the URL
     for handler, ref in handlers:
         pattern = ref.__doc__.split()[0]
@@ -420,7 +419,7 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
         prefix = "Title:"
     info = None
     # tuple, additional info
-    if type(title) == tuple:
+    if isinstance(title, tuple):
         info = title[1]
         title = title[0]
     # crop obscenely long titles

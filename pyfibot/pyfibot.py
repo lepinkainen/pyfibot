@@ -76,7 +76,7 @@ class Network(object):
         self.address = address  # server address
         self.nickname = nickname  # nick to use
         self.realname = realname
-        self.channels = channels or {}  # channels to join
+        self.channels: List[str] = channels or []  # channels to join
         self.linerate = linerate
         self.password = password
         self.is_ssl = is_ssl

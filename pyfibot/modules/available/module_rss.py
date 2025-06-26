@@ -20,7 +20,6 @@ def init(bot, testing=False):
     global config
     global botref
     global updater
-    global logger
 
     if testing:
         DATABASE = dataset.connect("sqlite:///:memory:")
@@ -39,7 +38,6 @@ def init(bot, testing=False):
 def finalize():
     """Finalize updater (rehash etc) so we don't leave an updater running"""
     global updater
-    global logger
     logger.info("RSS module finalized")
     if updater:
         try:
@@ -84,9 +82,7 @@ def remove_feed(network, channel, id):
 def update_feeds(cancel=True, **kwargs):
     # from time import sleep
     """Update all feeds in the DB"""
-    global config
     global updater
-    global logger
     logger.info("Updating RSS feeds started")
     for f in get_feeds(**kwargs):
         Thread(target=f.update).start()
@@ -313,9 +309,6 @@ class Feed(object):
         return items
 
     def update(self):
-        global logger
-        global botref
-
         # If botref isn't defined, bot isn't running, no need to run
         # (used for tests?)
         if not botref:

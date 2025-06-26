@@ -18,7 +18,10 @@ from twisted.internet import reactor, threads
 from twisted.python import rebuild
 
 from types import FunctionType
-from typing import Optional, Any, Dict, Tuple
+from typing import Optional, Any, Dict, Tuple, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from . import pyfibot as pyfibot_module
 
 import inspect
 import string
@@ -34,6 +37,13 @@ log = logging.getLogger("bot")
 
 
 class CoreCommands(object):
+    # Attributes that will be provided by the subclass
+    pingAve: float
+
+    def get_nick(self, user: str) -> str:
+        """Get nick from user string - implemented in subclass"""
+        raise NotImplementedError("get_nick should be implemented by subclass")
+
     def command_echo(self, user: str, channel: str, args: str) -> None:
         self.say(channel, "%s: %s" % (user, args))
 
@@ -69,7 +79,9 @@ class CoreCommands(object):
                 self.say(channel, "Rehash OK")
                 log.info("Rehash OK")
 
-    def say(self, channel: str, message: str, length: Optional[int] = None) -> Any:
+    def say(
+        self, channel: str, message: str, length: Optional[int] = None
+    ) -> Tuple[str, str, str]:
         """Must be implemented by the inheriting class"""
         raise NotImplementedError
 
@@ -207,15 +219,18 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     """PyFiBot"""
 
     nickname = "pyfibot"
-    realname = "https://github.com/lepinkainen/pyfibot"
+    realname: str = "https://github.com/lepinkainen/pyfibot"  # type: ignore[assignment]
     password = None
 
     # send 2 msgs per second max
-    lineRate = 0.5
+    lineRate: float = 0.5  # type: ignore[assignment]
     hasQuit = False
 
     # Rolling ping time average
-    pingAve = 0.0
+    pingAve: float = 0.0
+
+    if TYPE_CHECKING:
+        factory: "pyfibot_module.PyFiBotFactory"
 
     def __init__(self, config: Dict[str, Any], network: Any) -> None:
         self.cmdchar = config.get("cmdchar", ".")
@@ -306,7 +321,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def joinChannels(self):
         for chan in self.network.channels:
             # Defined as a tuple, channel has a key
-            if type(chan) == list:
+            if isinstance(chan, list):
                 self.join(chan[0], key=chan[1])
             else:
                 self.join(chan)
@@ -411,7 +426,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             handlers = [
                 (h, ref)
                 for h, ref in mylocals.items()
-                if h == handler and type(ref) == FunctionType
+                if h == handler and isinstance(ref, FunctionType)
             ]
 
             for hname, func in handlers:
@@ -430,7 +445,7 @@ class PyFiBot(irc.IRCClient, CoreCommands):
             events = [
                 (h, ref)
                 for h, ref in mylocals.items()
-                if h == eventname and type(ref) == FunctionType
+                if h == eventname and isinstance(ref, FunctionType)
             ]
 
             for ename, func in events:

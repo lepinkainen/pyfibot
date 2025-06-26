@@ -37,8 +37,6 @@ def command_weather(bot, user, channel, args):
         log.warn("No OpenWeatherMap appid set in configuration")
         return False
 
-    global default_location
-    global threshold
     if args:
         location = args
     else:
@@ -107,7 +105,6 @@ def command_weather(bot, user, channel, args):
 
 
 def command_forecast(bot, user, channel, args):
-    global default_location
     if not appid:
         log.warn("No OpenWeatherMap appid set in configuration")
         return False
