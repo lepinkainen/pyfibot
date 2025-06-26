@@ -11,6 +11,7 @@ A modular python bot based on the twisted matrix irc library
 """
 
 from __future__ import print_function, division
+from typing import Dict, Any, Optional, List, Tuple
 import sys
 import os.path
 import time
@@ -60,16 +61,16 @@ class Network(object):
 
     def __init__(
         self,
-        root,
-        alias,
-        address,
-        nickname,
-        realname=None,
-        channels=None,
-        linerate=None,
-        password=None,
-        is_ssl=False,
-    ):
+        root: str,
+        alias: str,
+        address: Tuple[str, int],
+        nickname: str,
+        realname: Optional[str] = None,
+        channels: Optional[List[str]] = None,
+        linerate: Optional[float] = None,
+        password: Optional[str] = None,
+        is_ssl: bool = False,
+    ) -> None:
         self.root = root
         self.alias = alias  # network name
         self.address = address  # server address
@@ -121,12 +122,12 @@ class PyFiBotFactory(ThrottledClientFactory):
     startTime = None
     config = None
 
-    def __init__(self, config):
+    def __init__(self, config: Dict[str, Any]) -> None:
         """Initialize the factory"""
         self.config = config
-        self.data = {}
+        self.data: Dict[str, Any] = {}
         self.data["networks"] = {}
-        self.ns = {}
+        self.ns: Dict[str, Any] = {}
 
     def startFactory(self):
         self.allBots = {}
@@ -197,8 +198,7 @@ class PyFiBotFactory(ThrottledClientFactory):
     def clientConnectionLost(self, connector, reason):
         """Connection lost for some reason"""
         log.info(
-            "connection to %s lost: %s" % (
-                str(connector.getDestination().host), reason)
+            "connection to %s lost: %s" % (str(connector.getDestination().host), reason)
         )
 
         # find bot that connects to the address that just disconnected
@@ -215,8 +215,7 @@ class PyFiBotFactory(ThrottledClientFactory):
                     del self.allBots[n.alias]
                     return
                 else:
-                    log.info("No active connection to known network %s" %
-                             n.address[0])
+                    log.info("No active connection to known network %s" % n.address[0])
 
     def _finalize_modules(self, modules=None):
         """Call all module finalizers"""
@@ -236,7 +235,7 @@ class PyFiBotFactory(ThrottledClientFactory):
             env = self._getGlobals()
             log.info("load module - %s" % module)
             # Load new version of the module
-            with open(os.path.join(self.moduledir, module), 'r') as f:
+            with open(os.path.join(self.moduledir, module), "r") as f:
                 exec(f.read(), env, env)
             # Initialize module
             if "init" in env:
@@ -284,7 +283,10 @@ class PyFiBotFactory(ThrottledClientFactory):
         s.headers.update({"User-Agent": browser})
         s.headers.update({"Accept-Language": "*"})
         s.headers.update(
-            {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"})
+            {
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            }
+        )
         # Custom headers from requester
         if headers:
             s.headers.update(headers)
@@ -312,12 +314,13 @@ class PyFiBotFactory(ThrottledClientFactory):
             content_type = "Unknown"
 
         if size > 5:
-            bot.say(channel, "File size: %s MB - Content-Type: %s" %
-                    (int(size), content_type))
+            bot.say(
+                channel,
+                "File size: %s MB - Content-Type: %s" % (int(size), content_type),
+            )
 
         if size > 2:
-            log.warn("Content too large, will not fetch: %skB %s" %
-                     (size, url))
+            log.warn("Content too large, will not fetch: %skB %s" % (size, url))
             return None
 
         return r
@@ -336,7 +339,7 @@ class PyFiBotFactory(ThrottledClientFactory):
         @return: host"""
         return user.split("@", 1)[1]
 
-    def isAdmin(self, user):
+    def isAdmin(self, user: str) -> bool:
         """Check if an user has admin privileges.
         @return: True or False"""
         for pattern in self.config["admins"]:
@@ -344,13 +347,13 @@ class PyFiBotFactory(ThrottledClientFactory):
                 return True
         return False
 
-    def to_utf8(self, _string):
+    def to_utf8(self, _string: Any) -> bytes:
         """Convert string to UTF-8 bytes if it is a string"""
         if isinstance(_string, str):
             _string = _string.encode("UTF-8")
         return _string
 
-    def to_unicode(self, _string):
+    def to_unicode(self, _string: Any) -> str:
         """Convert bytes to unicode string"""
         if isinstance(_string, bytes):
             try:
@@ -448,8 +451,7 @@ def init_logging(config):
         )
         # Append file name + number if debug is enabled
         if config.get("debug", False):
-            FORMAT = "%s %s" % (
-                FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
+            FORMAT = "%s %s" % (FORMAT, " ($BOLD%(filename)s$RESET:%(lineno)d)")
         COLOR_FORMAT = colorlogger.formatter_message(FORMAT, True)
         formatter = colorlogger.ColoredFormatter(COLOR_FORMAT)
     else:
@@ -468,7 +470,7 @@ def read_config():
     config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
     if os.path.exists(config_file):
-        with open(config_file, 'r') as f:
+        with open(config_file, "r") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
     else:
         print(
@@ -479,7 +481,7 @@ def read_config():
 
 
 def validate_config(config):
-    with open(os.path.join(sys.path[0], "config_schema.json"), 'r') as f:
+    with open(os.path.join(sys.path[0], "config_schema.json"), "r") as f:
         schema = json.load(f)
     log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
@@ -531,8 +533,7 @@ def main():
                 )[0][4][0]
             except IndexError:
                 log.error(
-                    "No IPv6 address found for %s (force_ipv6 = true)" % (
-                        network)
+                    "No IPv6 address found for %s (force_ipv6 = true)" % (network)
                 )
                 continue
         else:
@@ -550,8 +551,7 @@ def main():
         )
         if is_ssl:
             log.info("connecting via SSL to %s:%d" % (server_name, port))
-            reactor.connectSSL(server_name, port, factory,
-                               ssl.ClientContextFactory())
+            reactor.connectSSL(server_name, port, factory, ssl.ClientContextFactory())
         else:
             log.info("connecting to %s:%d" % (server_name, port))
             reactor.connectTCP(server_name, port, factory)

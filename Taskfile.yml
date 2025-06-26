@@ -1,0 +1,73 @@
+version: '3'
+
+tasks:
+  build:
+    desc: Build the project (depends on tests and linting)
+    deps: [test, lint, typecheck]
+    cmds:
+      - echo "Python project - no build artifacts to create"
+      - mkdir -p build/
+
+  build-linux:
+    desc: Build for Linux (same as build for Python)
+    deps: [test, lint, typecheck]
+    cmds:
+      - echo "Python project - no build artifacts to create"
+      - mkdir -p build/
+
+  build-ci:
+    desc: Build in CI environment
+    deps: [test-ci, lint, typecheck]
+    cmds:
+      - echo "Python project - no build artifacts to create"
+      - mkdir -p build/
+
+  test:
+    desc: Run tests with coverage
+    cmds:
+      - uv run pytest tests/test_openweather.py tests/test_pyfiurl.py --cov=pyfibot --cov-report=term-missing
+
+  test-ci:
+    desc: Run tests in CI environment
+    cmds:
+      - uv run pytest tests/test_openweather.py tests/test_pyfiurl.py --cov=pyfibot --cov-report=xml --cov-report=term
+
+  lint:
+    desc: Run linting tools
+    cmds:
+      - uv run flake8 pyfibot/
+
+  typecheck:
+    desc: Run type checking on core files
+    cmds:
+      - uv run mypy pyfibot/botcore.py pyfibot/pyfibot.py
+
+  format:
+    desc: Format code with black
+    cmds:
+      - uv run black pyfibot/ tests/
+
+  format-check:
+    desc: Check if code is formatted correctly
+    cmds:
+      - uv run black --check pyfibot/ tests/
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - uv sync
+
+  dev-install:
+    desc: Install with development dependencies
+    cmds:
+      - uv sync --extra dev
+
+  clean:
+    desc: Clean build artifacts and cache
+    cmds:
+      - rm -rf build/
+      - rm -rf .mypy_cache/
+      - rm -rf .pytest_cache/
+      - rm -rf __pycache__/
+      - find . -name "*.pyc" -delete
+      - find . -name "*.pyo" -delete

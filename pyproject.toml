@@ -33,11 +33,14 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "black",
+    "mypy",
     "flake8",
     "pylint",
     "pep8",
     "autopep8",
     "pytest",
+    "pytest-cov",
     "coverage",
     "vcrpy",
 ]
@@ -50,3 +53,49 @@ include = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["pyfibot"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = false
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = false
+ignore_missing_imports = true
+ignore_errors = false
+strict_optional = false
+files = ["pyfibot/botcore.py", "pyfibot/pyfibot.py"]
+exclude = ["pyfibot/modules/"]
+
+[[tool.mypy.overrides]]
+module = "pyfibot.modules.*"
+ignore_errors = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503", "E501", "E722", "F821", "E701", "W504"]
+exclude = [
+    ".git",
+    "__pycache__",
+    "build",
+    "dist",
+    ".mypy_cache",
+    ".pytest_cache"
+]

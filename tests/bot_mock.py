@@ -49,8 +49,7 @@ class BotMock(botcore.CoreCommands):
         size = int(r.headers.get("Content-Length", 0)) // 1024
         # log.debug("Content-Length: %dkB" % size)
         if size > 2048:
-            print("[WARNING] Content too large, will not fetch: %skB %s" %
-                  (size, url))
+            print("[WARNING] Content too large, will not fetch: %skB %s" % (size, url))
             return None
 
         return r
@@ -84,29 +83,25 @@ class FactoryMock(pyfibot.PyFiBotFactory):
 
     def __init__(self, config={}):
         # run with main bot config if one exists
-        main_config = os.path.join(
-            os.path.dirname(__file__), "..", "config.yml")
-        test_config = os.path.join(
-            os.path.dirname(__file__), "test_config.yml")
+        main_config = os.path.join(os.path.dirname(__file__), "..", "config.yml")
+        test_config = os.path.join(os.path.dirname(__file__), "test_config.yml")
 
         if not config or config == {}:
             if os.path.exists(main_config):
                 log.debug("USING MAIN CONFIG")
-                with open(main_config, 'r') as f:
+                with open(main_config, "r") as f:
                     config = yaml.load(f, Loader=yaml.FullLoader)
             else:
                 log.debug("USING TEST CONFIG")
-                with open(test_config, 'r') as f:
+                with open(test_config, "r") as f:
                     config = yaml.load(f, Loader=yaml.FullLoader)
 
         pyfibot.PyFiBotFactory.__init__(self, config)
         self.createNetwork(
-            ("localhost", 6667), "nerv", "pyfibot", [
-                "#pyfibot"], 0.5, None, False
+            ("localhost", 6667), "nerv", "pyfibot", ["#pyfibot"], 0.5, None, False
         )
         self.createNetwork(
-            ("localhost", 6667), "localhost", "pyfibot", [
-                "#pyfibot"], 0.5, None, False
+            ("localhost", 6667), "localhost", "pyfibot", ["#pyfibot"], 0.5, None, False
         )
         self.startFactory()
         self.buildProtocol(None)

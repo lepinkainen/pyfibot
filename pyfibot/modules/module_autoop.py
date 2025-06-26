@@ -33,8 +33,7 @@ def open_db(createTable=False):
 def add_op(channel, hostmask, modes="o"):
     if not get_op_status(channel, hostmask):
         conn, c = open_db()
-        c.execute("INSERT INTO autoops VALUES (?, ?, ?);",
-                  (channel, hostmask, modes))
+        c.execute("INSERT INTO autoops VALUES (?, ?, ?);", (channel, hostmask, modes))
         conn.commit()
         conn.close()
         return True
@@ -117,8 +116,7 @@ def command_autoop(bot, user, channel, args):
     if command not in COMMANDS:
         return bot.say(
             channel,
-            "Invalid command, valid commands are %s" % ", ".join(
-                map(str, COMMANDS)),
+            "Invalid command, valid commands are %s" % ", ".join(map(str, COMMANDS)),
         )
 
     if command == "list":
@@ -135,8 +133,7 @@ def command_autoop(bot, user, channel, args):
         if ops:
             return bot.say(
                 channel,
-                "%s ops: %s" % (list_channel, ", ".join(
-                    str(i[0]) for i in ops)),
+                "%s ops: %s" % (list_channel, ", ".join(str(i[0]) for i in ops)),
             )
         return bot.say(channel, "%s doesn't have any ops." % list_channel)
 

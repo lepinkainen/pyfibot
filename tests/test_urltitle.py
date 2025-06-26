@@ -113,10 +113,7 @@ def test_pythonorg(botmock):
 @my_vcr.use_cassette
 def test_github(botmock):
     msg = "https://github.com/lepinkainen/pyfibot"
-    assert (
-        "Title: lepinkainen/pyfibot"
-        == __handle_url(botmock, msg)
-    )
+    assert "Title: lepinkainen/pyfibot" == __handle_url(botmock, msg)
 
 
 # Test ignored titles

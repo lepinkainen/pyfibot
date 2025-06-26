@@ -15,7 +15,7 @@ config = {}
 
 
 def init(bot, testing=False):
-    """ Initialize updater """
+    """Initialize updater"""
     global DATABASE
     global config
     global botref
@@ -37,7 +37,7 @@ def init(bot, testing=False):
 
 
 def finalize():
-    """ Finalize updater (rehash etc) so we don't leave an updater running """
+    """Finalize updater (rehash etc) so we don't leave an updater running"""
     global updater
     global logger
     logger.info("RSS module finalized")
@@ -50,7 +50,7 @@ def finalize():
 
 
 def get_feeds(**kwargs):
-    """ Get feeds from database """
+    """Get feeds from database"""
     return [
         Feed(f["network"], f["channel"], f["id"])
         for f in list(DATABASE["feeds"].find(**kwargs))
@@ -58,7 +58,7 @@ def get_feeds(**kwargs):
 
 
 def find_feed(network, channel, **kwargs):
-    """ Find specific feed from database """
+    """Find specific feed from database"""
     f = DATABASE["feeds"].find_one(network=network, channel=channel, **kwargs)
     if not f:
         return
@@ -66,13 +66,13 @@ def find_feed(network, channel, **kwargs):
 
 
 def add_feed(network, channel, url):
-    """ Add feed to database """
+    """Add feed to database"""
     f = Feed(network=network, channel=channel, url=url)
     return (f.initialized, f.read())
 
 
 def remove_feed(network, channel, id):
-    """ Remove feed from database """
+    """Remove feed from database"""
     f = find_feed(network=network, channel=channel, id=int(id))
     if not f:
         return
@@ -83,7 +83,7 @@ def remove_feed(network, channel, id):
 
 def update_feeds(cancel=True, **kwargs):
     # from time import sleep
-    """ Update all feeds in the DB """
+    """Update all feeds in the DB"""
     global config
     global updater
     global logger
@@ -173,7 +173,7 @@ def command_rss(bot, user, channel, args):
 
 
 class Feed(object):
-    """ Feed object to simplify feed handling """
+    """Feed object to simplify feed handling"""
 
     def __init__(self, network, channel, id=None, url=None):
         # Not sure if (this complex) init is needed...
@@ -195,7 +195,7 @@ class Feed(object):
         return "%i - %s" % (self.id, self.url)
 
     def __init_feed(self):
-        """ Initialize databases for feed """
+        """Initialize databases for feed"""
         DATABASE["feeds"].insert(
             {
                 "network": self.network,
@@ -218,11 +218,11 @@ class Feed(object):
         return feed
 
     def __get_items_tbl(self):
-        """ Get table for feeds items """
+        """Get table for feeds items"""
         return DATABASE[("items_%i" % (self.id))]
 
     def __parse_feed(self):
-        """ Parse items from feed """
+        """Parse items from feed"""
         f = feedparser.parse(self.url)
         if self.initialized:
             self.update_feed_info({"name": f["channel"]["title"]})
@@ -230,7 +230,7 @@ class Feed(object):
         return (f, items)
 
     def __save_item(self, item, table=None):
-        """ Save item to feeds database """
+        """Save item to feeds database"""
         if table is None:
             table = self.__get_items_tbl()
         # If override is set or the item cannot be found, it's a new one
@@ -242,13 +242,13 @@ class Feed(object):
             table.insert(item)
 
     def __mark_printed(self, item, table=None):
-        """ Mark item as printed """
+        """Mark item as printed"""
         if table is None:
             table = self.__get_items_tbl()
         table.update({"id": item["id"], "printed": True}, ["id"])
 
     def _get_feed_from_db(self):
-        """ Get self from database """
+        """Get self from database"""
         feed = None
         if self.url and not self.id:
             feed = DATABASE["feeds"].find_one(
@@ -283,7 +283,7 @@ class Feed(object):
         return items[-1]
 
     def update_feed_info(self, data):
-        """ Update feed information """
+        """Update feed information"""
         data["id"] = self.id
         if "url" in data:
             self.url = data["url"]
@@ -292,7 +292,7 @@ class Feed(object):
         self._get_feed_from_db()
 
     def read(self):
-        """ Read new items from feed """
+        """Read new items from feed"""
         f, items = self.__parse_feed()
         # Get table -reference to speed up stuff...
         tbl = self.__get_items_tbl()
@@ -304,7 +304,7 @@ class Feed(object):
         return items
 
     def get_new_items(self, mark_printed=False):
-        """ Get all items which are not marked as printed, if mark_printed is set, update printed also. """
+        """Get all items which are not marked as printed, if mark_printed is set, update printed also."""
         tbl = self.__get_items_tbl()
         items = [i for i in list(tbl.find(printed=False))]
         if mark_printed:

@@ -87,8 +87,8 @@ def command_weather(bot, user, channel, args):
         feels_like = (
             13.12
             + 0.6215 * temperature
-            - 13.956 * (wind ** 0.16)
-            + 0.4867 * temperature * (wind ** 0.16)
+            - 13.956 * (wind**0.16)
+            + 0.4867 * temperature * (wind**0.16)
         )
         text += ", feels like: %.1f°C" % feels_like
         text += ", wind: %.1f m/s" % wind

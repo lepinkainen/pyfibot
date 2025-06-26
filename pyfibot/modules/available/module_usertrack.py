@@ -17,28 +17,28 @@ db = dataset.connect("sqlite:///databases/usertrack.db")
 
 
 def get_table(bot, channel):
-    """ Returns table-instance from database.
+    """Returns table-instance from database.
     Database names are in format "networkalias_channel".
     Network alias is the name assigned to network in config.
-    Channel is stripped from the &#!+ prepending the channel name. """
+    Channel is stripped from the &#!+ prepending the channel name."""
 
     return db["%s_%s" % (bot.network.alias, re.sub(r"&|#|!|\+", "", channel))]
 
 
 def upsert_row(bot, channel, data, keys=["nick", "ident", "host"]):
-    """ Updates row to database.
+    """Updates row to database.
     Default keys are nick, ident and host,
-    which are normally present for data received by get_base_data -function. """
+    which are normally present for data received by get_base_data -function."""
 
     table = get_table(bot, channel)
     table.upsert(data, keys)
 
 
 def get_base_data(user):
-    """ Fetches "base" data according to user.
+    """Fetches "base" data according to user.
     Normally this is nick, ident, host and current time to be set to action_time in database.
     Ident and host might be missing when the full mask isn't provided,
-    for example in handle_userKicked, where kickee doesn't get anything but name. """
+    for example in handle_userKicked, where kickee doesn't get anything but name."""
 
     data = {"nick": getNick(user), "action_time": datetime.now()}
 
@@ -56,12 +56,12 @@ def get_base_data(user):
 
 
 def handle_privmsg(bot, user, channel, message):
-    """ Handles all messages bot sees.
+    """Handles all messages bot sees.
     If message is private message to bot, doesn't update.
     Otherwise updates the DB.
     - last_action = 'message'
     - last_message = message
-    - message_time = current time """
+    - message_time = current time"""
 
     # if user == channel -> this is a query -> don't update
     if user == channel:
@@ -76,8 +76,8 @@ def handle_privmsg(bot, user, channel, message):
 
 
 def handle_userJoined(bot, user, channel):
-    """ Handles user joining the channel and auto-ops if op == True in database.
-    - last_action = 'join' """
+    """Handles user joining the channel and auto-ops if op == True in database.
+    - last_action = 'join'"""
 
     data = get_base_data(user)
     data["last_action"] = "join"
@@ -93,10 +93,10 @@ def handle_userJoined(bot, user, channel):
 
 
 def handle_userLeft(bot, user, channel, message):
-    """ Handles user leaving the channel (or quitting).
+    """Handles user leaving the channel (or quitting).
     For leaving, only updates the channel left.
     For quitting, updates all channels in network, which the user was on (as bot knows...)
-    - last_action = 'left' """
+    - last_action = 'left'"""
 
     data = get_base_data(user)
     data["last_message"] = message
@@ -119,12 +119,12 @@ def handle_userLeft(bot, user, channel, message):
 
 
 def handle_userKicked(bot, kickee, channel, kicker, message):
-    """ Handles user being kicked.
+    """Handles user being kicked.
     As 'kickee' doesn't get full mask, it's only determined by nick.
     For kickee:
         - last_action = kicked by kicker [message]
     For kicker:
-        - last_action = kicked kickee [message] """
+        - last_action = kicked kickee [message]"""
 
     data = get_base_data(kickee)
     data["last_action"] = "kicked by %s [%s]" % (getNick(kicker), message)
@@ -138,9 +138,9 @@ def handle_userKicked(bot, kickee, channel, kicker, message):
 
 
 def handle_userRenamed(bot, user, newnick):
-    """ Handles nick change.
+    """Handles nick change.
     Updates both data, related to old and new nick, doesn't remove anything from db.
-    - last_action = nick change from oldnick to newnick """
+    - last_action = nick change from oldnick to newnick"""
 
     nick = getNick(user)
     ident = getIdent(user)
@@ -174,10 +174,10 @@ def handle_userRenamed(bot, user, newnick):
 
 
 def handle_action(bot, user, channel, message):
-    """ Handles action (/me etc). Ignores stuff directed to bot (/describe botnick etc).
+    """Handles action (/me etc). Ignores stuff directed to bot (/describe botnick etc).
     - last_action = action
     - last_message = message
-    - message_time = current time """
+    - message_time = current time"""
 
     # if action is directed to bot instead of channel -> don't log
     if channel == bot.nickname:
@@ -192,9 +192,9 @@ def handle_action(bot, user, channel, message):
 
 
 def command_add_op(bot, user, channel, args):
-    """ Adds op-status according to nickname or full hostmask. Only for admins.
+    """Adds op-status according to nickname or full hostmask. Only for admins.
     If user is found from database, set op = True and return info with full hostmask.
-    Else returns user not found. """
+    Else returns user not found."""
 
     if not isAdmin(user) or user == channel or not args:
         return
@@ -222,7 +222,7 @@ def command_add_op(bot, user, channel, args):
 
 
 def command_remove_op(bot, user, channel, args):
-    """ Removes op-status from nick. Logic same as command_add_op. Only for admins. """
+    """Removes op-status from nick. Logic same as command_add_op. Only for admins."""
 
     if not isAdmin(user) or user == channel or not args:
         return
@@ -251,7 +251,7 @@ def command_remove_op(bot, user, channel, args):
 
 
 def command_op(bot, user, channel, args):
-    """ Ops user if op = True for user or isAdmin. """
+    """Ops user if op = True for user or isAdmin."""
 
     table = get_table(bot, channel)
     if table.find_one(
@@ -262,8 +262,8 @@ def command_op(bot, user, channel, args):
 
 
 def command_list_ops(bot, user, channel, args):
-    """ Lists ops in current channel. Only for admins.
-    By default lists nicks, if args == 'full', lists full hostmask. """
+    """Lists ops in current channel. Only for admins.
+    By default lists nicks, if args == 'full', lists full hostmask."""
 
     if not isAdmin(user) or user == channel:
         return

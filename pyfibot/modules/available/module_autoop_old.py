@@ -115,8 +115,7 @@ def autoop_add(user, channel, args):
                             )
                             oplist[nick].append(op_channel)
                     else:
-                        message += "Auto-op for %s in %s added. " % (
-                            nick, op_channel)
+                        message += "Auto-op for %s in %s added. " % (nick, op_channel)
                         oplist[nick] = list()
                         oplist[nick].append(op_channel)
                 writeConfig()
@@ -146,11 +145,9 @@ def autoop_del(user, channel, args):
                             if len(oplist[nick]) == 0:
                                 del oplist[nick]
                         else:
-                            message += "No auto-op for %s in %s. " % (
-                                nick, op_channel)
+                            message += "No auto-op for %s in %s. " % (nick, op_channel)
                     else:
-                        message += "No auto-op for %s in %s. " % (
-                            nick, op_channel)
+                        message += "No auto-op for %s in %s. " % (nick, op_channel)
                 writeConfig()
             else:
                 message = "#channel always needed when making changes in query!"

@@ -143,8 +143,7 @@ def _refresh_token(client_id, client_secret, refresh_token):
         new_access_token = r.json()["access_token"]
         new_refresh_token = r.json()["refresh_token"]
         log.info(
-            "Updated imgur access token for account %s" % r.json()[
-                "account_username"]
+            "Updated imgur access token for account %s" % r.json()["account_username"]
         )
 
         f = open(DATAFILE, "w")

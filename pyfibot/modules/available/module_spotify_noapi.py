@@ -32,9 +32,9 @@ def handle_privmsg(bot, user, channel, args):
         def _parse_script_elements(scripts):
             """
 
-           Selects the desired <script> element containing the desired json data
+            Selects the desired <script> element containing the desired json data
 
-           """
+            """
             for script in scripts:
                 if re.search(r"Spotify.Entity", script.string):
                     return re.sub(r"[\n\t]", "", script.string)
@@ -43,9 +43,9 @@ def handle_privmsg(bot, user, channel, args):
         def _ms_human_readable(ms):
             """
 
-           Converts milliseconds into a tuple of (minutes, seconds)
+            Converts milliseconds into a tuple of (minutes, seconds)
 
-           """
+            """
             minutes = int(ms / 60000)
             seconds = int((ms - minutes * 60000) / 1000)
             return minutes, seconds
@@ -58,9 +58,9 @@ def handle_privmsg(bot, user, channel, args):
         def data(self, value):
             """
 
-           Takes a list of <script> elements, selects the desired one and morphs contents to a neat json dict
+            Takes a list of <script> elements, selects the desired one and morphs contents to a neat json dict
 
-           """
+            """
             soup = BeautifulSoup(value, "html.parser")
             script = self._parse_script_elements(soup.find_all("script"))
             if script:
@@ -75,9 +75,9 @@ def handle_privmsg(bot, user, channel, args):
         def parse(self, data, data_type):
             """
 
-           Parse data, and set the .output parameter accordingly
+            Parse data, and set the .output parameter accordingly
 
-           """
+            """
 
             self.data = data
             if not self.data:

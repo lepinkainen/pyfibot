@@ -8,7 +8,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--vcrmode",
         action="store",
-        type="string",
+        type=str,
         default=VCR_RECORD_MODE,
         help="set vcr record mode [once, new_episodes, none, all]",
     )

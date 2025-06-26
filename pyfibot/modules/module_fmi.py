@@ -75,7 +75,7 @@ def init(bot):
 
 
 def command_saa(bot, user, channel, args):
-    """ Command to fetch data from FMI """
+    """Command to fetch data from FMI"""
     global default_place
 
     if args:
@@ -83,8 +83,7 @@ def command_saa(bot, user, channel, args):
     else:
         place = default_place
 
-    starttime = (datetime.utcnow() - timedelta(minutes=10)
-                 ).strftime(TIME_FORMAT) + "Z"
+    starttime = (datetime.utcnow() - timedelta(minutes=10)).strftime(TIME_FORMAT) + "Z"
     params = {
         "request": "getFeature",
         "storedquery_id": "fmi::observations::weather::timevaluepair",
@@ -142,5 +141,5 @@ def command_saa(bot, user, channel, args):
 
 
 def command_keli(bot, user, channel, args):
-    """ Alias for command "saa" """
+    """Alias for command "saa" """
     return command_saa(bot, user, channel, args)
