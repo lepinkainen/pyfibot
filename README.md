@@ -8,12 +8,6 @@ Thanks to the power of Claude Code, I was able to port the code to python3
 ---
 
 [![Python application](https://github.com/lepinkainen/pyfibot/actions/workflows/python-app.yml/badge.svg)](https://github.com/lepinkainen/pyfibot/actions/workflows/python-app.yml)
-[![Updates](https://pyup.io/repos/github/lepinkainen/pyfibot/shield.svg)](https://pyup.io/repos/github/lepinkainen/pyfibot/)
-[![Mergify Status][mergify-status]][mergify]
-
-[mergify]: https://mergify.io
-[mergify-status]: https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/lepinkainen/pyfibot&style=flat
-
 
 pyfibot
 =======
