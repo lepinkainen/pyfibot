@@ -7,7 +7,6 @@ Smart title functionality for sites which could have clear titles,
 but still decide show idiotic bulk data in the HTML title element
 """
 
-from __future__ import unicode_literals, print_function, division
 import fnmatch
 import urllib.parse as urlparse
 import logging
@@ -61,12 +60,15 @@ def __get_bs(bot, url):
     if not r:
         return None
 
+    if not hasattr(r, 'headers') or 'content-type' not in r.headers:
+        return None
+
     duration = (end - start).seconds
     if duration > TITLE_LAG_MAXIMUM:
         log.error("Fetching title took %d seconds, not displaying title", duration)
         return None
 
-    content_type = r.headers["content-type"].split(";")[0]
+    content_type = r.headers.get("content-type", "").split(";")[0]
     if content_type not in ["text/html", "text/xml", "application/xhtml+xml"]:
         log.debug("Content-type %s not parseable", content_type)
         return None
@@ -199,6 +201,9 @@ def command_cache(bot, user, channel, args):
 def handle_url(bot, user, channel, url, msg):
     """Handle urls"""
 
+    if not url or not isinstance(url, str):
+        return
+
     if msg.startswith("-"):
         return
     if re.match(
@@ -271,7 +276,7 @@ def handle_url(bot, user, channel, url, msg):
         if not title and data.get("errorMessage") == "Source url is not HTML":
             pass  # Skip this error
         elif not title:
-            log.warn("Title not found for: %s" % data)
+            log.warning("Title not found for: %s" % data)
         else:
             log.debug(data)
 
@@ -369,8 +374,8 @@ def _check_redundant(url, title):
         cmp_title = cmp_title.replace(i, unicode_to_ascii[i])
 
     cmp_url = url.replace("-", " ")
-    cmp_url = url.replace("+", " ")
-    cmp_url = url.replace("_", " ")
+    cmp_url = cmp_url.replace("+", " ")
+    cmp_url = cmp_url.replace("_", " ")
 
     parts = cmp_url.lower().rsplit("/")
 
@@ -738,7 +743,7 @@ def _handle_stackoverflow(url):
         tags = "/".join(item["tags"])
         score = item["score"]
         return "%s - %dpts - %s" % (title, score, tags)
-    except Exception as e:
+    except (KeyError, IndexError, ValueError, TypeError) as e:
         log.debug("Json parsing failed %s" % e)
         return
 
@@ -772,7 +777,7 @@ def _handle_reddit(url):
         if over_18:
             result = "{0} (NSFW)".format(result)
         return result
-    except:
+    except (KeyError, IndexError, ValueError, TypeError):
         # parsing error, use default title
         return
 
@@ -974,7 +979,7 @@ def _handle_areena(url):
 
     try:
         identifier = url.split("/")[-1].split("?")[0]
-    except:
+    except (IndexError, AttributeError):
         log.debug("Areena identifier could not be found.")
         return
 
@@ -1011,7 +1016,7 @@ def _handle_wikipedia(url):
         r = bot.get_url(api, params=params)
 
         try:
-            content = r.json()["query"]["pages"].values()[0]["extract"]
+            content = list(r.json()["query"]["pages"].values())[0]["extract"]
             content = BeautifulSoup(content, "html.parser").get_text()
             content = content.strip()
         except KeyError:
@@ -1108,15 +1113,15 @@ def _handle_imgur(url):
             log.debug("switching to endpoint gallery/r/all because of empty response")
             r = bot.get_url("%s/%s/%s" % (api, endpoint, resource_id), headers=headers)
             if not r.content:
-                log.warn("Empty response after retry!")
+                log.warning("Empty response after retry!")
                 return
         else:
-            log.warn("Empty response!")
+            log.warning("Empty response!")
             return
 
     try:
         data = r.json()
-    except:
+    except (ValueError, KeyError, TypeError):
         log.error("Error decoding JSON response from Imgur")
         return False
 
@@ -1185,7 +1190,7 @@ def _handle_dailymotion(url):
             agestr,
             adult,
         )
-    except:
+    except (KeyError, ValueError, TypeError, AttributeError):
         return
 
 
@@ -1285,7 +1290,7 @@ def _handle_dealextreme(url):
 
     try:
         data = r.json()
-    except:
+    except (ValueError, KeyError, TypeError):
         log.debug("DX.com API error.")
         return
 
@@ -1436,7 +1441,7 @@ def _handle_hitbox(url):
 
         try:
             data = r.json()
-        except:
+        except (ValueError, KeyError, TypeError):
             log.debug("can't parse, probably wrong stream name")
             return "Stream not found."
 
@@ -1577,7 +1582,7 @@ def _handle_gfycat(url):
             data = r.json()[0]["data"]["children"][0]["data"]
 
             title.append(data["title"])
-        except:
+        except (ValueError, KeyError, AttributeError):
             pass
 
     if j["subreddit"]:
