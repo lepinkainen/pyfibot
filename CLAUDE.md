@@ -2,13 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Tech Stack Guidelines
+
+**IMPORTANT**: For general technology choices and project guidelines, refer to `/llm-shared/project_tech_stack.md` which contains the authoritative guidelines that may change over time.
+
 ## Project Status
 
 **MIGRATED TO PYTHON 3** - This IRC bot has been successfully migrated from Python 2.x to Python 3.8+. All core functionality including the critical `.rehash` command works with Python 3 and modern Twisted Matrix.
 
 ## Development Commands
-
-The project uses [Task](https://taskfile.dev) for build automation instead of traditional Makefiles.
 
 ### Available Tasks
 
@@ -62,21 +64,13 @@ The bot uses a modular architecture where features are implemented as separate m
 - JSON schema validation via config_schema.json
 - Supports SSL, IPv6, virtualenv, and Tor proxy
 
-### Dependencies
+### Key Dependencies
 
 - **Python 3.8+**: Required Python version
 - **Twisted Matrix 24.0+**: Core IRC library with Python 3 support
 - **PyYAML**: Configuration parsing
 - **Requests**: HTTP client for URL handling
 - **VCR.py**: HTTP interaction recording for tests (via cassettes/)
-- **uv**: Modern Python package manager (recommended)
-
-### Development Tools
-
-- **black**: Code formatter (configured for 88-character line length)
-- **flake8**: Code linting (configured to work with black)
-- **mypy**: Type checking for core files only (modules are untyped for simplicity)
-- **Task**: Build automation replacing traditional Makefiles
 
 ### Testing Strategy
 
