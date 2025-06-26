@@ -332,12 +332,12 @@ _singleNum = r"""[0-9a-f]{0,4}"""
 _ipv6 = (
     r"""
 (?:
-  [[]                                    # Start [
+  \[                                     # Start [
   (?P<ipv6>
     (?: %(_singleNum)s[:] ){2,7}         # xxxx:xxxx:[xxxx:[xxxx:[xxxx:[xxxx:[xxxx:]]]]]
     %(_singleNum)s                       # xxxx
   )
-  []]                                    # End ]
+  \]                                     # End ]
 )
 """
     % globals()
