@@ -9,12 +9,12 @@ but still decide show idiotic bulk data in the HTML title element
 
 from __future__ import unicode_literals, print_function, division
 import fnmatch
-import urlparse
+import urllib.parse as urlparse
 import logging
 import re
 import math
 from datetime import datetime, timedelta
-from types import TupleType
+# TupleType removed in Python 3, use tuple type directly
 from dateutil.tz import tzutc
 from dateutil.parser import parse as parse_datetime
 
@@ -376,11 +376,11 @@ def _check_redundant(url, title):
 
 
 def _levenshtein_distance(s, t):
-    d = [[i] + [0] * len(t) for i in xrange(0, len(s) + 1)]
-    d[0] = [i for i in xrange(0, (len(t) + 1))]
+    d = [[i] + [0] * len(t) for i in range(0, len(s) + 1)]
+    d[0] = [i for i in range(0, (len(t) + 1))]
 
-    for i in xrange(1, len(d)):
-        for j in xrange(1, len(d[i])):
+    for i in range(1, len(d)):
+        for j in range(1, len(d[i])):
             if len(s) > i - 1 and len(t) > j - 1 and s[i - 1] == t[j - 1]:
                 d[i][j] = d[i - 1][j - 1]
             else:
@@ -404,7 +404,7 @@ def _title(bot, channel, title, smart=False, prefix=None, url=None):
         prefix = "Title:"
     info = None
     # tuple, additional info
-    if type(title) == TupleType:
+    if type(title) == tuple:
         info = title[1]
         title = title[0]
     # crop obscenely long titles
@@ -681,7 +681,7 @@ def _handle_stackoverflow(url):
         tags = '/'.join(item['tags'])
         score = item['score']
         return "%s - %dpts - %s" % (title, score, tags)
-    except Exception, e:
+    except Exception as e:
         log.debug("Json parsing failed %s" % e)
         return
 

@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse as urllib
 
 
 def command_oraakkeli(bot, user, channel, args):

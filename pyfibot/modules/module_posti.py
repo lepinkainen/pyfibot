@@ -6,7 +6,7 @@ from __future__ import unicode_literals, print_function, division
 from dateutil.parser import parse
 from dateutil.tz import tzutc
 from datetime import datetime
-from urllib import quote_plus
+from urllib.parse import quote_plus
 
 
 def init(bot):

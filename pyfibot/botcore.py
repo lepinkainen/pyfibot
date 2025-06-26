@@ -505,11 +505,11 @@ class PyFiBot(irc.IRCClient, CoreCommands):
     def say(self, channel, message, length=None):
         """Override default say to make replying to private messages easier"""
 
-        # Encode channel
+        # Ensure channel is a string
         # (for cases where channel is specified in code instead of "answering")
-        channel = self.factory.to_utf8(channel)
-        # Encode all outgoing messages to UTF-8
-        message = self.factory.to_utf8(message)
+        channel = self.factory.to_unicode(channel)
+        # Ensure all outgoing messages are strings
+        message = self.factory.to_unicode(message)
 
         # Change nick!user@host -> nick, since all servers don't support full hostmask messaging
         if "!" and "@" in channel:
@@ -532,32 +532,32 @@ class PyFiBot(irc.IRCClient, CoreCommands):
         return super(PyFiBot, self).describe(channel, message)
 
     def mode(self, chan, set, modes, limit=None, user=None, mask=None):
-        chan = self.factory.to_utf8(chan)
-        _set = self.factory.to_utf8(set)
-        modes = self.factory.to_utf8(modes)
+        chan = self.factory.to_unicode(chan)
+        _set = self.factory.to_unicode(set)
+        modes = self.factory.to_unicode(modes)
         return super(PyFiBot, self).mode(chan, _set, modes, limit, user, mask)
 
     def kick(self, channel, user, reason=None):
-        reason = self.factory.to_utf8(reason)
+        reason = self.factory.to_unicode(reason)
         return super(PyFiBot, self).kick(channel, user, reason)
 
     def join(self, channel, key=None):
-        channel = self.factory.to_utf8(channel)
+        channel = self.factory.to_unicode(channel)
         return super(PyFiBot, self).join(channel, key)
 
     def leave(self, channel, key=None):
-        channel = self.factory.to_utf8(channel)
+        channel = self.factory.to_unicode(channel)
         return super(PyFiBot, self).leave(channel, key)
 
     def quit(self, message=""):
-        message = self.factory.to_utf8(message)
+        message = self.factory.to_unicode(message)
         return super(PyFiBot, self).quit(message)
 
     # Overrides for twisted.words.irc internal commands #
     def XXregister(self, nickname, hostname="foo", servername="bar"):
-        nickname = self.factory.to_utf8(nickname)
-        hostname = self.factory.to_utf8(hostname)
-        servername = self.factory.to_utf8(servername)
+        nickname = self.factory.to_unicode(nickname)
+        hostname = self.factory.to_unicode(hostname)
+        servername = self.factory.to_unicode(servername)
         return super(PyFiBot, self).register(nickname, hostname, servername)
 
         # self.sendLine("USER %s %s %s :%s" % (self.username, hostname, servername, self.realname))

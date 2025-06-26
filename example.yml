@@ -1,10 +1,10 @@
 nick: botnick
 
 admins:
-  - 'foo!bar@example.com'
+  - "foo!bar@example.com"
 
 networks:
   nerv:
     server: irc.nerv.fi
     channels:
-      - '#pyfibot'
+      - "#pyfibot"

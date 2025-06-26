@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
-import urllib
+import urllib.parse as urllib
 import logging
 import re
 import xml.etree.ElementTree as etree

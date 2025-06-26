@@ -59,21 +59,23 @@ class BotMock(botcore.CoreCommands):
         return (channel, message)
 
     def to_utf8(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if isinstance(_string, unicode):
+        """Convert string to UTF-8 bytes if it is a string"""
+        if isinstance(_string, str):
             _string = _string.encode("UTF-8")
         return _string
 
     def to_unicode(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if not isinstance(_string, unicode):
+        """Convert bytes to unicode string"""
+        if isinstance(_string, bytes):
             try:
-                _string = unicode(_string)
-            except:
+                _string = _string.decode("utf-8")
+            except UnicodeDecodeError:
                 try:
-                    _string = _string.decode("utf-8")
-                except:
                     _string = _string.decode("iso-8859-1")
+                except UnicodeDecodeError:
+                    _string = str(_string)
+        elif not isinstance(_string, str):
+            _string = str(_string)
         return _string
 
 
@@ -90,10 +92,12 @@ class FactoryMock(pyfibot.PyFiBotFactory):
         if not config or config == {}:
             if os.path.exists(main_config):
                 log.debug("USING MAIN CONFIG")
-                config = yaml.load(file(main_config), Loader=yaml.FullLoader)
+                with open(main_config, 'r') as f:
+                    config = yaml.load(f, Loader=yaml.FullLoader)
             else:
                 log.debug("USING TEST CONFIG")
-                config = yaml.load(file(test_config), Loader=yaml.FullLoader)
+                with open(test_config, 'r') as f:
+                    config = yaml.load(f, Loader=yaml.FullLoader)
 
         pyfibot.PyFiBotFactory.__init__(self, config)
         self.createNetwork(

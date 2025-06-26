@@ -236,7 +236,8 @@ class PyFiBotFactory(ThrottledClientFactory):
             env = self._getGlobals()
             log.info("load module - %s" % module)
             # Load new version of the module
-            execfile(os.path.join(self.moduledir, module), env, env)
+            with open(os.path.join(self.moduledir, module), 'r') as f:
+                exec(f.read(), env, env)
             # Initialize module
             if "init" in env:
                 log.info("initialize module - %s" % module)
@@ -344,21 +345,23 @@ class PyFiBotFactory(ThrottledClientFactory):
         return False
 
     def to_utf8(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if isinstance(_string, unicode):
+        """Convert string to UTF-8 bytes if it is a string"""
+        if isinstance(_string, str):
             _string = _string.encode("UTF-8")
         return _string
 
     def to_unicode(self, _string):
-        """Convert string to UTF-8 if it is unicode"""
-        if not isinstance(_string, unicode):
+        """Convert bytes to unicode string"""
+        if isinstance(_string, bytes):
             try:
-                _string = unicode(_string)
-            except:
+                _string = _string.decode("utf-8")
+            except UnicodeDecodeError:
                 try:
-                    _string = _string.decode("utf-8")
-                except:
                     _string = _string.decode("iso-8859-1")
+                except UnicodeDecodeError:
+                    _string = str(_string)
+        elif not isinstance(_string, str):
+            _string = str(_string)
         return _string
 
     def reload_config(self):
@@ -465,7 +468,8 @@ def read_config():
     config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
 
     if os.path.exists(config_file):
-        config = yaml.load(file(config_file), Loader=yaml.FullLoader)
+        with open(config_file, 'r') as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
     else:
         print(
             "No config file found, please edit example.yml and rename it to config.yml"
@@ -475,7 +479,8 @@ def read_config():
 
 
 def validate_config(config):
-    schema = json.load(file(os.path.join(sys.path[0], "config_schema.json")))
+    with open(os.path.join(sys.path[0], "config_schema.json"), 'r') as f:
+        schema = json.load(f)
     log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
     if not v.is_valid(config):
