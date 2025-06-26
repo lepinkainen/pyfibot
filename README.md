@@ -1,14 +1,9 @@
-# Project archived 7/2024
+# Pyfibot is back!
 
-Porting this Python 2.x project to 3.x is way too much work for me.
+Thanks to the power of Claude Code, I was able to port the code to python3
 
-I've replaced Pyfibot in my personal use with these three:
-
-- IRC connector: https://github.com/lepinkainen/gobotlite
-- Commands in AWS Lambda: https://github.com/lepinkainen/lambdabot
-- Title parser in AWS Lambda: https://github.com/lepinkainen/titleparser
-
-Both Lambda functions should be pretty easy to convert to run locally.
+- [uv](https://github.com/astral-sh/uv) is used to manage packages
+- [Taskfiles](https://taskfile.dev/) instead of Makefiles
 
 ---
 
