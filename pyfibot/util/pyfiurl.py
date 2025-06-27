@@ -12,6 +12,7 @@ __version__ = "3.0.3"
 
 import re
 import string
+from typing import List
 
 _countrycodes = [
     "ac",
@@ -382,10 +383,10 @@ validUserinfoChars = "".join(validUserinfoChars)
 hostRe = re.compile(_host, re.VERBOSE | re.MULTILINE | re.I)
 
 
-def grab(txt, needScheme=True):
-    seekpos = 0
+def grab(txt: str, needScheme: bool = True) -> List[str]:
+    seekpos: int = 0
 
-    possibleUrls = []
+    possibleUrls: List[str] = []
 
     # Try to find all possible URI's
     while 1:

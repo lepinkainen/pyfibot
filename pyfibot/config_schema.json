@@ -1,89 +1,128 @@
 {
-    "$schema": "http://json-schema.org/draft-03/schema#",
-    "id": "#",
-    "required": false,
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "https://pyfibot.org/config-schema.json",
+    "title": "PyFiBot Configuration Schema",
+    "description": "Schema for PyFiBot configuration files",
     "type": "object",
+    "required": ["networks"],
     "properties": {
         "admins": {
-            "id": "admins",
+            "type": "array",
+            "description": "List of admin users (nick!user@host format)",
             "items": {
-                "id": "0",
-                "required": true,
-                "type": "string"
-            },
-            "required": false,
-            "type": "array"
-        },
-        "logging": {
-            "id": "logging",
-            "properties": {
-                "debug": {
-                    "id": "debug",
-                    "required": false,
-                    "type": "boolean"
-                }
-            },
-            "required": false,
-            "type": "object"
-        },
-        "module_urltitle": {
-            "id": "module_urltitle",
-            "properties": {
-                "ignore_urls": {
-                    "id": "ignore_urls",
-                    "items": {
-                        "id": "0",
-                        "required": false,
-                        "type": "string"
-                    },
-                    "required": false,
-                    "type": "array"
-                },
-                "ignore_users": {
-                    "id": "ignore_users",
-                    "items": {
-                        "id": "0",
-                        "required": false,
-                        "type": "string"
-                    },
-                    "required": false,
-                    "type": "array"
-                },
-                "youtube_devid": {
-                    "id": "youtube_devid",
-                    "required": false,
-                    "type": "string"
-                },
-                "check_redundant": {
-                    "id": "check_redundant",
-                    "required": false,
-                    "type": "boolean"
-                }
-            },
-            "required": false,
-            "type": "object"
-        },
-        "module_wolfram_alpha": {
-            "id": "module_wolfram_alpha",
-            "properties": {
-                "appid": {
-                    "id": "appid",
-                    "required": false,
-                    "type": "string"
-                }
-            },
-            "required": false,
-            "type": "object"
-        },
-        "networks": {
-            "id": "networks",
-            "required": true,
-            "type": "object"
+                "type": "string",
+                "pattern": "^.+!.+@.+$"
+            }
         },
         "nick": {
-            "id": "nick",
-            "required": false,
-            "type": "string"
+            "type": "string",
+            "description": "Default nickname for the bot"
+        },
+        "logging": {
+            "type": "object",
+            "description": "Logging configuration",
+            "properties": {
+                "debug": {
+                    "type": "boolean",
+                    "description": "Enable debug logging"
+                }
+            },
+            "additionalProperties": false
+        },
+        "module_urltitle": {
+            "type": "object",
+            "description": "URL title module configuration",
+            "properties": {
+                "ignore_urls": {
+                    "type": "array",
+                    "description": "List of URL patterns to ignore",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ignore_users": {
+                    "type": "array",
+                    "description": "List of users to ignore for URL title fetching",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "youtube_devid": {
+                    "type": "string",
+                    "description": "YouTube API developer ID"
+                },
+                "check_redundant": {
+                    "type": "boolean",
+                    "description": "Check for redundant URL titles"
+                }
+            },
+            "additionalProperties": false
+        },
+        "module_wolfram_alpha": {
+            "type": "object",
+            "description": "Wolfram Alpha module configuration",
+            "properties": {
+                "appid": {
+                    "type": "string",
+                    "description": "Wolfram Alpha application ID"
+                }
+            },
+            "additionalProperties": false
+        },
+        "networks": {
+            "type": "object",
+            "description": "Network configurations",
+            "patternProperties": {
+                "^[a-zA-Z0-9_-]+$": {
+                    "type": "object",
+                    "required": ["server"],
+                    "properties": {
+                        "server": {
+                            "type": "string",
+                            "description": "IRC server hostname"
+                        },
+                        "port": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 65535,
+                            "default": 6667,
+                            "description": "IRC server port"
+                        },
+                        "ssl": {
+                            "type": "boolean",
+                            "default": false,
+                            "description": "Use SSL connection"
+                        },
+                        "channels": {
+                            "type": "array",
+                            "description": "List of channels to join",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^#.+"
+                            }
+                        },
+                        "nickname": {
+                            "type": "string",
+                            "description": "Nickname for this network"
+                        },
+                        "password": {
+                            "type": "string",
+                            "description": "Server password"
+                        },
+                        "authname": {
+                            "type": "string",
+                            "description": "Authentication username"
+                        },
+                        "authpass": {
+                            "type": "string",
+                            "description": "Authentication password"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
         }
-    }
+    },
+    "additionalProperties": true
 }

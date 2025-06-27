@@ -88,17 +88,6 @@ exclude = ["pyfibot/modules/"]
 module = "pyfibot.modules.*"
 ignore_errors = true
 
-[tool.flake8]
-max-line-length = 88
-extend-ignore = ["E203", "W503", "E501", "E722", "F821", "E701", "W504"]
-exclude = [
-    ".git",
-    "__pycache__",
-    "build",
-    "dist",
-    ".mypy_cache",
-    ".pytest_cache"
-]
 
 [dependency-groups]
 dev = [

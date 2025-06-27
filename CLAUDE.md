@@ -6,16 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **IMPORTANT**: For general technology choices and project guidelines, refer to `/llm-shared/project_tech_stack.md` which contains the authoritative guidelines that may change over time.
 
-## Project Status
-
-**MIGRATED TO PYTHON 3** - This IRC bot has been successfully migrated from Python 2.x to Python 3.8+. All core functionality including the critical `.rehash` command works with Python 3 and modern Twisted Matrix.
-
 ## Development Commands
+
+In general don't try to run `python3` directly, use the `uv run` command instead. This ensures that the correct Python environment is used and dependencies are managed properly.
 
 ### Available Tasks
 
 - `task test` - Run tests with coverage
-- `task test-ci` - Run tests in CI environment 
+- `task test-ci` - Run tests in CI environment
 - `task lint` - Run flake8 linting
 - `task typecheck` - Run mypy type checking on core files only
 - `task format` - Format code with black
@@ -24,14 +22,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `task dev-install` - Install with development dependencies
 - `task clean` - Clean build artifacts and cache
 
-### Legacy Commands
-
-- Run tests: `python3 -m pytest` or `./test.sh`
-- Coverage with VCR recording: `VCR_RECORD_MODE=once coverage run --source pyfibot -m pytest`
-
 ### Running the Bot
 
-- Start bot: `python3 pyfibot/pyfibot.py <config.yml>`
+- Start bot: `uv run python3 pyfibot/pyfibot.py <config.yml>`
 - Install dependencies: `uv sync` or `pip install -e .`
 - Docker: Available via Dockerfile
 

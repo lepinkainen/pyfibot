@@ -1,8 +1,9 @@
 from __future__ import unicode_literals, print_function, division
 import requests
+from typing import Dict, Any
 
-client_id = "a7a5d6bc929d48f"
-client_secret = "57b1f90a12d4d72762b4b1bf644af5157f73fed5"
+client_id: str = "a7a5d6bc929d48f"
+client_secret: str = "57b1f90a12d4d72762b4b1bf644af5157f73fed5"
 
 print("Open the following URL in a browser:")
 print(
@@ -10,8 +11,8 @@ print(
     % client_id
 )
 
-pin = raw_input("enter pin:")
-r = requests.post(
+pin: str = input("enter pin:")
+r: requests.Response = requests.post(
     "https://api.imgur.com/oauth2/token",
     data={
         "client_id": client_id,
@@ -20,6 +21,8 @@ r = requests.post(
         "pin": pin,
     },
 )
+
+response_data: Dict[str, Any] = r.json()
 
 print("Paste the following to your configuration:")
 
@@ -30,5 +33,5 @@ module_imgur:
   access_token: %s
   refresh_token: %s
 """
-    % (r.json()["access_token"], r.json()["refresh_token"])
+    % (response_data["access_token"], response_data["refresh_token"])
 )

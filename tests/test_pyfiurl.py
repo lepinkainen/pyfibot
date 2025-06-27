@@ -137,3 +137,31 @@ def testBlocks():
         "(http://link1.com) <http://link2.com> \"http://link3.com\" 'http://link4.com' [http://link5.com]",
         needScheme,
     )
+
+
+def testUserinfo():
+    """Test URLs with userinfo (user:pass@host)"""
+    assert ["http://user:pass@example.com"] == grab(
+        "http://user:pass@example.com", needScheme
+    )
+    assert ["https://user@example.org/path"] == grab(
+        "https://user@example.org/path", needScheme
+    )
+
+
+def testNeedSchemeSkip():
+    """Test that URLs without scheme are skipped when needScheme=True"""
+    # This should find no URLs because needScheme=True but no scheme is present
+    assert [] == grab("example.com/path", needScheme)
+    # This should find URLs with scheme
+    assert ["http://example.com/path"] == grab("http://example.com/path", needScheme)
+
+
+def testUserinfoVariants():
+    """Test various userinfo patterns"""
+    assert ["http://user:password@host.com"] == grab(
+        "http://user:password@host.com", needScheme
+    )
+    assert ["ftp://user@ftp.example.com/file"] == grab(
+        "ftp://user@ftp.example.com/file", needScheme
+    )
