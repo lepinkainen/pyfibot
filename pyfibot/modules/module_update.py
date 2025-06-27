@@ -3,8 +3,39 @@ import subprocess
 import sys
 
 import logging
+from git import Repo, GitCommandError
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 log = logging.getLogger("update")
+
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+def _git_pull(repo_path):
+    """Pull from git with retry logic"""
+    repo = Repo(repo_path)
+    origin = repo.remotes.origin
+    return origin.pull()
+
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+def _install_dependencies(cwd):
+    """Install/upgrade dependencies with retry logic"""
+    # Use uv if available, otherwise fall back to pip
+    try:
+        cmd = ["uv", "sync", "--upgrade"]
+        log.debug("Executing uv sync --upgrade in %s" % cwd)
+    except FileNotFoundError:
+        cmd = ["pip", "install", "--upgrade", "-e", "."]
+        log.debug("Executing pip install --upgrade in %s" % cwd)
+
+    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    res = p.wait()
+    out, err = p.communicate()
+
+    if res != 0:
+        raise RuntimeError(f"Command failed with exit code {res}: {err.decode()}")
+
+    return out.decode(), err.decode()
 
 
 def command_update(bot, user, channel, args):
@@ -14,47 +45,48 @@ def command_update(bot, user, channel, args):
 
     pull_ok = False
     pip_ok = False
-
-    cmd = ["git", "pull"]
     cwd = sys.path[0]
 
-    log.debug("Executing git pull in %s" % cwd)
+    # Git pull with GitPython and retry logic
+    try:
+        log.debug("Executing git pull in %s" % cwd)
+        pull_info = _git_pull(cwd)
 
-    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = p.wait()
-    out, err = p.communicate()
+        if pull_info:
+            pull_ok = True
+            bot.say(channel, "Git update OK:")
+            for info in pull_info:
+                if hasattr(info, "commit"):
+                    bot.say(
+                        channel,
+                        f"Updated to {info.commit.hexsha[:8]}: {info.commit.summary}",
+                    )
+        else:
+            pull_ok = True
+            bot.say(channel, "Already up to date")
 
-    if res:
-        bot.say(channel, "Git pull failed:")
-        for line in out.split("\n"):
-            bot.say(channel, "%s" % line)
-    else:
-        pull_ok = True
-        bot.say(channel, "Git update OK:")
-        for line in out.split("\n"):
-            bot.say(channel, "%s" % line)
+    except GitCommandError as e:
+        bot.say(channel, f"Git pull failed: {e}")
+        log.error(f"Git pull failed: {e}")
+    except Exception as e:
+        bot.say(channel, f"Git operation failed: {e}")
+        log.error(f"Git operation failed: {e}")
 
-    # only report errors when the update failed, git uses stderr for normal output..
-    if res and err:
-        bot.say(channel, "Errors: %s" % err)
-
-    # fetch new required packages if needed
-    cmd = ["pip", "install", "--upgrade", "--requirement", "../requirements.txt"]
-    log.debug("executing pip install in %s" % cwd)
-
-    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    res = p.wait()
-    out, err = p.communicate()
-
-    if res:
-        bot.say(channel, "Package update failed:")
-        for line in out.split("\n"):
-            bot.say(channel, "%s" % line)
-        for line in err.split("\n"):
-            bot.say(channel, "%s" % line)
-    else:
-        bot.say(channel, "Package status OK")
+    # Install/upgrade dependencies
+    try:
+        out, err = _install_dependencies(cwd)
+        bot.say(channel, "Package dependencies updated successfully")
         pip_ok = True
+
+        # Log detailed output for debugging
+        if out:
+            log.debug(f"Package install output: {out}")
+        if err:
+            log.debug(f"Package install stderr: {err}")
+
+    except Exception as e:
+        bot.say(channel, f"Package update failed: {e}")
+        log.error(f"Package update failed: {e}")
 
     # Rehash after successful update
     if pip_ok and pull_ok:

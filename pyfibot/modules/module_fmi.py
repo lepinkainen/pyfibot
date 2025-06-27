@@ -1,11 +1,44 @@
 # -*- encoding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
-from datetime import datetime, timedelta
-from bs4 import BeautifulSoup
+from datetime import datetime, timedelta, timezone
 from math import isnan
+from typing import Optional
+import logging
+
+import lxml.etree as etree
+import requests_cache
+from tenacity import retry, stop_after_attempt, wait_exponential
+from pydantic import BaseModel, Field, field_validator
 
 global default_place
 default_place = "Helsinki"
+
+log = logging.getLogger("fmi")
+
+# Initialize cached session for API requests (15 minute cache)
+cached_session = requests_cache.CachedSession(
+    "fmi_cache", expire_after=900, backend="memory"  # 15 minutes
+)
+
+
+class WeatherData(BaseModel):
+    """Pydantic model for weather data validation"""
+
+    place: str = Field(..., description="Location name")
+    temperature: Optional[float] = Field(None, description="Temperature in Celsius")
+    feels_like: Optional[float] = Field(None, description="Feels like temperature")
+    wind_speed: Optional[float] = Field(None, description="Wind speed in m/s")
+    humidity: Optional[int] = Field(None, description="Relative humidity percentage")
+    cloudiness: Optional[int] = Field(None, description="Cloudiness 0-8")
+    weather_description: Optional[str] = Field(None, description="Weather description")
+
+    @field_validator("humidity", "cloudiness", mode="before")
+    @classmethod
+    def validate_percentages(cls, v):
+        if v is not None and (v < 0 or v > 100):
+            return None
+        return v
+
 
 # Time format for the API
 TIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
@@ -68,20 +101,12 @@ WAWA = {
 }
 
 
-def init(bot):
-    global default_place
-    config = bot.config.get("module_fmi", {})
-    default_place = config.get("default_place", default_place)
-
-
-def command_saa(bot, user, channel, args):
-    """Command to fetch data from FMI"""
-    if args:
-        place = args
-    else:
-        place = default_place
-
-    starttime = (datetime.utcnow() - timedelta(minutes=10)).strftime(TIME_FORMAT) + "Z"
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+def _fetch_weather_data(place: str) -> Optional[WeatherData]:
+    """Fetch weather data from FMI API with retry logic and caching"""
+    starttime = (datetime.now(timezone.utc) - timedelta(minutes=10)).strftime(
+        TIME_FORMAT
+    ) + "Z"
     params = {
         "request": "getFeature",
         "storedquery_id": "fmi::observations::weather::timevaluepair",
@@ -92,50 +117,122 @@ def command_saa(bot, user, channel, args):
         "starttime": starttime,
     }
 
-    r = bot.get_url("http://opendata.fmi.fi/wfs", params=params)
-    bs = BeautifulSoup(r.text)
-
-    # Get FMI name, gives the observation place more accurately
     try:
-        place = bs.find("gml:name").text
-    except AttributeError:
-        return bot.say(channel, "Paikkaa ei löytynyt.")
-
-    # Loop through measurement time series -objects and gather values
-    values = {}
-    for mts in bs.find_all("wml2:measurementtimeseries"):
-        # Get the identifier from mts-tag
-        target = mts["gml:id"].split("-")[-1]
-        # Get last value from measurements (always sorted by time)
-        value = float(mts.find_all("wml2:value")[-1].text)
-        # NaN is returned, if observation doesn't exist
-        if not isnan(value):
-            values[target] = value
-
-    # Build text from values found
-    text = []
-    if "t2m" in values:
-        text.append("lämpötila: %.1f°C" % values["t2m"])
-    if "t2m" in values and "ws_10min" in values:
-        # Calculate "feels like" if both temperature and wind speed were found
-        feels_like = (
-            13.12
-            + 0.6215 * values["t2m"]
-            - 13.956 * (values["ws_10min"] ** 0.16)
-            + 0.4867 * values["t2m"] * (values["ws_10min"] ** 0.16)
+        response = cached_session.get(
+            "http://opendata.fmi.fi/wfs", params=params, timeout=10
         )
-        text.append("tuntuu kuin: %.1f°C" % feels_like)
-    if "ws_10min" in values:
-        text.append("tuulen nopeus: %i m/s" % round(values["ws_10min"]))
-    if "rh" in values:
-        text.append("ilman kosteus: %i%%" % round(values["rh"]))
-    if "n_man" in values:
-        text.append("pilvisyys: %i/8" % int(values["n_man"]))
-    if "wawa" in values and int(values["wawa"]) in WAWA:
-        text.append(WAWA[int(values["wawa"])])
+        response.raise_for_status()
 
-    # Return place and values to the channel
-    return bot.say(channel, "%s: %s" % (place, ", ".join(text)))
+        # Parse XML with lxml for better performance
+        root = etree.fromstring(response.content)
+
+        # Define namespaces
+        namespaces = {
+            "gml": "http://www.opengis.net/gml/3.2",
+            "wml2": "http://www.opengis.net/waterml/2.0",
+        }
+
+        # Get FMI name for more accurate location
+        name_element = root.find(".//gml:name", namespaces)
+        if name_element is None:
+            log.warning(f"Location not found: {place}")
+            return None
+
+        location_name = name_element.text
+
+        # Extract measurement values
+        values = {}
+        for mts in root.findall(".//wml2:MeasurementTimeseries", namespaces):
+            gml_id = mts.get("{http://www.opengis.net/gml/3.2}id")
+            if gml_id:
+                target = gml_id.split("-")[-1]
+                value_elements = mts.findall(".//wml2:value", namespaces)
+                if value_elements:
+                    try:
+                        value = float(value_elements[-1].text)
+                        if not isnan(value):
+                            values[target] = value
+                    except (ValueError, TypeError):
+                        continue
+
+        # Calculate feels like temperature if we have both temp and wind
+        feels_like = None
+        if "t2m" in values and "ws_10min" in values:
+            feels_like = (
+                13.12
+                + 0.6215 * values["t2m"]
+                - 13.956 * (values["ws_10min"] ** 0.16)
+                + 0.4867 * values["t2m"] * (values["ws_10min"] ** 0.16)
+            )
+
+        # Get weather description
+        weather_desc = None
+        if "wawa" in values and int(values["wawa"]) in WAWA:
+            weather_desc = WAWA[int(values["wawa"])]
+
+        # Create and validate weather data
+        weather_data = WeatherData(
+            place=location_name,
+            temperature=values.get("t2m"),
+            feels_like=feels_like,
+            wind_speed=values.get("ws_10min"),
+            humidity=int(values["rh"]) if "rh" in values else None,
+            cloudiness=int(values["n_man"]) if "n_man" in values else None,
+            weather_description=weather_desc,
+        )
+
+        return weather_data
+
+    except Exception as e:
+        log.error(f"Error fetching weather data for {place}: {e}")
+        raise
+
+
+def init(bot):
+    global default_place
+    config = bot.config.get("module_fmi", {})
+    default_place = config.get("default_place", default_place)
+
+
+def command_saa(bot, user, channel, args):
+    """Command to fetch data from FMI with enhanced error handling and caching"""
+    place = args if args else default_place
+
+    try:
+        weather_data = _fetch_weather_data(place)
+        if not weather_data:
+            return bot.say(channel, "Paikkaa ei löytynyt.")
+
+        # Build text from weather data
+        text_parts = []
+
+        if weather_data.temperature is not None:
+            text_parts.append(f"lämpötila: {weather_data.temperature:.1f}°C")
+
+        if weather_data.feels_like is not None:
+            text_parts.append(f"tuntuu kuin: {weather_data.feels_like:.1f}°C")
+
+        if weather_data.wind_speed is not None:
+            text_parts.append(f"tuulen nopeus: {round(weather_data.wind_speed)} m/s")
+
+        if weather_data.humidity is not None:
+            text_parts.append(f"ilman kosteus: {weather_data.humidity}%%")
+
+        if weather_data.cloudiness is not None:
+            text_parts.append(f"pilvisyys: {weather_data.cloudiness}/8")
+
+        if weather_data.weather_description:
+            text_parts.append(weather_data.weather_description)
+
+        if not text_parts:
+            return bot.say(channel, f"{weather_data.place}: ei säätietoja saatavilla")
+
+        response = f"{weather_data.place}: {', '.join(text_parts)}"
+        return bot.say(channel, response)
+
+    except Exception as e:
+        log.error(f"Weather command failed for {place}: {e}")
+        return bot.say(channel, f"Säätietojen haku epäonnistui: {place}")
 
 
 def command_keli(bot, user, channel, args):

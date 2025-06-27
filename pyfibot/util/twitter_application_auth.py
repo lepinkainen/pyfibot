@@ -11,10 +11,10 @@ if len(sys.argv) < 3:
 consumer_key: str = sys.argv[1]
 consumer_secret: str = sys.argv[2]
 token: str = consumer_key + ":" + consumer_secret
-encoded_token: bytes = base64.b64encode(token.encode('utf-8'))
+encoded_token: bytes = base64.b64encode(token.encode("utf-8"))
 
 payload: Dict[str, str] = {"grant_type": "client_credentials"}
-headers: Dict[str, str] = {"Authorization": "Basic " + encoded_token.decode('utf-8')}
+headers: Dict[str, str] = {"Authorization": "Basic " + encoded_token.decode("utf-8")}
 auth_url: str = "https://api.twitter.com/oauth2/token"
 r: requests.Response = requests.post(auth_url, data=payload, headers=headers)
 try:

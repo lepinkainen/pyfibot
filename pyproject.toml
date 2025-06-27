@@ -29,6 +29,11 @@ dependencies = [
     "python-dateutil>=2.2",
     "pytz",
     "pytvmaze",
+    "gitpython>=3.1.0",
+    "requests-cache>=1.0.0",
+    "tenacity>=8.0.0",
+    "lxml>=4.6.0",
+    "pydantic>=2.0.0",
 ]
 
 [project.optional-dependencies]

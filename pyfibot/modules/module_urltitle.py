@@ -60,7 +60,7 @@ def __get_bs(bot, url):
     if not r:
         return None
 
-    if not hasattr(r, 'headers') or 'content-type' not in r.headers:
+    if not hasattr(r, "headers") or "content-type" not in r.headers:
         return None
 
     duration = (end - start).seconds
