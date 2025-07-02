@@ -6,6 +6,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **IMPORTANT**: For general technology choices and project guidelines, refer to `/llm-shared/project_tech_stack.md` which contains the authoritative guidelines that may change over time.
 
+### Python-Specific Guidelines
+
+- Use "uv" for dependency management (already implemented in this project)
+- Use "ruff" for linting and formatting (this project uses flake8 for linting)
+- Use "mypy" for type checking as much as possible (already implemented for core files)
+- When analyzing large codebases, use the `pyfuncs` tool: `python llm-shared/utils/pyfuncs.py --dir /path/to/project`
+
+### Large Codebase Analysis
+
+When analyzing large codebases that might exceed context limits, use the Gemini CLI with the `-p` flag:
+
+- Analyzing entire codebases or large directories
+- Comparing multiple large files
+- Understanding project-wide patterns or architecture
+- Checking for coding patterns or practices
+
+Examples:
+```bash
+gemini -p "@pyfibot/ Summarise the architecture of this codebase"
+gemini -p "@pyfibot/modules/ Explain the module system implementation"
+gemini -p "@pyfibot/ Is the project test coverage on par with industry standards?"
+```
+
 ## Development Commands
 
 In general don't try to run `python3` directly, use the `uv run` command instead. This ensures that the correct Python environment is used and dependencies are managed properly.
