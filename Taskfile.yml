@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 tasks:
   build:
@@ -75,7 +75,7 @@ tasks:
 
   build-dist:
     desc: Build wheel and source distributions for PyPI
-    deps: [test, lint, typecheck]
+    deps: [clean, test, lint, typecheck]
     cmds:
       - uv build --no-sources
       - echo "Built distributions in dist/"
@@ -95,18 +95,18 @@ tasks:
     cmds:
       - uv version --bump major
 
-  publish-test:
-    desc: Publish to TestPyPI for testing
-    deps: [build-dist]
-    cmds:
-      - echo "Publishing to TestPyPI..."
-      - echo "Set UV_PUBLISH_TOKEN to your TestPyPI token first"
-      - uv publish --publish-url https://test.pypi.org/legacy/
-
   publish:
     desc: Publish to PyPI (production)
     deps: [build-dist]
     cmds:
       - echo "Publishing to PyPI..."
-      - echo "Set UV_PUBLISH_TOKEN to your PyPI token first"
-      - uv publish
+      - echo "Make sure UV_PUBLISH_TOKEN is set to your PyPI token"
+      - echo "Get token from https://pypi.org/manage/account/#api-tokens"
+      - echo "Token format pypi-xxxxxxxxxxxxxxxxxxxx"
+      - |
+        if [ -z "$UV_PUBLISH_TOKEN" ]; then
+          echo "ERROR: UV_PUBLISH_TOKEN environment variable not set"
+          echo "Usage: export UV_PUBLISH_TOKEN='pypi-your-token-here'"
+          exit 1
+        fi
+      - uv publish --token "$UV_PUBLISH_TOKEN"
