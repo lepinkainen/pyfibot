@@ -62,3 +62,6 @@ nosetests.xml
 
 # VSCode
 .vscode
+
+# Environment variables
+.envrc

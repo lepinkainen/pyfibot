@@ -66,8 +66,47 @@ tasks:
     desc: Clean build artifacts and cache
     cmds:
       - rm -rf build/
+      - rm -rf dist/
       - rm -rf .mypy_cache/
       - rm -rf .pytest_cache/
       - rm -rf __pycache__/
       - find . -name "*.pyc" -delete
       - find . -name "*.pyo" -delete
+
+  build-dist:
+    desc: Build wheel and source distributions for PyPI
+    deps: [test, lint, typecheck]
+    cmds:
+      - uv build --no-sources
+      - echo "Built distributions in dist/"
+
+  version-patch:
+    desc: Bump patch version (e.g., 0.1.0 -> 0.1.1)
+    cmds:
+      - uv version --bump patch
+
+  version-minor:
+    desc: Bump minor version (e.g., 0.1.0 -> 0.2.0)
+    cmds:
+      - uv version --bump minor
+
+  version-major:
+    desc: Bump major version (e.g., 0.1.0 -> 1.0.0)
+    cmds:
+      - uv version --bump major
+
+  publish-test:
+    desc: Publish to TestPyPI for testing
+    deps: [build-dist]
+    cmds:
+      - echo "Publishing to TestPyPI..."
+      - echo "Set UV_PUBLISH_TOKEN to your TestPyPI token first"
+      - uv publish --publish-url https://test.pypi.org/legacy/
+
+  publish:
+    desc: Publish to PyPI (production)
+    deps: [build-dist]
+    cmds:
+      - echo "Publishing to PyPI..."
+      - echo "Set UV_PUBLISH_TOKEN to your PyPI token first"
+      - uv publish
