@@ -47,13 +47,67 @@
                         "type": "string"
                     }
                 },
-                "youtube_devid": {
+                "youtube_apikey": {
                     "type": "string",
-                    "description": "YouTube API developer ID"
+                    "description": "YouTube Data API key"
                 },
                 "check_redundant": {
                     "type": "boolean",
                     "description": "Check for redundant URL titles"
+                },
+                "disable": {
+                    "type": "string",
+                    "description": "Comma-separated channel names to disable URL title fetching in"
+                },
+                "ignore": {
+                    "type": "array",
+                    "description": "List of patterns to ignore",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "lambda_enable": {
+                    "type": "boolean",
+                    "description": "Enable AWS Lambda-based URL fetching"
+                },
+                "lambda_url": {
+                    "type": "string",
+                    "description": "AWS Lambda function URL"
+                },
+                "lambda_apikey": {
+                    "type": "string",
+                    "description": "AWS Lambda API key"
+                },
+                "twitter_bearer": {
+                    "type": "string",
+                    "description": "Twitter/X API bearer token"
+                },
+                "areena": {
+                    "type": "object",
+                    "description": "Yle Areena API credentials",
+                    "properties": {
+                        "app_id": {
+                            "type": "string",
+                            "description": "Areena application ID"
+                        },
+                        "app_key": {
+                            "type": "string",
+                            "description": "Areena application key"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "ebay_appid": {
+                    "type": "string",
+                    "description": "eBay application ID"
+                },
+                "ebay_siteid": {
+                    "type": "integer",
+                    "description": "eBay site ID"
+                },
+                "ebay_currency": {
+                    "type": "string",
+                    "description": "eBay currency symbol"
                 }
             },
             "additionalProperties": false
