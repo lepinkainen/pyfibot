@@ -1,8 +1,8 @@
-from __future__ import unicode_literals, print_function, division
-import pygeoip
-import os.path
-import sys
+import logging
 import socket
+
+import geoip2.database
+import geoip2.errors
 
 try:
     from modules.module_usertrack import get_table
@@ -11,20 +11,32 @@ try:
 except ImportError:
     user_track_available = False
 
+log = logging.getLogger("geoip")
+reader = None
 
-# http://dev.maxmind.com/geoip/legacy/geolite/
-DATAFILE = os.path.join(sys.path[0], "GeoIP.dat")
 
-# STANDARD = reload from disk
-# MEMORY_CACHE = load to memory
-# MMAP_CACHE = memory using mmap
-gi4 = pygeoip.GeoIP(DATAFILE, pygeoip.MEMORY_CACHE)
+def init(botref):
+    global reader
+    config = botref.config.get("module_geoip", {})
+    database = config.get("database", "GeoLite2-Country.mmdb")
+
+    try:
+        reader = geoip2.database.Reader(database)
+        log.info("Loaded GeoIP2 database from %s", database)
+    except FileNotFoundError:
+        log.error(
+            "GeoIP2 database not found: %s - download GeoLite2-Country.mmdb from MaxMind",
+            database,
+        )
 
 
 def command_geoip(bot, user, channel, args):
     """Determine the user's country based on host or nick, if module_usertrack is used."""
     if not args:
         return bot.say(channel, "usage: .geoip HOST/NICK")
+
+    if not reader:
+        return bot.say(channel, "GeoIP database not loaded")
 
     host = args
     nick = None
@@ -37,8 +49,13 @@ def command_geoip(bot, user, channel, args):
             host = user["host"]
 
     try:
-        country = gi4.country_name_by_name(host)
+        # geoip2 requires an IP address, resolve hostname first
+        ip = socket.gethostbyname(host)
+        response = reader.country(ip)
+        country = response.country.name
     except socket.gaierror:
+        country = None
+    except geoip2.errors.AddressNotFoundError:
         country = None
 
     if country:

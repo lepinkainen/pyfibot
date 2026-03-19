@@ -114,6 +114,12 @@ module_urltitle:
     app_id: 'cd556936'
     app_key: '25a08bbaa8101cca1bf0d1879bb13012'
 
+module_geoip:
+  # Path to GeoLite2-Country.mmdb database file
+  # Download from https://dev.maxmind.com/geoip/geolite2-free-geolocation-data (free account required)
+  # default: GeoLite2-Country.mmdb
+  database: /path/to/GeoLite2-Country.mmdb
+
 module_openweather:
   # Application ID for OpenWeatherMap, required for use
   # http://openweathermap.org/api
