@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack Guidelines
 
-**IMPORTANT**: For general technology choices and project guidelines, refer to `/llm-shared/project_tech_stack.md` which contains the authoritative guidelines that may change over time.
+**IMPORTANT**: For general technology choices and project guidelines, refer to `/llm-shared/project_tech_stack.md` which contains the authoritative guidelines that may change over time. The `llm-shared/` directory is a git submodule.
 
 ## Development Commands
 
@@ -22,6 +22,15 @@ In general don't try to run `python3` directly, use the `uv run` command instead
 - `task dev-install` - Install with development dependencies
 - `task clean` - Clean build artifacts and cache
 
+### Running a Single Test
+
+```bash
+uv run pytest tests/test_urltitle_simple.py -v              # single file
+uv run pytest tests/test_urltitle_simple.py::test_get_views  # single test function
+```
+
+**Note**: Only specific test files are wired into `task test` (see Taskfile.yml). Some test files (e.g. test_openweather.py) have all tests commented out. When adding tests, ensure they are added to the Taskfile test command if they should run in CI.
+
 ### Running the Bot
 
 - Start bot: `uv run python3 pyfibot/pyfibot.py <config.yml>`
@@ -32,52 +41,34 @@ In general don't try to run `python3` directly, use the `uv run` command instead
 
 ### Core Components
 
-- **pyfibot/pyfibot.py**: Main entry point and factory setup
-- **pyfibot/botcore.py**: Core IRC bot functionality using Twisted Matrix
-- **pyfibot/modules/**: Modular plugin system for bot commands and features
+- **pyfibot/pyfibot.py**: `PyFiBotFactory` (Twisted factory) — parses config, manages networks, loads/reloads modules dynamically via `_loadmodules()`. Stores module namespaces in `self.ns`.
+- **pyfibot/botcore.py**: `CoreCommands` mixin and `PyFiBot` (Twisted IRC protocol) — handles IRC events, command dispatch, URL detection. Commands are dispatched by looking for `command_<name>` and `admin_<name>` functions across all loaded module namespaces.
+- **pyfibot/modules/**: Plugin modules, loaded at runtime. Files in `available/` are disabled.
 
-### Module System
+### Module Conventions
 
-The bot uses a modular architecture where features are implemented as separate modules:
+Modules are plain Python files named `module_<name>.py`. Key function signatures the bot looks for:
 
-- Modules are loaded dynamically and can be reloaded without restart
-- Each module can define commands, URL handlers, and event handlers
-- Module structure supports both simple functions and class-based implementations
+- `command_<name>(bot, user, channel, args)` — triggered by `!<name>` in IRC
+- `admin_<name>(bot, user, channel, args)` — admin-only commands
+- `init(botref)` — called when module is loaded; used to store bot/config references
+- `finalize()` — called before module is unloaded/reloaded
+- `_handle_<pattern>(url)` — URL handlers in module_urltitle (prefixed with `_handle_`)
 
-### Key Directories
+Modules are intentionally kept untyped. Type checking (`task typecheck`) only applies to `botcore.py` and `pyfibot.py`.
 
-- **pyfibot/modules/**: Active bot modules
-- **pyfibot/modules/available/**: Disabled/example modules
-- **pyfibot/util/**: Utility functions (URL handling, etc.)
-- **tests/**: Test suite with VCR cassettes for HTTP mocking
+### Import Paths
+
+The bot runs with `pyfibot/` on `sys.path`, so modules use bare imports: `from util import pyfiurl`, `import botcore`. This is **not** standard package-relative import style.
+
+### Testing
+
+- Uses pytest with VCR cassettes in `tests/cassettes/` for HTTP mocking
+- `tests/bot_mock.py` provides `BotMock` and `FactoryMock` — lightweight stand-ins that avoid Twisted reactor. `BotMock.say()` returns `(channel, message)` tuples for assertion.
+- Test config in `tests/test_config.yml`; if a `config.yml` exists at repo root, the mock factory uses that instead.
 
 ### Configuration
 
-- Uses YAML configuration files (see example.yml, example_full.yml)
-- JSON schema validation via config_schema.json
-- Supports SSL, IPv6, virtualenv, and Tor proxy
-
-### Key Dependencies
-
-- **Python 3.8+**: Required Python version
-- **Twisted Matrix 24.0+**: Core IRC library with Python 3 support
-- **PyYAML**: Configuration parsing
-- **Requests**: HTTP client for URL handling
-- **VCR.py**: HTTP interaction recording for tests (via cassettes/)
-
-### Testing Strategy
-
-- Uses pytest with custom configuration in pytest.ini
-- VCR cassettes in tests/cassettes/ for mocking HTTP responses
-- Test configuration in test_config.yml
-- Mock bot implementation in tests/bot_mock.py
-
-## Module Development
-
-When working with modules:
-
-- Follow existing patterns in pyfibot/modules/
-- Modules can define command handlers, URL title fetchers, and event handlers
-- Use the existing logging framework (import logging; log = logging.getLogger("modulename"))
-- Test modules using the mock bot framework in tests/
-- **Note**: Modules are intentionally kept untyped to maintain development simplicity. Type checking is only applied to core bot classes.
+- YAML config files (see `example.yml`, `example_full.yml`)
+- JSON schema validation via `config_schema.json`
+- Module-specific config accessed via `bot.config.get("module_<name>", {})`
