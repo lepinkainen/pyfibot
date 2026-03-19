@@ -22,11 +22,15 @@ import logging.handlers
 import json
 import jsonschema
 from copy import deepcopy
-import botcore
-from util.dictdiffer import DictDiffer
+import argparse
+
+from pyfibot import botcore
+from pyfibot.util.dictdiffer import DictDiffer
 import socket
 
-import colorlogger
+from pyfibot import colorlogger
+
+_PACKAGE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 USE_COLOR = True
 
@@ -116,9 +120,9 @@ class PyFiBotFactory(ThrottledClientFactory):
     """python.fi bot factory"""
 
     version = "2013-02-19"
-    protocol = botcore.PyFiBot
+    protocol = botcore.PyFiBot  # type: ignore[assignment]
     allBots = None
-    moduledir = os.path.join(sys.path[0], "modules/")
+    moduledir = os.path.join(_PACKAGE_DIR, "modules/")
     startTime = None
     config = None
 
@@ -466,22 +470,18 @@ def init_logging(config):
     logger.addHandler(handler)
 
 
-def read_config():
-    config_file = sys.argv[1] or os.path.join(sys.path[0], "config.yml")
-
+def read_config(config_file):
     if os.path.exists(config_file):
         with open(config_file, "r") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
     else:
-        print(
-            "No config file found, please edit example.yml and rename it to config.yml"
-        )
+        print(f"Config file not found: {config_file}")
         return
     return config
 
 
 def validate_config(config):
-    with open(os.path.join(sys.path[0], "config_schema.json"), "r") as f:
+    with open(os.path.join(_PACKAGE_DIR, "config_schema.json"), "r") as f:
         schema = json.load(f)
     log.info("Validating configuration")
     v = jsonschema.Draft3Validator(schema)
@@ -494,10 +494,17 @@ def validate_config(config):
     return True
 
 
-def main():
-    sys.path.append(os.path.join(sys.path[0], "lib"))
+def parse_args():
+    parser = argparse.ArgumentParser(description="PyFiBot - A modular Python IRC bot")
+    parser.add_argument(
+        "-c", "--config", default="config.yml", help="Path to config file (default: config.yml)"
+    )
+    return parser.parse_args()
 
-    config = read_config()
+
+def main():
+    args = parse_args()
+    config = read_config(args.config)
     # if config not found or can't validate it, exit with error
     if not config or not validate_config(config):
         sys.exit(1)

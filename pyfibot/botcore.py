@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 import inspect
 import string
 import logging
-from util import pyfiurl
+from pyfibot.util import pyfiurl
 
 # line splitting
 import textwrap
