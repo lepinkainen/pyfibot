@@ -133,21 +133,13 @@ def test_saaren_taika_url_real():
     # Check that we got some content
     assert len(response.content) > 1000  # Should be a substantial page
     
-    # Check for expected content in the HTML
+    # Check that we got valid HTML content (don't assert on specific product
+    # terms since the external site content changes over time)
     content_str = response.content.decode('utf-8', errors='ignore')
-    
-    # Should contain product-related terms
     content_lower = content_str.lower()
-    product_terms = ['hamam', 'pyyhe', 'navy', 'puuvilla']
-    found_terms = [term for term in product_terms if term in content_lower]
-    
-    print(f"Found product terms: {found_terms}")
-    print(f"Response status: {response.status_code}")
-    print(f"Content type: {response.headers.get('content-type')}")
-    print(f"Content length: {len(response.content)}")
-    
-    # Should find at least some product terms
-    assert len(found_terms) >= 1, f"Expected to find product terms in content"
+    assert '<html' in content_lower, "Expected HTML content"
+    assert 'saaren' in content_lower or 'taika' in content_lower, \
+        "Expected shop branding in page content"
 
 
 def test_url_title_with_actual_extraction():
