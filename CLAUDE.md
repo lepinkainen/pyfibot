@@ -33,7 +33,8 @@ uv run pytest tests/test_urltitle_simple.py::test_get_views  # single test funct
 
 ### Running the Bot
 
-- Start bot: `uv run python3 pyfibot/pyfibot.py <config.yml>`
+- Start bot: `uv run pyfibot <config.yml>` (console script defined in `pyproject.toml`; also works as `uv run python3 -m pyfibot.pyfibot <config.yml>`)
+- **Do not** run `python3 pyfibot/pyfibot.py` directly — the script dir lands on `sys.path[0]` and `pyfibot.py` shadows the `pyfibot` package, breaking the absolute `from pyfibot import botcore` import (self-import ImportError).
 - Install dependencies: `uv sync` or `pip install -e .`
 - Docker: Available via Dockerfile
 
@@ -59,7 +60,7 @@ Modules are intentionally kept untyped. Type checking (`task typecheck`) only ap
 
 ### Import Paths
 
-The bot runs with `pyfibot/` on `sys.path`, so modules use bare imports: `from util import pyfiurl`, `import botcore`. This is **not** standard package-relative import style.
+Core files (`pyfibot.py`, `botcore.py`) use absolute package imports: `from pyfibot import botcore`, `from pyfibot.util.dictdiffer import DictDiffer`. Runtime-loaded modules in `pyfibot/modules/` still use bare imports (`from util import pyfiurl`, `import botcore`) because they are loaded with `pyfibot/` on `sys.path`. This is **not** standard package-relative import style.
 
 ### Testing
 
