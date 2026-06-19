@@ -1662,11 +1662,11 @@ wheels = [
 
 [[package]]
 name = "repoze-lru"
-version = "0.7"
+version = "0.8"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/12/bc/595a77c4b5e204847fdf19268314ef59c85193a9dc9f83630fc459c0fee5/repoze.lru-0.7.tar.gz", hash = "sha256:0429a75e19380e4ed50c0694e26ac8819b4ea7851ee1fc7583c8572db80aff77", size = 19591, upload-time = "2017-09-07T05:01:00.949Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/19/727d5c904ea513a6a9044bf43beaa2c5e632e017b1e0ab71e9d111d20967/repoze_lru-0.8.tar.gz", hash = "sha256:a252408cd93fe670c88d6665b96fe5d42e071dba2507a1f21a1e609ae4fa891a", size = 22169, upload-time = "2026-05-16T16:57:28.315Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b0/30/6cc0c95f0b59ad4b3b9163bff7cdcf793cc96fac64cf398ff26271f5cf5e/repoze.lru-0.7-py3-none-any.whl", hash = "sha256:f77bf0e1096ea445beadd35f3479c5cff2aa1efe604a133e67150bc8630a62ea", size = 10985, upload-time = "2017-09-07T05:01:00.007Z" },
+    { url = "https://files.pythonhosted.org/packages/6f/a1/cc0848069e3937651582c74db0fdddda96f853060a25617754a264913afe/repoze_lru-0.8-py3-none-any.whl", hash = "sha256:979a30d2e567e31f292009ba4467aa444c89ee0da3e3013980c35f1fb4f19d99", size = 6379, upload-time = "2026-05-16T16:57:27.257Z" },
 ]
 
 [[package]]
