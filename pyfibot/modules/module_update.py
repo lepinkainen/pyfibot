@@ -20,7 +20,9 @@ def command_update(bot, user, channel, args):
 
     log.debug("Executing git pull in %s" % cwd)
 
-    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(
+        cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
     res = p.wait()
     out, err = p.communicate()
 
@@ -39,10 +41,12 @@ def command_update(bot, user, channel, args):
         bot.say(channel, "Errors: %s" % err)
 
     # fetch new required packages if needed
-    cmd = ["pip", "install", "--upgrade", "--requirement", "../requirements.txt"]
-    log.debug("executing pip install in %s" % cwd)
+    cmd = ["uv", "sync"]
+    log.debug("executing uv sync in %s" % cwd)
 
-    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(
+        cmd, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    )
     res = p.wait()
     out, err = p.communicate()
 
